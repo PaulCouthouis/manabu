@@ -88,22 +88,22 @@ Options minimales : `strict: true`, `noUncheckedIndexedAccess: true`.
 
 ### Étape 0 — CLAUDE.md
 
-- [ ] Créer le fichier `CLAUDE.md` à la racine du projet avec :
-  - [ ] Stack technique et versions
-  - [ ] Architecture monorepo et conventions de nommage
-  - [ ] Commandes disponibles (`pnpm dev`, `pnpm build`, `pnpm test`, `pnpm lint`, `pnpm format:check`)
-  - [ ] Règles architecturales (DDD, séparation domain/infra)
-  - [ ] Approche test (ATDD)
+- [x] Créer le fichier `CLAUDE.md` à la racine du projet avec :
+  - [x] Stack technique et versions
+  - [x] Architecture monorepo et conventions de nommage
+  - [x] Commandes disponibles (`pnpm dev`, `pnpm build`, `pnpm test`, `pnpm lint`, `pnpm format:check`)
+  - [x] Règles architecturales (DDD, séparation domain/infra)
+  - [x] Approche test (ATDD)
 
 Le CLAUDE.md est un document vivant, enrichi à chaque étape.
 
 ### Étape 1 — Monorepo nu
 
-- [ ] Initialiser le workspace pnpm (`pnpm-workspace.yaml`)
-- [ ] Créer les dossiers `apps/web`, `packages/domain`, `packages/db`, `packages/ui`, `packages/shared`, `e2e/`
-- [ ] Chaque package a son `package.json` et `tsconfig.json` (étend `tsconfig.base.json`)
-- [ ] `tsconfig.base.json` à la racine avec `strict: true`, `noUncheckedIndexedAccess: true`
-- [ ] **Vérification :** `pnpm install` et `pnpm build` passent → AC6
+- [x] Initialiser le workspace pnpm (`pnpm-workspace.yaml`)
+- [x] Créer les dossiers `apps/web`, `packages/domain`, `packages/db`, `packages/ui`, `packages/shared`, `e2e/`
+- [x] Chaque package a son `package.json` et `tsconfig.json` (étend `tsconfig.base.json`)
+- [x] `tsconfig.base.json` à la racine avec `strict: true`, `noUncheckedIndexedAccess: true`
+- [x] **Vérification :** `pnpm install` et `pnpm build` passent → AC6
 
 ### Étape 2 — TanStack Start + premier écran
 
