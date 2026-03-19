@@ -107,10 +107,10 @@ Le CLAUDE.md est un document vivant, enrichi à chaque étape.
 
 ### Étape 2 — TanStack Start + premier écran
 
-- [ ] Bootstrap TanStack Start dans `apps/web`
-- [ ] Créer une route `/` avec un "Hello Manabu" minimal
-- [ ] Configurer `app.config.ts`
-- [ ] **Vérification :** `pnpm dev` → la page s'affiche → AC1
+- [x] Bootstrap TanStack Start dans `apps/web`
+- [x] Créer une route `/` avec un "Hello Manabu" minimal
+- [x] Configurer `vite.config.ts` (TanStack Start 1.166+ utilise Vite plugin au lieu de `app.config.ts`)
+- [x] **Vérification :** `pnpm dev` → la page s'affiche → AC1
 
 ### Étape 3 — Design system
 
