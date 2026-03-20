@@ -102,9 +102,10 @@ apps/web/app/
 
 - [ ] Monter le handler Better Auth dans `apps/web` (API route `/api/auth/*`)
 - [ ] Exécuter les migrations Better Auth (tables `user`, `session`, `account`, `verification`)
-- [ ] Valider le hashing des mots de passe en base via test d'intégration → AC6
-- [ ] Tester le rate limiting sur les endpoints auth → AC7
-- [ ] Tester l'expiration de session → AC8
+- [ ] Écrire les tests d'intégration (Vitest + Testcontainers) :
+  - [ ] Test : le mot de passe est hashé en base, jamais stocké en clair → AC6
+  - [ ] Test : le rate limiting bloque après N tentatives/min/IP → AC7
+  - [ ] Test : la session expire après 30 jours d'inactivité → AC8
 
 ### Étape 3 — Pages auth & UI
 
@@ -122,14 +123,20 @@ apps/web/app/
   - [ ] **Visiteur non connecté** : heading "Manabu", texte d'accroche, bouton "Get started" → `/auth/sign-up`
   - [ ] **Utilisateur connecté** : même page avec son email affiché et bouton "Sign out" à la place
 - [ ] Vérifier le responsive 375px sur les pages auth
-- [ ] **Vérification E2E :** parcours inscription → connexion → déconnexion → AC1, AC2, AC3, AC9
+- [ ] Écrire les tests E2E (Playwright) :
+  - [ ] Test : parcours inscription (email + mdp) → AC1
+  - [ ] Test : parcours connexion avec identifiants valides → AC2
+  - [ ] Test : parcours déconnexion → AC3
+  - [ ] Test : pages sign-in/sign-up responsives sur 375px avec composants Park UI → AC9
 
 ### Étape 4 — Protection des routes & persistance de session
 
 - [ ] Appliquer le middleware de protection sur les routes qui le nécessitent
 - [ ] Rediriger les visiteurs non authentifiés vers `/auth/sign-in`
 - [ ] Vérifier la persistance de session (fermer/rouvrir le navigateur)
-- [ ] **Vérification E2E :** accès route protégée sans auth → redirection, session persistante après reload → AC4, AC5
+- [ ] Écrire les tests E2E (Playwright) :
+  - [ ] Test : accès route protégée sans auth → redirection vers `/auth/sign-in` → AC5
+  - [ ] Test : session persistante après fermeture/réouverture navigateur → AC4
 
 ### Étape 5 — Mise à jour du CLAUDE.md
 

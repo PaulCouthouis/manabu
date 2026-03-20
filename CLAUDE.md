@@ -99,7 +99,7 @@ packages/shared →  (aucune dépendance interne)
 - Le système de difficulté est propriétaire (3 axes : fréquence BCCWJ, profondeur graphe, complexité intrinsèque).
 - Le JLPT est un output dérivé, jamais un input.
 
-## Approche test — ATDD
+## Approche test — ATDD + TDD
 
 Chaque critère d'acceptance est validé par un test automatisé ou une commande vérifiable.
 
@@ -108,3 +108,17 @@ Chaque critère d'acceptance est validé par un test automatisé ou une commande
 - **Tests unitaires** (Vitest) : valident la logique domaine pure (Effect).
 
 Règle : un AC sans test automatisé est un AC non validé.
+
+### TDD — Red-Green-Refactor
+
+Pour toute logique testable (domain, services, repositories, API), appliquer le cycle TDD :
+
+1. **Red** — Écrire le test qui échoue en premier
+2. **Green** — Écrire le minimum de code pour faire passer le test
+3. **Refactor** — Simplifier le code en gardant les tests verts
+
+Le TDD ne s'applique pas au boilerplate (config, wiring de routes, CSS/markup).
+
+### Rédaction des User Stories — tests explicites
+
+Chaque étape d'implémentation d'une US doit inclure des sous-tâches (`- [ ]`) explicites pour l'écriture des tests associés à ses AC. Ne pas compter sur une mention implicite dans la ligne "Vérification" — le test doit être une checkbox à part entière.

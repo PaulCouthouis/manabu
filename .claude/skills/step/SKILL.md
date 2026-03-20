@@ -72,12 +72,19 @@ Avant d'écrire quoi que ce soit :
 2. Lire les fichiers existants qui seront modifiés ou qui servent de référence
 3. Comprendre les patterns en place (conventions de nommage, structure, imports)
 
-### Step 3 : Implémenter
+### Step 3 : Implémenter (TDD pour la logique testable)
 
+Si l'étape implique de la logique testable (domain, services, repositories, API) :
+
+1. **Red** — Écrire d'abord le(s) test(s) qui échouent
+2. **Green** — Écrire le minimum de code pour faire passer les tests
+3. **Refactor** — Simplifier en gardant les tests verts
+
+Pour le boilerplate (config, wiring, CSS/markup) : implémenter directement.
+
+Dans tous les cas :
 - Suivre les conventions du projet (voir CLAUDE.md)
 - Respecter les patterns existants identifiés au Step 2
-- Créer ou modifier les fichiers nécessaires
-- Écrire les tests si l'étape implique de la logique testable
 
 ### Step 4 : Vérification — Lint
 
