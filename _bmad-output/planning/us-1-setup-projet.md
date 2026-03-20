@@ -154,12 +154,12 @@ Le CLAUDE.md est un document vivant, enrichi à chaque étape.
 
 ### Étape 6 — Pipeline de test
 
-- [ ] Configurer Vitest pour `packages/db` (tests d'intégration)
-- [ ] Test d'intégration : `SELECT 1` via Testcontainers (PostgreSQL éphémère)
-- [ ] Configurer Playwright dans `e2e/`
-- [ ] Test E2E : naviguer vers `/`, vérifier qu'un composant Park UI est visible, vérifier le responsive 375px
-- [ ] Ajouter le script `pnpm test` qui orchestre tous les tests
-- [ ] **Vérification :** `pnpm test` passe, exit code 0 → AC7
+- [x] Configurer Vitest pour `packages/db` (tests d'intégration)
+- [x] Test d'intégration : `SELECT 1` via Testcontainers (PostgreSQL éphémère)
+- [x] Configurer Playwright dans `e2e/`
+- [x] Test E2E : naviguer vers `/`, vérifier qu'un composant Park UI est visible, vérifier le responsive 375px
+- [x] Ajouter le script `pnpm test` qui orchestre tous les tests
+- [x] **Vérification :** `pnpm test` passe, exit code 0 → AC7
 
 ## Hors scope
 

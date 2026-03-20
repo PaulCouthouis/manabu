@@ -5,3 +5,5 @@ dist/
 **/styled-system/
 *.log
 .env
+test-results/
+playwright-report/
