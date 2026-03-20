@@ -134,7 +134,7 @@ Le CLAUDE.md est un document vivant, enrichi à chaque étape.
 
 ### Étape 5 — PostgreSQL
 
-- [ ] Créer `docker-compose.yml` avec PostgreSQL 17
+- [x] Créer `docker-compose.yml` avec PostgreSQL 17
   ```yaml
   services:
     db:
@@ -144,13 +144,13 @@ Le CLAUDE.md est un document vivant, enrichi à chaque étape.
         POSTGRES_USER: manabu
         POSTGRES_PASSWORD: manabu
       ports:
-        - "5432:5432"
+        - "5433:5432"
       volumes:
         - pgdata:/var/lib/postgresql/data
   ```
-- [ ] Implémenter le Layer `@effect/sql-pg` dans `packages/db`
-- [ ] Valider la connexion au démarrage de l'app
-- [ ] **Vérification :** `docker compose up` + connexion OK → AC4, AC5
+- [x] Implémenter le Layer `@effect/sql-pg` dans `packages/db`
+- [x] Valider la connexion au démarrage de l'app
+- [x] **Vérification :** `docker compose up` + connexion OK → AC4, AC5
 
 ### Étape 6 — Pipeline de test
 

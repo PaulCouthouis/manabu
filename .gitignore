@@ -4,3 +4,4 @@ dist/
 *.tsbuildinfo
 **/styled-system/
 *.log
+.env

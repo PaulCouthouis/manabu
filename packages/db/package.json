@@ -10,8 +10,11 @@
     "build": "tsc --build"
   },
   "dependencies": {
+    "@effect/sql": "^0.51.0",
+    "@effect/sql-pg": "^0.52.0",
     "@manabu/domain": "workspace:*",
-    "@manabu/shared": "workspace:*"
+    "@manabu/shared": "workspace:*",
+    "effect": "^3.21.0"
   },
   "devDependencies": {
     "typescript": "^5.8.0"
