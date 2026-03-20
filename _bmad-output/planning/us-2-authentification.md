@@ -100,12 +100,12 @@ apps/web/app/
 
 ### Étape 2 — Intégration serveur & API auth
 
-- [ ] Monter le handler Better Auth dans `apps/web` (API route `/api/auth/*`)
-- [ ] Exécuter les migrations Better Auth (tables `user`, `session`, `account`, `verification`)
-- [ ] Écrire les tests d'intégration (Vitest + Testcontainers) :
-  - [ ] Test : le mot de passe est hashé en base, jamais stocké en clair → AC6
-  - [ ] Test : le rate limiting bloque après N tentatives/min/IP → AC7
-  - [ ] Test : la session expire après 30 jours d'inactivité → AC8
+- [x] Monter le handler Better Auth dans `apps/web` (API route `/api/auth/*`)
+- [x] Exécuter les migrations Better Auth (tables `user`, `session`, `account`, `verification`)
+- [x] Écrire les tests d'intégration (Vitest + Testcontainers) :
+  - [x] Test : le mot de passe est hashé en base, jamais stocké en clair → AC6
+  - [x] Test : le rate limiting bloque après N tentatives/min/IP → AC7
+  - [x] Test : la session expire après 30 jours d'inactivité → AC8
 
 ### Étape 3 — Pages auth & UI
 

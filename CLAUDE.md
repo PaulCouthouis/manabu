@@ -89,6 +89,12 @@ packages/shared →  (aucune dépendance interne)
 - Privilégier `const Main = styled("main", { base: { ... } })` pour créer des composants stylés.
 - Éviter `css()` et les props inline sur `styled.div` — réserver `css()` aux cas où `styled()` n'est pas applicable.
 
+### Durées — `Duration` Effect plutôt que des nombres bruts
+
+- Utiliser `Duration.days(30)`, `Duration.minutes(1)`, `Duration.seconds(5)`, etc. pour exprimer les durées.
+- Convertir à la frontière avec les APIs externes via `Duration.toMillis(...)`, `Duration.toSeconds(...)`, etc.
+- Ne jamais écrire de calculs manuels comme `30 * 24 * 60 * 60` — `Duration` rend l'intention explicite et évite les erreurs d'unité.
+
 ### Nullabilité — `Option` Effect plutôt que `null | undefined`
 
 - Utiliser `Option.fromNullable` pour convertir les valeurs potentiellement `null` ou `undefined` en `Option`.
