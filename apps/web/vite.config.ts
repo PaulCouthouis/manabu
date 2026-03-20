@@ -6,6 +6,7 @@ export default defineConfig({
   plugins: [tanstackStart({ srcDirectory: "app" })],
   resolve: {
     alias: {
+      "~": path.resolve(__dirname, "app"),
       "styled-system": path.resolve(__dirname, "styled-system"),
     },
   },

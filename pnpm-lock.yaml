@@ -23,6 +23,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@effect-atom/atom-react':
+        specifier: ^0.5.0
+        version: 0.5.0(@effect/experimental@0.60.0(@effect/platform@0.96.0(effect@3.21.0))(effect@3.21.0)(ioredis@5.10.0))(@effect/platform@0.96.0(effect@3.21.0))(@effect/rpc@0.73.2(@effect/platform@0.96.0(effect@3.21.0))(effect@3.21.0))(effect@3.21.0)(react@19.2.4)(scheduler@0.27.0)
       '@manabu/auth':
         specifier: workspace:*
         version: link:../../packages/auth
@@ -40,13 +43,16 @@ importers:
         version: link:../../packages/ui
       '@park-ui/panda-preset':
         specifier: ^0.43.1
-        version: 0.43.1(@internationalized/date@3.11.0)(@pandacss/dev@1.9.0(typescript@5.9.3))
+        version: 0.43.1(@internationalized/date@3.5.5)(@pandacss/dev@1.9.0(typescript@5.9.3))
       '@tanstack/react-router':
         specifier: ^1.167.5
         version: 1.167.5(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@tanstack/react-start':
         specifier: ^1.166.17
         version: 1.166.17(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vite@8.0.1(esbuild@0.27.4)(jiti@2.6.1)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.2))
+      effect:
+        specifier: ^3.21.0
+        version: 3.21.0
       react:
         specifier: ^19.2.4
         version: 19.2.4
@@ -81,6 +87,9 @@ importers:
 
   packages/auth:
     dependencies:
+      '@effect-atom/atom-react':
+        specifier: ^0.5.0
+        version: 0.5.0(@effect/experimental@0.60.0(@effect/platform@0.96.0(effect@3.21.0))(effect@3.21.0)(ioredis@5.10.0))(@effect/platform@0.96.0(effect@3.21.0))(@effect/rpc@0.73.2(@effect/platform@0.96.0(effect@3.21.0))(effect@3.21.0))(effect@3.21.0)(react@19.2.4)(scheduler@0.27.0)
       '@manabu/shared':
         specifier: workspace:*
         version: link:../shared
@@ -164,7 +173,7 @@ importers:
         version: link:../shared
       '@park-ui/panda-preset':
         specifier: ^0.43.1
-        version: 0.43.1(@internationalized/date@3.5.5)(@pandacss/dev@1.9.0(typescript@5.9.3))
+        version: 0.43.1(@internationalized/date@3.11.0)(@pandacss/dev@1.9.0(typescript@5.9.3))
     devDependencies:
       '@chromatic-com/storybook':
         specifier: ^5.0.2
@@ -199,6 +208,9 @@ importers:
       '@vitest/coverage-v8':
         specifier: ^4.1.0
         version: 4.1.0(@vitest/browser@4.1.0(vite@8.0.1(esbuild@0.27.4)(jiti@2.6.1)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.2))(vitest@4.1.0))(vitest@4.1.0)
+      lucide-react:
+        specifier: ^0.577.0
+        version: 0.577.0(react@19.2.4)
       playwright:
         specifier: ^1.58.2
         version: 1.58.2
@@ -445,6 +457,21 @@ packages:
   '@deno/shim-deno@0.19.2':
     resolution: {integrity: sha512-q3VTHl44ad8T2Tw2SpeAvghdGOjlnLPDNO2cpOxwMrBE/PVas6geWpbpIgrM+czOCH0yejp0yi8OaTuB+NU40Q==}
 
+  '@effect-atom/atom-react@0.5.0':
+    resolution: {integrity: sha512-aFfjWi4rEJCqfM12Oi36/EKaDm/W6n4/N6yM5vL0t/QozKhJhK05rQL/GY4XMxlH2eqkQ4ih8jBQa3Yyp0Fiqw==}
+    peerDependencies:
+      effect: ^3.19
+      react: '>=18 <20'
+      scheduler: '*'
+
+  '@effect-atom/atom@0.5.3':
+    resolution: {integrity: sha512-TRZv/i+YT3TtnN0oFORJqXdxSs1fc7lrJlH+1xZvDFyjC9hgoVnrcKbeZsDFmr6r0wYRqVo7U3IftxiQNjpNZA==}
+    peerDependencies:
+      '@effect/experimental': ^0.58.0
+      '@effect/platform': ^0.94.2
+      '@effect/rpc': ^0.73.0
+      effect: ^3.19.15
+
   '@effect/experimental@0.60.0':
     resolution: {integrity: sha512-i5zIg7Xup2KgHyqHlYtkgqSE1bNzCL0GbbTQxrpIzKF0q/ebknOk/ox8B/gIq2vImjoEE81h/oxU+6i1NH210g==}
     peerDependencies:
@@ -462,6 +489,12 @@ packages:
     resolution: {integrity: sha512-U7PLhkVzg7zzrgFvyWATOzD6reL87KG/fcdOxgLWBQ/J5CCU6qdPAVG+0o6o+IxcsLoqGwxs+rFxaFzrdtDV1A==}
     peerDependencies:
       effect: ^3.21.0
+
+  '@effect/rpc@0.73.2':
+    resolution: {integrity: sha512-td7LHDgBOYKg+VgGWEelD8rSAmvjXz7am17vfxZROX5qIYuvH7drL/z4p5xQFadhHZ7DYdlFpqdO9ggc77OCIw==}
+    peerDependencies:
+      '@effect/platform': ^0.94.5
+      effect: ^3.19.18
 
   '@effect/sql-pg@0.52.0':
     resolution: {integrity: sha512-pK0XBWrjR815w2eIM3yVtA0JqBgE2Yi5Ua+f0pWYuUhc35uLahrhgB/IGYJdAEOVwaS2PKgKfuiRIwG4WZv2Bg==}
@@ -4042,6 +4075,11 @@ packages:
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
 
+  lucide-react@0.577.0:
+    resolution: {integrity: sha512-4LjoFv2eEPwYDPg/CUdBJQSDfPyzXCRrVW1X7jrx/trgxnxkHFjnVZINbzvzxjN70dxychOfg+FTYwBiS3pQ5A==}
+    peerDependencies:
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
   lz-string@1.5.0:
     resolution: {integrity: sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ==}
     hasBin: true
@@ -6046,6 +6084,24 @@ snapshots:
       '@deno/shim-deno-test': 0.5.0
       which: 4.0.0
 
+  '@effect-atom/atom-react@0.5.0(@effect/experimental@0.60.0(@effect/platform@0.96.0(effect@3.21.0))(effect@3.21.0)(ioredis@5.10.0))(@effect/platform@0.96.0(effect@3.21.0))(@effect/rpc@0.73.2(@effect/platform@0.96.0(effect@3.21.0))(effect@3.21.0))(effect@3.21.0)(react@19.2.4)(scheduler@0.27.0)':
+    dependencies:
+      '@effect-atom/atom': 0.5.3(@effect/experimental@0.60.0(@effect/platform@0.96.0(effect@3.21.0))(effect@3.21.0)(ioredis@5.10.0))(@effect/platform@0.96.0(effect@3.21.0))(@effect/rpc@0.73.2(@effect/platform@0.96.0(effect@3.21.0))(effect@3.21.0))(effect@3.21.0)
+      effect: 3.21.0
+      react: 19.2.4
+      scheduler: 0.27.0
+    transitivePeerDependencies:
+      - '@effect/experimental'
+      - '@effect/platform'
+      - '@effect/rpc'
+
+  '@effect-atom/atom@0.5.3(@effect/experimental@0.60.0(@effect/platform@0.96.0(effect@3.21.0))(effect@3.21.0)(ioredis@5.10.0))(@effect/platform@0.96.0(effect@3.21.0))(@effect/rpc@0.73.2(@effect/platform@0.96.0(effect@3.21.0))(effect@3.21.0))(effect@3.21.0)':
+    dependencies:
+      '@effect/experimental': 0.60.0(@effect/platform@0.96.0(effect@3.21.0))(effect@3.21.0)(ioredis@5.10.0)
+      '@effect/platform': 0.96.0(effect@3.21.0)
+      '@effect/rpc': 0.73.2(@effect/platform@0.96.0(effect@3.21.0))(effect@3.21.0)
+      effect: 3.21.0
+
   '@effect/experimental@0.60.0(@effect/platform@0.96.0(effect@3.21.0))(effect@3.21.0)(ioredis@5.10.0)':
     dependencies:
       '@effect/platform': 0.96.0(effect@3.21.0)
@@ -6060,6 +6116,12 @@ snapshots:
       find-my-way-ts: 0.1.6
       msgpackr: 1.11.9
       multipasta: 0.2.7
+
+  '@effect/rpc@0.73.2(@effect/platform@0.96.0(effect@3.21.0))(effect@3.21.0)':
+    dependencies:
+      '@effect/platform': 0.96.0(effect@3.21.0)
+      effect: 3.21.0
+      msgpackr: 1.11.9
 
   '@effect/sql-pg@0.52.0(@effect/experimental@0.60.0(@effect/platform@0.96.0(effect@3.21.0))(effect@3.21.0)(ioredis@5.10.0))(@effect/platform@0.96.0(effect@3.21.0))(@effect/sql@0.51.0(@effect/experimental@0.60.0(@effect/platform@0.96.0(effect@3.21.0))(effect@3.21.0)(ioredis@5.10.0))(@effect/platform@0.96.0(effect@3.21.0))(effect@3.21.0))(effect@3.21.0)':
     dependencies:
@@ -10163,6 +10225,10 @@ snapshots:
   lru-cache@5.1.1:
     dependencies:
       yallist: 3.1.1
+
+  lucide-react@0.577.0(react@19.2.4):
+    dependencies:
+      react: 19.2.4
 
   lz-string@1.5.0: {}
 

@@ -13,6 +13,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@effect-atom/atom-react": "^0.5.0",
     "@manabu/shared": "workspace:*",
     "better-auth": "^1.2.0",
     "effect": "^3.21.0",

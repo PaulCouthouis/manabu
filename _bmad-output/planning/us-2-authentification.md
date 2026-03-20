@@ -109,25 +109,25 @@ apps/web/app/
 
 ### Étape 3 — Pages auth & UI
 
-- [ ] Créer la page `/auth/sign-up` avec composants Park UI :
-  - [ ] Champs : email, mot de passe, confirmation mot de passe
-  - [ ] Bouton "Create account"
-  - [ ] Lien vers sign-in
-  - [ ] Gestion des erreurs (email already taken, password too short...)
-- [ ] Créer la page `/auth/sign-in` avec composants Park UI :
-  - [ ] Champs : email, mot de passe
-  - [ ] Bouton "Sign in"
-  - [ ] Lien vers sign-up
-  - [ ] Gestion des erreurs (invalid credentials)
-- [ ] Mettre à jour la page d'accueil (`/`) selon l'état d'authentification :
-  - [ ] **Visiteur non connecté** : heading "Manabu", texte d'accroche, bouton "Get started" → `/auth/sign-up`
-  - [ ] **Utilisateur connecté** : même page avec son email affiché et bouton "Sign out" à la place
-- [ ] Vérifier le responsive 375px sur les pages auth
-- [ ] Écrire les tests E2E (Playwright) :
-  - [ ] Test : parcours inscription (email + mdp) → AC1
-  - [ ] Test : parcours connexion avec identifiants valides → AC2
-  - [ ] Test : parcours déconnexion → AC3
-  - [ ] Test : pages sign-in/sign-up responsives sur 375px avec composants Park UI → AC9
+- [x] Créer la page `/auth/sign-up` avec composants Park UI :
+  - [x] Champs : email, mot de passe, confirmation mot de passe
+  - [x] Bouton "Create account"
+  - [x] Lien vers sign-in
+  - [x] Gestion des erreurs (email already taken, password too short...)
+- [x] Créer la page `/auth/sign-in` avec composants Park UI :
+  - [x] Champs : email, mot de passe
+  - [x] Bouton "Sign in"
+  - [x] Lien vers sign-up
+  - [x] Gestion des erreurs (invalid credentials)
+- [x] Mettre à jour la page d'accueil (`/`) selon l'état d'authentification :
+  - [x] **Visiteur non connecté** : heading "Manabu", texte d'accroche, bouton "Get started" → `/auth/sign-up`
+  - [x] **Utilisateur connecté** : même page avec son email affiché et bouton "Sign out" à la place
+- [x] Vérifier le responsive 375px sur les pages auth
+- [x] Écrire les tests E2E (Playwright) :
+  - [x] Test : parcours inscription (email + mdp) → AC1
+  - [x] Test : parcours connexion avec identifiants valides → AC2
+  - [x] Test : parcours déconnexion → AC3
+  - [x] Test : pages sign-in/sign-up responsives sur 375px avec composants Park UI → AC9
 
 ### Étape 4 — Protection des routes & persistance de session
 

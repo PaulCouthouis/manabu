@@ -1,3 +1,5 @@
+import { signOutAtom, useSession } from "@manabu/auth/client"
+import { useAtomSet } from "@effect-atom/atom-react"
 import { Button, Text } from "@manabu/ui"
 import { createFileRoute } from "@tanstack/react-router"
 import { styled } from "styled-system/jsx"
@@ -19,6 +21,9 @@ const Main = styled("main", {
 })
 
 function HomePage() {
+  const { data: session } = useSession()
+  const signOut = useAtomSet(signOutAtom)
+
   return (
     <Main>
       <Text as="h1" variant="heading" textStyle="4xl" fontWeight="bold">
@@ -27,9 +32,18 @@ function HomePage() {
       <Text textStyle="lg" color="fg.muted" textAlign="center">
         Learn Japanese, skill by skill
       </Text>
-      <Button size="lg" colorPalette="accent">
-        Get started
-      </Button>
+      {session ? (
+        <>
+          <Text color="fg.muted">{session.user.email}</Text>
+          <Button size="lg" colorPalette="accent" onClick={() => signOut()}>
+            Sign out
+          </Button>
+        </>
+      ) : (
+        <Button size="lg" colorPalette="accent" asChild>
+          <a href="/auth/sign-up">Get started</a>
+        </Button>
+      )}
     </Main>
   )
 }

@@ -7,6 +7,7 @@
 | Langage | TypeScript strict | 5.x |
 | Framework full-stack | TanStack Start | latest |
 | Domaine / runtime | Effect TS | 3.x |
+| Effect ↔ React | @effect-atom/atom-react | latest |
 | Design system | Panda CSS + Park UI | latest |
 | Base de données | PostgreSQL | 17 |
 | ORM / SQL | @effect/sql-pg | latest |
@@ -29,6 +30,7 @@ manabu/
         components/    # Composants spécifiques à l'app
       app.config.ts
   packages/
+    auth/              # @manabu/auth — Better Auth config, client atoms, server handlers
     domain/            # Entités, value objects, agrégats — pur Effect, zéro dépendance infra
     db/                # @effect/sql-pg, migrations, repositories
     ui/                # Composants UI partagés, design system Panda/Park
@@ -42,7 +44,8 @@ manabu/
 ### Dépendances entre packages
 
 ```
-apps/web       →  @manabu/domain, @manabu/db, @manabu/ui, @manabu/shared
+apps/web       →  @manabu/auth, @manabu/domain, @manabu/db, @manabu/ui, @manabu/shared
+packages/auth  →  @manabu/shared
 packages/db     →  @manabu/domain, @manabu/shared
 packages/ui     →  @manabu/shared
 packages/domain →  @manabu/shared
@@ -83,6 +86,8 @@ packages/shared →  (aucune dépendance interne)
 - Utiliser `Effect` comme runtime principal pour la gestion d'erreurs, dépendances, et concurrence.
 - Les erreurs métier sont des types tagués Effect (`Data.TaggedError`), jamais des exceptions.
 - Les dépendances sont injectées via le système de Layer Effect, jamais par import direct d'implémentation.
+- **Côté React** : utiliser `Atom.fn` (`@effect-atom/atom-react`) pour wrapper les Effects en atoms réactifs. Utiliser `useAtomSet` / `useAtomValue` / `useAtom` pour interagir avec les atoms dans les composants. Ne jamais appeler `Effect.runPromise` manuellement dans un composant.
+- **Formulaires** : utiliser `useActionState` (React 19) avec `<form action={...}>` et `FormData`. Combiner avec `useAtom(atom, { mode: "promiseExit" })` pour exécuter les atoms dans les actions.
 
 ### Panda CSS — styled() plutôt que css()
 

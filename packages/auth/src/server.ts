@@ -1,6 +1,7 @@
 import { betterAuth } from "better-auth"
-import { Duration } from "effect"
+import { Duration, Effect } from "effect"
 import { Pool } from "pg"
+import { AuthError, Unauthorized } from "./errors"
 
 export interface AuthDatabaseConfig {
   readonly host: string
@@ -69,4 +70,31 @@ export const auth = createAuth({
     password: process.env["DB_PASSWORD"] ?? "manabu",
   },
   secret: process.env["BETTER_AUTH_SECRET"] ?? "dev-secret-change-in-production",
+  baseURL: process.env["BETTER_AUTH_URL"] ?? "http://localhost:5173",
+  rateLimitMax: Number.isNaN(Number(process.env["RATE_LIMIT_MAX"]))
+    ? RATE_LIMIT_MAX
+    : Number(process.env["RATE_LIMIT_MAX"] ?? RATE_LIMIT_MAX),
 })
+
+type SessionResponse = NonNullable<Awaited<ReturnType<typeof auth.api.getSession>>>
+
+function errorMessage(error: unknown): string {
+  return error instanceof Error ? error.message : String(error)
+}
+
+export const handler = (request: Request) =>
+  Effect.tryPromise({
+    try: () => auth.handler(request),
+    catch: (error) => new AuthError({ message: errorMessage(error) }),
+  })
+
+export const getSession = (headers: Headers) =>
+  Effect.tryPromise({
+    try: () => auth.api.getSession({ headers }),
+    catch: (error) => new AuthError({ message: errorMessage(error) }),
+  }).pipe(
+    Effect.filterOrFail(
+      (session): session is SessionResponse => session != null,
+      () => new Unauthorized({ message: "Not authenticated" }),
+    ),
+  )

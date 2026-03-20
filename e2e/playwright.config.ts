@@ -5,6 +5,7 @@ export default defineConfig({
 	testMatch: "**/*.spec.ts",
 	timeout: 30_000,
 	retries: 0,
+	workers: 1,
 	use: {
 		baseURL: "http://localhost:5173",
 		headless: true,
@@ -13,6 +14,7 @@ export default defineConfig({
 		{
 			name: "desktop",
 			use: { ...devices["Desktop Chrome"] },
+			testMatch: "**/*.spec.ts",
 		},
 		{
 			name: "mobile",
@@ -20,6 +22,7 @@ export default defineConfig({
 				...devices["Desktop Chrome"],
 				viewport: { width: 375, height: 812 },
 			},
+			testMatch: "home.spec.ts",
 		},
 	],
 	webServer: {
