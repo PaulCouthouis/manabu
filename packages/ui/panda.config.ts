@@ -6,17 +6,17 @@ import { absoluteCenter } from "./src/theme/recipes/absolute-center"
 import { group } from "./src/theme/recipes/group"
 
 export default defineConfig({
-	preflight: true,
-	presets: [createPreset({ accentColor: jade, grayColor: sage, radius: "sm" })],
-	include: ["./src/**/*.{ts,tsx}"],
-	jsxFramework: "react",
-	outdir: "styled-system",
-	theme: {
-		extend: {
-			recipes: {
-				absoluteCenter,
-				group,
-			},
-		},
-	},
+  preflight: true,
+  presets: [createPreset({ accentColor: jade, grayColor: sage, radius: "sm" })],
+  include: ["./src/**/*.{ts,tsx}"],
+  jsxFramework: "react",
+  outdir: "styled-system",
+  theme: {
+    extend: {
+      recipes: {
+        absoluteCenter,
+        group,
+      },
+    },
+  },
 })

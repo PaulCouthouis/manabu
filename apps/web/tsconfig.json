@@ -1,17 +1,17 @@
 {
-	"extends": "../../tsconfig.base.json",
-	"compilerOptions": {
-		"outDir": "dist",
-		"rootDir": ".",
-		"paths": {
-			"~/*": ["./app/*"]
-		}
-	},
-	"references": [
-		{ "path": "../../packages/domain" },
-		{ "path": "../../packages/db" },
-		{ "path": "../../packages/ui" },
-		{ "path": "../../packages/shared" }
-	],
-	"include": ["app", "vite.config.ts"]
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": ".",
+    "paths": {
+      "~/*": ["./app/*"]
+    }
+  },
+  "references": [
+    { "path": "../../packages/domain" },
+    { "path": "../../packages/db" },
+    { "path": "../../packages/ui" },
+    { "path": "../../packages/shared" }
+  ],
+  "include": ["app", "vite.config.ts"]
 }

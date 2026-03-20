@@ -1,11 +1,11 @@
-'use client'
-import { forwardRef } from 'react'
-import type { HTMLStyledProps } from 'styled-system/jsx'
-import { AbsoluteCenter } from './absolute-center'
-import { Span } from './span'
-import { Spinner } from './spinner'
+"use client"
+import { forwardRef } from "react"
+import type { HTMLStyledProps } from "styled-system/jsx"
+import { AbsoluteCenter } from "./absolute-center"
+import { Span } from "./span"
+import { Spinner } from "./spinner"
 
-export interface LoaderProps extends HTMLStyledProps<'span'> {
+export interface LoaderProps extends HTMLStyledProps<"span"> {
   /**
    * Whether the loader is visible
    * @default true
@@ -19,7 +19,7 @@ export interface LoaderProps extends HTMLStyledProps<'span'> {
    * The placement of the spinner
    * @default "start"
    */
-  spinnerPlacement?: 'start' | 'end' | undefined
+  spinnerPlacement?: "start" | "end" | undefined
   /**
    * The text to display when loading
    */
@@ -30,8 +30,8 @@ export interface LoaderProps extends HTMLStyledProps<'span'> {
 
 export const Loader = forwardRef<HTMLSpanElement, LoaderProps>(function Loader(props, ref) {
   const {
-    spinner = <Spinner size="inherit" borderWidth="0.125em" color="inherit" />,
-    spinnerPlacement = 'start',
+    spinner = <Spinner borderWidth="0.125em" color="inherit" />,
+    spinnerPlacement = "start",
     children,
     text,
     visible = true,
@@ -43,9 +43,9 @@ export const Loader = forwardRef<HTMLSpanElement, LoaderProps>(function Loader(p
   if (text) {
     return (
       <Span ref={ref} display="contents" {...rest}>
-        {spinnerPlacement === 'start' && spinner}
+        {spinnerPlacement === "start" && spinner}
         {text}
-        {spinnerPlacement === 'end' && spinner}
+        {spinnerPlacement === "end" && spinner}
       </Span>
     )
   }

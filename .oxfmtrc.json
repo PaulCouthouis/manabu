@@ -1,0 +1,8 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nicolo-ribaudo/oxc-project.github.io/ox-workspace-schema/src/oxfmt.schema.json",
+  "semi": false,
+  "singleQuote": false,
+  "trailingComma": "all",
+  "tabWidth": 2,
+  "printWidth": 100
+}

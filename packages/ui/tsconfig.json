@@ -10,8 +10,6 @@
       "styled-system/*": ["./styled-system/*"]
     }
   },
-  "references": [
-    { "path": "../shared" }
-  ],
+  "references": [{ "path": "../shared" }],
   "include": ["src"]
 }

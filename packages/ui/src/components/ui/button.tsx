@@ -1,11 +1,11 @@
-'use client'
-import { ark } from '@ark-ui/react/factory'
-import { createContext, mergeProps } from '@ark-ui/react/utils'
-import { type ComponentProps, forwardRef, useMemo } from 'react'
-import { styled } from 'styled-system/jsx'
-import { type ButtonVariantProps, button } from 'styled-system/recipes'
-import { Group, type GroupProps } from './group'
-import { Loader } from './loader'
+"use client"
+import { ark } from "@ark-ui/react/factory"
+import { createContext, mergeProps } from "@ark-ui/react/utils"
+import { type ComponentProps, forwardRef, useMemo } from "react"
+import { styled } from "styled-system/jsx"
+import { type ButtonVariantProps, button } from "styled-system/recipes"
+import { Group, type GroupProps } from "./group"
+import { Loader } from "./loader"
 
 interface ButtonLoadingProps {
   /**
@@ -25,7 +25,7 @@ interface ButtonLoadingProps {
    * The placement of the spinner
    * @default "start"
    */
-  spinnerPlacement?: 'start' | 'end' | undefined
+  spinnerPlacement?: "start" | "end" | undefined
 }
 
 type BaseButtonProps = ComponentProps<typeof BaseButton>
@@ -46,7 +46,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
       type="button"
       ref={ref}
       {...rest}
-      data-loading={loading ? '' : undefined}
+      data-loading={loading ? "" : undefined}
       disabled={loading || rest.disabled}
     >
       {!props.asChild && loading ? (
@@ -74,8 +74,8 @@ export const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(
 )
 
 const [ButtonPropsProvider, useButtonPropsContext] = createContext<ButtonVariantProps>({
-  name: 'ButtonPropsContext',
-  hookName: 'useButtonPropsContext',
-  providerName: '<PropsProvider />',
+  name: "ButtonPropsContext",
+  hookName: "useButtonPropsContext",
+  providerName: "<PropsProvider />",
   strict: false,
 })

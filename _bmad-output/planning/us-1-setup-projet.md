@@ -126,11 +126,11 @@ Le CLAUDE.md est un document vivant, enrichi à chaque étape.
 
 ### Étape 4 — Linter & Formatter
 
-- [ ] Installer oxlint et oxfmt
-- [ ] Configurer `oxlint.json` et `oxfmt.json` à la racine
-- [ ] Ajouter les scripts `pnpm lint` et `pnpm format:check` / `pnpm format`
-- [ ] Configurer un pre-commit hook (simple-git-hooks ou lefthook)
-- [ ] **Vérification :** `pnpm lint` et `pnpm format:check` passent → AC8, AC9
+- [x] Installer oxlint et oxfmt pour chaque packages
+- [x] Configurer `oxlint.json` et `oxfmt.json` à la racine
+- [x] Ajouter les scripts `pnpm lint` et `pnpm format:check` / `pnpm format`
+- [x] Configurer un pre-commit hook (simple-git-hooks ou lefthook)
+- [x] **Vérification :** `pnpm lint` et `pnpm format:check` passent → AC8, AC9
 
 ### Étape 5 — PostgreSQL
 

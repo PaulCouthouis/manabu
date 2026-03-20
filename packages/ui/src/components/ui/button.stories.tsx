@@ -7,11 +7,11 @@ const meta: Meta<typeof Button> = {
   argTypes: {
     variant: {
       control: "select",
-      options: ["solid", "surface", "subtle", "outline", "plain"],
+      options: ["solid", "outline", "subtle", "ghost", "link"],
     },
     size: {
       control: "select",
-      options: ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"],
+      options: ["xs", "sm", "md", "lg", "xl", "2xl"],
     },
     loading: { control: "boolean" },
     disabled: { control: "boolean" },
@@ -25,26 +25,21 @@ export const Solid: Story = {
   args: { variant: "solid", children: "Solid" },
 }
 
-export const Surface: Story = {
-  args: { variant: "surface", children: "Surface" },
+export const Outline: Story = {
+  args: { variant: "outline", children: "Outline" },
 }
 
 export const Subtle: Story = {
   args: { variant: "subtle", children: "Subtle" },
 }
 
-export const Outline: Story = {
-  args: { variant: "outline", children: "Outline" },
-}
-
-export const Plain: Story = {
-  args: { variant: "plain", children: "Plain" },
+export const Ghost: Story = {
+  args: { variant: "ghost", children: "Ghost" },
 }
 
 export const Sizes: Story = {
   render: () => (
     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-      <Button size="2xs">2xs</Button>
       <Button size="xs">xs</Button>
       <Button size="sm">sm</Button>
       <Button size="md">md</Button>
