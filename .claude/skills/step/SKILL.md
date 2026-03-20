@@ -172,3 +172,4 @@ Prochaine étape suggérée : <description de la suite logique, si applicable>
 - Si une vérification échoue plus de 3 fois, demander de l'aide à l'utilisateur via `AskUserQuestion`
 - Toujours lire le code avant de le modifier
 - Préférer modifier les fichiers existants plutôt qu'en créer de nouveaux
+- **Mettre à jour `CLAUDE.md`** si l'étape introduit de nouvelles commandes, conventions, dépendances structurantes, ou modifie l'architecture du projet (nouveau package, nouvel outil, nouvelle règle). Ne pas mettre à jour pour des changements mineurs qui n'affectent pas les conventions globales.
