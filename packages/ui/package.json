@@ -9,7 +9,9 @@
   },
   "scripts": {
     "prepare": "panda codegen",
-    "build": "panda codegen && tsc --build"
+    "build": "panda codegen && tsc --build",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@ark-ui/react": "^5.34.1",
@@ -23,7 +25,17 @@
     "@types/react-dom": "^19.2.3",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "typescript": "^5.8.0"
+    "typescript": "^5.8.0",
+    "storybook": "^10.3.1",
+    "@storybook/react-vite": "^10.3.1",
+    "@chromatic-com/storybook": "^5.0.2",
+    "@storybook/addon-vitest": "^10.3.1",
+    "@storybook/addon-a11y": "^10.3.1",
+    "@storybook/addon-docs": "^10.3.1",
+    "vitest": "^4.1.0",
+    "playwright": "^1.58.2",
+    "@vitest/browser-playwright": "^4.1.0",
+    "@vitest/coverage-v8": "^4.1.0"
   },
   "peerDependencies": {
     "react": "^19.2.4",

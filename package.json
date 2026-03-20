@@ -7,6 +7,7 @@
     "test": "pnpm -r test",
     "lint": "pnpm -r lint",
     "format": "pnpm -r format",
-    "format:check": "pnpm -r format:check"
+    "format:check": "pnpm -r format:check",
+    "storybook": "pnpm --filter @manabu/ui storybook"
   }
 }

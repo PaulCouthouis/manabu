@@ -68,6 +68,7 @@ packages/shared →  (aucune dépendance interne)
 | `pnpm lint` | Linter tout le monorepo (oxlint) |
 | `pnpm format:check` | Vérifier le formatting (oxfmt) |
 | `pnpm format` | Appliquer le formatting (oxfmt) |
+| `pnpm storybook` | Lancer Storybook (packages/ui) sur le port 6006 |
 
 ## Règles architecturales
 
