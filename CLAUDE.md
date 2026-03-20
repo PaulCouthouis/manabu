@@ -89,6 +89,12 @@ packages/shared →  (aucune dépendance interne)
 - Privilégier `const Main = styled("main", { base: { ... } })` pour créer des composants stylés.
 - Éviter `css()` et les props inline sur `styled.div` — réserver `css()` aux cas où `styled()` n'est pas applicable.
 
+### Nullabilité — `Option` Effect plutôt que `null | undefined`
+
+- Utiliser `Option.fromNullable` pour convertir les valeurs potentiellement `null` ou `undefined` en `Option`.
+- Utiliser les combinateurs `Option` (`Option.getOrElse`, `Option.map`, `Option.match`, etc.) plutôt que `??`, `?` ou des ternaires pour gérer l'absence de valeur.
+- Les frontières avec les APIs externes (Better Auth, DOM, etc.) sont le point de conversion : `Option.fromNullable` à l'entrée, `.pipe(Option.getOrElse(...))` à la sortie si nécessaire.
+
 ### TypeScript strict
 
 - `tsconfig.base.json` avec `strict: true` et `noUncheckedIndexedAccess: true`.

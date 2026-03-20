@@ -1,0 +1,23 @@
+{
+  "name": "@manabu/auth",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./client": "./src/client.ts"
+  },
+  "scripts": {
+    "build": "tsc --build"
+  },
+  "dependencies": {
+    "@manabu/shared": "workspace:*",
+    "better-auth": "^1.2.0",
+    "effect": "^3.21.0",
+    "pg": "^8.16.0"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.15.4",
+    "typescript": "^5.8.0"
+  }
+}

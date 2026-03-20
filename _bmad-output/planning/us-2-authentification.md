@@ -87,16 +87,16 @@ apps/web/app/
 
 ### Étape 1 — Package `@manabu/auth`
 
-- [ ] Créer `packages/auth/` avec `package.json` (`@manabu/auth`), `tsconfig.json` (étend `tsconfig.base.json`)
-- [ ] Installer Better Auth et l'adapter PostgreSQL
-- [ ] Configurer le serveur Better Auth (`src/server.ts`) :
-  - [ ] Adapter PostgreSQL (connexion via variables d'environnement)
-  - [ ] Plugin rate limiting
-  - [ ] Expiration de session à 30 jours
-- [ ] Exporter le client Better Auth (`src/client.ts`) pour le frontend
-- [ ] Créer le middleware de protection des routes (`src/middleware.ts`)
-- [ ] Ajouter `@manabu/auth` comme dépendance de `apps/web`
-- [ ] **Vérification :** `pnpm build` passe → AC10
+- [x] Créer `packages/auth/` avec `package.json` (`@manabu/auth`), `tsconfig.json` (étend `tsconfig.base.json`)
+- [x] Installer Better Auth et l'adapter PostgreSQL
+- [x] Configurer le serveur Better Auth (`src/server.ts`) :
+  - [x] Adapter PostgreSQL (connexion via variables d'environnement)
+  - [x] Plugin rate limiting
+  - [x] Expiration de session à 30 jours
+- [x] Exporter le client Better Auth (`src/client.ts`) pour le frontend
+- [x] Créer le middleware de protection des routes (`src/middleware.ts`)
+- [x] Ajouter `@manabu/auth` comme dépendance de `apps/web`
+- [x] **Vérification :** `pnpm build` passe → AC10
 
 ### Étape 2 — Intégration serveur & API auth
 
