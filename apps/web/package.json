@@ -12,6 +12,7 @@
     "@manabu/domain": "workspace:*",
     "@manabu/shared": "workspace:*",
     "@manabu/ui": "workspace:*",
+    "@park-ui/panda-preset": "^0.43.1",
     "@tanstack/react-router": "^1.167.5",
     "@tanstack/react-start": "^1.166.17",
     "react": "^19.2.4",
@@ -19,6 +20,7 @@
     "vinxi": "^0.5.11"
   },
   "devDependencies": {
+    "@pandacss/dev": "^1.9.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "typescript": "^5.8.0",

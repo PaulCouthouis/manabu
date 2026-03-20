@@ -114,15 +114,15 @@ Le CLAUDE.md est un document vivant, enrichi à chaque étape.
 
 ### Étape 3 — Design system
 
-- [ ] **Décision préalable :** choisir le theme Park UI (preset de couleurs, couleur d'accent, mode clair/sombre). Cette décision se prend avec Paul avant de coder — elle impacte l'identité visuelle de toute l'app.
-- [ ] Installer et configurer Panda CSS dans `packages/ui`
-- [ ] Intégrer le preset Park UI avec le theme choisi
-- [ ] Créer la page d'accueil minimale dans `apps/web` sur la route `/` :
-  - [ ] `Heading` — "Manabu"
-  - [ ] `Text` — "Apprends le japonais, skill par skill"
-  - [ ] `Button` — "Commencer" (non fonctionnel, sera branché à l'auth en US2)
-- [ ] Ajouter le viewport meta tag et vérifier le layout responsive
-- [ ] **Vérification :** les 3 composants Park UI sont visibles, pas de scroll horizontal sur 375px → AC2, AC3
+- [x] **Décision préalable :** choisir le theme Park UI (preset de couleurs, couleur d'accent, mode clair/sombre). Cette décision se prend avec Paul avant de coder — elle impacte l'identité visuelle de toute l'app.
+- [x] Installer et configurer Panda CSS dans `packages/ui`
+- [x] Intégrer le preset Park UI avec le theme choisi
+- [x] Créer la page d'accueil minimale dans `apps/web` sur la route `/` :
+  - [x] `Heading` — "Manabu"
+  - [x] `Text` — "Apprends le japonais, skill par skill"
+  - [x] `Button` — "Commencer" (non fonctionnel, sera branché à l'auth en US2)
+- [x] Ajouter le viewport meta tag et vérifier le layout responsive
+- [x] **Vérification :** les 3 composants Park UI sont visibles, pas de scroll horizontal sur 375px → AC2, AC3
 
 ### Étape 4 — Linter & Formatter
 

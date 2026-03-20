@@ -1,5 +1,6 @@
 import { APP_NAME } from "@manabu/shared"
 import { HeadContent, Outlet, Scripts, createRootRoute } from "@tanstack/react-router"
+import indexCss from "../index.css?url"
 
 export const Route = createRootRoute({
 	component: RootComponent,
@@ -9,12 +10,13 @@ export const Route = createRootRoute({
 			{ name: "viewport", content: "width=device-width, initial-scale=1" },
 			{ title: APP_NAME },
 		],
+		links: [{ rel: "stylesheet", href: indexCss }],
 	}),
 })
 
 function RootComponent() {
 	return (
-		<html lang="ja">
+		<html lang="en">
 			<head>
 				<HeadContent />
 			</head>

@@ -4,15 +4,29 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./styled-system/*": "./styled-system/*"
   },
   "scripts": {
-    "build": "tsc --build"
+    "prepare": "panda codegen",
+    "build": "panda codegen && tsc --build"
   },
   "dependencies": {
-    "@manabu/shared": "workspace:*"
+    "@ark-ui/react": "^5.34.1",
+    "@manabu/shared": "workspace:*",
+    "@park-ui/panda-preset": "^0.43.1"
   },
   "devDependencies": {
+    "@pandacss/dev": "^1.9.0",
+    "@park-ui/cli": "^1.0.1",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
     "typescript": "^5.8.0"
+  },
+  "peerDependencies": {
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
   }
 }

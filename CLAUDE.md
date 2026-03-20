@@ -83,6 +83,11 @@ packages/shared →  (aucune dépendance interne)
 - Les erreurs métier sont des types tagués Effect (`Data.TaggedError`), jamais des exceptions.
 - Les dépendances sont injectées via le système de Layer Effect, jamais par import direct d'implémentation.
 
+### Panda CSS — styled() plutôt que css()
+
+- Privilégier `const Main = styled("main", { base: { ... } })` pour créer des composants stylés.
+- Éviter `css()` et les props inline sur `styled.div` — réserver `css()` aux cas où `styled()` n'est pas applicable.
+
 ### TypeScript strict
 
 - `tsconfig.base.json` avec `strict: true` et `noUncheckedIndexedAccess: true`.
