@@ -122,8 +122,8 @@ Les hiragana viennent en premier (appris avant les katakana). À l'intérieur de
 
 ### Étape 3 — Vérifications finales
 
-- [ ] `pnpm build` compile sans erreur → AC9
-- [ ] Mise à jour du CLAUDE.md si nécessaire
+- [x] `pnpm build` compile sans erreur → AC9
+- [x] Mise à jour du CLAUDE.md si nécessaire
 
 ## Hors scope
 
