@@ -105,8 +105,8 @@ La liste exacte des skill types n'est pas figée. Le PRD propose 17 skills répa
 
 ### Étape 4 — Vérifications finales
 
-- [ ] `pnpm build` compile sans erreur → AC7
-- [ ] Mise à jour du CLAUDE.md si nécessaire
+- [x] `pnpm build` compile sans erreur → AC7
+- [x] Mise à jour du CLAUDE.md si nécessaire
 
 ## Hors scope
 

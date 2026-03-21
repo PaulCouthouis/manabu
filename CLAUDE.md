@@ -101,6 +101,9 @@ Les routes protégées utilisent le layout `_protected.tsx` qui vérifie la sess
 - Utiliser `Effect` comme runtime principal pour la gestion d'erreurs, dépendances, et concurrence.
 - Les erreurs métier sont des types tagués Effect (`Data.TaggedError`), jamais des exceptions.
 - Les dépendances sont injectées via le système de Layer Effect, jamais par import direct d'implémentation.
+- **Entités domaine** : utiliser `Schema.Class` (pas `Data.Class`) pour que le Schema soit réutilisable à la frontière SQL/API.
+- **Services infra** : utiliser `Effect.Service` pour combiner le Tag et le Default layer dans une seule classe. Accès au layer via `MyService.Default`.
+- **Frontières SQL** : valider les données avec `Schema.decode` (lecture) et `Schema.encode` (écriture). Ne pas utiliser les variantes `Unknown`.
 - **Côté React** : utiliser `Atom.fn` (`@effect-atom/atom-react`) pour wrapper les Effects en atoms réactifs. Utiliser `useAtomSet` / `useAtomValue` / `useAtom` pour interagir avec les atoms dans les composants. Ne jamais appeler `Effect.runPromise` manuellement dans un composant.
 - **Formulaires** : utiliser `useActionState` (React 19) avec `<form action={...}>` et `FormData`. Combiner avec `useAtom(atom, { mode: "promiseExit" })` pour exécuter les atoms dans les actions.
 
