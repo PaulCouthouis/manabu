@@ -168,16 +168,16 @@ Le ContentItem n'a pas de score de difficulté propre — il hérite de la diffi
 
 ### Étape 1 — Modèle domaine
 
-- [ ] Définir `LinguisticElementId` (branded type) dans `packages/domain/src/linguistic-element.ts`
-- [ ] Définir les sous-types `KanaElement`, `KanjiElement`, `WordElement`, `SentenceElement`, `GrammarElement` avec `Schema.Class`
-- [ ] Définir l'union discriminée `LinguisticElement` avec le champ `kind`
-- [ ] Définir `ContentItemId` (branded type) et `ContentItem` dans `packages/domain/src/content-item.ts`
-- [ ] Écrire les tests unitaires (TDD) :
-  - [ ] Test : chaque sous-type se construit correctement avec ses champs → AC1
-  - [ ] Test : le graphe de composants kanji est un DAG valide → AC2
-  - [ ] Test : les composants d'un WordElement sont des KanaElements/KanjiElements → AC3
-  - [ ] Test : les composants d'un SentenceElement sont des WordElements/GrammarElements → AC4
-  - [ ] Test : un ContentItem lie un élément et un skill → AC5
+- [x] Définir `LinguisticElementId` (branded type) dans `packages/domain/src/linguistic-element.ts`
+- [x] Définir les sous-types `KanaElement`, `KanjiElement`, `WordElement`, `SentenceElement`, `GrammarElement` avec `Schema.Class`
+- [x] Définir l'union discriminée `LinguisticElement` avec le champ `kind`
+- [x] Définir `ContentItemId` (branded type) et `ContentItem` dans `packages/domain/src/content-item.ts`
+- [x] Écrire les tests unitaires (TDD) :
+  - [x] Test : chaque sous-type se construit correctement avec ses champs → AC1
+  - [x] Test : le graphe de composants kanji est un DAG valide → AC2
+  - [x] Test : les composants d'un WordElement sont des KanaElements/KanjiElements → AC3
+  - [x] Test : les composants d'un SentenceElement sont des WordElements/GrammarElements → AC4
+  - [x] Test : un ContentItem lie un élément et un skill → AC5
 
 ### Étape 2 — Persistance SQL
 
@@ -186,12 +186,18 @@ Le ContentItem n'a pas de score de difficulté propre — il hérite de la diffi
 - [ ] Créer la table de jointure `element_component` (element_id FK, component_id FK) pour les composants des mots et phrases
 - [ ] Créer la migration pour la table `content_item` (id, element_id FK, skill_type_id FK, UNIQUE)
 - [ ] Implémenter `LinguisticElementRepo` comme Effect Service dans `packages/db`
+  - [ ] Valider à l'insertion que les composants d'un KanjiElement sont bien des kanji
+  - [ ] Valider à l'insertion que les composants d'un WordElement sont bien des kana ou kanji
+  - [ ] Valider à l'insertion que les composants d'un SentenceElement sont bien des mots ou grammaire
 - [ ] Implémenter `ContentItemRepo` comme Effect Service dans `packages/db`
 - [ ] Écrire les tests d'intégration (Vitest + Testcontainers) :
   - [ ] Test : la contrainte UNIQUE empêche les doublons → AC6
   - [ ] Test : les éléments sont queryables par kind → AC7
   - [ ] Test : les content items sont queryables par skill type → AC8
   - [ ] Test : round-trip complet (persist + read) pour chaque sous-type avec composants → AC9
+  - [ ] Test : l'insertion d'un KanjiElement avec un composant non-kanji échoue
+  - [ ] Test : l'insertion d'un WordElement avec un composant non-kana/kanji échoue
+  - [ ] Test : l'insertion d'un SentenceElement avec un composant non-word/grammar échoue
 
 ### Étape 3 — Vérifications finales
 

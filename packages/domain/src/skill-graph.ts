@@ -1,4 +1,5 @@
 import { Array, HashMap, Option, pipe } from "effect"
+import { validateDag } from "./dag.js"
 import { SkillTypeId } from "./skill-type.js"
 
 // --- Types ---
@@ -74,28 +75,5 @@ export const getDependents = (graph: SkillGraphData, id: SkillTypeId): ReadonlyA
     Array.map(([depId]) => depId),
   )
 
-export const validateGraph = (graph: SkillGraphData): boolean => {
-  const visited = new Set<SkillTypeId>()
-  const inStack = new Set<SkillTypeId>()
-
-  const hasCycle = (id: SkillTypeId): boolean => {
-    if (inStack.has(id)) return true
-    if (visited.has(id)) return false
-
-    visited.add(id)
-    inStack.add(id)
-
-    for (const prereq of getPrerequisites(graph, id)) {
-      if (hasCycle(prereq)) return true
-    }
-
-    inStack.delete(id)
-    return false
-  }
-
-  for (const [id] of HashMap.toEntries(graph)) {
-    if (hasCycle(id)) return false
-  }
-
-  return true
-}
+export const validateGraph = (graph: SkillGraphData): boolean =>
+  validateDag(HashMap.keys(graph), (id) => getPrerequisites(graph, id))

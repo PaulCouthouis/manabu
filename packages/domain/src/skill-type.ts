@@ -33,7 +33,7 @@ export class SkillType extends Schema.Class<SkillType>("SkillType")({
 
 export const SkillTypes: ReadonlyArray<SkillType> = [
   // Foundation (closed)
-  new SkillType({
+  SkillType.make({
     id: SkillTypeId(1),
     family: "Foundation",
     code: "F1",
@@ -43,7 +43,7 @@ export const SkillTypes: ReadonlyArray<SkillType> = [
     format: "ListenRepeat",
     open: false,
   }),
-  new SkillType({
+  SkillType.make({
     id: SkillTypeId(2),
     family: "Foundation",
     code: "F2",
@@ -52,7 +52,7 @@ export const SkillTypes: ReadonlyArray<SkillType> = [
     format: "ReadAloud",
     open: false,
   }),
-  new SkillType({
+  SkillType.make({
     id: SkillTypeId(3),
     family: "Foundation",
     code: "F3",
@@ -64,7 +64,7 @@ export const SkillTypes: ReadonlyArray<SkillType> = [
   }),
 
   // Core (open)
-  new SkillType({
+  SkillType.make({
     id: SkillTypeId(4),
     family: "Core",
     code: "C1",
@@ -74,7 +74,7 @@ export const SkillTypes: ReadonlyArray<SkillType> = [
     format: "ListenRepeat",
     open: true,
   }),
-  new SkillType({
+  SkillType.make({
     id: SkillTypeId(5),
     family: "Core",
     code: "C2",
@@ -84,7 +84,7 @@ export const SkillTypes: ReadonlyArray<SkillType> = [
     format: "MultipleChoice",
     open: true,
   }),
-  new SkillType({
+  SkillType.make({
     id: SkillTypeId(6),
     family: "Core",
     code: "C3",
@@ -93,7 +93,7 @@ export const SkillTypes: ReadonlyArray<SkillType> = [
     format: "MultipleChoice",
     open: true,
   }),
-  new SkillType({
+  SkillType.make({
     id: SkillTypeId(7),
     family: "Core",
     code: "C4",
@@ -102,7 +102,7 @@ export const SkillTypes: ReadonlyArray<SkillType> = [
     format: "ReadAloud",
     open: true,
   }),
-  new SkillType({
+  SkillType.make({
     id: SkillTypeId(8),
     family: "Core",
     code: "C5",
@@ -111,7 +111,7 @@ export const SkillTypes: ReadonlyArray<SkillType> = [
     format: "MultipleChoice",
     open: true,
   }),
-  new SkillType({
+  SkillType.make({
     id: SkillTypeId(9),
     family: "Core",
     code: "C6",
@@ -120,7 +120,7 @@ export const SkillTypes: ReadonlyArray<SkillType> = [
     format: "ReadAloud",
     open: true,
   }),
-  new SkillType({
+  SkillType.make({
     id: SkillTypeId(10),
     family: "Core",
     code: "C7",
@@ -131,7 +131,7 @@ export const SkillTypes: ReadonlyArray<SkillType> = [
   }),
 
   // Grammar (open)
-  new SkillType({
+  SkillType.make({
     id: SkillTypeId(11),
     family: "Grammar",
     code: "G1",
@@ -140,7 +140,7 @@ export const SkillTypes: ReadonlyArray<SkillType> = [
     format: "MultipleChoice",
     open: true,
   }),
-  new SkillType({
+  SkillType.make({
     id: SkillTypeId(12),
     family: "Grammar",
     code: "G2",
@@ -150,7 +150,7 @@ export const SkillTypes: ReadonlyArray<SkillType> = [
     format: "MultipleChoice",
     open: true,
   }),
-  new SkillType({
+  SkillType.make({
     id: SkillTypeId(13),
     family: "Grammar",
     code: "G3",
@@ -159,7 +159,7 @@ export const SkillTypes: ReadonlyArray<SkillType> = [
     format: "MultipleChoice",
     open: true,
   }),
-  new SkillType({
+  SkillType.make({
     id: SkillTypeId(14),
     family: "Grammar",
     code: "G4",
@@ -168,7 +168,7 @@ export const SkillTypes: ReadonlyArray<SkillType> = [
     format: "MultipleChoice",
     open: true,
   }),
-  new SkillType({
+  SkillType.make({
     id: SkillTypeId(15),
     family: "Grammar",
     code: "G5",

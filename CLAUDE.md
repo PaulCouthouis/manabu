@@ -62,6 +62,7 @@ packages/shared →  (aucune dépendance interne)
 - Types / interfaces : PascalCase (ex: `SkillType`, `UserRepository`)
 - Fonctions / variables : camelCase
 - Effect services / layers : PascalCase avec suffixe descriptif (ex: `SqlLive`, `UserRepo`)
+- Instanciation des `Schema.Class` : utiliser `Class.make({...})` plutôt que `new Class({...})`
 
 ## Commandes
 
