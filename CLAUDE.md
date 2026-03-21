@@ -133,6 +133,11 @@ Les routes protégées utilisent le layout `_protected.tsx` qui vérifie la sess
 - Chaque package étend cette config — impossible de relâcher la strictness.
 - Éviter les assertions de type (`as`) — préférer les type guards, `Schema.decode`, ou restructurer le code pour que le type soit inféré correctement.
 
+### Lisibilité — fonctions nommées plutôt que commentaires
+
+- Préférer extraire une mini-fonction avec un nom explicite plutôt que d'ajouter un commentaire au-dessus d'un bloc de code.
+- Le nom de la fonction remplace le commentaire — il documente l'intention et reste synchronisé avec le code.
+
 ### Skill types — taxonomie à 15 skills
 
 - **15 skill types** répartis en 3 familles : Fondations (3, fermés), Core (7, ouverts), Grammaire (5, ouverts).

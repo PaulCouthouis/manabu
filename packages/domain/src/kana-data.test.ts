@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest"
-import { kanaData } from "./seed/kana-data.js"
+import { kanaData } from "./kana-data.js"
 import { Array, Number, pipe } from "effect"
 
 describe("kana-data", () => {

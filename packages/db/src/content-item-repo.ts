@@ -1,23 +1,13 @@
 import { SqlClient } from "@effect/sql"
 import { ContentItem } from "@manabu/domain"
-import type { LinguisticElementId, SkillTypeId } from "@manabu/domain"
-import { Effect, Schema } from "effect"
-
-// --- Decoders ---
+import type { SkillTypeId } from "@manabu/domain"
+import { Array, Effect, Schema } from "effect"
 
 const decodeContentItem = Schema.decodeUnknown(ContentItem)
-
-// --- Repo ---
 
 export class ContentItemRepo extends Effect.Service<ContentItemRepo>()("ContentItemRepo", {
   effect: Effect.gen(function* () {
     const sql = yield* SqlClient.SqlClient
-
-    const insert = (elementId: LinguisticElementId, skillTypeId: SkillTypeId) =>
-      sql`
-          INSERT INTO content_item (element_id, skill_type_id)
-          VALUES (${Number(elementId)}, ${Number(skillTypeId)})
-        `
 
     const findBySkillType = (skillTypeId: SkillTypeId) =>
       Effect.gen(function* () {
@@ -29,7 +19,7 @@ export class ContentItemRepo extends Effect.Service<ContentItemRepo>()("ContentI
             SELECT * FROM content_item WHERE skill_type_id = ${Number(skillTypeId)} ORDER BY id
           `
         return yield* Effect.all(
-          rows.map((row) =>
+          Array.map(rows, (row) =>
             decodeContentItem({
               id: row.id,
               linguisticElementId: row.element_id,
@@ -39,6 +29,6 @@ export class ContentItemRepo extends Effect.Service<ContentItemRepo>()("ContentI
         )
       })
 
-    return { insert, findBySkillType }
+    return { findBySkillType }
   }),
 }) {}

@@ -33,12 +33,13 @@ Justification : le skill F1 cible le **son** (la syllabe). Le hiragana s'affiche
 
 ```
 packages/
+  domain/
+    src/
+      kana-data.ts             # Données de référence — 208 kana (comme SkillTypes)
   db/
     src/
-      seed/
-        kana-data.ts           # Fichier de données — KanaElement.make() × 208
       migrations/
-        XXXX_seed_kana.ts      # Migration : insertion éléments + ContentItems
+        0004_seed_kana.ts      # Migration : insertion éléments + ContentItems
 ```
 
 ## Corpus kana — 208 caractères
@@ -111,13 +112,13 @@ Les hiragana viennent en premier (appris avant les katakana). À l'intérieur de
 
 ### Étape 2 — Migration seed
 
-- [ ] Créer la migration qui importe `kana-data.ts` et insère les éléments via `LinguisticElementRepo`
-- [ ] Dans la même migration, créer les ContentItems (hiragana → F1+F2, katakana → F3) via `ContentItemRepo`
-- [ ] Écrire les tests d'intégration (Vitest + Testcontainers) :
-  - [ ] Test : chaque hiragana a un ContentItem F1 et un ContentItem F2 → AC5
-  - [ ] Test : chaque katakana a un ContentItem F3 → AC6
-  - [ ] Test : aucun ContentItem en doublon → AC7
-  - [ ] Test : round-trip seed → lecture → données correctes → AC8
+- [x] Créer la migration qui importe `kana-data.ts` et insère les éléments via SQL direct
+- [x] Dans la même migration, créer les ContentItems (hiragana → F1+F2, katakana → F3) via SQL direct
+- [x] Écrire les tests d'intégration (Vitest + Testcontainers) :
+  - [x] Test : chaque hiragana a un ContentItem F1 et un ContentItem F2 → AC5
+  - [x] Test : chaque katakana a un ContentItem F3 → AC6
+  - [x] Test : aucun ContentItem en doublon → AC7
+  - [x] Test : round-trip seed → lecture → données correctes → AC8
 
 ### Étape 3 — Vérifications finales
 

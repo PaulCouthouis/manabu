@@ -1,5 +1,5 @@
-import type { KanaType } from "@manabu/domain"
-import { KanaElement, KanaId } from "@manabu/domain"
+import type { KanaType } from "./linguistic-element.js"
+import { KanaElement, KanaId } from "./linguistic-element.js"
 import { Array } from "effect"
 
 // --- Caractères par bloc ---

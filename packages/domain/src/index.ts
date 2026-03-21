@@ -44,3 +44,5 @@ export {
 } from "./linguistic-element.js"
 
 export { ContentItem, ContentItemId, ContentItemIdSchema } from "./content-item.js"
+
+export { kanaData } from "./kana-data.js"

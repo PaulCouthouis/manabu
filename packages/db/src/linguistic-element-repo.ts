@@ -2,19 +2,12 @@ import { SqlClient } from "@effect/sql"
 import type { LinguisticElement, LinguisticElementId, LinguisticElementKind } from "@manabu/domain"
 import {
   GrammarElement,
-  GrammarIdSchema,
   KanaElement,
-  KanaIdSchema,
   KanjiElement,
-  KanjiIdSchema,
   SentenceElement,
-  SentenceIdSchema,
   WordElement,
-  WordIdSchema,
 } from "@manabu/domain"
 import { Array, Effect, Option, ParseResult, Record, Schema } from "effect"
-
-// --- Row types ---
 
 interface ElementRow {
   readonly id: number
@@ -38,31 +31,11 @@ interface ComponentRow {
   readonly component_id: number
 }
 
-interface InsertedRow {
-  readonly id: number
-}
-
-// --- Decoders ---
-
 const decodeKana = Schema.decodeUnknown(KanaElement)
 const decodeKanji = Schema.decodeUnknown(KanjiElement)
 const decodeWord = Schema.decodeUnknown(WordElement)
 const decodeSentence = Schema.decodeUnknown(SentenceElement)
 const decodeGrammar = Schema.decodeUnknown(GrammarElement)
-
-const decodeKanaId = Schema.decodeUnknown(KanaIdSchema)
-const decodeKanjiId = Schema.decodeUnknown(KanjiIdSchema)
-const decodeWordId = Schema.decodeUnknown(WordIdSchema)
-const decodeSentenceId = Schema.decodeUnknown(SentenceIdSchema)
-const decodeGrammarId = Schema.decodeUnknown(GrammarIdSchema)
-
-// --- Helpers ---
-
-const getInsertedId = (rows: ReadonlyArray<InsertedRow>) =>
-  Array.head(rows).pipe(
-    Option.map((row) => row.id),
-    Option.getOrThrow,
-  )
 
 const decodeRow = (
   row: ElementRow,
@@ -126,72 +99,6 @@ export class LinguisticElementRepo extends Effect.Service<LinguisticElementRepo>
     effect: Effect.gen(function* () {
       const sql = yield* SqlClient.SqlClient
 
-      const insertComponents = (
-        parentId: number,
-        componentIds: ReadonlyArray<LinguisticElementId>,
-      ) =>
-        Effect.gen(function* () {
-          if (Array.isEmptyReadonlyArray(componentIds)) return
-          const rows = Array.map(componentIds, (compId, i) => ({
-            parent_id: parentId,
-            component_id: Number(compId),
-            position: i,
-          }))
-          yield* sql`INSERT INTO element_component ${sql.insert(rows)}`
-        })
-
-      const insert = (element: LinguisticElement) =>
-        Effect.gen(function* () {
-          switch (element.kind) {
-            case "kana": {
-              const rows = yield* sql<InsertedRow>`
-                INSERT INTO linguistic_element (kind, character, kana_type, sort_order)
-                VALUES ('kana', ${element.character}, ${element.kanaType}, ${element.sortOrder})
-                RETURNING id
-              `
-              return yield* decodeKanaId(getInsertedId(rows))
-            }
-            case "kanji": {
-              const rows = yield* sql<InsertedRow>`
-                INSERT INTO linguistic_element (kind, character, meanings, frequency, stroke_count)
-                VALUES ('kanji', ${element.character}, ${JSON.stringify(element.meanings)}, ${element.frequency}, ${element.strokeCount})
-                RETURNING id
-              `
-              const id = getInsertedId(rows)
-              yield* insertComponents(id, element.components)
-              return yield* decodeKanjiId(id)
-            }
-            case "word": {
-              const rows = yield* sql<InsertedRow>`
-                INSERT INTO linguistic_element (kind, written, meaning, frequency)
-                VALUES ('word', ${element.written}, ${element.meaning}, ${element.frequency})
-                RETURNING id
-              `
-              const id = getInsertedId(rows)
-              yield* insertComponents(id, element.components)
-              return yield* decodeWordId(id)
-            }
-            case "sentence": {
-              const rows = yield* sql<InsertedRow>`
-                INSERT INTO linguistic_element (kind, text, meaning)
-                VALUES ('sentence', ${element.text}, ${element.meaning})
-                RETURNING id
-              `
-              const id = getInsertedId(rows)
-              yield* insertComponents(id, element.components)
-              return yield* decodeSentenceId(id)
-            }
-            case "grammar": {
-              const rows = yield* sql<InsertedRow>`
-                INSERT INTO linguistic_element (kind, name, explanation, frequency, form_count)
-                VALUES ('grammar', ${element.name}, ${element.explanation}, ${element.frequency}, ${element.formCount})
-                RETURNING id
-              `
-              return yield* decodeGrammarId(getInsertedId(rows))
-            }
-          }
-        })
-
       const findById = (id: LinguisticElementId) =>
         Effect.gen(function* () {
           const rows = yield* sql<ElementRow>`
@@ -244,7 +151,7 @@ export class LinguisticElementRepo extends Effect.Service<LinguisticElementRepo>
           )
         })
 
-      return { insert, findById, findByKind }
+      return { findById, findByKind }
     }),
   },
 ) {}

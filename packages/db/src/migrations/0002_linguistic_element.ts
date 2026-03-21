@@ -6,7 +6,7 @@ export default Effect.gen(function* () {
 
   yield* sql`
     CREATE TABLE IF NOT EXISTS linguistic_element (
-      id SERIAL PRIMARY KEY,
+      id INTEGER PRIMARY KEY,
       kind TEXT NOT NULL,
 
       -- KanaElement
