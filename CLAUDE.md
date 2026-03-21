@@ -35,6 +35,9 @@ manabu/
     db/                # @effect/sql-pg, migrations, repositories
     ui/                # Composants UI partagés, design system Panda/Park
     shared/            # Types partagés, config Effect, utilitaires
+  _bmad-output/
+    specs/             # Documents de spécification (PRD, taxonomie skills)
+    planning/          # User stories, sprints, roadmap
   e2e/                 # Tests Playwright
   docker-compose.yml
   pnpm-workspace.yaml
@@ -122,6 +125,14 @@ Les routes protégées utilisent le layout `_protected.tsx` qui vérifie la sess
 
 - `tsconfig.base.json` avec `strict: true` et `noUncheckedIndexedAccess: true`.
 - Chaque package étend cette config — impossible de relâcher la strictness.
+
+### Skill types — taxonomie à 15 skills
+
+- **15 skill types** répartis en 3 familles : Fondations (3, fermés), Core (7, ouverts), Grammaire (5, ouverts).
+- **Un skill = un format d'exercice unique** — pas de formats multiples par skill.
+- **2 points d'entrée** dans le graphe : Écoute syllabique (skill 1) et Sens des kanji (skill 5).
+- Les skills de grammaire **déverrouillent des instances** plus complexes dans les skills core.
+- Référence complète : `_bmad-output/specs/skill-taxonomy.md`
 
 ### JLPT non structurant
 

@@ -72,10 +72,12 @@ La liste exacte des skill types n'est pas figée. Le PRD propose 17 skills répa
 - **Grammaire (G1-G7)** : vrais skill types avec leur progression, ou modificateurs de difficulté des skills core ? (le PRD dit "modificateurs" mais liste 7 skill types dédiés — tension à résoudre)
 
 **Livrables :**
-- [ ] Revue de chaque skill type proposé avec justification linguistique
-- [ ] Décision sur le statut de la grammaire (skill types vs modificateurs)
-- [ ] Liste définitive des skill types avec famille, code, nom, description
-- [ ] Graphe de dépendances préliminaire entre les skill types retenus
+- [x] Revue de chaque skill type proposé avec justification linguistique
+- [x] Décision sur le statut de la grammaire (skill types vs modificateurs)
+- [x] Liste définitive des skill types avec famille, code, nom, description
+- [x] Graphe de dépendances préliminaire entre les skill types retenus
+
+**Résultat :** 15 skill types (3 fondations + 7 core + 5 grammaire). Voir `_bmad-output/specs/skill-taxonomy.md`.
 
 **Pas de code à cette étape** — c'est une décision produit/domaine.
 
