@@ -46,3 +46,5 @@ export {
 export { ContentItem, ContentItemId, ContentItemIdSchema } from "./content-item.js"
 
 export { kanaData } from "./kana-data.js"
+
+export { kanjiData } from "./kanji-data/index.js"
