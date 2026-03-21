@@ -105,12 +105,12 @@ Les kanji sont triés par fréquence d'apparition dans le corpus Aozora Bunko (v
 
 ### Étape 2 — Migration seed
 
-- [ ] Créer la migration `0005_seed_kanji.ts` qui insère les 2136 éléments via SQL
-- [ ] Dans la même migration, créer les 2136 ContentItems (chaque kanji → Skill 5)
-- [ ] Écrire les tests d'intégration (Vitest + Testcontainers) :
-  - [ ] Test : chaque kanji a exactement 1 ContentItem Skill 5 → AC9
-  - [ ] Test : aucun ContentItem en doublon → AC10
-  - [ ] Test : round-trip seed → lecture → données correctes → AC11
+- [x] Créer la migration `0005_seed_kanji.ts` qui insère les 2136 éléments via SQL
+- [x] Dans la même migration, créer les 2136 ContentItems (chaque kanji → Skill 5)
+- [x] Écrire les tests d'intégration (Vitest + Testcontainers) :
+  - [x] Test : chaque kanji a exactement 1 ContentItem Skill 5 → AC9
+  - [x] Test : aucun ContentItem en doublon → AC10
+  - [x] Test : round-trip seed → lecture → données correctes → AC11
 
 ### Étape 3 — Vérifications finales
 
