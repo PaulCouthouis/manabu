@@ -103,6 +103,8 @@ export type LinguisticElement =
   | SentenceElement
   | GrammarElement
 
+export type LinguisticElementKind = LinguisticElement["kind"]
+
 // --- Validation du graphe de composants ---
 
 export const validateComponentGraph = (

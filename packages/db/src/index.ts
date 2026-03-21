@@ -1,3 +1,5 @@
 export { SqlLive } from "./sql-live.js"
 export { runMigrations } from "./migrations/index.js"
+export { ContentItemRepo } from "./content-item-repo.js"
+export { LinguisticElementRepo } from "./linguistic-element-repo.js"
 export { SkillTypeRepo } from "./skill-type-repo.js"

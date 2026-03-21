@@ -181,19 +181,19 @@ Le ContentItem n'a pas de score de difficulté propre — il hérite de la diffi
 
 ### Étape 2 — Persistance SQL
 
-- [ ] Créer la migration pour la table `linguistic_element` (id, kind, + colonnes par sous-type)
-- [ ] Créer la table de jointure `kanji_component` (kanji_id FK, component_id FK) pour les composants kanji récursifs
-- [ ] Créer la table de jointure `element_component` (element_id FK, component_id FK) pour les composants des mots et phrases
-- [ ] Créer la migration pour la table `content_item` (id, element_id FK, skill_type_id FK, UNIQUE)
-- [ ] Implémenter `LinguisticElementRepo` comme Effect Service dans `packages/db`
-  - [ ] Le repo brande les IDs au bon type (KanaId, KanjiId, etc.) à la lecture selon le `kind`
-- [ ] Implémenter `ContentItemRepo` comme Effect Service dans `packages/db`
-- [ ] Écrire les tests d'intégration (Vitest + Testcontainers) :
-  - [ ] Test : la contrainte UNIQUE empêche les doublons → AC6
-  - [ ] Test : les éléments sont queryables par kind → AC7
-  - [ ] Test : les content items sont queryables par skill type → AC8
-  - [ ] Test : round-trip complet (persist + read) pour chaque sous-type avec composants → AC9
-  - [ ] Test : le repo retourne les bons types d'IDs brandés selon le kind
+- [x] Créer la migration pour la table `linguistic_element` (id, kind, + colonnes par sous-type)
+- [x] Créer la table de jointure `kanji_component` (kanji_id FK, component_id FK) pour les composants kanji récursifs
+- [x] Créer la table de jointure `element_component` (element_id FK, component_id FK) pour les composants des mots et phrases
+- [x] Créer la migration pour la table `content_item` (id, element_id FK, skill_type_id FK, UNIQUE)
+- [x] Implémenter `LinguisticElementRepo` comme Effect Service dans `packages/db`
+  - [x] Le repo brande les IDs au bon type (KanaId, KanjiId, etc.) à la lecture selon le `kind`
+- [x] Implémenter `ContentItemRepo` comme Effect Service dans `packages/db`
+- [x] Écrire les tests d'intégration (Vitest + Testcontainers) :
+  - [x] Test : la contrainte UNIQUE empêche les doublons → AC6
+  - [x] Test : les éléments sont queryables par kind → AC7
+  - [x] Test : les content items sont queryables par skill type → AC8
+  - [x] Test : round-trip complet (persist + read) pour chaque sous-type avec composants → AC9
+  - [x] Test : le repo retourne les bons types d'IDs brandés selon le kind
 
 ### Étape 3 — Vérifications finales
 

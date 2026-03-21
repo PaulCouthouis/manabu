@@ -20,7 +20,7 @@ export {
   validateGraph,
 } from "./skill-graph.js"
 
-export type { KanaType, LinguisticElement } from "./linguistic-element.js"
+export type { KanaType, LinguisticElement, LinguisticElementKind } from "./linguistic-element.js"
 export {
   GrammarElement,
   GrammarId,

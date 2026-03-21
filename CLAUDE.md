@@ -104,7 +104,8 @@ Les routes protégées utilisent le layout `_protected.tsx` qui vérifie la sess
 - Les dépendances sont injectées via le système de Layer Effect, jamais par import direct d'implémentation.
 - **Entités domaine** : utiliser `Schema.Class` (pas `Data.Class`) pour que le Schema soit réutilisable à la frontière SQL/API.
 - **Services infra** : utiliser `Effect.Service` pour combiner le Tag et le Default layer dans une seule classe. Accès au layer via `MyService.Default`.
-- **Frontières SQL** : valider les données avec `Schema.decode` (lecture) et `Schema.encode` (écriture). Ne pas utiliser les variantes `Unknown`.
+- **Frontières SQL** : valider les données avec `Schema.decode` (lecture) et `Schema.encode` (écriture). Utiliser `Schema.decodeUnknown` uniquement quand les types de la source ne sont pas connus (données externes non typées).
+- **Manipulation de tableaux** : utiliser `Array` de Effect (`Array.map`, `Array.filter`, `Array.head`, etc.) plutôt que les méthodes natives `.map()`, `.filter()`, etc.
 - **Côté React** : utiliser `Atom.fn` (`@effect-atom/atom-react`) pour wrapper les Effects en atoms réactifs. Utiliser `useAtomSet` / `useAtomValue` / `useAtom` pour interagir avec les atoms dans les composants. Ne jamais appeler `Effect.runPromise` manuellement dans un composant.
 - **Formulaires** : utiliser `useActionState` (React 19) avec `<form action={...}>` et `FormData`. Combiner avec `useAtom(atom, { mode: "promiseExit" })` pour exécuter les atoms dans les actions.
 
@@ -124,6 +125,7 @@ Les routes protégées utilisent le layout `_protected.tsx` qui vérifie la sess
 - Utiliser `Option.fromNullable` pour convertir les valeurs potentiellement `null` ou `undefined` en `Option`.
 - Utiliser les combinateurs `Option` (`Option.getOrElse`, `Option.map`, `Option.match`, etc.) plutôt que `??`, `?` ou des ternaires pour gérer l'absence de valeur.
 - Les frontières avec les APIs externes (Better Auth, DOM, etc.) sont le point de conversion : `Option.fromNullable` à l'entrée, `.pipe(Option.getOrElse(...))` à la sortie si nécessaire.
+- Pour l'accès indexé (`record[key]`), préférer `Record.get(record, key)` qui retourne un `Option`.
 
 ### TypeScript strict
 
