@@ -140,8 +140,8 @@ apps/web/app/
 
 ### Étape 5 — Mise à jour du CLAUDE.md
 
-- [ ] Ajouter `@manabu/auth` dans le graphe de dépendances du CLAUDE.md
-- [ ] Documenter les routes auth disponibles
+- [x] Ajouter `@manabu/auth` dans le graphe de dépendances du CLAUDE.md
+- [x] Documenter les routes auth disponibles
 
 ## Hors scope
 

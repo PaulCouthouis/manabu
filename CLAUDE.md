@@ -73,6 +73,18 @@ packages/shared →  (aucune dépendance interne)
 | `pnpm format` | Appliquer le formatting (oxfmt) |
 | `pnpm storybook` | Lancer Storybook (packages/ui) sur le port 6006 |
 
+## Routes
+
+| Route | Type | Description |
+|---|---|---|
+| `/` | Publique | Page d'accueil (Get started / Sign out selon état auth) |
+| `/auth/sign-up` | Publique | Inscription email + mot de passe |
+| `/auth/sign-in` | Publique | Connexion |
+| `/dashboard` | Protégée | Dashboard utilisateur (layout `_protected`) |
+| `/api/auth/*` | API | Endpoints Better Auth (sign-up, sign-in, sign-out, get-session) |
+
+Les routes protégées utilisent le layout `_protected.tsx` qui vérifie la session via `getAuthSessionFn` (server function) et redirige vers `/auth/sign-in` si non authentifié.
+
 ## Règles architecturales
 
 ### DDD — Séparation domain / infra
