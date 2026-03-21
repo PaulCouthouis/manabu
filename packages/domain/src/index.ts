@@ -23,14 +23,24 @@ export {
 export type { KanaType, LinguisticElement } from "./linguistic-element.js"
 export {
   GrammarElement,
+  GrammarId,
+  GrammarIdSchema,
   KanaElement,
+  KanaId,
+  KanaIdSchema,
   KanaTypeSchema,
   KanjiElement,
+  KanjiId,
+  KanjiIdSchema,
   LinguisticElementId,
   LinguisticElementIdSchema,
   SentenceElement,
+  SentenceId,
+  SentenceIdSchema,
   validateComponentGraph,
   WordElement,
+  WordId,
+  WordIdSchema,
 } from "./linguistic-element.js"
 
 export { ContentItem, ContentItemId, ContentItemIdSchema } from "./content-item.js"

@@ -186,18 +186,14 @@ Le ContentItem n'a pas de score de difficulté propre — il hérite de la diffi
 - [ ] Créer la table de jointure `element_component` (element_id FK, component_id FK) pour les composants des mots et phrases
 - [ ] Créer la migration pour la table `content_item` (id, element_id FK, skill_type_id FK, UNIQUE)
 - [ ] Implémenter `LinguisticElementRepo` comme Effect Service dans `packages/db`
-  - [ ] Valider à l'insertion que les composants d'un KanjiElement sont bien des kanji
-  - [ ] Valider à l'insertion que les composants d'un WordElement sont bien des kana ou kanji
-  - [ ] Valider à l'insertion que les composants d'un SentenceElement sont bien des mots ou grammaire
+  - [ ] Le repo brande les IDs au bon type (KanaId, KanjiId, etc.) à la lecture selon le `kind`
 - [ ] Implémenter `ContentItemRepo` comme Effect Service dans `packages/db`
 - [ ] Écrire les tests d'intégration (Vitest + Testcontainers) :
   - [ ] Test : la contrainte UNIQUE empêche les doublons → AC6
   - [ ] Test : les éléments sont queryables par kind → AC7
   - [ ] Test : les content items sont queryables par skill type → AC8
   - [ ] Test : round-trip complet (persist + read) pour chaque sous-type avec composants → AC9
-  - [ ] Test : l'insertion d'un KanjiElement avec un composant non-kanji échoue
-  - [ ] Test : l'insertion d'un WordElement avec un composant non-kana/kanji échoue
-  - [ ] Test : l'insertion d'un SentenceElement avec un composant non-word/grammar échoue
+  - [ ] Test : le repo retourne les bons types d'IDs brandés selon le kind
 
 ### Étape 3 — Vérifications finales
 

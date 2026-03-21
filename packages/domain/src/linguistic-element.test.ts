@@ -1,26 +1,30 @@
 import { describe, expect, it } from "vitest"
 import {
   GrammarElement,
+  GrammarId,
   KanaElement,
+  KanaId,
   KanjiElement,
-  LinguisticElementId,
+  KanjiId,
   SentenceElement,
+  SentenceId,
   validateComponentGraph,
   WordElement,
+  WordId,
 } from "./linguistic-element.js"
 
 describe("LinguisticElement", () => {
   // --- Fixtures ---
 
   const kanaA = KanaElement.make({
-    id: LinguisticElementId(1),
+    id: KanaId(1),
     character: "あ",
     kanaType: "hiragana",
     sortOrder: 1,
   })
 
   const kanjiKo = KanjiElement.make({
-    id: LinguisticElementId(100),
+    id: KanjiId(100),
     character: "子",
     meanings: ["child"],
     components: [],
@@ -29,32 +33,32 @@ describe("LinguisticElement", () => {
   })
 
   const kanjiGaku = KanjiElement.make({
-    id: LinguisticElementId(101),
+    id: KanjiId(101),
     character: "学",
     meanings: ["study", "learning"],
-    components: [LinguisticElementId(100)],
+    components: [KanjiId(100)],
     frequency: 150,
     strokeCount: 8,
   })
 
   const wordTaberu = WordElement.make({
-    id: LinguisticElementId(200),
+    id: WordId(200),
     written: "食べる",
     meaning: "to eat",
-    components: [LinguisticElementId(102), LinguisticElementId(10), LinguisticElementId(11)],
+    components: [KanjiId(102), KanaId(10), KanaId(11)],
     frequency: 50,
   })
 
   const wordSugoi = WordElement.make({
-    id: LinguisticElementId(201),
+    id: WordId(201),
     written: "すごい",
     meaning: "amazing",
-    components: [LinguisticElementId(12), LinguisticElementId(13), LinguisticElementId(14)],
+    components: [KanaId(12), KanaId(13), KanaId(14)],
     frequency: 120,
   })
 
   const grammarGa = GrammarElement.make({
-    id: LinguisticElementId(300),
+    id: GrammarId(300),
     name: "が (subject marker)",
     explanation: "Marks the subject of a sentence",
     frequency: 1,
@@ -62,15 +66,10 @@ describe("LinguisticElement", () => {
   })
 
   const sentence = SentenceElement.make({
-    id: LinguisticElementId(400),
+    id: SentenceId(400),
     text: "猫が好きです",
     meaning: "I like cats",
-    components: [
-      LinguisticElementId(202),
-      LinguisticElementId(300),
-      LinguisticElementId(203),
-      LinguisticElementId(204),
-    ],
+    components: [WordId(202), GrammarId(300), WordId(203), WordId(204)],
   })
 
   // AC1 — Les 5 sous-types de LinguisticElement sont modélisés avec union discriminée
@@ -84,7 +83,7 @@ describe("LinguisticElement", () => {
 
     it("KanaElement katakana se construit correctement", () => {
       const kataA = KanaElement.make({
-        id: LinguisticElementId(50),
+        id: KanaId(50),
         character: "ア",
         kanaType: "katakana",
         sortOrder: 1,
@@ -97,7 +96,7 @@ describe("LinguisticElement", () => {
       expect(kanjiGaku.kind).toBe("kanji")
       expect(kanjiGaku.character).toBe("学")
       expect(kanjiGaku.meanings).toEqual(["study", "learning"])
-      expect(kanjiGaku.components).toEqual([LinguisticElementId(100)])
+      expect(kanjiGaku.components).toEqual([KanjiId(100)])
       expect(kanjiGaku.frequency).toBe(150)
       expect(kanjiGaku.strokeCount).toBe(8)
     })
@@ -106,11 +105,7 @@ describe("LinguisticElement", () => {
       expect(wordTaberu.kind).toBe("word")
       expect(wordTaberu.written).toBe("食べる")
       expect(wordTaberu.meaning).toBe("to eat")
-      expect(wordTaberu.components).toEqual([
-        LinguisticElementId(102),
-        LinguisticElementId(10),
-        LinguisticElementId(11),
-      ])
+      expect(wordTaberu.components).toEqual([KanjiId(102), KanaId(10), KanaId(11)])
       expect(wordTaberu.frequency).toBe(50)
     })
 
@@ -137,27 +132,25 @@ describe("LinguisticElement", () => {
     })
 
     it("un kanji composé référence ses composants", () => {
-      expect(kanjiGaku.components).toEqual([LinguisticElementId(100)])
+      expect(kanjiGaku.components).toEqual([KanjiId(100)])
     })
 
     it("validateComponentGraph détecte les cycles", () => {
-      // Graphe valide : 学→子, 子→∅
       expect(validateComponentGraph([kanjiKo, kanjiGaku])).toBe(true)
 
-      // Graphe avec cycle : A→B, B→A
       const cycleA = KanjiElement.make({
-        id: LinguisticElementId(900),
+        id: KanjiId(900),
         character: "X",
         meanings: ["x"],
-        components: [LinguisticElementId(901)],
+        components: [KanjiId(901)],
         frequency: 1,
         strokeCount: 1,
       })
       const cycleB = KanjiElement.make({
-        id: LinguisticElementId(901),
+        id: KanjiId(901),
         character: "Y",
         meanings: ["y"],
-        components: [LinguisticElementId(900)],
+        components: [KanjiId(900)],
         frequency: 1,
         strokeCount: 1,
       })
@@ -168,33 +161,18 @@ describe("LinguisticElement", () => {
   // AC3 — Les composants d'un WordElement sont des KanaElements/KanjiElements
   describe("composants des WordElements", () => {
     it("un mot composé de kanji + kana a les bons composants", () => {
-      // 食べる = [食(kanji), べ(kana), る(kana)]
-      expect(wordTaberu.components).toEqual([
-        LinguisticElementId(102),
-        LinguisticElementId(10),
-        LinguisticElementId(11),
-      ])
+      expect(wordTaberu.components).toEqual([KanjiId(102), KanaId(10), KanaId(11)])
     })
 
     it("un mot tout en kana a des composants kana uniquement", () => {
-      expect(wordSugoi.components).toEqual([
-        LinguisticElementId(12),
-        LinguisticElementId(13),
-        LinguisticElementId(14),
-      ])
+      expect(wordSugoi.components).toEqual([KanaId(12), KanaId(13), KanaId(14)])
     })
   })
 
   // AC4 — Les composants d'un SentenceElement sont des WordElements/GrammarElements
   describe("composants des SentenceElements", () => {
     it("une phrase référence ses mots et points de grammaire", () => {
-      // 猫が好きです = [猫(word), が(grammar), 好き(word), です(word)]
-      expect(sentence.components).toEqual([
-        LinguisticElementId(202),
-        LinguisticElementId(300),
-        LinguisticElementId(203),
-        LinguisticElementId(204),
-      ])
+      expect(sentence.components).toEqual([WordId(202), GrammarId(300), WordId(203), WordId(204)])
     })
   })
 })
