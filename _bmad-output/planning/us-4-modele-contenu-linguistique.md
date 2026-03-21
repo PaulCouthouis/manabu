@@ -197,8 +197,8 @@ Le ContentItem n'a pas de score de difficulté propre — il hérite de la diffi
 
 ### Étape 3 — Vérifications finales
 
-- [ ] `pnpm build` compile sans erreur → AC10
-- [ ] Mise à jour du CLAUDE.md si nécessaire
+- [x] `pnpm build` compile sans erreur → AC10
+- [x] Mise à jour du CLAUDE.md si nécessaire
 
 ## Hors scope
 
