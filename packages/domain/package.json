@@ -7,12 +7,15 @@
     ".": "./src/index.ts"
   },
   "scripts": {
-    "build": "tsc --build"
+    "build": "tsc --build",
+    "test": "vitest run"
   },
   "dependencies": {
-    "@manabu/shared": "workspace:*"
+    "@manabu/shared": "workspace:*",
+    "effect": "^3.21.0"
   },
   "devDependencies": {
-    "typescript": "^5.8.0"
+    "typescript": "^5.8.0",
+    "vitest": "^4.1.0"
   }
 }

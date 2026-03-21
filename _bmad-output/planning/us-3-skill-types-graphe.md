@@ -83,17 +83,17 @@ La liste exacte des skill types n'est pas figée. Le PRD propose 17 skills répa
 
 ### Étape 2 — Modèle domaine & graphe de dépendances
 
-- [ ] Définir `SkillFamily`, `SkillTypeId`, `SkillType` dans `packages/domain/src/skill-type.ts`
-- [ ] Définir les constantes des skill types (liste issue de l'étape 1)
-- [ ] Modéliser le graphe de dépendances dans `packages/domain/src/skill-graph.ts`
-- [ ] Implémenter les fonctions de query : `getPrerequisites`, `getTransitivePrerequisites`, `getEntryPoints`, `getDependents`
-- [ ] Implémenter `validateGraph` (détection de cycles)
-- [ ] Écrire les tests unitaires (TDD sur les fonctions de query, pas sur les constantes) :
-  - [ ] Test : le graphe est un DAG valide → AC1
-  - [ ] Test : `getPrerequisites` retourne les prérequis directs → AC2
-  - [ ] Test : `getTransitivePrerequisites` retourne la fermeture transitive → AC3
-  - [ ] Test : `getEntryPoints` retourne les skills sans prérequis → AC4
-  - [ ] Test : chaque skill type a une entrée dans le graphe → AC5
+- [x] Définir `SkillFamily`, `SkillTypeId`, `SkillType` dans `packages/domain/src/skill-type.ts`
+- [x] Définir les constantes des skill types (liste issue de l'étape 1)
+- [x] Modéliser le graphe de dépendances dans `packages/domain/src/skill-graph.ts`
+- [x] Implémenter les fonctions de query : `getPrerequisites`, `getTransitivePrerequisites`, `getEntryPoints`, `getDependents`
+- [x] Implémenter `validateGraph` (détection de cycles)
+- [x] Écrire les tests unitaires (TDD sur les fonctions de query, pas sur les constantes) :
+  - [x] Test : le graphe est un DAG valide → AC1
+  - [x] Test : `getPrerequisites` retourne les prérequis directs → AC2
+  - [x] Test : `getTransitivePrerequisites` retourne la fermeture transitive → AC3
+  - [x] Test : `getEntryPoints` retourne les skills sans prérequis → AC4
+  - [x] Test : chaque skill type a une entrée dans le graphe → AC5
 
 ### Étape 3 — Persistance SQL
 
