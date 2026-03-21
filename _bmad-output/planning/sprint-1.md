@@ -101,8 +101,9 @@ Chaque élément est livré avec :
 | US2 | Authentification | Un visiteur peut s'inscrire, se connecter, se déconnecter. Sa session persiste. | US1 |
 | US3 | Skill types & graphe de dépendances | Les 17 skill types sont définis avec leurs familles et leur graphe de dépendances complet. | US1 |
 | US4 | Modèle de contenu linguistique | Une instance de contenu est modélisée avec ses métadonnées, son score de difficulté (3 axes) et ses associations skill types. | US3 |
-| US5 | Seed data kana | Les ~240 kana (hiragana + katakana) sont chargés avec leurs scores et associations. | US4 |
-| US6 | Seed data vocabulaire | Les ~200 mots fréquents sont chargés avec leurs scores et associations. | US4 |
+| US5 | Seed data kana | Les ~208 kana standard (gojūon + dakuten + handakuten + yōon) sont chargés avec leurs scores et associations. | US4 |
+| US5b | Seed data kanji | Les ~120-150 kanji nécessaires aux mots de l'US6 sont chargés avec leur graphe de composants et associations. | US4 |
+| US6 | Seed data vocabulaire | Les ~200 mots fréquents sont chargés avec leurs scores et associations. | US5, US5b |
 | US7 | Seed data grammaire | Les ~50 points de grammaire sont chargés avec leurs liens vers les instances core modifiées. | US4 |
 | US8 | Structures de progression utilisateur | Les entités pour la progression par skill et le SRS par paire exercice/réponse sont définies (structures prêtes, pas de logique). | US3 |
 | US9 | Navigation & routing | Les écrans principaux existent en coquille vide, la navigation entre eux fonctionne. | US1 |
@@ -115,7 +116,8 @@ US1 (Setup)
 ├── US3 (Skill types & graphe)
 │   ├── US4 (Modèle contenu)
 │   │   ├── US5 (Seed kana)
-│   │   ├── US6 (Seed vocabulaire)
+│   │   ├── US5b (Seed kanji)
+│   │   ├── US6 (Seed vocabulaire) ← dépend de US5 + US5b
 │   │   └── US7 (Seed grammaire)
 │   └── US8 (Structures progression)
 └── US9 (Navigation)
