@@ -131,12 +131,12 @@ apps/web/app/
 
 ### Étape 4 — Protection des routes & persistance de session
 
-- [ ] Appliquer le middleware de protection sur les routes qui le nécessitent
-- [ ] Rediriger les visiteurs non authentifiés vers `/auth/sign-in`
-- [ ] Vérifier la persistance de session (fermer/rouvrir le navigateur)
-- [ ] Écrire les tests E2E (Playwright) :
-  - [ ] Test : accès route protégée sans auth → redirection vers `/auth/sign-in` → AC5
-  - [ ] Test : session persistante après fermeture/réouverture navigateur → AC4
+- [x] Appliquer le middleware de protection sur les routes qui le nécessitent
+- [x] Rediriger les visiteurs non authentifiés vers `/auth/sign-in`
+- [x] Vérifier la persistance de session (fermer/rouvrir le navigateur)
+- [x] Écrire les tests E2E (Playwright) :
+  - [x] Test : accès route protégée sans auth → redirection vers `/auth/sign-in` → AC5
+  - [x] Test : session persistante après fermeture/réouverture navigateur → AC4
 
 ### Étape 5 — Mise à jour du CLAUDE.md
 

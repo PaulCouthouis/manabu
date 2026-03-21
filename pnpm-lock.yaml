@@ -43,7 +43,7 @@ importers:
         version: link:../../packages/ui
       '@park-ui/panda-preset':
         specifier: ^0.43.1
-        version: 0.43.1(@internationalized/date@3.5.5)(@pandacss/dev@1.9.0(typescript@5.9.3))
+        version: 0.43.1(@internationalized/date@3.11.0)(@pandacss/dev@1.9.0(typescript@5.9.3))
       '@tanstack/react-router':
         specifier: ^1.167.5
         version: 1.167.5(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -173,7 +173,7 @@ importers:
         version: link:../shared
       '@park-ui/panda-preset':
         specifier: ^0.43.1
-        version: 0.43.1(@internationalized/date@3.11.0)(@pandacss/dev@1.9.0(typescript@5.9.3))
+        version: 0.43.1(@internationalized/date@3.5.5)(@pandacss/dev@1.9.0(typescript@5.9.3))
     devDependencies:
       '@chromatic-com/storybook':
         specifier: ^5.0.2
