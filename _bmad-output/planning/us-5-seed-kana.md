@@ -100,14 +100,14 @@ Les hiragana viennent en premier (appris avant les katakana). À l'intérieur de
 
 ### Étape 1 — Fichier de données kana
 
-- [ ] Créer `packages/db/src/seed/kana-data.ts`
-- [ ] Structurer les données par blocs (gojūon, dakuten, handakuten, yōon) × (hiragana, katakana)
-- [ ] Utiliser `KanaElement.make()` pour chaque entrée
-- [ ] Écrire les tests unitaires (TDD) sur le fichier de données :
-  - [ ] Test : 104 hiragana présents → AC1
-  - [ ] Test : 104 katakana présents → AC2
-  - [ ] Test : sortOrder continu 1-208, pas de trou ni doublon → AC3
-  - [ ] Test : pas de character en doublon → AC4
+- [x] Créer `packages/db/src/seed/kana-data.ts`
+- [x] Structurer les données par blocs (gojūon, dakuten, handakuten, yōon) × (hiragana, katakana)
+- [x] Utiliser `KanaElement.make()` pour chaque entrée
+- [x] Écrire les tests unitaires (TDD) sur le fichier de données :
+  - [x] Test : 104 hiragana présents → AC1
+  - [x] Test : 104 katakana présents → AC2
+  - [x] Test : sortOrder continu 1-208, pas de trou ni doublon → AC3
+  - [x] Test : pas de character en doublon → AC4
 
 ### Étape 2 — Migration seed
 

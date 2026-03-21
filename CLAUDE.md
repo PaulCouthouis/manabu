@@ -131,6 +131,7 @@ Les routes protégées utilisent le layout `_protected.tsx` qui vérifie la sess
 
 - `tsconfig.base.json` avec `strict: true` et `noUncheckedIndexedAccess: true`.
 - Chaque package étend cette config — impossible de relâcher la strictness.
+- Éviter les assertions de type (`as`) — préférer les type guards, `Schema.decode`, ou restructurer le code pour que le type soit inféré correctement.
 
 ### Skill types — taxonomie à 15 skills
 
