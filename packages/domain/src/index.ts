@@ -1,5 +1,12 @@
 export type { ExerciseFormat, SkillFamily } from "./skill-type.js"
-export { SkillType, SkillTypeId, SkillTypes } from "./skill-type.js"
+export {
+  ExerciseFormatSchema,
+  SkillFamilySchema,
+  SkillType,
+  SkillTypeId,
+  SkillTypeIdSchema,
+  SkillTypes,
+} from "./skill-type.js"
 
 export type { SkillGraphData } from "./skill-graph.js"
 export {

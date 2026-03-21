@@ -97,11 +97,11 @@ La liste exacte des skill types n'est pas figée. Le PRD propose 17 skills répa
 
 ### Étape 3 — Persistance SQL
 
-- [ ] Créer la migration pour la table `skill_type` (id, family, code, name, description)
-- [ ] Implémenter `SkillTypeRepo` comme Effect Service dans `packages/db`
-- [ ] Seed les skill types en base
-- [ ] Écrire les tests d'intégration (Vitest + Testcontainers) :
-  - [ ] Test : les skill types sont persistés et queryables par famille → AC6
+- [x] Créer la migration pour la table `skill_type` (id, family, code, name, description)
+- [x] Implémenter `SkillTypeRepo` comme Effect Service dans `packages/db`
+- [x] Seed les skill types en base
+- [x] Écrire les tests d'intégration (Vitest + Testcontainers) :
+  - [x] Test : les skill types sont persistés et queryables par famille → AC6
 
 ### Étape 4 — Vérifications finales
 

@@ -1,29 +1,33 @@
-import { Brand, Data } from "effect"
+import { Brand, Schema } from "effect"
 
-// --- Branded types ---
+// --- Schemas ---
 
 export type SkillTypeId = number & Brand.Brand<"SkillTypeId">
 export const SkillTypeId = Brand.nominal<SkillTypeId>()
+export const SkillTypeIdSchema = Schema.Number.pipe(Schema.fromBrand(SkillTypeId))
 
-// --- Skill Family ---
+export const SkillFamilySchema = Schema.Literal("Foundation", "Core", "Grammar")
+export type SkillFamily = typeof SkillFamilySchema.Type
 
-export type SkillFamily = "Foundation" | "Core" | "Grammar"
-
-// --- Exercise Format ---
-
-export type ExerciseFormat = "ListenRepeat" | "ReadAloud" | "MultipleChoice" | "KeyboardInput"
+export const ExerciseFormatSchema = Schema.Literal(
+  "ListenRepeat",
+  "ReadAloud",
+  "MultipleChoice",
+  "KeyboardInput",
+)
+export type ExerciseFormat = typeof ExerciseFormatSchema.Type
 
 // --- Skill Type ---
 
-export class SkillType extends Data.Class<{
-  readonly id: SkillTypeId
-  readonly family: SkillFamily
-  readonly code: string
-  readonly name: string
-  readonly description: string
-  readonly format: ExerciseFormat
-  readonly open: boolean
-}> {}
+export class SkillType extends Schema.Class<SkillType>("SkillType")({
+  id: SkillTypeIdSchema,
+  family: SkillFamilySchema,
+  code: Schema.String,
+  name: Schema.String,
+  description: Schema.String,
+  format: ExerciseFormatSchema,
+  open: Schema.Boolean,
+}) {}
 
 // --- Constants ---
 
