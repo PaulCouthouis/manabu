@@ -24,8 +24,6 @@ export {
 
 export type { KanaType, LinguisticElement, LinguisticElementKind } from "./linguistic-element.js"
 export {
-  GrammarId,
-  GrammarIdSchema,
   KanaElement,
   KanaId,
   KanaIdSchema,
@@ -40,6 +38,7 @@ export {
   SentenceIdSchema,
   validateComponentGraph,
   WordElement,
+  WORD_ID_MIN,
   WordId,
   WordIdSchema,
 } from "./linguistic-element.js"

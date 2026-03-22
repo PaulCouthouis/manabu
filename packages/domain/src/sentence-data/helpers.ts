@@ -1,13 +1,12 @@
-import type { GrammarId, WordId } from "../linguistic-element.js"
 import {
-  GrammarId as mkGrammarId,
   SentenceElement,
   SentenceId,
+  WORD_ID_MIN,
   WordId as mkWordId,
 } from "../linguistic-element.js"
+import { GrammarPointId } from "../grammar-point.js"
 
-const toComponentId = (id: number): WordId | GrammarId =>
-  id >= 5000 ? mkWordId(id) : mkGrammarId(id)
+const isWordId = (id: number): boolean => id >= WORD_ID_MIN
 
 export const s = (
   id: number,
@@ -15,11 +14,15 @@ export const s = (
   meaning: string,
   components: readonly number[],
   sentenceRank: number,
-) =>
-  SentenceElement.make({
+) => {
+  const words = components.filter(isWordId)
+  const grammarPoints = components.filter((x) => !isWordId(x))
+  return SentenceElement.make({
     id: SentenceId(id),
     text,
     meaning,
-    components: components.map(toComponentId) as [WordId | GrammarId, ...(WordId | GrammarId)[]],
+    components: words.map((x) => mkWordId(x)),
+    grammarPoints: grammarPoints.map((x) => GrammarPointId(x)),
     sentenceRank,
   })
+}

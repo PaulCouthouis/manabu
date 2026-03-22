@@ -1,7 +1,7 @@
 import { Schema } from "effect"
 import { describe, expect, it } from "vitest"
+import { GrammarPointId } from "./grammar-point.js"
 import {
-  GrammarId,
   KanaElement,
   KanaId,
   KanjiElement,
@@ -61,7 +61,8 @@ describe("LinguisticElement", () => {
     id: SentenceId(400),
     text: "猫が好きです",
     meaning: "I like cats",
-    components: [WordId(202), GrammarId(300), WordId(203), WordId(204)],
+    components: [WordId(202), WordId(203), WordId(204)],
+    grammarPoints: [GrammarPointId(300)],
     sentenceRank: 1,
   })
 
@@ -106,7 +107,8 @@ describe("LinguisticElement", () => {
       expect(sentence.kind).toBe("sentence")
       expect(sentence.text).toBe("猫が好きです")
       expect(sentence.meaning).toBe("I like cats")
-      expect(sentence.components).toHaveLength(4)
+      expect(sentence.components).toHaveLength(3)
+      expect(sentence.grammarPoints).toHaveLength(1)
     })
   })
 
@@ -118,7 +120,8 @@ describe("LinguisticElement", () => {
           id: SentenceId(400),
           text: "テスト",
           meaning: "test",
-          components: [WordId(200), GrammarId(300)],
+          components: [WordId(200)],
+          grammarPoints: [GrammarPointId(300)],
           sentenceRank: rank,
         })
 
@@ -135,7 +138,8 @@ describe("LinguisticElement", () => {
         kind: "sentence",
         text: "テスト",
         meaning: "test",
-        components: [200, 300],
+        components: [200],
+        grammarPoints: [300],
       }
 
       expect(() => decode({ ...base, sentenceRank: 0 })).toThrow()
@@ -188,10 +192,30 @@ describe("LinguisticElement", () => {
     })
   })
 
-  // AC4 — Les composants d'un SentenceElement sont des WordElements/GrammarElements
+  // US8 AC4 — SentenceElement.components n'accepte que des WordId
   describe("composants des SentenceElements", () => {
-    it("une phrase référence ses mots et points de grammaire", () => {
-      expect(sentence.components).toEqual([WordId(202), GrammarId(300), WordId(203), WordId(204)])
+    it("components contient uniquement des WordId", () => {
+      expect(sentence.components).toEqual([WordId(202), WordId(203), WordId(204)])
+    })
+  })
+
+  // US8 AC5 — SentenceElement.grammarPoints accepte un tableau de GrammarPointId
+  describe("SentenceElement.grammarPoints", () => {
+    it("accepte des GrammarPointId", () => {
+      expect(sentence.grammarPoints).toEqual([GrammarPointId(300)])
+    })
+
+    // US8 AC6 — grammarPoints peut être vide
+    it("accepte un grammarPoints vide", () => {
+      const noGrammar = SentenceElement.make({
+        id: SentenceId(401),
+        text: "テスト",
+        meaning: "test",
+        components: [WordId(200)],
+        grammarPoints: [],
+        sentenceRank: 1,
+      })
+      expect(noGrammar.grammarPoints).toEqual([])
     })
   })
 })

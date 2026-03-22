@@ -224,13 +224,17 @@ Les grammar points conservent les mêmes IDs que les anciens `GrammarElement` (3
 
 ### Étape 2 — Modifier `SentenceElement`
 
-- [ ] Modifier `SentenceElement` dans `linguistic-element.ts`
-  - [ ] `components` → `Schema.NonEmptyArray(WordIdSchema)` (retirer `GrammarIdSchema` de l'union)
-  - [ ] Ajouter `grammarPoints: Schema.Array(GrammarPointIdSchema)`
-- [ ] Écrire les tests unitaires (TDD) :
-  - [ ] Test : `SentenceElement.make()` accepte des `components` de type `WordId` uniquement → AC4
-  - [ ] Test : `SentenceElement.make()` accepte des `grammarPoints` de type `GrammarPointId[]` → AC5
-  - [ ] Test : `SentenceElement.make()` accepte un `grammarPoints` vide → AC6
+- [x] Modifier `SentenceElement` dans `linguistic-element.ts`
+  - [x] `components` → `Schema.Array(WordIdSchema)` (retirer `GrammarIdSchema` de l'union ; `Array` car certaines phrases n'ont que des grammar points)
+  - [x] Ajouter `grammarPoints: Schema.Array(GrammarPointIdSchema)`
+- [x] Retirer `GrammarId`/`GrammarIdSchema` de `linguistic-element.ts` (plus aucun consommateur)
+- [x] Mettre à jour `sentence-data/helpers.ts` — séparer components (WordId) et grammarPoints (GrammarPointId)
+- [x] Mettre à jour `sentence-data/sentence-data.test.ts` — `getGrammarIds` lit `grammarPoints`, `getWordIds` lit `components`
+- [x] Mettre à jour `packages/db/src/linguistic-element-repo.ts` — séparer components dans `decodeRow`
+- [x] Écrire les tests unitaires (TDD) :
+  - [x] Test : `SentenceElement.make()` accepte des `components` de type `WordId` uniquement → AC4
+  - [x] Test : `SentenceElement.make()` accepte des `grammarPoints` de type `GrammarPointId[]` → AC5
+  - [x] Test : `SentenceElement.make()` accepte un `grammarPoints` vide → AC6
 
 ### Étape 3 — Entité `ReviewCard` + migration DB
 

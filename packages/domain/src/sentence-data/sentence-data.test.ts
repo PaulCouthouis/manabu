@@ -20,10 +20,10 @@ const grammarToSkill = (id: number): number => {
 }
 
 const getGrammarIds = (sentence: (typeof sentenceData)[number]): ReadonlyArray<number> =>
-  sentence.components.filter((c) => n(c) >= 300 && n(c) <= 558).map((c) => n(c))
+  sentence.grammarPoints.map((c) => n(c))
 
 const getWordIds = (sentence: (typeof sentenceData)[number]): ReadonlyArray<number> =>
-  sentence.components.filter((c) => n(c) >= 5000).map((c) => n(c))
+  sentence.components.map((c) => n(c))
 
 const maxWordIdForRank = (rank: number): number => {
   switch (rank) {

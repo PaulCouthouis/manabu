@@ -1,6 +1,12 @@
 import { SqlClient } from "@effect/sql"
 import type { LinguisticElement, LinguisticElementId, LinguisticElementKind } from "@manabu/domain"
-import { KanaElement, KanjiElement, SentenceElement, WordElement } from "@manabu/domain"
+import {
+  KanaElement,
+  KanjiElement,
+  SentenceElement,
+  WORD_ID_MIN,
+  WordElement,
+} from "@manabu/domain"
 import { Array, Effect, Option, ParseResult, Record, Schema } from "effect"
 
 interface ElementRow {
@@ -69,7 +75,8 @@ const decodeRow = (
         kind: "sentence",
         text: row.text,
         meaning: row.meaning,
-        components,
+        components: components.filter((id) => id >= WORD_ID_MIN),
+        grammarPoints: components.filter((id) => id < WORD_ID_MIN),
         sentenceRank: row.sentence_rank,
       })
     default:

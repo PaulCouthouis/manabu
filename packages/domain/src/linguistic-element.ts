@@ -1,5 +1,6 @@
 import { Brand, Schema } from "effect"
 import { validateDag } from "./dag.js"
+import { GrammarPointIdSchema } from "./grammar-point.js"
 
 // --- Base Id ---
 
@@ -21,13 +22,11 @@ export type WordId = LinguisticElementId & Brand.Brand<"WordId">
 export const WordId = Brand.nominal<WordId>()
 export const WordIdSchema = Schema.Number.pipe(Schema.fromBrand(WordId))
 
+export const WORD_ID_MIN = 5000
+
 export type SentenceId = LinguisticElementId & Brand.Brand<"SentenceId">
 export const SentenceId = Brand.nominal<SentenceId>()
 export const SentenceIdSchema = Schema.Number.pipe(Schema.fromBrand(SentenceId))
-
-export type GrammarId = LinguisticElementId & Brand.Brand<"GrammarId">
-export const GrammarId = Brand.nominal<GrammarId>()
-export const GrammarIdSchema = Schema.Number.pipe(Schema.fromBrand(GrammarId))
 
 // --- Helpers ---
 
@@ -80,7 +79,8 @@ export class SentenceElement extends Schema.Class<SentenceElement>("SentenceElem
   kind: kindField("sentence"),
   text: Schema.String,
   meaning: Schema.String,
-  components: Schema.NonEmptyArray(Schema.Union(WordIdSchema, GrammarIdSchema)),
+  components: Schema.Array(WordIdSchema),
+  grammarPoints: Schema.Array(GrammarPointIdSchema),
   sentenceRank: Schema.Int.pipe(Schema.between(1, 10)),
 }) {}
 
