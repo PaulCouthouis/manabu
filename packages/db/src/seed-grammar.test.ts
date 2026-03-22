@@ -1,82 +1,68 @@
+import { SqlClient } from "@effect/sql"
 import { assert, layer } from "@effect/vitest"
-import { SkillTypeId } from "@manabu/domain"
-import { Array, Effect, Layer } from "effect"
-import { ContentItemRepo } from "./content-item-repo.js"
+import { Effect } from "effect"
 import { runMigrations } from "./migrations/index.js"
-import { SkillTypeRepo } from "./skill-type-repo.js"
 import { TestSqlLayer } from "./test-utils.js"
 
-const TestLayer = Layer.mergeAll(ContentItemRepo.Default, SkillTypeRepo.Default).pipe(
-  Layer.provideMerge(TestSqlLayer),
-)
-
-const GRAMMAR_SKILL_IDS = [11, 12, 13, 14, 15]
-const GRAMMAR_COUNTS: Record<number, number> = { 11: 80, 12: 93, 13: 28, 14: 14, 15: 44 }
-
-// These tests validate the current seed grammar migrations (0009).
-// They will be rewritten at US8 step 4 when grammar moves to its own table.
-layer(TestLayer, { timeout: 120_000 })("Seed grammar — PostgreSQL", (it) => {
-  // AC8 — Chaque GrammarElement a exactement 1 ContentItem
-  it.effect("each grammar element has exactly 1 ContentItem for its skill", () =>
+layer(TestSqlLayer, { timeout: 120_000 })("Seed grammar — PostgreSQL", (it) => {
+  // US8 AC9 — 259 grammar points dans grammar_point
+  it.effect("grammar_point table contains 259 rows", () =>
     Effect.gen(function* () {
       yield* runMigrations
-      const contentRepo = yield* ContentItemRepo
+      const sql = yield* SqlClient.SqlClient
 
-      for (const skillId of GRAMMAR_SKILL_IDS) {
-        const items = yield* contentRepo.findBySkillType(SkillTypeId(skillId))
-        const grammarItems = Array.filter(items, (ci) => {
-          const eid = Number(ci.linguisticElementId)
-          return eid >= 300 && eid <= 558
-        })
-        assert.strictEqual(
-          grammarItems.length,
-          GRAMMAR_COUNTS[skillId],
-          `Skill ${skillId} should have ${GRAMMAR_COUNTS[skillId]} grammar ContentItems, got ${grammarItems.length}`,
-        )
-      }
+      const rows = yield* sql<{ count: string }>`SELECT COUNT(*)::text AS count FROM grammar_point`
+      assert.strictEqual(rows[0]!.count, "259")
     }),
   )
 
-  // AC9 — Aucun ContentItem en doublon
-  it.effect("no duplicate ContentItems for grammar", () =>
+  // US8 AC10 — 0 lignes kind = 'grammar' dans linguistic_element
+  it.effect("no grammar rows remain in linguistic_element", () =>
     Effect.gen(function* () {
       yield* runMigrations
-      const contentRepo = yield* ContentItemRepo
+      const sql = yield* SqlClient.SqlClient
 
-      const allItems = yield* Effect.all(
-        Array.map(GRAMMAR_SKILL_IDS, (sid) => contentRepo.findBySkillType(SkillTypeId(sid))),
-      )
-      const grammarPairs = Array.flatMap(allItems, (items) =>
-        Array.map(
-          Array.filter(items, (ci) => {
-            const eid = Number(ci.linguisticElementId)
-            return eid >= 300 && eid <= 558
-          }),
-          (ci) => `${ci.linguisticElementId}-${ci.skillTypeId}`,
-        ),
-      )
-      const unique = new Set(grammarPairs)
-      assert.strictEqual(unique.size, grammarPairs.length)
+      const rows = yield* sql<{ count: string }>`
+        SELECT COUNT(*)::text AS count FROM linguistic_element WHERE kind = 'grammar'
+      `
+      assert.strictEqual(rows[0]!.count, "0")
     }),
   )
 
-  // AC11 — 259 ContentItems grammaire au total
-  it.effect("total of 259 grammar ContentItems", () =>
+  // US8 AC11 — aucun content item orphelin vers un grammar element
+  it.effect("no content items reference grammar element IDs", () =>
     Effect.gen(function* () {
       yield* runMigrations
-      const contentRepo = yield* ContentItemRepo
+      const sql = yield* SqlClient.SqlClient
 
-      let total = 0
-      for (const skillId of GRAMMAR_SKILL_IDS) {
-        const items = yield* contentRepo.findBySkillType(SkillTypeId(skillId))
-        const grammarItems = Array.filter(items, (ci) => {
-          const eid = Number(ci.linguisticElementId)
-          return eid >= 300 && eid <= 558
-        })
-        total += grammarItems.length
-      }
+      const rows = yield* sql<{ count: string }>`
+        SELECT COUNT(*)::text AS count FROM content_item
+        WHERE element_id >= 300 AND element_id <= 558
+          AND NOT EXISTS (SELECT 1 FROM linguistic_element WHERE id = content_item.element_id)
+      `
+      assert.strictEqual(rows[0]!.count, "0")
+    }),
+  )
 
-      assert.strictEqual(total, 259)
+  // US8 AC18 (partial) — first grammar point has correct data
+  it.effect("grammar_point data matches domain (spot check)", () =>
+    Effect.gen(function* () {
+      yield* runMigrations
+      const sql = yield* SqlClient.SqlClient
+
+      const rows = yield* sql<{
+        id: number
+        name: string
+        explanation: string
+        frequency: number
+        form_count: number
+      }>`SELECT * FROM grammar_point WHERE id = 300`
+
+      assert.strictEqual(rows.length, 1)
+      assert.strictEqual(rows[0]!.name, "だ")
+      assert.strictEqual(rows[0]!.explanation, "Copula asserting identity or state")
+      assert.strictEqual(rows[0]!.frequency, 1)
+      assert.strictEqual(rows[0]!.form_count, 1)
     }),
   )
 })

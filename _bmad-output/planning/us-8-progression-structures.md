@@ -253,20 +253,20 @@ Les grammar points conservent les mêmes IDs que les anciens `GrammarElement` (3
 
 ### Étape 4 — Migration des grammar points
 
-- [ ] Créer la migration `packages/db/src/migrations/0012_grammar_point.ts`
-  - [ ] Créer la table `grammar_point`
-  - [ ] Migrer les 259 lignes `kind = 'grammar'` de `linguistic_element` vers `grammar_point`
-  - [ ] Supprimer les content items pointant vers les anciens grammar elements
-  - [ ] Supprimer les lignes `kind = 'grammar'` de `linguistic_element`
-- [ ] Adapter `packages/domain/src/grammar-data/` pour exporter des `GrammarPoint` au lieu de `GrammarElement`
-  - [ ] Modifier le helper et les fichiers skill-11 à skill-15
-  - [ ] Vérifier que les 259 grammar points ont les mêmes données
-- [ ] Écrire les tests d'intégration :
-  - [ ] Test : 259 grammar points dans `grammar_point` → AC9
-  - [ ] Test : 0 lignes `kind = 'grammar'` dans `linguistic_element` → AC10
-  - [ ] Test : aucun content item orphelin vers un grammar element → AC11
-- [ ] Écrire les tests unitaires :
-  - [ ] Test : `grammarData` contient les 259 grammar points avec les mêmes données → AC18
+- [x] Créer la migration `packages/db/src/migrations/0012_grammar_point.ts`
+  - [x] Créer la table `grammar_point`
+  - [x] Migrer les 259 lignes `kind = 'grammar'` de `linguistic_element` vers `grammar_point`
+  - [x] Supprimer les content items pointant vers les anciens grammar elements
+  - [x] Supprimer les lignes `kind = 'grammar'` de `linguistic_element`
+- [x] Adapter `packages/domain/src/grammar-data/` pour exporter des `GrammarPoint` au lieu de `GrammarElement`
+  - [x] Modifier le helper et les fichiers skill-11 à skill-15 (fait à l'étape 1)
+  - [x] Vérifier que les 259 grammar points ont les mêmes données (grammar-data.test.ts existant)
+- [x] Écrire les tests d'intégration :
+  - [x] Test : 259 grammar points dans `grammar_point` → AC9
+  - [x] Test : 0 lignes `kind = 'grammar'` dans `linguistic_element` → AC10
+  - [x] Test : aucun content item orphelin vers un grammar element → AC11
+- [x] Écrire les tests unitaires :
+  - [x] Test : `grammarData` contient les 259 grammar points avec les mêmes données → AC18 (grammar-data.test.ts existant)
 
 ### Étape 5 — Migration des sentences et content items grammar
 
