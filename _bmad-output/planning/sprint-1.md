@@ -105,6 +105,7 @@ Chaque élément est livré avec :
 | US5b | Seed data kanji | Les ~120-150 kanji nécessaires aux mots de l'US6 sont chargés avec leur graphe de composants et associations. | US4 |
 | US6 | Seed data vocabulaire | Les ~200 mots fréquents sont chargés avec leurs scores et associations. | US5, US5b |
 | US7 | Seed data grammaire | Les ~50 points de grammaire sont chargés avec leurs liens vers les instances core modifiées. | US4 |
+| US7 BIS | Seed data sentences | 2 590 phrases d'exemple (10 par grammar point) générées par IA avec matrice de difficulté (bande de fréquence × densité grammaticale). | US7, US6 |
 | US8 | Structures de progression utilisateur | Les entités pour la progression par skill et le SRS par paire exercice/réponse sont définies (structures prêtes, pas de logique). | US3 |
 | US9 | Navigation & routing | Les écrans principaux existent en coquille vide, la navigation entre eux fonctionne. | US1 |
 
@@ -119,6 +120,7 @@ US1 (Setup)
 │   │   ├── US5b (Seed kanji)
 │   │   ├── US6 (Seed vocabulaire) ← dépend de US5 + US5b
 │   │   └── US7 (Seed grammaire)
+│   │       └── US7 BIS (Seed sentences) ← dépend de US7 + US6
 │   └── US8 (Structures progression)
 └── US9 (Navigation)
 ```
