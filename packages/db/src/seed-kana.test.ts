@@ -34,7 +34,7 @@ layer(TestLayer, { timeout: 60_000 })("Seed kana — PostgreSQL", (it) => {
       yield* runMigrations
       const repo = yield* LinguisticElementRepo
 
-      const found = yield* repo.findById(LinguisticElementId(KanaId(9999)))
+      const found = yield* repo.findById(LinguisticElementId(KanaId(99999)))
       assert.ok(Option.isNone(found))
     }),
   )
@@ -54,7 +54,7 @@ layer(TestLayer, { timeout: 60_000 })("Seed kana — PostgreSQL", (it) => {
       yield* runMigrations
       const repo = yield* LinguisticElementRepo
 
-      const results = yield* repo.findByKind("word")
+      const results = yield* repo.findByKind("grammar")
       assert.strictEqual(results.length, 0)
     }),
   )

@@ -244,18 +244,18 @@ Les mots sont triés par fréquence d'apparition en tant que lemme dans le corpu
 
 ### Étape 2 — Migration seed mots
 
-- [ ] Créer la migration `0007_seed_words.ts` qui insère les 5000 éléments via SQL (batchs de 500)
-- [ ] Dans la même migration, créer les 30 000 ContentItems (chaque mot × skills 4, 6, 7, 8, 9, 10)
-- [ ] Écrire les tests d'intégration (Vitest + Testcontainers) :
-  - [ ] Test : chaque mot a exactement 6 ContentItems → AC11
-  - [ ] Test : aucun ContentItem en doublon → AC12
-  - [ ] Test : round-trip seed → lecture → données correctes → AC13
-  - [ ] Test : 30 000 ContentItems mots au total → AC14
+- [x] Créer la migration `0007_seed_words.ts` qui insère les 5000 éléments via SQL (batchs de 500)
+- [x] Dans la même migration, créer les 30 000 ContentItems (chaque mot × skills 4, 6, 7, 8, 9, 10)
+- [x] Écrire les tests d'intégration (Vitest + Testcontainers) :
+  - [x] Test : chaque mot a exactement 6 ContentItems → AC11
+  - [x] Test : aucun ContentItem en doublon → AC12
+  - [x] Test : round-trip seed → lecture → données correctes → AC13
+  - [x] Test : 30 000 ContentItems mots au total → AC14
 
 ### Étape 3 — Vérifications finales
 
-- [ ] `pnpm build` compile sans erreur → AC15
-- [ ] Mise à jour du CLAUDE.md si nécessaire
+- [x] `pnpm build` compile sans erreur → AC15
+- [x] Mise à jour du CLAUDE.md si nécessaire (pas de changement requis)
 
 ## Sources de données
 
