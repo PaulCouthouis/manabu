@@ -270,21 +270,23 @@ Les grammar points conservent les mêmes IDs que les anciens `GrammarElement` (3
 
 ### Étape 5 — Migration des sentences et content items grammar
 
-- [ ] Créer la migration `packages/db/src/migrations/0013_sentence_grammar_point.ts`
-  - [ ] Créer la table `sentence_grammar_point`
-  - [ ] Migrer les liens grammar depuis `element_component` vers `sentence_grammar_point`
-  - [ ] Supprimer les anciens liens sentence → grammar dans `element_component`
-  - [ ] Créer les content items sentences × skills grammar (G1-G5)
-- [ ] Adapter `packages/domain/src/sentence-data/` :
-  - [ ] Modifier le helper `s()` pour séparer `components` (WordId[]) et `grammarPoints` (GrammarPointId[])
-  - [ ] Mettre à jour tous les fichiers de données (skill-11 à skill-15)
-- [ ] Écrire les tests d'intégration :
-  - [ ] Test : `element_component` ne contient plus de liens vers des grammar points → AC12
-  - [ ] Test : `sentence_grammar_point` contient les bons liens → AC13
-  - [ ] Test : les sentences ont des content items sur les skills grammar appropriés → AC14
-  - [ ] Test : nombre total de content items correct → AC15
-- [ ] Écrire les tests unitaires :
-  - [ ] Test : les 2 590 sentences ont des `components` WordId-only et des `grammarPoints` corrects → AC19
+- [x] Créer la migration `packages/db/src/migrations/0013_sentence_grammar_point.ts`
+  - [x] Créer la table `sentence_grammar_point`
+  - [x] Insérer les liens sentence → grammar_point depuis les données domaine
+  - [x] Créer les content items sentences × skills grammar (G1-G5)
+- [x] Adapter `packages/domain/src/sentence-data/` :
+  - [x] Modifier le helper `s()` pour séparer `components` (WordId[]) et `grammarPoints` (GrammarPointId[]) (fait à l'étape 2)
+  - [x] Mettre à jour tous les fichiers de données (skill-11 à skill-15) (fait à l'étape 2)
+- [x] Nettoyer `packages/db/src/linguistic-element-repo.ts` :
+  - [x] Supprimer le hack `components.filter(WORD_ID_MIN)` — lire `sentence_grammar_point` séparément
+  - [x] Retirer les colonnes grammar mortes de `ElementRow`
+- [x] Écrire les tests d'intégration :
+  - [x] Test : `element_component` ne contient plus de liens vers des grammar points → AC12
+  - [x] Test : `sentence_grammar_point` contient les bons liens → AC13
+  - [x] Test : les sentences ont des content items sur les skills grammar appropriés → AC14
+  - [x] Test : nombre total de content items correct → AC15
+- [x] Écrire les tests unitaires :
+  - [x] Test : les 2 590 sentences ont des `components` WordId-only et des `grammarPoints` corrects → AC19 (sentence-data.test.ts existant)
 
 ### Étape 6 — Vérifications finales et non-régression
 

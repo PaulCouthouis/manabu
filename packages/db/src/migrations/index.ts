@@ -11,6 +11,7 @@ import m0009 from "./0009_seed_grammar.js"
 import m0010 from "./0010_seed_sentences.js"
 import m0011 from "./0011_review_card.js"
 import m0012 from "./0012_grammar_point.js"
+import m0013 from "./0013_sentence_grammar_point.js"
 
 const migrations = Migrator.fromRecord({
   "0001_skill_type": m0001,
@@ -25,6 +26,7 @@ const migrations = Migrator.fromRecord({
   "0010_seed_sentences": m0010,
   "0011_review_card": m0011,
   "0012_grammar_point": m0012,
+  "0013_sentence_grammar_point": m0013,
 })
 
 const migrator = Migrator.make({})

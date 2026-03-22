@@ -1,12 +1,6 @@
 import { SqlClient } from "@effect/sql"
 import type { LinguisticElement, LinguisticElementId, LinguisticElementKind } from "@manabu/domain"
-import {
-  KanaElement,
-  KanjiElement,
-  SentenceElement,
-  WORD_ID_MIN,
-  WordElement,
-} from "@manabu/domain"
+import { KanaElement, KanjiElement, SentenceElement, WordElement } from "@manabu/domain"
 import { Array, Effect, Option, ParseResult, Record, Schema } from "effect"
 
 interface ElementRow {
@@ -21,9 +15,6 @@ interface ElementRow {
   readonly written: string | null
   readonly meaning: string | null
   readonly text: string | null
-  readonly name: string | null
-  readonly explanation: string | null
-  readonly form_count: number | null
   readonly sentence_rank: number | null
 }
 
@@ -40,6 +31,7 @@ const decodeSentence = Schema.decodeUnknown(SentenceElement)
 const decodeRow = (
   row: ElementRow,
   components: ReadonlyArray<number>,
+  grammarPoints: ReadonlyArray<number> = [],
 ): Effect.Effect<LinguisticElement, ParseResult.ParseError> => {
   switch (row.kind) {
     case "kana":
@@ -75,8 +67,8 @@ const decodeRow = (
         kind: "sentence",
         text: row.text,
         meaning: row.meaning,
-        components: components.filter((id) => id >= WORD_ID_MIN),
-        grammarPoints: components.filter((id) => id < WORD_ID_MIN),
+        components,
+        grammarPoints,
         sentenceRank: row.sentence_rank,
       })
     default:
@@ -105,9 +97,16 @@ export class LinguisticElementRepo extends Effect.Service<LinguisticElementRepo>
                   const comps = yield* sql<ComponentRow>`
                     SELECT component_id FROM element_component WHERE parent_id = ${row.id} ORDER BY position
                   `
+                  const gpRows =
+                    row.kind === "sentence"
+                      ? yield* sql<{ grammar_point_id: number }>`
+                          SELECT grammar_point_id FROM sentence_grammar_point WHERE sentence_id = ${row.id}
+                        `
+                      : []
                   const element = yield* decodeRow(
                     row,
                     Array.map(comps, (r) => r.component_id),
+                    Array.map(gpRows, (r) => r.grammar_point_id),
                   )
                   return Option.some(element)
                 }),
@@ -131,12 +130,25 @@ export class LinguisticElementRepo extends Effect.Service<LinguisticElementRepo>
 
           const compsByParent = Array.groupBy(allComps, (c) => String(c.parent_id))
 
+          const allGrammarPoints =
+            kind === "sentence"
+              ? yield* sql<{ sentence_id: number; grammar_point_id: number }>`
+                  SELECT sentence_id, grammar_point_id FROM sentence_grammar_point
+                  WHERE sentence_id IN ${sql.in(ids)}
+                `
+              : []
+          const gpByParent = Array.groupBy(allGrammarPoints, (g) => String(g.sentence_id))
+
           return yield* Effect.all(
             Array.map(rows, (row) =>
               decodeRow(
                 row,
                 Record.get(compsByParent, String(row.id)).pipe(
                   Option.map(Array.map((c) => c.component_id)),
+                  Option.getOrElse(() => Array.empty<number>()),
+                ),
+                Record.get(gpByParent, String(row.id)).pipe(
+                  Option.map(Array.map((g) => g.grammar_point_id)),
                   Option.getOrElse(() => Array.empty<number>()),
                 ),
               ),
