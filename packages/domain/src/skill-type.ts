@@ -32,6 +32,7 @@ export class SkillType extends Schema.Class<SkillType>("SkillType")({
 // --- Skill ID sets by element type ---
 
 export const WORD_SKILL_IDS = [4, 6, 7, 8, 9, 10] as const
+export const SENTENCE_SKILL_IDS = [4, 5, 6, 7, 8, 9, 10] as const
 
 // --- Constants ---
 

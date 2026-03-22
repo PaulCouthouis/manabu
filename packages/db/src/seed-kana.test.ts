@@ -49,13 +49,13 @@ layer(TestLayer, { timeout: 60_000 })("Seed kana — PostgreSQL", (it) => {
     }),
   )
 
-  it.effect("findByKind returns empty for unseeded kinds", () =>
+  it.effect("findByKind returns seeded sentences", () =>
     Effect.gen(function* () {
       yield* runMigrations
       const repo = yield* LinguisticElementRepo
 
       const results = yield* repo.findByKind("sentence")
-      assert.strictEqual(results.length, 0)
+      assert.strictEqual(results.length, 2590)
     }),
   )
 

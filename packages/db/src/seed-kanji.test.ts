@@ -25,10 +25,16 @@ layer(TestLayer, { timeout: 60_000 })("Seed kanji — PostgreSQL", (it) => {
       assert.strictEqual(kanjiElements.length, 2136)
 
       const skill5Items = yield* contentRepo.findBySkillType(SkillTypeId(5))
-      assert.strictEqual(skill5Items.length, 2136)
+      const kanjiSkill5Items = Array.filter(skill5Items, (ci) => {
+        const eid = Number(ci.linguisticElementId)
+        return eid >= 1000 && eid <= 4999
+      })
+      assert.strictEqual(kanjiSkill5Items.length, 2136)
 
       const kanjiIds = new Set(Array.map(kanjiElements, (k) => Number(k.id)))
-      const itemElementIds = new Set(Array.map(skill5Items, (ci) => Number(ci.linguisticElementId)))
+      const itemElementIds = new Set(
+        Array.map(kanjiSkill5Items, (ci) => Number(ci.linguisticElementId)),
+      )
 
       for (const id of kanjiIds) {
         assert.ok(itemElementIds.has(id), `Kanji ${id} missing Skill 5 ContentItem`)

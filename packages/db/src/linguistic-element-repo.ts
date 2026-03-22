@@ -24,6 +24,7 @@ interface ElementRow {
   readonly name: string | null
   readonly explanation: string | null
   readonly form_count: number | null
+  readonly sentence_rank: number | null
 }
 
 interface ComponentRow {
@@ -76,6 +77,7 @@ const decodeRow = (
         text: row.text,
         meaning: row.meaning,
         components,
+        sentenceRank: row.sentence_rank,
       })
     case "grammar":
       return decodeGrammar({

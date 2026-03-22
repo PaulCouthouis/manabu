@@ -101,13 +101,15 @@ Chaque sentence génère des `ContentItem` pour les skills core où elle est exe
 
 | Skill core | Description | Applicable si |
 |---|---|---|
-| 4 | Lecture → prononciation | Toujours |
-| 5 | Lecture → sens | Toujours |
-| 6 | Rappel productif | Toujours |
-| 7 | Perception audio | Toujours |
-| 8 | Compréhension orale | Toujours |
+| 4 | Word listening & repetition | Toujours |
+| 5 | Kanji meaning | Toujours |
+| 6 | Listening comprehension | Toujours |
+| 7 | Reading aloud | Toujours |
+| 8 | Reading comprehension | Toujours |
+| 9 | Oral production | Toujours |
+| 10 | Written production | Toujours |
 
-**Total ContentItems :** 2 590 × 5 = **12 950**
+**Total ContentItems :** 2 590 × 7 = **18 130**
 
 ## Processus de génération semi-automatique
 
@@ -205,8 +207,8 @@ Le prompt doit exiger :
 
 | # | Critère | Type de vérification | Étape |
 |---|---|---|---|
-| AC20 | Chaque SentenceElement a exactement 5 ContentItems (skills 4, 5, 6, 7, 8) | Intégration | 4 |
-| AC21 | 12 950 ContentItems sentences au total (2 590 × 5) | Intégration | 4 |
+| AC20 | Chaque SentenceElement a exactement 7 ContentItems (skills 4, 5, 6, 7, 8, 9, 10) | Intégration | 4 |
+| AC21 | 18 130 ContentItems sentences au total (2 590 × 7) | Intégration | 4 |
 | AC22 | Aucun ContentItem en doublon (contrainte UNIQUE respectée) | Intégration | 4 |
 | AC23 | Round-trip : seed → lecture via SQL → données correctes | Intégration | 4 |
 
@@ -273,15 +275,15 @@ Le prompt doit exiger :
 
 ### Étape 4 — Migration seed sentences
 
-- [ ] Créer la migration `0010_seed_sentences.ts`
-  - [ ] Insérer les 2 590 SentenceElements via SQL (batchs de 500)
-  - [ ] Insérer les composants dans `element_component`
-  - [ ] Créer les 12 950 ContentItems (2 590 × 5 skills core)
-- [ ] Écrire les tests d'intégration (Vitest + Testcontainers) :
-  - [ ] Test : chaque SentenceElement a exactement 5 ContentItems → AC20
-  - [ ] Test : 12 950 ContentItems au total → AC21
-  - [ ] Test : aucun ContentItem en doublon → AC22
-  - [ ] Test : round-trip seed → lecture → données correctes → AC23
+- [x] Créer la migration `0010_seed_sentences.ts`
+  - [x] Insérer les 2 590 SentenceElements via SQL (batchs de 500)
+  - [x] Insérer les composants dans `element_component`
+  - [x] Créer les 18 130 ContentItems (2 590 × 7 skills core)
+- [x] Écrire les tests d'intégration (Vitest + Testcontainers) :
+  - [x] Test : chaque SentenceElement a exactement 5 ContentItems → AC20
+  - [x] Test : 12 950 ContentItems au total → AC21
+  - [x] Test : aucun ContentItem en doublon → AC22
+  - [x] Test : round-trip seed → lecture → données correctes → AC23
 
 ### Étape 5 — Vérifications finales
 

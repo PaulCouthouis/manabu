@@ -8,6 +8,7 @@ export {
   SkillTypeId,
   SkillTypeIdSchema,
   SkillTypes,
+  SENTENCE_SKILL_IDS,
   WORD_SKILL_IDS,
 } from "./skill-type.js"
 
