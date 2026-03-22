@@ -1,10 +1,10 @@
-import type { GrammarElement } from "../linguistic-element.js"
+import type { GrammarPoint } from "../grammar-point.js"
 import { g } from "./helpers.js"
 
 // Skill 13 — Keigo (28 éléments)
 // IDs 473-500, frequency = rang intra-skill
 
-export const skill13Data: ReadonlyArray<GrammarElement> = [
+export const skill13Data: ReadonlyArray<GrammarPoint> = [
   g(473, "お〜になる", "Honorific verb pattern elevating the listener's action", 1, 1),
   g(474, "お〜する/いたす", "Humble verb pattern lowering the speaker's action", 2, 2),
   g(475, "お〜ください", "Respectful request pattern for wago verbs (please do)", 3, 1),

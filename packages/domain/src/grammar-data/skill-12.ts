@@ -1,10 +1,10 @@
-import type { GrammarElement } from "../linguistic-element.js"
+import type { GrammarPoint } from "../grammar-point.js"
 import { g } from "./helpers.js"
 
 // Skill 12 — Conjugaisons & patterns (93 éléments)
 // IDs 380-472, frequency = rang intra-skill
 
-export const skill12Data: ReadonlyArray<GrammarElement> = [
+export const skill12Data: ReadonlyArray<GrammarPoint> = [
   // --- Conjugaisons pures (28) ---
   g(
     380,

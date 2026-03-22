@@ -1,10 +1,10 @@
-import type { GrammarElement } from "../linguistic-element.js"
+import type { GrammarPoint } from "../grammar-point.js"
 import { g } from "./helpers.js"
 
 // Skill 11 — Particules & connecteurs (80 éléments)
 // IDs 300-379, frequency = rang intra-skill
 
-export const skill11Data: ReadonlyArray<GrammarElement> = [
+export const skill11Data: ReadonlyArray<GrammarPoint> = [
   // --- Particules (24) ---
   g(300, "だ", "Copula asserting identity or state", 1, 1),
   g(301, "は", "Marks the topic of a sentence", 2, 1),

@@ -1,21 +1,20 @@
 import { assert, layer } from "@effect/vitest"
-import { GrammarId, LinguisticElementId, SkillTypeId } from "@manabu/domain"
-import { Array, Effect, Layer, Option } from "effect"
+import { SkillTypeId } from "@manabu/domain"
+import { Array, Effect, Layer } from "effect"
 import { ContentItemRepo } from "./content-item-repo.js"
-import { LinguisticElementRepo } from "./linguistic-element-repo.js"
 import { runMigrations } from "./migrations/index.js"
 import { SkillTypeRepo } from "./skill-type-repo.js"
 import { TestSqlLayer } from "./test-utils.js"
 
-const TestLayer = Layer.mergeAll(
-  LinguisticElementRepo.Default,
-  ContentItemRepo.Default,
-  SkillTypeRepo.Default,
-).pipe(Layer.provideMerge(TestSqlLayer))
+const TestLayer = Layer.mergeAll(ContentItemRepo.Default, SkillTypeRepo.Default).pipe(
+  Layer.provideMerge(TestSqlLayer),
+)
 
 const GRAMMAR_SKILL_IDS = [11, 12, 13, 14, 15]
 const GRAMMAR_COUNTS: Record<number, number> = { 11: 80, 12: 93, 13: 28, 14: 14, 15: 44 }
 
+// These tests validate the current seed grammar migrations (0009).
+// They will be rewritten at US8 step 4 when grammar moves to its own table.
 layer(TestLayer, { timeout: 120_000 })("Seed grammar — PostgreSQL", (it) => {
   // AC8 — Chaque GrammarElement a exactement 1 ContentItem
   it.effect("each grammar element has exactly 1 ContentItem for its skill", () =>
@@ -58,27 +57,6 @@ layer(TestLayer, { timeout: 120_000 })("Seed grammar — PostgreSQL", (it) => {
       )
       const unique = new Set(grammarPairs)
       assert.strictEqual(unique.size, grammarPairs.length)
-    }),
-  )
-
-  // AC10 — Round-trip seed → lecture → données correctes
-  it.effect("round-trip: seeded grammar elements are readable with correct data", () =>
-    Effect.gen(function* () {
-      yield* runMigrations
-      const elemRepo = yield* LinguisticElementRepo
-
-      const grammarElements = yield* elemRepo.findByKind("grammar")
-      assert.strictEqual(grammarElements.length, 259)
-
-      // Verify first element (だ, ID 300)
-      const first = yield* elemRepo.findById(LinguisticElementId(GrammarId(300)))
-      assert.ok(Option.isSome(first))
-      if (Option.isSome(first) && first.value.kind === "grammar") {
-        assert.strictEqual(first.value.name, "だ")
-        assert.strictEqual(first.value.explanation, "Copula asserting identity or state")
-        assert.strictEqual(first.value.frequency, 1)
-        assert.strictEqual(first.value.formCount, 1)
-      }
     }),
   )
 

@@ -1,7 +1,6 @@
 import { Schema } from "effect"
 import { describe, expect, it } from "vitest"
 import {
-  GrammarElement,
   GrammarId,
   KanaElement,
   KanaId,
@@ -58,14 +57,6 @@ describe("LinguisticElement", () => {
     frequency: 120,
   })
 
-  const grammarGa = GrammarElement.make({
-    id: GrammarId(300),
-    name: "が (subject marker)",
-    explanation: "Marks the subject of a sentence",
-    frequency: 1,
-    formCount: 1,
-  })
-
   const sentence = SentenceElement.make({
     id: SentenceId(400),
     text: "猫が好きです",
@@ -74,8 +65,8 @@ describe("LinguisticElement", () => {
     sentenceRank: 1,
   })
 
-  // AC1 — Les 5 sous-types de LinguisticElement sont modélisés avec union discriminée
-  describe("union discriminée — 5 sous-types", () => {
+  // AC1 — Les 4 sous-types de LinguisticElement sont modélisés avec union discriminée
+  describe("union discriminée — 4 sous-types", () => {
     it("KanaElement se construit avec kind 'kana'", () => {
       expect(kanaA.kind).toBe("kana")
       expect(kanaA.character).toBe("あ")
@@ -116,14 +107,6 @@ describe("LinguisticElement", () => {
       expect(sentence.text).toBe("猫が好きです")
       expect(sentence.meaning).toBe("I like cats")
       expect(sentence.components).toHaveLength(4)
-    })
-
-    it("GrammarElement se construit avec kind 'grammar'", () => {
-      expect(grammarGa.kind).toBe("grammar")
-      expect(grammarGa.name).toBe("が (subject marker)")
-      expect(grammarGa.explanation).toBe("Marks the subject of a sentence")
-      expect(grammarGa.frequency).toBe(1)
-      expect(grammarGa.formCount).toBe(1)
     })
   })
 

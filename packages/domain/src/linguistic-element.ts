@@ -84,25 +84,9 @@ export class SentenceElement extends Schema.Class<SentenceElement>("SentenceElem
   sentenceRank: Schema.Int.pipe(Schema.between(1, 10)),
 }) {}
 
-// --- Grammar ---
-
-export class GrammarElement extends Schema.Class<GrammarElement>("GrammarElement")({
-  id: GrammarIdSchema,
-  kind: kindField("grammar"),
-  name: Schema.String,
-  explanation: Schema.String,
-  frequency: Schema.Number,
-  formCount: Schema.Number,
-}) {}
-
 // --- Union discriminée ---
 
-export type LinguisticElement =
-  | KanaElement
-  | KanjiElement
-  | WordElement
-  | SentenceElement
-  | GrammarElement
+export type LinguisticElement = KanaElement | KanjiElement | WordElement | SentenceElement
 
 export type LinguisticElementKind = LinguisticElement["kind"]
 

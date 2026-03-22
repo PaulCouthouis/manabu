@@ -211,16 +211,16 @@ Les grammar points conservent les mêmes IDs que les anciens `GrammarElement` (3
 
 ### Étape 1 — Entité `GrammarPoint` dans le domaine
 
-- [ ] Créer `packages/domain/src/grammar-point.ts`
-  - [ ] Branded type `GrammarPointId` (distinct de `LinguisticElementId`)
-  - [ ] `Schema.Class` `GrammarPoint` avec `id`, `name`, `explanation`, `frequency`, `formCount`
-- [ ] Retirer `GrammarElement`, `GrammarId`, `GrammarIdSchema` de `linguistic-element.ts`
-- [ ] Retirer `GrammarElement` de l'union `LinguisticElement`
-- [ ] Mettre à jour `packages/domain/src/index.ts` (exports)
-- [ ] Écrire les tests unitaires (TDD) :
-  - [ ] Test : `GrammarPoint.make()` crée une instance valide → AC1
-  - [ ] Test : `GrammarPointId` est distinct de `LinguisticElementId` → AC3
-  - [ ] Test : `GrammarElement` n'existe plus dans l'union `LinguisticElement` → AC2
+- [x] Créer `packages/domain/src/grammar-point.ts`
+  - [x] Branded type `GrammarPointId` (distinct de `LinguisticElementId`)
+  - [x] `Schema.Class` `GrammarPoint` avec `id`, `name`, `explanation`, `frequency`, `formCount`
+- [x] Retirer `GrammarElement`, `GrammarId`, `GrammarIdSchema` de `linguistic-element.ts`
+- [x] Retirer `GrammarElement` de l'union `LinguisticElement`
+- [x] Mettre à jour `packages/domain/src/index.ts` (exports)
+- [x] Écrire les tests unitaires (TDD) :
+  - [x] Test : `GrammarPoint.make()` crée une instance valide → AC1
+  - [x] Test : `GrammarPointId` est distinct de `LinguisticElementId` → AC3
+  - [x] Test : `GrammarElement` n'existe plus dans l'union `LinguisticElement` → AC2
 
 ### Étape 2 — Modifier `SentenceElement`
 

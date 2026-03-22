@@ -1,12 +1,6 @@
 import { SqlClient } from "@effect/sql"
 import type { LinguisticElement, LinguisticElementId, LinguisticElementKind } from "@manabu/domain"
-import {
-  GrammarElement,
-  KanaElement,
-  KanjiElement,
-  SentenceElement,
-  WordElement,
-} from "@manabu/domain"
+import { KanaElement, KanjiElement, SentenceElement, WordElement } from "@manabu/domain"
 import { Array, Effect, Option, ParseResult, Record, Schema } from "effect"
 
 interface ElementRow {
@@ -36,7 +30,6 @@ const decodeKana = Schema.decodeUnknown(KanaElement)
 const decodeKanji = Schema.decodeUnknown(KanjiElement)
 const decodeWord = Schema.decodeUnknown(WordElement)
 const decodeSentence = Schema.decodeUnknown(SentenceElement)
-const decodeGrammar = Schema.decodeUnknown(GrammarElement)
 
 const decodeRow = (
   row: ElementRow,
@@ -78,15 +71,6 @@ const decodeRow = (
         meaning: row.meaning,
         components,
         sentenceRank: row.sentence_rank,
-      })
-    case "grammar":
-      return decodeGrammar({
-        id: row.id,
-        kind: "grammar",
-        name: row.name,
-        explanation: row.explanation,
-        frequency: row.frequency,
-        formCount: row.form_count,
       })
     default:
       return Effect.die(new Error(`Unknown element kind: ${row.kind}`))

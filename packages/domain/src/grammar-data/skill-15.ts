@@ -1,10 +1,10 @@
-import type { GrammarElement } from "../linguistic-element.js"
+import type { GrammarPoint } from "../grammar-point.js"
 import { g } from "./helpers.js"
 
 // Skill 15 — Compteurs & temps (44 éléments)
 // IDs 515-558, frequency = rang intra-skill
 
-export const skill15Data: ReadonlyArray<GrammarElement> = [
+export const skill15Data: ReadonlyArray<GrammarPoint> = [
   // --- Expressions temporelles (14) ---
   g(515, "時 (じ)", "Hours on the clock with irregular readings at 4, 7, 9", 1, 3),
   g(516, "分 (ふん/ぷん)", "Minutes with rendaku alternations at 1, 3, 4, 6, 8, 10", 2, 3),

@@ -1,4 +1,4 @@
-import { GrammarElement, GrammarId } from "../linguistic-element.js"
+import { GrammarPoint, GrammarPointId } from "../grammar-point.js"
 
 export const g = (
   id: number,
@@ -7,8 +7,8 @@ export const g = (
   frequency: number,
   formCount: number,
 ) =>
-  GrammarElement.make({
-    id: GrammarId(id),
+  GrammarPoint.make({
+    id: GrammarPointId(id),
     name,
     explanation,
     frequency,

@@ -24,7 +24,6 @@ export {
 
 export type { KanaType, LinguisticElement, LinguisticElementKind } from "./linguistic-element.js"
 export {
-  GrammarElement,
   GrammarId,
   GrammarIdSchema,
   KanaElement,
@@ -46,6 +45,8 @@ export {
 } from "./linguistic-element.js"
 
 export { ContentItem, ContentItemId, ContentItemIdSchema } from "./content-item.js"
+
+export { GrammarPoint, GrammarPointId, GrammarPointIdSchema } from "./grammar-point.js"
 
 export { kanaData } from "./kana-data.js"
 

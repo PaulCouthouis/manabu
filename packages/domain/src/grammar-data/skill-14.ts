@@ -1,10 +1,10 @@
-import type { GrammarElement } from "../linguistic-element.js"
+import type { GrammarPoint } from "../grammar-point.js"
 import { g } from "./helpers.js"
 
 // Skill 14 — Donner/recevoir (14 éléments)
 // IDs 501-514, frequency = rang intra-skill
 
-export const skill14Data: ReadonlyArray<GrammarElement> = [
+export const skill14Data: ReadonlyArray<GrammarPoint> = [
   g(501, "あげる", "To give outward (speaker/in-group gives to others)", 1, 1),
   g(502, "もらう", "To receive (speaker/in-group receives from others)", 2, 1),
   g(503, "くれる", "To give inward (others give to speaker/in-group)", 3, 1),
