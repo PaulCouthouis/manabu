@@ -227,13 +227,13 @@ Le prompt doit exiger :
 
 ### Étape 1 — Script de génération des contraintes
 
-- [ ] Créer `scripts/generate-sentence-constraints.ts`
-  - [ ] Pour chaque grammar point (300-558) × rank (1-10), produire un objet JSON :
+- [x] Créer `scripts/generate-sentence-constraints.ts`
+  - [x] Pour chaque grammar point (300-558) × rank (1-10), produire un objet JSON :
     - Grammar point principal (ID, name, explanation)
     - Grammar points secondaires éligibles (filtrés par contrainte de skill selon le rank)
     - Liste exhaustive des WordIds éligibles (filtrés par bande de fréquence selon le rank)
     - Chaque mot avec sa forme `written` et son `meaning`
-  - [ ] Exporter le résultat en fichier JSON pour consommation par le prompt IA
+  - [x] Exporter le résultat en fichier JSON pour consommation par le prompt IA
 
 ### Étape 2 — Génération IA des phrases
 
