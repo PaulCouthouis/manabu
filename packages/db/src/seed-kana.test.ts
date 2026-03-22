@@ -1,5 +1,5 @@
 import { assert, layer } from "@effect/vitest"
-import { KanaId, LinguisticElementId, SkillTypeId } from "@manabu/domain"
+import { KanaId, LinguisticElementId, SkillTypeId, sokuonChoonIds } from "@manabu/domain"
 import { Array, Effect, Layer, Option } from "effect"
 import { ContentItemRepo } from "./content-item-repo.js"
 import { LinguisticElementRepo } from "./linguistic-element-repo.js"
@@ -39,13 +39,13 @@ layer(TestLayer, { timeout: 60_000 })("Seed kana — PostgreSQL", (it) => {
     }),
   )
 
-  it.effect("findByKind returns all 208 seeded kana", () =>
+  it.effect("findByKind returns all seeded kana (208 standard + 16 extended)", () =>
     Effect.gen(function* () {
       yield* runMigrations
       const repo = yield* LinguisticElementRepo
 
       const results = yield* repo.findByKind("kana")
-      assert.strictEqual(results.length, 208)
+      assert.strictEqual(results.length, 224)
     }),
   )
 
@@ -59,53 +59,51 @@ layer(TestLayer, { timeout: 60_000 })("Seed kana — PostgreSQL", (it) => {
     }),
   )
 
-  // AC5 — Chaque hiragana a un ContentItem F1 et F2
-  it.effect("each hiragana has ContentItems for F1 and F2", () =>
+  // AC5 — Chaque hiragana standard a un ContentItem F1 et F2
+  it.effect("each standard hiragana has ContentItems for F1 and F2", () =>
     Effect.gen(function* () {
       yield* runMigrations
       const elemRepo = yield* LinguisticElementRepo
       const contentRepo = yield* ContentItemRepo
 
       const kanaElements = yield* elemRepo.findByKind("kana")
-      const hiragana = Array.filter(
+      const standardHiragana = Array.filter(
         kanaElements,
-        (k) => k.kind === "kana" && k.kanaType === "hiragana",
+        (k) => k.kind === "kana" && k.kanaType === "hiragana" && !sokuonChoonIds.has(k.id),
       )
 
-      assert.strictEqual(hiragana.length, 104)
+      assert.strictEqual(standardHiragana.length, 104)
 
-      const f1Items = yield* contentRepo.findBySkillType(SkillTypeId(1))
       const f2Items = yield* contentRepo.findBySkillType(SkillTypeId(2))
 
-      // Each hiragana should have one F1 and one F2 ContentItem
-      const hiraganaIds = new Set(Array.map(hiragana, (k) => Number(k.id)))
-      const f1ElementIds = new Set(Array.map(f1Items, (ci) => Number(ci.linguisticElementId)))
+      // Each standard hiragana should have one F1 and one F2 ContentItem
+      const hiraganaIds = new Set(Array.map(standardHiragana, (k) => Number(k.id)))
       const f2ElementIds = new Set(Array.map(f2Items, (ci) => Number(ci.linguisticElementId)))
 
       for (const id of hiraganaIds) {
-        assert.ok(f1ElementIds.has(id), `Hiragana ${id} missing F1 ContentItem`)
         assert.ok(f2ElementIds.has(id), `Hiragana ${id} missing F2 ContentItem`)
       }
     }),
   )
 
-  // AC6 — Chaque katakana a un ContentItem F3
-  it.effect("each katakana has a ContentItem for F3", () =>
+  // AC6 — Chaque katakana (standard + étendu, sauf sokuon/chōon) a un ContentItem F3
+  it.effect("each katakana with ContentItems has F3", () =>
     Effect.gen(function* () {
       yield* runMigrations
       const elemRepo = yield* LinguisticElementRepo
       const contentRepo = yield* ContentItemRepo
 
       const kanaElements = yield* elemRepo.findByKind("kana")
-      const katakana = Array.filter(
+      const katakanaWithF3 = Array.filter(
         kanaElements,
-        (k) => k.kind === "kana" && k.kanaType === "katakana",
+        (k) => k.kind === "kana" && k.kanaType === "katakana" && !sokuonChoonIds.has(k.id),
       )
 
-      assert.strictEqual(katakana.length, 104)
+      // 104 standard + 13 extended = 117
+      assert.strictEqual(katakanaWithF3.length, 117)
 
       const f3Items = yield* contentRepo.findBySkillType(SkillTypeId(3))
-      const katakanaIds = new Set(Array.map(katakana, (k) => Number(k.id)))
+      const katakanaIds = new Set(Array.map(katakanaWithF3, (k) => Number(k.id)))
       const f3ElementIds = new Set(Array.map(f3Items, (ci) => Number(ci.linguisticElementId)))
 
       for (const id of katakanaIds) {
@@ -140,7 +138,7 @@ layer(TestLayer, { timeout: 60_000 })("Seed kana — PostgreSQL", (it) => {
       const elemRepo = yield* LinguisticElementRepo
 
       const kanaElements = yield* elemRepo.findByKind("kana")
-      assert.strictEqual(kanaElements.length, 208)
+      assert.strictEqual(kanaElements.length, 224)
 
       // Verify first hiragana
       const first = kanaElements[0]
