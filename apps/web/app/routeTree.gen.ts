@@ -10,16 +10,22 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ProtectedRouteImport } from './routes/_protected'
+import { Route as ExerciseRouteImport } from './routes/_exercise'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthSignUpRouteImport } from './routes/auth/sign-up'
 import { Route as AuthSignInRouteImport } from './routes/auth/sign-in'
 import { Route as ProtectedProgressRouteImport } from './routes/_protected/progress'
 import { Route as ProtectedProfileRouteImport } from './routes/_protected/profile'
 import { Route as ProtectedHomeRouteImport } from './routes/_protected/home'
+import { Route as ExerciseSessionRouteImport } from './routes/_exercise/session'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
 const ProtectedRoute = ProtectedRouteImport.update({
   id: '/_protected',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExerciseRoute = ExerciseRouteImport.update({
+  id: '/_exercise',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -52,6 +58,11 @@ const ProtectedHomeRoute = ProtectedHomeRouteImport.update({
   path: '/home',
   getParentRoute: () => ProtectedRoute,
 } as any)
+const ExerciseSessionRoute = ExerciseSessionRouteImport.update({
+  id: '/session',
+  path: '/session',
+  getParentRoute: () => ExerciseRoute,
+} as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
@@ -60,6 +71,7 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/session': typeof ExerciseSessionRoute
   '/home': typeof ProtectedHomeRoute
   '/profile': typeof ProtectedProfileRoute
   '/progress': typeof ProtectedProgressRoute
@@ -69,6 +81,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/session': typeof ExerciseSessionRoute
   '/home': typeof ProtectedHomeRoute
   '/profile': typeof ProtectedProfileRoute
   '/progress': typeof ProtectedProgressRoute
@@ -79,7 +92,9 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_exercise': typeof ExerciseRouteWithChildren
   '/_protected': typeof ProtectedRouteWithChildren
+  '/_exercise/session': typeof ExerciseSessionRoute
   '/_protected/home': typeof ProtectedHomeRoute
   '/_protected/profile': typeof ProtectedProfileRoute
   '/_protected/progress': typeof ProtectedProgressRoute
@@ -91,6 +106,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/session'
     | '/home'
     | '/profile'
     | '/progress'
@@ -100,6 +116,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/session'
     | '/home'
     | '/profile'
     | '/progress'
@@ -109,7 +126,9 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/_exercise'
     | '/_protected'
+    | '/_exercise/session'
     | '/_protected/home'
     | '/_protected/profile'
     | '/_protected/progress'
@@ -120,6 +139,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ExerciseRoute: typeof ExerciseRouteWithChildren
   ProtectedRoute: typeof ProtectedRouteWithChildren
   AuthSignInRoute: typeof AuthSignInRoute
   AuthSignUpRoute: typeof AuthSignUpRoute
@@ -133,6 +153,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof ProtectedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_exercise': {
+      id: '/_exercise'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof ExerciseRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -177,6 +204,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProtectedHomeRouteImport
       parentRoute: typeof ProtectedRoute
     }
+    '/_exercise/session': {
+      id: '/_exercise/session'
+      path: '/session'
+      fullPath: '/session'
+      preLoaderRoute: typeof ExerciseSessionRouteImport
+      parentRoute: typeof ExerciseRoute
+    }
     '/api/auth/$': {
       id: '/api/auth/$'
       path: '/api/auth/$'
@@ -186,6 +220,18 @@ declare module '@tanstack/react-router' {
     }
   }
 }
+
+interface ExerciseRouteChildren {
+  ExerciseSessionRoute: typeof ExerciseSessionRoute
+}
+
+const ExerciseRouteChildren: ExerciseRouteChildren = {
+  ExerciseSessionRoute: ExerciseSessionRoute,
+}
+
+const ExerciseRouteWithChildren = ExerciseRoute._addFileChildren(
+  ExerciseRouteChildren,
+)
 
 interface ProtectedRouteChildren {
   ProtectedHomeRoute: typeof ProtectedHomeRoute
@@ -205,6 +251,7 @@ const ProtectedRouteWithChildren = ProtectedRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ExerciseRoute: ExerciseRouteWithChildren,
   ProtectedRoute: ProtectedRouteWithChildren,
   AuthSignInRoute: AuthSignInRoute,
   AuthSignUpRoute: AuthSignUpRoute,

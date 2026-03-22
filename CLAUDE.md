@@ -87,9 +87,12 @@ packages/shared →  (aucune dépendance interne)
 | `/home` | Protégée | Home utilisateur (layout `_protected`) |
 | `/progress` | Protégée | Progression (layout `_protected`) |
 | `/profile` | Protégée | Profil utilisateur (layout `_protected`) |
+| `/session` | Protégée | Session d'exercice (layout `_exercise`, plein écran) |
 | `/api/auth/*` | API | Endpoints Better Auth (sign-up, sign-in, sign-out, get-session) |
 
-Les routes protégées utilisent le layout `_protected.tsx` qui vérifie la session via `getAuthSessionFn` (server function) et redirige vers `/auth/sign-in` si non authentifié.
+Les routes protégées utilisent deux layouts qui vérifient la session via `getAuthSessionFn` (server function) et redirigent vers `/auth/sign-in` si non authentifié :
+- `_protected.tsx` — layout standard (home, progress, profile)
+- `_exercise.tsx` — layout plein écran (session d'exercice)
 
 ## Règles architecturales
 

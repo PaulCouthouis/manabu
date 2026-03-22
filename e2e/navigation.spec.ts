@@ -32,7 +32,7 @@ async function signUp(page: import("@playwright/test").Page, email: string) {
 }
 
 test.describe("Navigation — US9", () => {
-	test("routes protégées sans auth redirigent vers /auth/sign-in → AC5", async ({ page }) => {
+	test("routes protégées sans auth redirigent vers /auth/sign-in → AC5, AC6", async ({ page }) => {
 		await page.goto("/home", { waitUntil: "networkidle" })
 		await expect(page).toHaveURL(/\/auth\/sign-in/, { timeout: 15000 })
 
@@ -40,6 +40,9 @@ test.describe("Navigation — US9", () => {
 		await expect(page).toHaveURL(/\/auth\/sign-in/, { timeout: 15000 })
 
 		await page.goto("/profile", { waitUntil: "networkidle" })
+		await expect(page).toHaveURL(/\/auth\/sign-in/, { timeout: 15000 })
+
+		await page.goto("/session", { waitUntil: "networkidle" })
 		await expect(page).toHaveURL(/\/auth\/sign-in/, { timeout: 15000 })
 	})
 
@@ -61,5 +64,15 @@ test.describe("Navigation — US9", () => {
 		await expect(page).toHaveURL(/\/profile/, { timeout: 15000 })
 		await expect(page.getByRole("heading", { name: "Profil" })).toBeVisible()
 		await expect(page.locator("main")).toBeVisible()
+	})
+
+	test("/session rend une page plein écran avec layout exercice → AC4, AC8", async ({ page }) => {
+		const email = `nav-session-${Date.now()}@example.com`
+		await signUp(page, email)
+
+		await page.goto("/session", { waitUntil: "networkidle" })
+		await expect(page).toHaveURL(/\/session/, { timeout: 15000 })
+		await expect(page.getByRole("heading", { name: "Session" })).toBeVisible()
+		await expect(page.locator("[data-layout='exercise']")).toBeVisible()
 	})
 })

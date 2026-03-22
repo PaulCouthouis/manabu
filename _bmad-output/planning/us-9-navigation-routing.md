@@ -81,11 +81,11 @@ routes/
 
 ### Étape 3 — Layout exercice plein écran
 
-- [ ] Créer `_exercise.tsx` (layout protégé, plein écran, auth via `getAuthSessionFn`)
-- [ ] Créer `_exercise/session.tsx` (coquille : titre "Session")
-- [ ] Test E2E : `/session` rend la coquille → AC4
-- [ ] Test E2E : `/session` protégé par auth → AC6
-- [ ] Test E2E : layout distinct du standard → AC8
+- [x] Créer `_exercise.tsx` (layout protégé, plein écran, auth via `getAuthSessionFn`)
+- [x] Créer `_exercise/session.tsx` (coquille : titre "Session")
+- [x] Test E2E : `/session` rend la coquille → AC4
+- [x] Test E2E : `/session` protégé par auth → AC6
+- [x] Test E2E : layout distinct du standard → AC8
 
 ### Étape 4 — Vérifications finales
 
