@@ -238,18 +238,18 @@ Les grammar points conservent les mêmes IDs que les anciens `GrammarElement` (3
 
 ### Étape 3 — Entité `ReviewCard` + migration DB
 
-- [ ] Créer `packages/domain/src/review-card.ts`
-  - [ ] Branded type `ReviewCardId`
-  - [ ] `Schema.Class` `ReviewCard` avec `id`, `userId`, `contentItemId`, `createdAt`, `nextReviewAt`
-- [ ] Mettre à jour `packages/domain/src/index.ts` (exports)
-- [ ] Créer la migration `packages/db/src/migrations/0011_review_card.ts`
-  - [ ] Table `review_card` avec colonnes, FK vers `user(id)` et `content_item(id)`, contrainte UNIQUE
-- [ ] Écrire les tests unitaires (TDD) :
-  - [ ] Test : `ReviewCard.make()` crée une instance valide → AC7
-  - [ ] Test : `ReviewCardId` est un branded type → AC8
-- [ ] Écrire les tests d'intégration (Vitest + Testcontainers) :
-  - [ ] Test : table `review_card` créée avec les bonnes colonnes et FK → AC16
-  - [ ] Test : contrainte UNIQUE `(user_id, content_item_id)` empêche les doublons → AC17
+- [x] Créer `packages/domain/src/review-card.ts`
+  - [x] Branded type `ReviewCardId`
+  - [x] `Schema.Class` `ReviewCard` avec `id`, `userId`, `contentItemId`, `createdAt`, `nextReviewAt`
+- [x] Mettre à jour `packages/domain/src/index.ts` (exports)
+- [x] Créer la migration `packages/db/src/migrations/0011_review_card.ts`
+  - [x] Table `review_card` avec colonnes, FK vers `user(id)` et `content_item(id)`, contrainte UNIQUE
+- [x] Écrire les tests unitaires (TDD) :
+  - [x] Test : `ReviewCard.make()` crée une instance valide → AC7
+  - [x] Test : `ReviewCardId` est un branded type → AC8
+- [x] Écrire les tests d'intégration (Vitest + Testcontainers) :
+  - [x] Test : table `review_card` créée avec les bonnes colonnes et FK → AC16
+  - [x] Test : contrainte UNIQUE `(user_id, content_item_id)` empêche les doublons → AC17
 
 ### Étape 4 — Migration des grammar points
 

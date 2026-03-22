@@ -740,7 +740,13 @@ export const skill15Sentences: ReadonlyArray<SentenceElement> = [
   s(72283, "30秒間目を閉じてください", "Please close your eyes for 30 seconds", [5053, 528], 3),
   s(72284, "世界記録は9秒台だ", "The world record is in the 9-second range", [5064, 6147, 528], 4),
   s(72285, "このスマホは3秒で起動する", "This smartphone starts up in 3 seconds", [5466, 528], 5),
-  s(72286, "残り30秒で3点取った", "They scored 3 points in the last 30 seconds", [528, 516], 6),
+  s(
+    72286,
+    "残り30秒で3点取った",
+    "They scored 3 points in the last 30 seconds",
+    [5181, 528, 516],
+    6,
+  ),
   s(
     72287,
     "45秒間で100メートルを歩くのは難しい",
@@ -1922,7 +1928,7 @@ export const skill15Sentences: ReadonlyArray<SentenceElement> = [
     [5157, 554],
     5,
   ),
-  s(72546, "3席予約して4人で来た", "I reserved 3 seats but 4 people came", [554, 531], 6),
+  s(72546, "3席予約して4人で来た", "I reserved 3 seats but 4 people came", [5007, 554, 531], 6),
   s(
     72547,
     "30席の部屋で2時間の会議をした",
