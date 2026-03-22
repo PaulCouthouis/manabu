@@ -113,7 +113,7 @@ Les combinaisons ciblent les **alternances phonétiques irrégulières** (rendak
 
 | Champ | Type | Source | Description |
 |---|---|---|---|
-| `id` | `GrammarId` | Séquentiel 1-259 | ID stable pour FK |
+| `id` | `GrammarId` | Séquentiel 300-558 | ID stable pour FK |
 | `name` | `string` | Curation manuelle | Nom du point de grammaire (en anglais) |
 | `explanation` | `string` | Curation manuelle | Explication courte (en anglais) |
 | `frequency` | `number` | Rang intra-skill | Ordre d'enseignement au sein du skill |
@@ -123,11 +123,11 @@ Les combinaisons ciblent les **alternances phonétiques irrégulières** (rendak
 
 | GrammarElement | Skill associé | ContentItems |
 |---|---|---|
-| Particules & connecteurs (1-80) | Skill 11 | 1 chacun |
-| Conjugaisons & patterns (81-173) | Skill 12 | 1 chacun |
-| Keigo (174-201) | Skill 13 | 1 chacun |
-| Donner/recevoir (202-215) | Skill 14 | 1 chacun |
-| Compteurs & temps (216-259) | Skill 15 | 1 chacun |
+| Particules & connecteurs (300-379) | Skill 11 | 1 chacun |
+| Conjugaisons & patterns (380-472) | Skill 12 | 1 chacun |
+| Keigo (473-500) | Skill 13 | 1 chacun |
+| Donner/recevoir (501-514) | Skill 14 | 1 chacun |
+| Compteurs & temps (515-558) | Skill 15 | 1 chacun |
 
 **Total ContentItems grammaire :** 259
 
@@ -567,7 +567,7 @@ Chaque fichier `skill-XX.ts` exporte un `ReadonlyArray<GrammarElement>`. L'`inde
 |---|---|---|---|
 | AC1 | 259 GrammarElements sont présents | Unitaire | 1 |
 | AC2 | Pas de `name` en doublon | Unitaire | 1 |
-| AC3 | IDs continus 1-259, pas de trou ni doublon | Unitaire | 1 |
+| AC3 | IDs continus 300-558, pas de trou ni doublon | Unitaire | 1 |
 | AC4 | `name` et `explanation` non vides pour chaque élément | Unitaire | 1 |
 | AC5 | `frequency` > 0 pour chaque élément | Unitaire | 1 |
 | AC6 | `formCount` > 0 pour chaque élément | Unitaire | 1 |
@@ -613,23 +613,23 @@ Chaque fichier `skill-XX.ts` exporte un `ReadonlyArray<GrammarElement>`. L'`inde
 
 ### Étape 1 — Fichiers de données grammaire
 
-- [ ] Créer le dossier `packages/domain/src/grammar-data/`
-- [ ] Créer les 5 fichiers de données par skill :
-  - [ ] `skill-11.ts` — 80 particules & connecteurs
-  - [ ] `skill-12.ts` — 93 conjugaisons & patterns
-  - [ ] `skill-13.ts` — 28 keigo
-  - [ ] `skill-14.ts` — 14 donner/recevoir
-  - [ ] `skill-15.ts` — 44 compteurs & temps
-- [ ] Créer `index.ts` qui agrège tous les fichiers → `export const grammarData`
-- [ ] Utiliser `GrammarElement.make()` pour chaque entrée
-- [ ] Écrire les tests unitaires (TDD) sur le dataset agrégé :
-  - [ ] Test : 259 GrammarElements présents → AC1
-  - [ ] Test : pas de `name` en doublon → AC2
-  - [ ] Test : IDs continus 1-259 → AC3
-  - [ ] Test : `name` et `explanation` non vides → AC4
-  - [ ] Test : `frequency` > 0 → AC5
-  - [ ] Test : `formCount` > 0 → AC6
-  - [ ] Test : répartition par skill correcte → AC7
+- [x] Créer le dossier `packages/domain/src/grammar-data/`
+- [x] Créer les 5 fichiers de données par skill :
+  - [x] `skill-11.ts` — 80 particules & connecteurs
+  - [x] `skill-12.ts` — 93 conjugaisons & patterns
+  - [x] `skill-13.ts` — 28 keigo
+  - [x] `skill-14.ts` — 14 donner/recevoir
+  - [x] `skill-15.ts` — 44 compteurs & temps
+- [x] Créer `index.ts` qui agrège tous les fichiers → `export const grammarData`
+- [x] Utiliser `GrammarElement.make()` pour chaque entrée
+- [x] Écrire les tests unitaires (TDD) sur le dataset agrégé :
+  - [x] Test : 259 GrammarElements présents → AC1
+  - [x] Test : pas de `name` en doublon → AC2
+  - [x] Test : IDs continus 300-558 → AC3
+  - [x] Test : `name` et `explanation` non vides → AC4
+  - [x] Test : `frequency` > 0 → AC5
+  - [x] Test : `formCount` > 0 → AC6
+  - [x] Test : répartition par skill correcte → AC7
 
 ### Étape 2 — Migration seed grammaire
 
@@ -685,7 +685,7 @@ Chaque fichier `skill-XX.ts` exporte un `ReadonlyArray<GrammarElement>`. L'`inde
 | Keigo : dépendances verbe de base | Documenté, ordonnancement runtime | On n'enseigne pas いらっしゃる avant いる/行く/来る |
 | Nombres (一〜九) | WordElements (étape 0), pas GrammarElements | Les nombres sont des mots, pas de la grammaire |
 | Combinaisons nombre+compteur | WordElements avec chiffres arabes dans `written` | 3本 est la forme réelle, `components` ne garde que le kanji |
-| Plage d'IDs GrammarElements | GrammarId 1-259 | Espace d'IDs séparé (GrammarId ≠ KanaId/KanjiId/WordId) |
+| Plage d'IDs GrammarElements | GrammarId 300-558 | Après kana (1-224), avant kanji (1000+). Même table `linguistic_element`, IDs ne doivent pas collisionner. |
 | Plage d'IDs mots compteurs | WordId 10000-10051 | Suite des 5000 mots (5000-9999) de l'US6 |
 | Découpage fichiers grammaire | 5 fichiers, un par skill | Correspondance directe skill → fichier, lisible et maintenable |
 | Expressions fonctionnelles formelles | Skill 11, pas Skill 12 | に関して, において, etc. sont des expressions à trou, pas des transformations verbales |

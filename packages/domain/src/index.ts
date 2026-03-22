@@ -55,3 +55,12 @@ export { kanjiData } from "./kanji-data/index.js"
 export { wordData } from "./word-data/index.js"
 
 export { counterWordData } from "./counter-word-data.js"
+
+export {
+  grammarData,
+  skill11Data,
+  skill12Data,
+  skill13Data,
+  skill14Data,
+  skill15Data,
+} from "./grammar-data/index.js"

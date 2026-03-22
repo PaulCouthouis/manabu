@@ -1,0 +1,91 @@
+import type { GrammarElement } from "../linguistic-element.js"
+import { g } from "./helpers.js"
+
+// Skill 15 — Compteurs & temps (44 éléments)
+// IDs 515-558, frequency = rang intra-skill
+
+export const skill15Data: ReadonlyArray<GrammarElement> = [
+  // --- Expressions temporelles (14) ---
+  g(515, "時 (じ)", "Hours on the clock with irregular readings at 4, 7, 9", 1, 3),
+  g(516, "分 (ふん/ぷん)", "Minutes with rendaku alternations at 1, 3, 4, 6, 8, 10", 2, 3),
+  g(517, "半 (はん)", "Half unit used with time and durations", 3, 1),
+  g(518, "日 (にち/か)", "Days of the month with highly irregular native readings 1st-10th", 4, 10),
+  g(519, "曜日 (ようび)", "Days of the week using kanji elements", 5, 1),
+  g(520, "月 (がつ)", "Months of the year with irregular readings at 4, 7, 9", 6, 3),
+  g(521, "年 (ねん)", "Counter for years", 7, 1),
+  g(522, "前/後 (まえ/ご/あと)", "Before and after markers for time expressions", 8, 3),
+  g(523, "間 (あいだ/かん)", "Duration or interval marker with two readings", 9, 2),
+  g(524, "月間 (かげつ)", "Counter for duration in months with rendaku at 1, 6", 10, 2),
+  g(525, "日間 (にちかん)", "Counter for duration in days", 11, 2),
+  g(526, "時間 (じかん)", "Counter for duration in hours", 12, 1),
+  g(527, "週間 (しゅうかん)", "Counter for weeks with rendaku at 1", 13, 2),
+  g(528, "秒 (びょう)", "Counter for seconds", 14, 1),
+
+  // --- Compteurs courants (30) ---
+  g(
+    529,
+    "つ (hitotsu...)",
+    "Native Japanese general counter with highly irregular readings 1-10",
+    15,
+    10,
+  ),
+  g(530, "個 (こ)", "Sino-Japanese general counter for small objects with rendaku", 16, 4),
+  g(
+    531,
+    "人 (にん/り)",
+    "Counter for people with irregular ひとり, ふたり then regular にん",
+    17,
+    3,
+  ),
+  g(
+    532,
+    "本 (ほん)",
+    "Counter for long thin objects with いっぽん, にほん, さんぼん alternations",
+    18,
+    3,
+  ),
+  g(533, "枚 (まい)", "Counter for flat thin objects, regular", 19, 1),
+  g(
+    534,
+    "匹 (ひき)",
+    "Counter for small animals with いっぴき, にひき, さんびき alternations",
+    20,
+    3,
+  ),
+  g(535, "台 (だい)", "Counter for machines and vehicles", 21, 1),
+  g(536, "冊 (さつ)", "Counter for bound volumes with いっさつ, はっさつ alternations", 22, 2),
+  g(537, "杯 (はい)", "Counter for cups and glasses with いっぱい, さんばい alternations", 23, 3),
+  g(538, "回 (かい)", "Counter for occurrences with いっかい, ろっかい alternations", 24, 2),
+  g(539, "階 (かい)", "Counter for building floors with same alternations as 回", 25, 2),
+  g(540, "番 (ばん)", "Ordinal counter for ranking and numbering", 26, 1),
+  g(541, "歳/才 (さい)", "Counter for age with irregular はたち at 20", 27, 2),
+  g(542, "円 (えん)", "Counter for Japanese yen currency", 28, 1),
+  g(543, "キロ", "Counter for kilograms or kilometers", 29, 1),
+  g(544, "度 (ど)", "Counter for degrees or occurrences", 30, 1),
+  g(545, "足 (そく)", "Counter for pairs of footwear with いっそく alternation", 31, 2),
+  g(546, "着 (ちゃく)", "Counter for suits or outfits of clothing", 32, 1),
+  g(
+    547,
+    "軒 (けん)",
+    "Counter for houses and buildings with いっけん, さんげん alternations",
+    33,
+    2,
+  ),
+  g(548, "頭 (とう)", "Counter for large animals", 34, 1),
+  g(
+    549,
+    "羽 (わ)",
+    "Counter for birds and rabbits with いちわ, さんば, ろっぱ alternations",
+    35,
+    3,
+  ),
+  g(550, "通 (つう)", "Counter for letters, emails, and correspondence", 36, 1),
+  g(551, "丁目 (ちょうめ)", "Counter for city blocks in addresses", 37, 1),
+  g(552, "組 (くみ)", "Counter for groups, sets, or classes", 38, 1),
+  g(553, "曲 (きょく)", "Counter for songs and musical pieces", 39, 1),
+  g(554, "席 (せき)", "Counter for seats", 40, 1),
+  g(555, "行 (ぎょう)", "Counter for lines of text", 41, 1),
+  g(556, "口 (くち)", "Counter for bites, portions, or donations", 42, 1),
+  g(557, "切れ (きれ)", "Counter for slices or cut pieces", 43, 1),
+  g(558, "粒 (つぶ)", "Counter for grains, pills, and small round things", 44, 1),
+]
