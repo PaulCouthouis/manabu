@@ -66,7 +66,7 @@ export const skill11Part2Sentences: ReadonlyArray<SentenceElement> = [
     70408,
     "現代社会における問題について説明する。",
     "I will explain the problems in modern society.",
-    [340, 337, 5083, 5067, 5902],
+    [340, 380, 5083, 5067, 5902],
     8,
   ),
   // Rank 9: Top 3000, 3 grammar (current + 1 skill 11 + 1 different skill)
@@ -149,7 +149,7 @@ export const skill11Part2Sentences: ReadonlyArray<SentenceElement> = [
     70419,
     "時代によって価値観が変わるし、文化も違う。",
     "Values change depending on the era, and cultures differ too.",
-    [341, 327, 389, 8166, 5145, 5520, 5034],
+    [341, 327, 389, 7100, 5145, 5520, 5034],
     9,
   ),
   s(
@@ -163,7 +163,7 @@ export const skill11Part2Sentences: ReadonlyArray<SentenceElement> = [
   // ============================================================
   // Grammar: に基づいて (ID 342) — Marks basis for action or judgment
   // ============================================================
-  s(70421, "事実に基づいて話す。", "I speak based on facts.", [342, 6120, 5017], 1),
+  s(70421, "事実に基づいて話す。", "I speak based on facts.", [342, 5700, 5017], 1),
   s(70422, "法律に基づいて判断する。", "I judge based on the law.", [342, 6140, 5506], 2),
   s(
     70423,
@@ -279,7 +279,7 @@ export const skill11Part2Sentences: ReadonlyArray<SentenceElement> = [
     70439,
     "この物語をもとにしたので、内容も面白いし、人気がある。",
     "Since it was based on this story, the content is interesting and it is popular.",
-    [343, 325, 327, 6042, 6037],
+    [343, 325, 380, 6042, 6037],
     9,
   ),
   s(
@@ -420,7 +420,7 @@ export const skill11Part2Sentences: ReadonlyArray<SentenceElement> = [
     70458,
     "何世代にわたって受け継がれてきた技術だ。",
     "This is a skill passed down over many generations.",
-    [345, 436, 529, 8285, 5523],
+    [345, 436, 8285, 5523],
     8,
   ),
   s(
@@ -489,7 +489,7 @@ export const skill11Part2Sentences: ReadonlyArray<SentenceElement> = [
     70469,
     "道に沿って歩くので、安全だし迷わない。",
     "Since I walk along the road, it is safe and I don't get lost.",
-    [346, 325, 327, 5338, 5135, 5409, 6103],
+    [346, 325, 380, 5338, 5135, 5409, 6103],
     9,
   ),
   s(
@@ -551,7 +551,7 @@ export const skill11Part2Sentences: ReadonlyArray<SentenceElement> = [
     70479,
     "状況に応じて方法を変えるし、相手にとっても良い。",
     "I change methods according to the situation, and it is good for the other party too.",
-    [347, 327, 339, 5516, 5081, 5171, 6032, 5020],
+    [347, 327, 380, 5516, 5081, 5171, 6032, 5020],
     9,
   ),
   s(
@@ -569,7 +569,7 @@ export const skill11Part2Sentences: ReadonlyArray<SentenceElement> = [
     70481,
     "日本をはじめ、多くの国が参加した。",
     "Many countries including Japan participated.",
-    [348, 5269, 5021, 6171],
+    [348, 5269, 5021, 5700],
     1,
   ),
   s(
@@ -618,14 +618,14 @@ export const skill11Part2Sentences: ReadonlyArray<SentenceElement> = [
     70488,
     "先生をはじめ、皆さんが協力してくださった。",
     "Everyone, starting with the teacher, cooperated for me.",
-    [348, 513, 529, 5350, 5373, 6134],
+    [348, 513, 5350, 5373, 6134],
     8,
   ),
   s(
     70489,
     "この町をはじめ、周りの地域でも人口が減っているし、問題だ。",
     "Population is decreasing in surrounding areas too, starting with this town, and it is a problem.",
-    [348, 327, 389, 5749, 8000, 8001, 5178, 5067],
+    [348, 327, 389, 5749, 7100, 7101, 5178, 5067],
     9,
   ),
   s(
@@ -650,7 +650,7 @@ export const skill11Part2Sentences: ReadonlyArray<SentenceElement> = [
     70492,
     "感謝の気持ちを込めて贈り物をした。",
     "I gave a gift with feelings of gratitude.",
-    [349, 7088, 5074],
+    [349, 6400, 5074],
     2,
   ),
   s(70493, "愛情を込めて料理を作る。", "I cook with love.", [349, 7091, 5308, 5016], 3),
@@ -693,7 +693,7 @@ export const skill11Part2Sentences: ReadonlyArray<SentenceElement> = [
     70499,
     "心を込めて作った料理だから、美味しいし、皆が喜ぶ。",
     "Since the food was made with heart, it is delicious and everyone is pleased.",
-    [349, 361, 327, 5058, 5016, 5308, 5372, 5881],
+    [349, 361, 380, 5058, 5016, 5308, 5372, 5881],
     9,
   ),
   s(
@@ -725,7 +725,7 @@ export const skill11Part2Sentences: ReadonlyArray<SentenceElement> = [
     70503,
     "人口の増加に伴って環境問題が深刻になる。",
     "Environmental problems become serious along with population increase.",
-    [350, 8001, 6164, 7049, 5067],
+    [350, 7100, 6164, 7049, 5067],
     3,
   ),
   s(
@@ -767,7 +767,7 @@ export const skill11Part2Sentences: ReadonlyArray<SentenceElement> = [
     70509,
     "人口が増えることに伴って、問題も出るし、対策も必要だ。",
     "Along with population increase, problems emerge and countermeasures are needed too.",
-    [350, 327, 385, 8001, 5177, 5067, 5085],
+    [350, 327, 385, 7100, 5177, 5067, 5085],
     9,
   ),
   s(
@@ -909,7 +909,7 @@ export const skill11Part2Sentences: ReadonlyArray<SentenceElement> = [
     70529,
     "資料を調べた上で報告するので、正確だし信頼できる。",
     "Since I report after examining the materials, it is accurate and reliable.",
-    [352, 325, 327, 5537, 5163, 5903, 5697, 5898],
+    [352, 325, 380, 5537, 5163, 5903, 5697, 5898],
     9,
   ),
   s(
@@ -934,7 +934,7 @@ export const skill11Part2Sentences: ReadonlyArray<SentenceElement> = [
     70532,
     "安い上に品質が良い。",
     "It is cheap and moreover the quality is good.",
-    [353, 5666, 7390, 5020],
+    [353, 5666, 6400, 5020],
     2,
   ),
   s(
@@ -1089,7 +1089,7 @@ export const skill11Part2Sentences: ReadonlyArray<SentenceElement> = [
     70553,
     "人口が増える一方、食料は足りない。",
     "While the population increases, food is insufficient.",
-    [355, 8001, 5177],
+    [355, 7100, 5177],
     3,
   ),
   s(
@@ -1489,7 +1489,7 @@ export const skill11Part2Sentences: ReadonlyArray<SentenceElement> = [
     70609,
     "大切な時に限って問題が起きるし、困る。",
     "Problems occur precisely at important times, and it's troublesome.",
-    [360, 327, 389, 5687, 5040, 5067, 5139, 8090],
+    [360, 327, 389, 5687, 5040, 5067, 5139, 7101],
     9,
   ),
   s(
@@ -1557,7 +1557,7 @@ export const skill11Part2Sentences: ReadonlyArray<SentenceElement> = [
     70619,
     "チームに入ったからには、努力するし仲間を大切にする。",
     "Now that I joined the team, I will make effort and treasure my companions.",
-    [361, 327, 389, 5486, 8299, 5687],
+    [361, 327, 389, 5486, 7100, 5687],
     9,
   ),
   s(
@@ -1956,7 +1956,7 @@ export const skill11Part2Sentences: ReadonlyArray<SentenceElement> = [
     70676,
     "この本は短いわりに内容が深いね。",
     "This book has deep content for how short it is, doesn't it?",
-    [367, 322, 5056, 5026, 6037],
+    [367, 322, 5056, 5026, 5700],
     6,
   ),
   s(
@@ -2125,7 +2125,7 @@ export const skill11Part2Sentences: ReadonlyArray<SentenceElement> = [
     70699,
     "信じているからこそ待つし、必ず会える。",
     "Precisely because I believe, I wait, and we will surely meet.",
-    [369, 327, 389, 8093, 5149, 6028, 5150],
+    [369, 327, 389, 7100, 5149, 6028, 5150],
     9,
   ),
   s(
@@ -2199,7 +2199,7 @@ export const skill11Part2Sentences: ReadonlyArray<SentenceElement> = [
     70709,
     "準備したものの、計画が変わったし、困った。",
     "Although I prepared, the plan changed and I was troubled.",
-    [370, 327, 389, 5908, 5480, 5145, 8090],
+    [370, 327, 389, 5908, 5480, 5145, 7100],
     9,
   ),
   s(
@@ -2329,7 +2329,7 @@ export const skill11Part2Sentences: ReadonlyArray<SentenceElement> = [
     70729,
     "困った時こそ、友達が助けてくれるし、ありがたい。",
     "It is precisely in troubled times that friends help, and it is appreciated.",
-    [372, 327, 389, 8090, 5040, 5072],
+    [372, 327, 389, 7100, 5040, 5072],
     9,
   ),
   s(
@@ -2463,7 +2463,7 @@ export const skill11Part2Sentences: ReadonlyArray<SentenceElement> = [
     70747,
     "先生ですら答えに対して悩むことがある。",
     "Even teachers sometimes worry about answers.",
-    [374, 338, 5350, 5162, 8091],
+    [374, 338, 5350, 5162, 7100],
     7,
   ),
   s(
@@ -2484,14 +2484,14 @@ export const skill11Part2Sentences: ReadonlyArray<SentenceElement> = [
     70750,
     "先生ですら存じ上げないことがございます。",
     "There are things that even the teacher does not know.",
-    [374, 497, 479, 5350],
+    [374, 497, 380, 5350],
     10,
   ),
 
   // ============================================================
   // Grammar: だらけ (ID 375) — Suffix marking abundance, often negative
   // ============================================================
-  s(70751, "この部屋は間違いだらけだ。", "This room is full of mistakes.", [375, 5329, 6110], 1),
+  s(70751, "この部屋は間違いだらけだ。", "This room is full of mistakes.", [375, 5329, 5700], 1),
   s(
     70752,
     "子供の服は泥だらけになった。",

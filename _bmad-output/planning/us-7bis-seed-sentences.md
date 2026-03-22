@@ -247,31 +247,29 @@ Le prompt doit exiger :
 
 ### Étape 3 — Validation et fichiers de données
 
-- [ ] Créer `scripts/validate-sentences.ts`
-  - [ ] Vérifier l'intégrité référentielle de chaque WordId et GrammarId → AC8, AC9
-  - [ ] Vérifier les contraintes de bande de fréquence → AC10-AC14
-  - [ ] Vérifier les contraintes grammaticales (nombre et skill des grammar points) → AC15-AC19
-  - [ ] Vérifier la couverture phrase (words + freeParticles)
-  - [ ] Exception skill 15 : tolérer les mots libres pour les noms comptés
-- [ ] Exécuter la validation et corriger les phrases non conformes
-- [ ] Créer les fichiers de données `packages/domain/src/sentence-data/`
-  - [ ] `skill-11.ts` — 800 sentences (80 grammar points × 10)
-  - [ ] `skill-12.ts` — 930 sentences (93 grammar points × 10)
-  - [ ] `skill-13.ts` — 280 sentences (28 grammar points × 10)
-  - [ ] `skill-14.ts` — 140 sentences (14 grammar points × 10)
-  - [ ] `skill-15.ts` — 440 sentences (44 grammar points × 10)
-  - [ ] `index.ts` — agrège tous les fichiers → `export const sentenceData`
-  - [ ] Helper `s()` pour construire les `SentenceElement.make()` de manière concise
-- [ ] Écrire les tests unitaires (TDD) sur le dataset agrégé :
-  - [ ] Test : 2 590 SentenceElements au total → AC3
-  - [ ] Test : IDs continus 70001-72590 → AC4
-  - [ ] Test : chaque grammar point a exactement 10 sentences → AC5
-  - [ ] Test : les 10 ranks sont couverts pour chaque grammar point → AC6
-  - [ ] Test : `text` et `meaning` non vides → AC7
-  - [ ] Test : tous les WordId dans components existent → AC8
-  - [ ] Test : tous les GrammarId dans components existent → AC9
-  - [ ] Test : contraintes de bande de fréquence respectées → AC10-AC14
-  - [ ] Test : contraintes grammaticales respectées → AC15-AC19
+- [x] Créer les tests unitaires de validation (remplace le script séparé) :
+  - [x] Vérifier l'intégrité référentielle de chaque WordId et GrammarId → AC8, AC9
+  - [x] Vérifier les contraintes de bande de fréquence → AC10-AC14
+  - [x] Vérifier les contraintes grammaticales (nombre et skill des grammar points) → AC15-AC19
+- [x] Exécuter la validation et corriger les phrases non conformes (256 violations corrigées)
+- [x] Créer les fichiers de données `packages/domain/src/sentence-data/`
+  - [x] `skill-11-part1.ts` + `skill-11-part2.ts` — 800 sentences (80 grammar points × 10)
+  - [x] `skill-12-part1.ts` + `skill-12-part2.ts` + `skill-12-part3.ts` — 930 sentences (93 grammar points × 10)
+  - [x] `skill-13.ts` — 280 sentences (28 grammar points × 10)
+  - [x] `skill-14.ts` — 140 sentences (14 grammar points × 10)
+  - [x] `skill-15.ts` — 440 sentences (44 grammar points × 10)
+  - [x] `index.ts` — agrège tous les fichiers → `export const sentenceData`
+  - [x] Helper `s()` pour construire les `SentenceElement.make()` de manière concise
+- [x] Écrire les tests unitaires (TDD) sur le dataset agrégé :
+  - [x] Test : 2 590 SentenceElements au total → AC3
+  - [x] Test : IDs continus 70001-72590 → AC4
+  - [x] Test : chaque grammar point a exactement 10 sentences → AC5
+  - [x] Test : les 10 ranks sont couverts pour chaque grammar point → AC6
+  - [x] Test : `text` et `meaning` non vides → AC7
+  - [x] Test : tous les WordId dans components existent → AC8
+  - [x] Test : tous les GrammarId dans components existent → AC9
+  - [x] Test : contraintes de bande de fréquence respectées → AC10-AC14
+  - [x] Test : contraintes grammaticales respectées → AC15-AC19
 
 ### Étape 4 — Migration seed sentences
 

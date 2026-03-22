@@ -52,7 +52,7 @@ export const skill14Sentences: ReadonlyArray<SentenceElement> = [
     72020,
     "友達に写真をあげたら最近の思い出を話してくれた",
     "When I gave my friend a photo, they told me about recent memories",
-    [5072, 5461, 5206, 5928, 5017, 501, 329, 506],
+    [5072, 5461, 5206, 5928, 5017, 501, 329, 380],
     10,
   ),
 
@@ -98,7 +98,7 @@ export const skill14Sentences: ReadonlyArray<SentenceElement> = [
     72028,
     "先生に資料をもらって説明していただいた",
     "I received materials from my teacher and they explained them to me",
-    [5350, 5537, 5902, 502, 512],
+    [5350, 5537, 5902, 502, 300],
     8,
   ),
   s(
@@ -112,7 +112,7 @@ export const skill14Sentences: ReadonlyArray<SentenceElement> = [
     72030,
     "友人にもらった本は一番大切なものだと思う",
     "The book I received from a friend is my most precious thing",
-    [5369, 5056, 5090, 5687, 5005, 502, 339, 300],
+    [5369, 5056, 5090, 5687, 5005, 502, 339, 380],
     10,
   ),
 
@@ -152,7 +152,7 @@ export const skill14Sentences: ReadonlyArray<SentenceElement> = [
     72038,
     "先生がくださった本を毎日読んでいる",
     "I read the book my teacher gave me every day",
-    [5350, 5056, 5293, 5136, 503, 510, 389],
+    [5350, 5056, 5293, 5136, 503, 389],
     8,
   ),
   s(
@@ -166,7 +166,7 @@ export const skill14Sentences: ReadonlyArray<SentenceElement> = [
     72040,
     "彼女が大切なプレゼントをくれたと言っていた",
     "He was saying that she gave him a precious present",
-    [5367, 5687, 6315, 5004, 503, 389, 428],
+    [5367, 5687, 6315, 5004, 503, 389, 300],
     10,
   ),
 
@@ -224,7 +224,7 @@ export const skill14Sentences: ReadonlyArray<SentenceElement> = [
     72048,
     "先生に丁寧に説明して差し上げた",
     "I politely explained it to my teacher",
-    [5350, 5698, 5902, 504, 511, 477],
+    [5350, 5698, 5902, 504, 477],
     8,
   ),
   s(
@@ -296,7 +296,7 @@ export const skill14Sentences: ReadonlyArray<SentenceElement> = [
     72058,
     "先生に日本語を教えていただいてうれしかった",
     "I had my teacher teach me Japanese and I was glad",
-    [5350, 5270, 5164, 5414, 505, 512, 473],
+    [5350, 5270, 5164, 5414, 505, 473],
     8,
   ),
   s(
@@ -368,7 +368,7 @@ export const skill14Sentences: ReadonlyArray<SentenceElement> = [
     72068,
     "先生がわからないところを説明してくださった",
     "My teacher explained the parts I didn't understand",
-    [5350, 5013, 5068, 5902, 506, 513, 385],
+    [5350, 5013, 5068, 5902, 506, 385],
     8,
   ),
   s(
@@ -416,7 +416,7 @@ export const skill14Sentences: ReadonlyArray<SentenceElement> = [
     72078,
     "毎日犬に水をやることになっている",
     "It's been decided that I water the dog every day",
-    [5293, 5585, 5309, 507, 433, 389],
+    [5293, 5585, 5309, 507, 433],
     8,
   ),
   s(
@@ -430,7 +430,7 @@ export const skill14Sentences: ReadonlyArray<SentenceElement> = [
     72080,
     "毎朝植物に水をやるようにしている",
     "I make sure to water the plants every morning",
-    [5294, 5591, 5309, 507, 419, 389],
+    [5294, 5591, 5309, 507, 419, 300],
     10,
   ),
 
@@ -462,7 +462,7 @@ export const skill14Sentences: ReadonlyArray<SentenceElement> = [
     72086,
     "先生にお茶を差し上げてからケーキもあげた",
     "I offered tea to the teacher and then also gave cake",
-    [5350, 5310, 6080, 508, 501],
+    [5350, 5310, 5700, 508, 501],
     6,
   ),
   s(
@@ -476,7 +476,7 @@ export const skill14Sentences: ReadonlyArray<SentenceElement> = [
     72088,
     "社長にお土産を丁寧に差し上げた",
     "I politely gave a souvenir to the president",
-    [5471, 7018, 5698, 508, 474, 477],
+    [5471, 7018, 5698, 508, 474],
     8,
   ),
   s(
@@ -490,7 +490,7 @@ export const skill14Sentences: ReadonlyArray<SentenceElement> = [
     72090,
     "先生に贈り物を差し上げたら喜んでくださった",
     "When I gave a gift to the teacher, they were pleased",
-    [5350, 6316, 5881, 508, 329, 513],
+    [5350, 6316, 5881, 508, 329, 380],
     10,
   ),
 
@@ -528,7 +528,7 @@ export const skill14Sentences: ReadonlyArray<SentenceElement> = [
     72096,
     "社長にお茶をいただいてからケーキも差し上げた",
     "I received tea from the president and then also gave cake",
-    [5471, 5310, 6080, 509, 508],
+    [5471, 5310, 5700, 509, 508],
     6,
   ),
   s(
@@ -542,7 +542,7 @@ export const skill14Sentences: ReadonlyArray<SentenceElement> = [
     72098,
     "先生から本をいただいた後で感謝を申し上げた",
     "After receiving a book from my teacher, I expressed my gratitude",
-    [5350, 5056, 5049, 7088, 509, 490, 477],
+    [5350, 5056, 5049, 7088, 509, 490],
     8,
   ),
   s(
@@ -556,7 +556,7 @@ export const skill14Sentences: ReadonlyArray<SentenceElement> = [
     72100,
     "社長からいただいたお茶はとても良かったらしい",
     "The tea I received from the president was apparently very good",
-    [5471, 5310, 5238, 5020, 509, 430, 427],
+    [5471, 5310, 5238, 5020, 509, 430, 300],
     10,
   ),
 
@@ -596,7 +596,7 @@ export const skill14Sentences: ReadonlyArray<SentenceElement> = [
     72108,
     "先生がくださった本を読んでから感想をお伝えした",
     "After reading the book the teacher gave me, I shared my thoughts",
-    [5350, 5056, 5136, 5509, 6012, 510, 474, 477],
+    [5350, 5056, 5136, 5509, 6012, 510, 474],
     8,
   ),
   s(
@@ -668,7 +668,7 @@ export const skill14Sentences: ReadonlyArray<SentenceElement> = [
     72118,
     "先生に丁寧にお教えして差し上げた",
     "I politely taught the teacher",
-    [5350, 5698, 5164, 511, 474, 477],
+    [5350, 5698, 5164, 511, 474],
     8,
   ),
   s(
@@ -682,7 +682,7 @@ export const skill14Sentences: ReadonlyArray<SentenceElement> = [
     72120,
     "先生に写真を送って差し上げたらとても喜んでくださった",
     "When I sent photos to my teacher, they were very pleased",
-    [5350, 5461, 5159, 5238, 5881, 511, 329, 513],
+    [5350, 5461, 5159, 5238, 5881, 511, 329, 380],
     10,
   ),
 
@@ -726,7 +726,7 @@ export const skill14Sentences: ReadonlyArray<SentenceElement> = [
     72126,
     "先生に教えていただいて感謝の手紙を差し上げた",
     "I had the teacher teach me and gave them a thank-you letter",
-    [5350, 5164, 7088, 5598, 512, 508],
+    [5350, 5164, 5700, 5598, 512, 508],
     6,
   ),
   s(
@@ -740,7 +740,7 @@ export const skill14Sentences: ReadonlyArray<SentenceElement> = [
     72128,
     "先生にていねいにご説明いただいた",
     "The teacher politely explained it to me",
-    [5350, 5698, 5498, 512, 476, 477],
+    [5350, 5698, 5498, 512, 476],
     8,
   ),
   s(
@@ -754,7 +754,7 @@ export const skill14Sentences: ReadonlyArray<SentenceElement> = [
     72130,
     "社長に確認していただいたらすぐに決めてくださった",
     "When I had the president check it, they decided right away",
-    [5471, 5907, 5389, 5146, 512, 329, 513],
+    [5471, 5907, 5389, 5146, 512, 329, 380],
     10,
   ),
 
@@ -812,7 +812,7 @@ export const skill14Sentences: ReadonlyArray<SentenceElement> = [
     72138,
     "先生がお教えくださった方法はとても役に立った",
     "The method my teacher taught me was very useful",
-    [5350, 5164, 5081, 5238, 5934, 513, 475, 477],
+    [5350, 5164, 5081, 5238, 5934, 513, 475],
     8,
   ),
   s(
@@ -826,7 +826,7 @@ export const skill14Sentences: ReadonlyArray<SentenceElement> = [
     72140,
     "部長が説明してくださった内容は本当に分かりやすかった",
     "The content the department head explained was really easy to understand",
-    [5472, 5902, 6037, 5400, 5013, 513, 438, 389],
+    [5472, 5902, 6037, 5400, 5013, 513, 438, 300],
     10,
   ),
 
@@ -872,14 +872,14 @@ export const skill14Sentences: ReadonlyArray<SentenceElement> = [
     72148,
     "弟の宿題を教えてやることにした",
     "I decided to teach my younger brother his homework",
-    [5358, 5348, 5164, 514, 432, 389],
+    [5358, 5348, 5164, 514, 432],
     8,
   ),
   s(
     72149,
     "妹に料理を作ってやったら本当にうれしそうだった",
     "When I made food for my younger sister, she looked really happy",
-    [5359, 5308, 5016, 5400, 5414, 514, 329, 427],
+    [5359, 5308, 5016, 5400, 5414, 514, 501, 427],
     9,
   ),
   s(

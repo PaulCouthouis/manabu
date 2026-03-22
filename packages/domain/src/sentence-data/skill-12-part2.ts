@@ -197,7 +197,7 @@ export const skill12Part2Sentences: ReadonlyArray<SentenceElement> = [
     71227,
     "試験に合格できるように単語を覚えておくべきだ",
     "You should memorize vocabulary in advance so you can pass the exam",
-    [5347, 6068, 8040, 5147, 422, 444],
+    [5347, 6068, 7100, 5147, 422, 444],
     7,
   ),
   s(
@@ -320,7 +320,7 @@ export const skill12Part2Sentences: ReadonlyArray<SentenceElement> = [
     71246,
     "起きたばかりなのにもう眠い",
     "I just woke up, but I'm already sleepy",
-    [5127, 5392, 5423, 424, 326],
+    [5127, 5392, 5423, 424, 380],
     6,
   ),
   s(
@@ -398,13 +398,7 @@ export const skill12Part2Sentences: ReadonlyArray<SentenceElement> = [
     [5735, 5926, 5922, 425, 391],
     7,
   ),
-  s(
-    71258,
-    "お客様がいらっしゃるところでございます",
-    "The guest is about to arrive",
-    [425, 480, 479],
-    8,
-  ),
+  s(71258, "お客様がいらっしゃるところでございます", "The guest is about to arrive", [425, 480], 8),
   s(
     71259,
     "出発するところだったのに電車が遅れてしまった",
@@ -470,7 +464,7 @@ export const skill12Part2Sentences: ReadonlyArray<SentenceElement> = [
     71268,
     "先生がご存知のはずだからお聞きしてみてください",
     "The teacher should know, so please try asking",
-    [5350, 486, 426, 474],
+    [5350, 486, 426],
     8,
   ),
   s(
@@ -510,7 +504,7 @@ export const skill12Part2Sentences: ReadonlyArray<SentenceElement> = [
     71274,
     "新しいシステムは使いやすそうだ",
     "The new system looks easy to use",
-    [5023, 6257, 5014, 427, 438],
+    [5023, 6257, 5014, 427],
     4,
   ),
   s(
@@ -524,7 +518,7 @@ export const skill12Part2Sentences: ReadonlyArray<SentenceElement> = [
     71276,
     "外は寒そうだからコートを着ていこう",
     "It looks cold outside, so let's wear a coat",
-    [5553, 6083, 427, 435],
+    [5553, 5700, 427, 435],
     6,
   ),
   s(
@@ -592,7 +586,7 @@ export const skill12Part2Sentences: ReadonlyArray<SentenceElement> = [
     71286,
     "あの店のケーキはおいしいそうだから行ってみよう",
     "I hear the cakes at that shop are delicious, so let's try going",
-    [5251, 6080, 5008, 428, 423],
+    [5251, 5700, 5008, 428, 423],
     6,
   ),
   s(
@@ -776,7 +770,7 @@ export const skill12Part2Sentences: ReadonlyArray<SentenceElement> = [
     71314,
     "来年の予算を削減するつもりだ",
     "I intend to cut next year's budget",
-    [5291, 6160, 9148, 431],
+    [5291, 6160, 7800, 431],
     4,
   ),
   s(
@@ -800,13 +794,7 @@ export const skill12Part2Sentences: ReadonlyArray<SentenceElement> = [
     [5637, 5615, 5614, 5027, 5501, 431, 437],
     7,
   ),
-  s(
-    71318,
-    "来週お伺いするつもりでございます",
-    "I intend to visit next week",
-    [5286, 431, 494, 479],
-    8,
-  ),
+  s(71318, "来週お伺いするつもりでございます", "I intend to visit next week", [5286, 431, 494], 8),
   s(
     71319,
     "大学を卒業したら留学するつもりだと友達も言っている",
@@ -836,7 +824,7 @@ export const skill12Part2Sentences: ReadonlyArray<SentenceElement> = [
     71322,
     "体のために甘いものを食べないことにした",
     "I decided not to eat sweet things for my health",
-    [5428, 7002, 5124, 432],
+    [5428, 6400, 5124, 432],
     2,
   ),
   s(
@@ -878,7 +866,7 @@ export const skill12Part2Sentences: ReadonlyArray<SentenceElement> = [
     71328,
     "来月から毎日お勉強なさることにしたとおっしゃっていた",
     "They were saying they decided to study every day from next month",
-    [5289, 5293, 5926, 432, 485, 481],
+    [5289, 5293, 5926, 432, 485],
     8,
   ),
   s(
@@ -917,7 +905,7 @@ export const skill12Part2Sentences: ReadonlyArray<SentenceElement> = [
     71333,
     "この地域では新しい規則を守ることになった",
     "It's been decided that new rules will be followed in this region",
-    [8000, 5023, 6139, 433],
+    [7100, 5023, 6139, 433],
     3,
   ),
   s(
@@ -952,14 +940,14 @@ export const skill12Part2Sentences: ReadonlyArray<SentenceElement> = [
     71338,
     "会議でご説明することになっておりますのでお待ちください",
     "It's been decided that I will explain at the meeting, so please wait",
-    [5345, 5498, 5149, 433, 492, 475],
+    [5345, 5498, 5149, 433, 492],
     8,
   ),
   s(
     71339,
     "来月から大阪に転勤することになったので引っ越しをしなければならない",
     "It was decided I'd transfer to Osaka, so I must move",
-    [5289, 5276, 7011, 8319, 433, 412, 310],
+    [5289, 5276, 7011, 7100, 433, 412, 310],
     9,
   ),
   s(
@@ -1006,7 +994,7 @@ export const skill12Part2Sentences: ReadonlyArray<SentenceElement> = [
     71346,
     "名前が書いてあるから誰のか分かる",
     "I can tell whose it is because the name is written on it",
-    [5063, 5137, 5250, 5013, 434, 310],
+    [5063, 5137, 5250, 5013, 434, 380],
     6,
   ),
   s(
@@ -1102,7 +1090,7 @@ export const skill12Part2Sentences: ReadonlyArray<SentenceElement> = [
     71360,
     "技術はどんどん発展していくのでしっかり学んでいってほしい",
     "Technology is advancing rapidly, so I want you to study firmly",
-    [5523, 5851, 5527, 5385, 5926, 435, 442, 515],
+    [5523, 5851, 5527, 5385, 5926, 435, 300, 515],
     10,
   ),
 
@@ -1170,7 +1158,7 @@ export const skill12Part2Sentences: ReadonlyArray<SentenceElement> = [
     71370,
     "技術が発達してきたおかげでこの仕事をもらえるようになった",
     "Thanks to technology developing, I came to be able to get this job",
-    [5523, 5528, 5066, 5186, 436, 420, 502],
+    [5523, 5528, 5066, 5186, 436, 300, 502],
     10,
   ),
 
@@ -1231,14 +1219,14 @@ export const skill12Part2Sentences: ReadonlyArray<SentenceElement> = [
     71379,
     "食べすぎてしまったので少し歩くことにした",
     "Since I ended up eating too much, I decided to walk a little",
-    [5124, 5240, 5135, 437, 421, 432],
+    [5124, 5240, 5135, 437, 421, 300],
     9,
   ),
   s(
     71380,
     "彼は真面目すぎて仕事を全部一人でやってしまうと先輩がくれた助言",
     "My senior's advice was that he's too serious and ends up doing all the work alone",
-    [5366, 5721, 5066, 5106, 5762, 5185, 437, 421, 506],
+    [5366, 5721, 5066, 5106, 5762, 5185, 437, 300, 506],
     10,
   ),
 
@@ -1292,7 +1280,7 @@ export const skill12Part2Sentences: ReadonlyArray<SentenceElement> = [
     71388,
     "こちらの商品はお使いになりやすいと存じます",
     "I believe this product is easy for you to use",
-    [5262, 6064, 5014, 438, 473, 497],
+    [5262, 6064, 5014, 438, 473],
     8,
   ),
   s(
@@ -1346,7 +1334,7 @@ export const skill12Part2Sentences: ReadonlyArray<SentenceElement> = [
     71396,
     "この漢字は覚えにくいけど大切だ",
     "This kanji is hard to memorize, but important",
-    [5147, 5687, 439, 324],
+    [5147, 5687, 439, 380],
     6,
   ),
   s(
@@ -1360,7 +1348,7 @@ export const skill12Part2Sentences: ReadonlyArray<SentenceElement> = [
     71398,
     "お話しになりにくいことかもしれませんがお聞かせください",
     "It may be hard to talk about, but please tell me",
-    [5017, 439, 449, 475],
+    [5017, 439, 475],
     8,
   ),
   s(
@@ -1381,7 +1369,7 @@ export const skill12Part2Sentences: ReadonlyArray<SentenceElement> = [
   // ============================================================
   // Grammar 440: 受身 indirect passive (negative impact)
   // ============================================================
-  s(71401, "雨に降られて困った", "I was rained on and was troubled", [5545, 8090, 440], 1),
+  s(71401, "雨に降られて困った", "I was rained on and was troubled", [5545, 5700, 440], 1),
   s(
     71402,
     "隣の人に夜遅くまで騒がれて眠れなかった",
@@ -1435,14 +1423,14 @@ export const skill12Part2Sentences: ReadonlyArray<SentenceElement> = [
     71409,
     "子供にケーキを全部食べられてしまったので買いに行かなければならない",
     "My child ate all the cake on me, so I have to go buy more",
-    [5364, 6080, 5106, 5124, 5157, 5008, 440, 421, 412],
+    [5364, 6080, 5106, 5124, 5157, 5008, 440, 421, 300],
     9,
   ),
   s(
     71410,
     "雨に降られてしまって友達にもらった服が濡れてしまった",
     "I got rained on and the clothes my friend gave me got wet",
-    [5545, 5072, 5186, 5324, 440, 421, 502],
+    [5545, 5072, 5186, 5324, 440, 300, 502],
     10,
   ),
 
@@ -1607,7 +1595,7 @@ export const skill12Part2Sentences: ReadonlyArray<SentenceElement> = [
     71437,
     "分からない単語があったら辞書で調べてみたらどう",
     "If there's a word you don't understand, why don't you try looking it up in the dictionary?",
-    [5013, 8040, 5623, 5163, 443, 423],
+    [5013, 7100, 5623, 5163, 443, 423],
     7,
   ),
   s(
@@ -1668,7 +1656,7 @@ export const skill12Part2Sentences: ReadonlyArray<SentenceElement> = [
     71446,
     "大切なことはちゃんと伝えるべきだと思う",
     "I think important things should be properly conveyed",
-    [5687, 5382, 6012, 5005, 444, 408],
+    [5687, 5382, 5700, 5005, 444, 408],
     6,
   ),
   s(
@@ -1682,7 +1670,7 @@ export const skill12Part2Sentences: ReadonlyArray<SentenceElement> = [
     71448,
     "皆さんがお考えになるべき問題だと存じます",
     "I think it is a problem that everyone should think about",
-    [5373, 5015, 5067, 444, 473, 497],
+    [5373, 5015, 5067, 444, 473],
     8,
   ),
   s(
@@ -1730,14 +1718,14 @@ export const skill12Part2Sentences: ReadonlyArray<SentenceElement> = [
     71456,
     "早く寝なさいと言われたけど眠くない",
     "I was told to sleep early, but I'm not sleepy",
-    [5031, 5128, 5004, 5423, 445, 324],
+    [5031, 5128, 5004, 5423, 445, 380],
     6,
   ),
   s(
     71457,
     "ちゃんと食べなさいと言われてもおいしくないから食べたくない",
     "Even when told to eat properly, I don't want to because it doesn't taste good",
-    [5382, 5124, 5004, 5124, 445, 332, 408],
+    [5382, 5124, 5004, 5124, 445, 408],
     7,
   ),
   s(
@@ -1758,7 +1746,7 @@ export const skill12Part2Sentences: ReadonlyArray<SentenceElement> = [
     71460,
     "母に早く帰りなさいと言われて友達にあげるものを忘れてしまった",
     "I was told to come home early by my mother and ended up forgetting what I was going to give my friend",
-    [5355, 5031, 5126, 5004, 5072, 5187, 5148, 445, 501, 421],
+    [5355, 5031, 5126, 5004, 5072, 5187, 5148, 445, 501, 300],
     10,
   ),
 
@@ -1825,7 +1813,7 @@ export const skill12Part2Sentences: ReadonlyArray<SentenceElement> = [
     71469,
     "練習すればするほど上手になっていくはずだから頑張ろう",
     "The more you practice, the better you should get, so let's do our best",
-    [5487, 5000, 5692, 5002, 5500, 446, 435, 426],
+    [5487, 5000, 5692, 5002, 5500, 446, 435, 300],
     9,
   ),
   s(
@@ -1872,7 +1860,7 @@ export const skill12Part2Sentences: ReadonlyArray<SentenceElement> = [
     71476,
     "弟は注射を怖がって泣いている",
     "My younger brother is showing fear of the injection and crying",
-    [5358, 7061, 5133, 447, 389],
+    [5358, 5700, 5133, 447, 389],
     6,
   ),
   s(
@@ -1968,7 +1956,7 @@ export const skill12Part2Sentences: ReadonlyArray<SentenceElement> = [
     71490,
     "遅刻しないようにと先輩が教えてくれた",
     "My senior taught me not to be late",
-    [5032, 8303, 5164, 448, 385, 506],
+    [5032, 8303, 5164, 448, 300, 506],
     10,
   ),
 
@@ -2036,7 +2024,7 @@ export const skill12Part2Sentences: ReadonlyArray<SentenceElement> = [
     71500,
     "天気が変わるかもしれないので傘を持って行くようにと母が言ってくれた",
     "My mother told me to bring an umbrella because the weather might change",
-    [5542, 5145, 5327, 5012, 5008, 5355, 5004, 449, 448, 506],
+    [5542, 5145, 5327, 5012, 5008, 5355, 5004, 449, 300, 506],
     10,
   ),
 ]

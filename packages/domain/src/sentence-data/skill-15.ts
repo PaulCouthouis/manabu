@@ -37,7 +37,7 @@ export const skill15Sentences: ReadonlyArray<SentenceElement> = [
     72157,
     "毎日朝7時から夜9時まで働く",
     "I work from 7 AM to 9 PM every day",
-    [5293, 5296, 5298, 5129, 515, 312],
+    [5293, 5296, 5298, 5129, 515, 516],
     7,
   ),
   s(
@@ -84,7 +84,7 @@ export const skill15Sentences: ReadonlyArray<SentenceElement> = [
     72166,
     "毎朝45分走ってから朝食を食べる",
     "I run for 45 minutes every morning before eating breakfast",
-    [5294, 5134, 5305, 5124, 516, 310],
+    [5294, 5134, 5305, 5124, 516, 515],
     6,
   ),
   s(
@@ -159,7 +159,7 @@ export const skill15Sentences: ReadonlyArray<SentenceElement> = [
     72179,
     "毎日1時間半勉強して30分休む",
     "I study for one and a half hours and rest for 30 minutes every day",
-    [5293, 5130, 517, 526, 516],
+    [5293, 5130, 517, 526, 300],
     9,
   ),
   s(
@@ -188,7 +188,7 @@ export const skill15Sentences: ReadonlyArray<SentenceElement> = [
     [6175, 5481, 518],
     5,
   ),
-  s(72186, "1月1日は日本の正月だ", "January 1st is New Year's in Japan", [5269, 7021, 518, 520], 6),
+  s(72186, "1月1日は日本の正月だ", "January 1st is New Year's in Japan", [5269, 5700, 518, 520], 6),
   s(
     72187,
     "先月の10日に届いた荷物がまだある",
@@ -303,7 +303,7 @@ export const skill15Sentences: ReadonlyArray<SentenceElement> = [
     [5642, 520, 518],
     6,
   ),
-  s(72207, "12月から2月までは冬だ", "From December to February is winter", [5559, 520, 312], 7),
+  s(72207, "12月から2月までは冬だ", "From December to February is winter", [5559, 520, 515], 7),
   s(
     72208,
     "先生が9月にいらっしゃる予定です",
@@ -363,7 +363,7 @@ export const skill15Sentences: ReadonlyArray<SentenceElement> = [
     72219,
     "1990年の4月に生まれた友達が2人いる",
     "I have 2 friends who were born in April 1990",
-    [5072, 5174, 521, 520, 531],
+    [5072, 5174, 521, 520, 300],
     9,
   ),
   s(
@@ -709,7 +709,7 @@ export const skill15Sentences: ReadonlyArray<SentenceElement> = [
     72277,
     "1週間に3回2時間ずつ練習する",
     "I practice 3 times a week for 2 hours each time",
-    [5487, 527, 538, 526],
+    [5487, 527, 538],
     7,
   ),
   s(
@@ -723,7 +723,7 @@ export const skill15Sentences: ReadonlyArray<SentenceElement> = [
     72279,
     "3週間で本を5冊読んで1つの感想文を書いた",
     "I read 5 books in 3 weeks and wrote one review",
-    [5056, 5509, 5137, 527, 536, 529],
+    [5056, 5509, 5137, 527, 536, 300],
     9,
   ),
   s(
@@ -1056,7 +1056,7 @@ export const skill15Sentences: ReadonlyArray<SentenceElement> = [
     72356,
     "自転車を2台持っていて1台は新しい",
     "I have 2 bicycles and one is new",
-    [6060, 5012, 5023, 535, 529],
+    [5700, 5012, 5023, 535, 529],
     6,
   ),
   s(
@@ -1107,7 +1107,7 @@ export const skill15Sentences: ReadonlyArray<SentenceElement> = [
     72369,
     "1週間に2冊ずつ読んで1か月で8冊読んだ",
     "I read 2 books a week and read 8 in a month",
-    [5136, 536, 527, 524],
+    [5136, 536, 527, 300],
     9,
   ),
   s(
@@ -1209,7 +1209,7 @@ export const skill15Sentences: ReadonlyArray<SentenceElement> = [
     72389,
     "1週間に3回2時間ずつ練習している",
     "I practice for 2 hours 3 times a week",
-    [5487, 538, 527, 526, 328],
+    [5487, 538, 527, 328],
     9,
   ),
   s(
@@ -1269,7 +1269,7 @@ export const skill15Sentences: ReadonlyArray<SentenceElement> = [
   ),
 
   // Grammar: 番 (ばん) — Ordinal counter for ranking (ID 540)
-  s(72401, "今日の試合は1番目だ", "Today's match is the first one", [5069, 7113, 540], 1),
+  s(72401, "今日の試合は1番目だ", "Today's match is the first one", [5069, 5700, 540], 1),
   s(72402, "この歌が一番好きだ", "I like this song the best", [5459, 5090, 5213, 540], 2),
   s(72403, "彼は3番目に速い選手だ", "He is the 3rd fastest player", [5366, 6107, 7112, 540], 3),
   s(72404, "電話番号は何番ですか", "What is your phone number?", [6319, 5044, 540], 4),
@@ -1306,7 +1306,7 @@ export const skill15Sentences: ReadonlyArray<SentenceElement> = [
     72410,
     "友達にもらった本の中で1番面白かったのをあげた",
     "I gave away the most interesting one among the books I received from a friend",
-    [5072, 5056, 5090, 540, 501, 502],
+    [5072, 5056, 5090, 540, 501, 300],
     10,
   ),
 
@@ -1396,7 +1396,7 @@ export const skill15Sentences: ReadonlyArray<SentenceElement> = [
     72430,
     "友達にもらった5000円で本を3冊買ってあげた",
     "I bought 3 books with the 5000 yen I received from a friend and gave them as gifts",
-    [5072, 5056, 5157, 542, 536, 501],
+    [5072, 5056, 5157, 542, 300, 501],
     10,
   ),
 
@@ -1479,7 +1479,7 @@ export const skill15Sentences: ReadonlyArray<SentenceElement> = [
     72449,
     "30度を超える日が1週間に3回あった",
     "There were 3 days above 30 degrees in one week",
-    [5039, 544, 527, 538, 329],
+    [5039, 544, 527, 329],
     9,
   ),
   s(
@@ -1527,7 +1527,7 @@ export const skill15Sentences: ReadonlyArray<SentenceElement> = [
     72459,
     "靴を3足買って1足を友達にあげた",
     "I bought 3 pairs of shoes and gave one to a friend",
-    [5325, 5157, 5072, 545, 501, 328],
+    [5325, 5157, 5072, 545, 515, 328],
     9,
   ),
   s(
@@ -1581,7 +1581,7 @@ export const skill15Sentences: ReadonlyArray<SentenceElement> = [
     72469,
     "服を3着選んで1着を友達にあげた",
     "I chose 3 outfits and gave one to a friend",
-    [5324, 5169, 5072, 546, 501, 328],
+    [5324, 5169, 5072, 546, 515, 328],
     9,
   ),
   s(
@@ -1635,7 +1635,7 @@ export const skill15Sentences: ReadonlyArray<SentenceElement> = [
   ),
 
   // Grammar: 頭 (とう) — Counter for large animals (ID 548)
-  s(72481, "牧場に牛が20頭いる", "There are 20 cows on the ranch", [7182, 5589, 548], 1),
+  s(72481, "牧場に牛が20頭いる", "There are 20 cows on the ranch", [5700, 5589, 548], 1),
   s(72482, "動物園に象が3頭いる", "There are 3 elephants at the zoo", [5584, 548], 2),
   s(
     72483,
@@ -1689,8 +1689,8 @@ export const skill15Sentences: ReadonlyArray<SentenceElement> = [
   ),
 
   // Grammar: 羽 (わ) — Counter for birds and rabbits (ID 549)
-  s(72491, "庭に鳥が3羽いる", "There are 3 birds in the garden", [6077, 5587, 549], 1),
-  s(72492, "うさぎを2羽飼っている", "I keep 2 rabbits", [7054, 549], 2),
+  s(72491, "庭に鳥が3羽いる", "There are 3 birds in the garden", [5700, 5587, 549], 1),
+  s(72492, "うさぎを2羽飼っている", "I keep 2 rabbits", [6400, 549], 2),
   s(72493, "公園で鳥が10羽飛んでいた", "10 birds were flying in the park", [5340, 5587, 549], 3),
   s(72494, "動物園にペンギンが20羽いる", "There are 20 penguins at the zoo", [5584, 549], 4),
   s(72495, "山で鷹を6羽見た", "I saw 6 hawks in the mountains", [5560, 7057, 5006, 549], 5),
@@ -1815,7 +1815,7 @@ export const skill15Sentences: ReadonlyArray<SentenceElement> = [
     72519,
     "5丁目の2番地に3人で引っ越した",
     "Three of us moved to number 2, block 5",
-    [5151, 551, 540, 531],
+    [5151, 551, 540, 300],
     9,
   ),
   s(
@@ -1827,7 +1827,7 @@ export const skill15Sentences: ReadonlyArray<SentenceElement> = [
   ),
 
   // Grammar: 組 (くみ) — Counter for groups, sets, or classes (ID 552)
-  s(72521, "3年2組の教室はここです", "The classroom for class 3-2 is here", [6071, 5259, 552], 1),
+  s(72521, "3年2組の教室はここです", "The classroom for class 3-2 is here", [5700, 5259, 552], 1),
   s(72522, "子供たちを4組に分けた", "I divided the children into 4 groups", [5364, 552], 2),
   s(72523, "茶碗を3組買った", "I bought 3 sets of tea bowls", [5157, 552], 3),
   s(72524, "1年生は6組ある", "There are 6 classes for first graders", [552], 4),
@@ -1948,7 +1948,7 @@ export const skill15Sentences: ReadonlyArray<SentenceElement> = [
     72550,
     "友達にもらったチケットで2席分確保してくれた",
     "My friend secured 2 seats with the tickets he got",
-    [5072, 554, 503, 506],
+    [5072, 554, 503, 300],
     10,
   ),
 
@@ -2080,7 +2080,7 @@ export const skill15Sentences: ReadonlyArray<SentenceElement> = [
     72580,
     "友達がくれたケーキを4切れに切って家族であげた",
     "I cut the cake my friend gave me into 4 slices and shared with my family",
-    [5072, 6080, 5353, 557, 503, 501],
+    [5072, 6080, 5353, 557, 503, 300],
     10,
   ),
 

@@ -192,7 +192,7 @@ export const skill13Sentences: ReadonlyArray<SentenceElement> = [
     71766,
     "ご出発の前にご確認ください",
     "Please confirm before your departure",
-    [6175, 5048, 5490, 476, 477],
+    [5700, 5048, 5490, 476, 477],
     6,
   ),
   s(
@@ -265,7 +265,7 @@ export const skill13Sentences: ReadonlyArray<SentenceElement> = [
     71777,
     "お客様のご要望にお応えいたします",
     "We will respond to the customer's request",
-    [477, 491, 474],
+    [477, 491],
     7,
   ),
   s(
@@ -530,7 +530,7 @@ export const skill13Sentences: ReadonlyArray<SentenceElement> = [
     71822,
     "社長はご覧になった報告書に満足していました",
     "The president was satisfied with the report he reviewed",
-    [5471, 5479, 7086, 482],
+    [5471, 5479, 6400, 482],
     2,
   ),
   s(
@@ -744,14 +744,14 @@ export const skill13Sentences: ReadonlyArray<SentenceElement> = [
     71856,
     "先生がなさったことをお伝えします",
     "I will convey what the teacher did",
-    [5350, 5038, 6012, 485, 474],
+    [5350, 5038, 5700, 485, 474],
     6,
   ),
   s(
     71857,
     "社長は決定をなさってからご連絡くださいます",
     "The president will contact us after making the decision",
-    [5471, 8020, 5491, 485, 484],
+    [5471, 7100, 5491, 485, 484],
     7,
   ),
   s(
@@ -1150,7 +1150,7 @@ export const skill13Sentences: ReadonlyArray<SentenceElement> = [
 
   // Grammar: 拝見する (ID 493)
   s(71931, "資料を拝見しました", "I had a look at the materials", [5537, 493], 1),
-  s(71932, "先生の論文を拝見いたしました", "I read the professor's thesis", [5350, 7013, 493], 2),
+  s(71932, "先生の論文を拝見いたしました", "I read the professor's thesis", [5350, 6400, 493], 2),
   s(71933, "作品を拝見して感動しました", "I was moved after seeing the work", [6039, 7093, 493], 3),
   s(
     71934,
@@ -1497,7 +1497,7 @@ export const skill13Sentences: ReadonlyArray<SentenceElement> = [
   ),
 
   // Grammar: させていただく (ID 499)
-  s(71991, "発表させていただきます", "I would like to give a presentation", [6026, 499], 1),
+  s(71991, "発表させていただきます", "I would like to give a presentation", [5700, 499], 1),
   s(71992, "一言申させていただきます", "Allow me to say a word", [499], 2),
   s(71993, "説明させていただきます", "Allow me to explain", [5498, 499], 3),
   s(
@@ -1584,7 +1584,7 @@ export const skill13Sentences: ReadonlyArray<SentenceElement> = [
     72006,
     "ご期待に沿いかねますことをお詫び申し上げます",
     "I apologize for not being able to meet your expectations",
-    [6251, 500, 490],
+    [5700, 500, 490],
     6,
   ),
   s(

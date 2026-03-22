@@ -470,7 +470,7 @@ export const skill12Part3Sentences: ReadonlyArray<SentenceElement> = [
     71556,
     "この服は安っぽいけど、着てみたい。",
     "These clothes look cheap-ish, but I want to try wearing them.",
-    [5324, 5666, 6083, 455, 408],
+    [5324, 5666, 5700, 455, 408],
     6,
   ),
   // R7 (top3000, 2 grammar skill12)
@@ -918,7 +918,7 @@ export const skill12Part3Sentences: ReadonlyArray<SentenceElement> = [
     71612,
     "新しい環境が不安でならない。",
     "I can't help feeling anxious about the new environment.",
-    [5023, 7049, 6099, 461],
+    [5023, 6400, 6099, 461],
     2,
   ),
   // R3
@@ -1282,7 +1282,7 @@ export const skill12Part3Sentences: ReadonlyArray<SentenceElement> = [
     71657,
     "困難を乗り越えきったと信じている。",
     "I believe I've completely overcome the difficulties.",
-    [7133, 5941, 8093, 465, 389],
+    [7133, 5941, 7099, 465, 389],
     7,
   ),
   // R8 (top5000, 2 grammar: 465 + skill11 310)
@@ -1628,7 +1628,7 @@ export const skill12Part3Sentences: ReadonlyArray<SentenceElement> = [
     71699,
     "友達が困っているので、助けるしかない。",
     "Since my friend is in trouble, I have no choice but to help.",
-    [5072, 8090, 469, 389, 325],
+    [5072, 7100, 469, 389, 325],
     9,
   ),
   // R10 (top5000, 3 grammar: 469 skill12 + 340 skill11 + 515 skill15)
@@ -1650,7 +1650,7 @@ export const skill12Part3Sentences: ReadonlyArray<SentenceElement> = [
     71702,
     "医者の判断を信じるほかない。",
     "We have no choice but to trust the doctor's judgment.",
-    [6010, 5506, 8093, 470],
+    [6010, 5506, 6400, 470],
     2,
   ),
   // R3
@@ -1706,7 +1706,7 @@ export const skill12Part3Sentences: ReadonlyArray<SentenceElement> = [
     71709,
     "考えながら待っているほかないが、結果を信じている。",
     "There's no choice but to wait while thinking, but I believe in the result.",
-    [5015, 5149, 5078, 8093, 470, 389, 333],
+    [5015, 5149, 5078, 7100, 470, 389, 333],
     9,
   ),
   // R10 (top5000, 3 grammar: 470 skill12 + 337 skill11 + 502 skill14)
