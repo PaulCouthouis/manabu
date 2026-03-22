@@ -237,13 +237,13 @@ Le prompt doit exiger :
 
 ### Étape 2 — Génération IA des phrases
 
-- [ ] Créer le prompt structuré pour la génération IA
-  - [ ] Inclure les contraintes de naturalité et de contexte réaliste
-  - [ ] Exiger la déclaration explicite de chaque mot avec son `WordId`
-  - [ ] Exiger la couverture complète (words + freeParticles = phrase entière)
-  - [ ] Documenter l'exception skill 15 (mots libres pour les compteurs)
-- [ ] Exécuter la génération par batchs (par skill, par rank)
-- [ ] Collecter les résultats en fichiers JSON intermédiaires
+- [x] Créer le prompt structuré pour la génération IA
+  - [x] Inclure les contraintes de naturalité et de contexte réaliste
+  - [x] Exiger la déclaration explicite de chaque mot avec son `WordId`
+  - [x] Exiger la couverture complète (words + freeParticles = phrase entière)
+  - [x] Documenter l'exception skill 15 (mots libres pour les compteurs)
+- [x] Exécuter la génération par batchs (par skill, par rank)
+- [x] Collecter les résultats en fichiers TypeScript (8 fichiers part)
 
 ### Étape 3 — Validation et fichiers de données
 

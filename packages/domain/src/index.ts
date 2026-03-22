@@ -64,3 +64,12 @@ export {
   skill14Data,
   skill15Data,
 } from "./grammar-data/index.js"
+
+export {
+  sentenceData,
+  skill11Sentences,
+  skill12Sentences,
+  skill13Sentences,
+  skill14Sentences,
+  skill15Sentences,
+} from "./sentence-data/index.js"
