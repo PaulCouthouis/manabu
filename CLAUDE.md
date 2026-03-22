@@ -85,6 +85,8 @@ packages/shared →  (aucune dépendance interne)
 | `/auth/sign-up` | Publique | Inscription email + mot de passe |
 | `/auth/sign-in` | Publique | Connexion |
 | `/home` | Protégée | Home utilisateur (layout `_protected`) |
+| `/progress` | Protégée | Progression (layout `_protected`) |
+| `/profile` | Protégée | Profil utilisateur (layout `_protected`) |
 | `/api/auth/*` | API | Endpoints Better Auth (sign-up, sign-in, sign-out, get-session) |
 
 Les routes protégées utilisent le layout `_protected.tsx` qui vérifie la session via `getAuthSessionFn` (server function) et redirige vers `/auth/sign-in` si non authentifié.

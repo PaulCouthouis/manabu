@@ -13,6 +13,8 @@ import { Route as ProtectedRouteImport } from './routes/_protected'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthSignUpRouteImport } from './routes/auth/sign-up'
 import { Route as AuthSignInRouteImport } from './routes/auth/sign-in'
+import { Route as ProtectedProgressRouteImport } from './routes/_protected/progress'
+import { Route as ProtectedProfileRouteImport } from './routes/_protected/profile'
 import { Route as ProtectedHomeRouteImport } from './routes/_protected/home'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
@@ -35,6 +37,16 @@ const AuthSignInRoute = AuthSignInRouteImport.update({
   path: '/auth/sign-in',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProtectedProgressRoute = ProtectedProgressRouteImport.update({
+  id: '/progress',
+  path: '/progress',
+  getParentRoute: () => ProtectedRoute,
+} as any)
+const ProtectedProfileRoute = ProtectedProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => ProtectedRoute,
+} as any)
 const ProtectedHomeRoute = ProtectedHomeRouteImport.update({
   id: '/home',
   path: '/home',
@@ -49,6 +61,8 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/home': typeof ProtectedHomeRoute
+  '/profile': typeof ProtectedProfileRoute
+  '/progress': typeof ProtectedProgressRoute
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/sign-up': typeof AuthSignUpRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -56,6 +70,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/home': typeof ProtectedHomeRoute
+  '/profile': typeof ProtectedProfileRoute
+  '/progress': typeof ProtectedProgressRoute
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/sign-up': typeof AuthSignUpRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -65,20 +81,38 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_protected': typeof ProtectedRouteWithChildren
   '/_protected/home': typeof ProtectedHomeRoute
+  '/_protected/profile': typeof ProtectedProfileRoute
+  '/_protected/progress': typeof ProtectedProgressRoute
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/sign-up': typeof AuthSignUpRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/home' | '/auth/sign-in' | '/auth/sign-up' | '/api/auth/$'
+  fullPaths:
+    | '/'
+    | '/home'
+    | '/profile'
+    | '/progress'
+    | '/auth/sign-in'
+    | '/auth/sign-up'
+    | '/api/auth/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/home' | '/auth/sign-in' | '/auth/sign-up' | '/api/auth/$'
+  to:
+    | '/'
+    | '/home'
+    | '/profile'
+    | '/progress'
+    | '/auth/sign-in'
+    | '/auth/sign-up'
+    | '/api/auth/$'
   id:
     | '__root__'
     | '/'
     | '/_protected'
     | '/_protected/home'
+    | '/_protected/profile'
+    | '/_protected/progress'
     | '/auth/sign-in'
     | '/auth/sign-up'
     | '/api/auth/$'
@@ -122,6 +156,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSignInRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_protected/progress': {
+      id: '/_protected/progress'
+      path: '/progress'
+      fullPath: '/progress'
+      preLoaderRoute: typeof ProtectedProgressRouteImport
+      parentRoute: typeof ProtectedRoute
+    }
+    '/_protected/profile': {
+      id: '/_protected/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProtectedProfileRouteImport
+      parentRoute: typeof ProtectedRoute
+    }
     '/_protected/home': {
       id: '/_protected/home'
       path: '/home'
@@ -141,10 +189,14 @@ declare module '@tanstack/react-router' {
 
 interface ProtectedRouteChildren {
   ProtectedHomeRoute: typeof ProtectedHomeRoute
+  ProtectedProfileRoute: typeof ProtectedProfileRoute
+  ProtectedProgressRoute: typeof ProtectedProgressRoute
 }
 
 const ProtectedRouteChildren: ProtectedRouteChildren = {
   ProtectedHomeRoute: ProtectedHomeRoute,
+  ProtectedProfileRoute: ProtectedProfileRoute,
+  ProtectedProgressRoute: ProtectedProgressRoute,
 }
 
 const ProtectedRouteWithChildren = ProtectedRoute._addFileChildren(

@@ -73,11 +73,11 @@ routes/
 
 ### Étape 2 — Routes protégées (layout standard)
 
-- [ ] Créer `_protected/progress.tsx` (coquille : titre "Progression")
-- [ ] Créer `_protected/profile.tsx` (coquille : titre "Profil")
-- [ ] Test E2E : chaque route rend sa coquille → AC1, AC2, AC3
-- [ ] Test E2E : routes protégées par auth → AC5
-- [ ] Test E2E : le layout standard est utilisé → AC7
+- [x] Créer `_protected/progress.tsx` (coquille : titre "Progression")
+- [x] Créer `_protected/profile.tsx` (coquille : titre "Profil")
+- [x] Test E2E : chaque route rend sa coquille → AC1, AC2, AC3
+- [x] Test E2E : routes protégées par auth → AC5
+- [x] Test E2E : le layout standard est utilisé → AC7
 
 ### Étape 3 — Layout exercice plein écran
 
