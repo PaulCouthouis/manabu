@@ -290,9 +290,9 @@ Les grammar points conservent les mêmes IDs que les anciens `GrammarElement` (3
 
 ### Étape 6 — Vérifications finales et non-régression
 
-- [ ] Vérifier que tous les tests existants passent → AC20
-- [ ] `pnpm build` compile sans erreur → AC21
-- [ ] `pnpm lint` passe sans erreur → AC22
+- [x] Vérifier que tous les tests existants passent (131 tests : 90 domain + 38 db + 3 auth) → AC20
+- [x] `pnpm build` compile sans erreur → AC21
+- [x] `pnpm lint` passe sans erreur → AC22
 
 ## Impact sur les US précédentes
 
