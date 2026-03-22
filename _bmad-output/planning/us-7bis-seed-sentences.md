@@ -287,8 +287,8 @@ Le prompt doit exiger :
 
 ### Étape 5 — Vérifications finales
 
-- [ ] `pnpm build` compile sans erreur → AC24
-- [ ] Vérifier que les tests US7 existants passent toujours
+- [x] `pnpm build` compile sans erreur → AC24
+- [x] Vérifier que les tests US7 existants passent toujours
 
 ## Sources de données
 
