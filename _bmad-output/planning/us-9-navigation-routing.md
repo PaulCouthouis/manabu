@@ -89,9 +89,9 @@ routes/
 
 ### Étape 4 — Vérifications finales
 
-- [ ] `pnpm build` sans erreur → AC9
-- [ ] `pnpm lint` sans erreur → AC10
-- [ ] Tests existants passent (non-régression)
+- [x] `pnpm build` sans erreur → AC9
+- [x] `pnpm lint` sans erreur → AC10
+- [x] Tests existants passent (non-régression)
 
 ## Hors scope
 
