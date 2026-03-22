@@ -1,3 +1,4 @@
+import { Schema } from "effect"
 import { describe, expect, it } from "vitest"
 import {
   GrammarElement,
@@ -70,6 +71,7 @@ describe("LinguisticElement", () => {
     text: "猫が好きです",
     meaning: "I like cats",
     components: [WordId(202), GrammarId(300), WordId(203), WordId(204)],
+    sentenceRank: 1,
   })
 
   // AC1 — Les 5 sous-types de LinguisticElement sont modélisés avec union discriminée
@@ -122,6 +124,40 @@ describe("LinguisticElement", () => {
       expect(grammarGa.explanation).toBe("Marks the subject of a sentence")
       expect(grammarGa.frequency).toBe(1)
       expect(grammarGa.formCount).toBe(1)
+    })
+  })
+
+  // US7 BIS AC1/AC2 — sentenceRank typé Int entre 1 et 10
+  describe("SentenceElement.sentenceRank", () => {
+    it("accepte un sentenceRank de 1, 5, 10", () => {
+      const makeSentence = (rank: number) =>
+        SentenceElement.make({
+          id: SentenceId(400),
+          text: "テスト",
+          meaning: "test",
+          components: [WordId(200), GrammarId(300)],
+          sentenceRank: rank,
+        })
+
+      expect(makeSentence(1).sentenceRank).toBe(1)
+      expect(makeSentence(5).sentenceRank).toBe(5)
+      expect(makeSentence(10).sentenceRank).toBe(10)
+    })
+
+    it("rejette un sentenceRank de 0, 11, ou 1.5", () => {
+      const decode = Schema.decodeUnknownSync(SentenceElement)
+
+      const base = {
+        id: 400,
+        kind: "sentence",
+        text: "テスト",
+        meaning: "test",
+        components: [200, 300],
+      }
+
+      expect(() => decode({ ...base, sentenceRank: 0 })).toThrow()
+      expect(() => decode({ ...base, sentenceRank: 11 })).toThrow()
+      expect(() => decode({ ...base, sentenceRank: 1.5 })).toThrow()
     })
   })
 

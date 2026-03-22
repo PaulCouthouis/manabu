@@ -220,10 +220,10 @@ Le prompt doit exiger :
 
 ### Étape 0 — Modifier le domaine (sentenceRank)
 
-- [ ] Ajouter `sentenceRank: Schema.Int.pipe(Schema.between(1, 10))` au `SentenceElement` dans `packages/domain/src/linguistic-element.ts`
-- [ ] Écrire les tests unitaires (TDD) :
-  - [ ] Test : `SentenceElement.make()` accepte un `sentenceRank` de 1, 5, 10 → AC1
-  - [ ] Test : `SentenceElement.make()` rejette un `sentenceRank` de 0, 11, ou 1.5 → AC2
+- [x] Ajouter `sentenceRank: Schema.Int.pipe(Schema.between(1, 10))` au `SentenceElement` dans `packages/domain/src/linguistic-element.ts`
+- [x] Écrire les tests unitaires (TDD) :
+  - [x] Test : `SentenceElement.make()` accepte un `sentenceRank` de 1, 5, 10 → AC1
+  - [x] Test : `SentenceElement.make()` rejette un `sentenceRank` de 0, 11, ou 1.5 → AC2
 
 ### Étape 1 — Script de génération des contraintes
 

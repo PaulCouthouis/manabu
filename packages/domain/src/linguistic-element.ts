@@ -81,6 +81,7 @@ export class SentenceElement extends Schema.Class<SentenceElement>("SentenceElem
   text: Schema.String,
   meaning: Schema.String,
   components: Schema.NonEmptyArray(Schema.Union(WordIdSchema, GrammarIdSchema)),
+  sentenceRank: Schema.Int.pipe(Schema.between(1, 10)),
 }) {}
 
 // --- Grammar ---
