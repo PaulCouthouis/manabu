@@ -68,8 +68,8 @@ routes/
 
 ### Étape 1 — Renommage dashboard → home
 
-- [ ] Supprimer `_protected/dashboard.tsx`
-- [ ] Créer `_protected/home.tsx` (coquille : titre "Home")
+- [x] Supprimer `_protected/dashboard.tsx`
+- [x] Créer `_protected/home.tsx` (coquille : titre "Home")
 
 ### Étape 2 — Routes protégées (layout standard)
 

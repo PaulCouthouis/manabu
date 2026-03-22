@@ -77,7 +77,7 @@ test.describe("Authentification", () => {
 	})
 
 	test("route protégée sans auth → redirection vers /auth/sign-in → AC5", async ({ page }) => {
-		await page.goto("/dashboard", { waitUntil: "networkidle" })
+		await page.goto("/home", { waitUntil: "networkidle" })
 		await expect(page).toHaveURL(/\/auth\/sign-in/, { timeout: 15000 })
 	})
 
@@ -88,8 +88,8 @@ test.describe("Authentification", () => {
 		await expect(page.getByText(sharedEmail)).toBeVisible()
 
 		// Access a protected route to confirm session works
-		await page.goto("/dashboard", { waitUntil: "networkidle" })
-		await expect(page).toHaveURL(/\/dashboard/, { timeout: 15000 })
+		await page.goto("/home", { waitUntil: "networkidle" })
+		await expect(page).toHaveURL(/\/home/, { timeout: 15000 })
 		await expect(page.getByText(sharedEmail)).toBeVisible()
 
 		// Get cookies before "closing" the browser
@@ -101,8 +101,8 @@ test.describe("Authentification", () => {
 		const newPage = await newContext.newPage()
 
 		// Access protected route with persisted session
-		await newPage.goto("/dashboard", { waitUntil: "networkidle" })
-		await expect(newPage).toHaveURL(/\/dashboard/, { timeout: 15000 })
+		await newPage.goto("/home", { waitUntil: "networkidle" })
+		await expect(newPage).toHaveURL(/\/home/, { timeout: 15000 })
 		await expect(newPage.getByText(sharedEmail)).toBeVisible()
 
 		await newContext.close()
