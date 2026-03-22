@@ -8,6 +8,7 @@ export {
   SkillTypeId,
   SkillTypeIdSchema,
   SkillTypes,
+  WORD_SKILL_IDS,
 } from "./skill-type.js"
 
 export type { SkillGraphData } from "./skill-graph.js"
@@ -52,3 +53,5 @@ export { kanaExtendedData, sokuonChoonIds } from "./kana-extended-data.js"
 export { kanjiData } from "./kanji-data/index.js"
 
 export { wordData } from "./word-data/index.js"
+
+export { counterWordData } from "./counter-word-data.js"

@@ -1,12 +1,12 @@
 import type { SqlClient as SqlClientType } from "@effect/sql"
 import { SqlClient } from "@effect/sql"
-import { WORD_SKILL_IDS, wordData } from "@manabu/domain"
+import { counterWordData, WORD_SKILL_IDS } from "@manabu/domain"
 import { Array, Effect } from "effect"
 
 const BATCH_SIZE = 500
 
 const insertWordElements = (sql: SqlClientType.SqlClient) => {
-  const rows = Array.map(wordData, (w) => ({
+  const rows = Array.map(counterWordData, (w) => ({
     id: Number(w.id),
     kind: "word",
     written: w.written,
@@ -21,7 +21,7 @@ const insertWordElements = (sql: SqlClientType.SqlClient) => {
 }
 
 const insertComponents = (sql: SqlClientType.SqlClient) => {
-  const rows = Array.flatMap(wordData, (w) =>
+  const rows = Array.flatMap(counterWordData, (w) =>
     Array.map(w.components, (comp, position) => ({
       parent_id: Number(w.id),
       component_id: Number(comp),
@@ -33,7 +33,7 @@ const insertComponents = (sql: SqlClientType.SqlClient) => {
 }
 
 const insertContentItems = (sql: SqlClientType.SqlClient) => {
-  const items = Array.flatMap(wordData, (w) =>
+  const items = Array.flatMap(counterWordData, (w) =>
     Array.map(WORD_SKILL_IDS, (skillId) => ({
       element_id: Number(w.id),
       skill_type_id: skillId,
@@ -43,16 +43,9 @@ const insertContentItems = (sql: SqlClientType.SqlClient) => {
   return Effect.forEach(batches, (batch) => sql`INSERT INTO content_item ${sql.insert(batch)}`)
 }
 
-const alterComponentPK = (sql: SqlClientType.SqlClient) =>
-  Effect.gen(function* () {
-    yield* sql`ALTER TABLE element_component DROP CONSTRAINT element_component_pkey`
-    yield* sql`ALTER TABLE element_component ADD PRIMARY KEY (parent_id, position)`
-  })
-
 export default Effect.gen(function* () {
   const sql = yield* SqlClient.SqlClient
 
-  yield* alterComponentPK(sql)
   yield* insertWordElements(sql)
   yield* insertComponents(sql)
   yield* insertContentItems(sql)

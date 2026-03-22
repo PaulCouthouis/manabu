@@ -29,6 +29,10 @@ export class SkillType extends Schema.Class<SkillType>("SkillType")({
   open: Schema.Boolean,
 }) {}
 
+// --- Skill ID sets by element type ---
+
+export const WORD_SKILL_IDS = [4, 6, 7, 8, 9, 10] as const
+
 // --- Constants ---
 
 export const SkillTypes: ReadonlyArray<SkillType> = [

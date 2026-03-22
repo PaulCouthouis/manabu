@@ -592,24 +592,24 @@ Chaque fichier `skill-XX.ts` exporte un `ReadonlyArray<GrammarElement>`. L'`inde
 
 ### Étape 0 — Extension vocabulaire (nombres + compteurs)
 
-- [ ] Créer `packages/domain/src/counter-word-data.ts` avec les 52 WordElements
-  - [ ] 10 nombres de base (一〜九 + 億) avec `written` en kanji
-  - [ ] 42 combinaisons nombre+compteur avec `written` en chiffres arabes (3本, 4時, 1日...)
-  - [ ] `components` ne contenant que les KanjiId (pas de chiffre arabe)
-  - [ ] Utiliser `WordElement.make()` pour chaque entrée
-  - [ ] IDs 10000-10051
-- [ ] Écrire les tests unitaires (TDD) :
-  - [ ] Test : 52 WordElements présents → AC-W1
-  - [ ] Test : IDs continus 10000-10051 → AC-W2
-  - [ ] Test : les combinaisons utilisent des chiffres arabes dans `written` → AC-W3
-  - [ ] Test : les `components` ne contiennent que des KanjiId valides → AC-W4
-- [ ] Créer la migration `0008_seed_counter_words.ts`
-  - [ ] Insérer les 52 mots
-  - [ ] Créer les 312 ContentItems (52 mots × skills 4, 6, 7, 8, 9, 10)
-- [ ] Écrire les tests d'intégration (TDD) :
-  - [ ] Test : chaque mot a exactement 6 ContentItems → AC-W5
-  - [ ] Test : 312 ContentItems au total → AC-W6
-  - [ ] Test : les tests US6 existants passent toujours → AC-W7
+- [x] Créer `packages/domain/src/counter-word-data.ts` avec les 52 WordElements
+  - [x] 10 nombres de base (一〜九 + 億) avec `written` en kanji
+  - [x] 42 combinaisons nombre+compteur avec `written` en chiffres arabes (3本, 4時, 1日...)
+  - [x] `components` ne contenant que les KanjiId (pas de chiffre arabe)
+  - [x] Utiliser `WordElement.make()` pour chaque entrée
+  - [x] IDs 10000-10051
+- [x] Écrire les tests unitaires (TDD) :
+  - [x] Test : 52 WordElements présents → AC-W1
+  - [x] Test : IDs continus 10000-10051 → AC-W2
+  - [x] Test : les combinaisons utilisent des chiffres arabes dans `written` → AC-W3
+  - [x] Test : les `components` ne contiennent que des KanjiId valides → AC-W4
+- [x] Créer la migration `0008_seed_counter_words.ts`
+  - [x] Insérer les 52 mots
+  - [x] Créer les 312 ContentItems (52 mots × skills 4, 6, 7, 8, 9, 10)
+- [x] Écrire les tests d'intégration (TDD) :
+  - [x] Test : chaque mot a exactement 6 ContentItems → AC-W5
+  - [x] Test : 312 ContentItems au total → AC-W6
+  - [x] Test : les tests US6 existants passent toujours → AC-W7
 
 ### Étape 1 — Fichiers de données grammaire
 
