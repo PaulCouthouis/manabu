@@ -643,8 +643,8 @@ Chaque fichier `skill-XX.ts` exporte un `ReadonlyArray<GrammarElement>`. L'`inde
 
 ### Étape 3 — Vérifications finales
 
-- [ ] `pnpm build` compile sans erreur → AC12
-- [ ] Mise à jour du CLAUDE.md si nécessaire
+- [x] `pnpm build` compile sans erreur → AC12
+- [x] Mise à jour du CLAUDE.md si nécessaire (pas de changement requis)
 
 ## Sources de données
 
