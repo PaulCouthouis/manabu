@@ -226,21 +226,21 @@ Les mots sont triés par fréquence d'apparition en tant que lemme dans le corpu
 
 ### Étape 1 — Fichiers de données mots (passe 1 + passe 2)
 
-- [ ] Créer le dossier `packages/domain/src/word-data/`
-- [ ] Générer les 5 fichiers de données par fréquence (freq-01.ts → freq-05.ts) — **passe 1** avec `components: [KanaId(1)]` placeholder
-- [ ] Créer `index.ts` qui agrège tous les fichiers → `export const wordData`
-- [ ] Rescanner et compléter les `components` réels — **passe 2**
-- [ ] Écrire les tests unitaires (TDD) sur le dataset agrégé :
-  - [ ] Test : 5000 mots présents → AC1
-  - [ ] Test : pas de `written` en doublon → AC2
-  - [ ] Test : IDs continus 5000-9999 → AC3
-  - [ ] Test : `meaning` non vide → AC4
-  - [ ] Test : `frequency` > 0 → AC5
-  - [ ] Test : `components` non vide → AC6
-  - [ ] Test : tous les KanjiId référencés existent dans les jōyō → AC7
-  - [ ] Test : tous les KanaId référencés existent dans les 224 kana → AC8
-  - [ ] Test : cohérence `written` ↔ `components` → AC9
-  - [ ] Test : aucun mot n'est une particule → AC10
+- [x] Créer le dossier `packages/domain/src/word-data/`
+- [x] Générer les 5 fichiers de données par fréquence (freq-01.ts → freq-05.ts) — **passe 1** avec `components: [KanaId(1)]` placeholder
+- [x] Créer `index.ts` qui agrège tous les fichiers → `export const wordData`
+- [x] Rescanner et compléter les `components` réels — **passe 2**
+- [x] Écrire les tests unitaires (TDD) sur le dataset agrégé :
+  - [x] Test : 5000 mots présents → AC1
+  - [x] Test : pas de `written` en doublon → AC2
+  - [x] Test : IDs continus 5000-9999 → AC3
+  - [x] Test : `meaning` non vide → AC4
+  - [x] Test : `frequency` > 0 → AC5
+  - [x] Test : `components` non vide → AC6
+  - [x] Test : tous les KanjiId référencés existent dans les jōyō → AC7
+  - [x] Test : tous les KanaId référencés existent dans les 224 kana → AC8
+  - [x] Test : cohérence `written` ↔ `components` → AC9
+  - [x] Test : aucun mot n'est une particule → AC10
 
 ### Étape 2 — Migration seed mots
 
