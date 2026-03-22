@@ -7,6 +7,7 @@ import m0005 from "./0005_seed_kanji.js"
 import m0006 from "./0006_seed_kana_extended.js"
 import m0007 from "./0007_seed_words.js"
 import m0008 from "./0008_seed_counter_words.js"
+import m0009 from "./0009_seed_grammar.js"
 
 const migrations = Migrator.fromRecord({
   "0001_skill_type": m0001,
@@ -17,6 +18,7 @@ const migrations = Migrator.fromRecord({
   "0006_seed_kana_extended": m0006,
   "0007_seed_words": m0007,
   "0008_seed_counter_words": m0008,
+  "0009_seed_grammar": m0009,
 })
 
 const migrator = Migrator.make({})

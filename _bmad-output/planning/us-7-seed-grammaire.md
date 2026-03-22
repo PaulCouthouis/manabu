@@ -633,13 +633,13 @@ Chaque fichier `skill-XX.ts` exporte un `ReadonlyArray<GrammarElement>`. L'`inde
 
 ### Étape 2 — Migration seed grammaire
 
-- [ ] Créer la migration `0009_seed_grammar.ts` qui insère les 259 éléments via SQL (batchs de 100)
-- [ ] Dans la même migration, créer les 259 ContentItems (chaque GrammarElement × son skill)
-- [ ] Écrire les tests d'intégration (Vitest + Testcontainers) :
-  - [ ] Test : chaque GrammarElement a exactement 1 ContentItem → AC8
-  - [ ] Test : aucun ContentItem en doublon → AC9
-  - [ ] Test : round-trip seed → lecture → données correctes → AC10
-  - [ ] Test : 259 ContentItems grammaire au total → AC11
+- [x] Créer la migration `0009_seed_grammar.ts` qui insère les 259 éléments via SQL (batchs de 500)
+- [x] Dans la même migration, créer les 259 ContentItems (chaque GrammarElement × son skill)
+- [x] Écrire les tests d'intégration (Vitest + Testcontainers) :
+  - [x] Test : chaque GrammarElement a exactement 1 ContentItem → AC8
+  - [x] Test : aucun ContentItem en doublon → AC9
+  - [x] Test : round-trip seed → lecture → données correctes → AC10
+  - [x] Test : 259 ContentItems grammaire au total → AC11
 
 ### Étape 3 — Vérifications finales
 
