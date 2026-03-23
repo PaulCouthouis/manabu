@@ -172,9 +172,9 @@ interface DrillSummary<A> {
 
 ### Étape 7 — Vérifications finales
 
-- [ ] `pnpm build` sans erreur → AC21
-- [ ] `pnpm lint` sans erreur → AC22
-- [ ] Tests existants passent (non-régression)
+- [x] `pnpm build` sans erreur → AC21
+- [x] `pnpm lint` sans erreur → AC22
+- [x] Tests existants passent (non-régression)
 
 ## Hors scope
 
