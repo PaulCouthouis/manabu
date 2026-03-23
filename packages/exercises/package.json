@@ -1,0 +1,21 @@
+{
+  "name": "@manabu/exercises",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc --build",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@manabu/shared": "workspace:*",
+    "effect": "^3.21.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.0",
+    "vitest": "^4.1.0"
+  }
+}

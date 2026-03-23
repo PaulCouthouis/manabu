@@ -33,6 +33,7 @@ manabu/
     auth/              # @manabu/auth — Better Auth config, client atoms, server handlers
     domain/            # Entités, value objects, agrégats — pur Effect, zéro dépendance infra
     db/                # @effect/sql-pg, migrations, repositories
+    exercises/         # @manabu/exercises — logique exercices (DrillQueue), composants exercice
     ui/                # Composants UI partagés, design system Panda/Park
     shared/            # Types partagés, config Effect, utilitaires
   _bmad-output/
@@ -47,12 +48,13 @@ manabu/
 ### Dépendances entre packages
 
 ```
-apps/web       →  @manabu/auth, @manabu/domain, @manabu/db, @manabu/ui, @manabu/shared
-packages/auth  →  @manabu/shared
-packages/db     →  @manabu/domain, @manabu/shared
-packages/ui     →  @manabu/shared
-packages/domain →  @manabu/shared
-packages/shared →  (aucune dépendance interne)
+apps/web           →  @manabu/auth, @manabu/domain, @manabu/db, @manabu/ui, @manabu/exercises, @manabu/shared
+packages/auth      →  @manabu/shared
+packages/db        →  @manabu/domain, @manabu/shared
+packages/exercises →  @manabu/shared
+packages/ui        →  @manabu/shared
+packages/domain    →  @manabu/shared
+packages/shared    →  (aucune dépendance interne)
 ```
 
 ### Conventions de nommage

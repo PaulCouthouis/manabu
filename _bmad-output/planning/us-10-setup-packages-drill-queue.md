@@ -119,11 +119,11 @@ interface DrillSummary<A> {
 
 ### Étape 1 — Setup `packages/exercises`
 
-- [ ] Créer `packages/exercises/package.json` (`@manabu/exercises`, dépendances : `effect`, `@manabu/shared`)
-- [ ] Créer `packages/exercises/tsconfig.json` (extends `tsconfig.base.json`)
-- [ ] Créer `packages/exercises/src/index.ts` (export vide)
-- [ ] Créer `packages/exercises/src/logic/` (dossier pour la logique pure)
-- [ ] `pnpm install` — vérifier la résolution des dépendances → AC1
+- [x] Créer `packages/exercises/package.json` (`@manabu/exercises`, dépendances : `effect`, `@manabu/shared`)
+- [x] Créer `packages/exercises/tsconfig.json` (extends `tsconfig.base.json`)
+- [x] Créer `packages/exercises/src/index.ts` (export vide)
+- [x] Créer `packages/exercises/src/logic/` (dossier pour la logique pure)
+- [x] `pnpm install` — vérifier la résolution des dépendances → AC1
 
 ### Étape 2 — Setup `packages/storybook` (migration)
 
