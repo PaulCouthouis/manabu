@@ -136,12 +136,12 @@ interface DrillSummary<A> {
 
 ### Étape 3 — DrillQueue : création, FIFO, succès
 
-- [ ] Test RED : créer une queue → taille et ordre vérifiés
-- [ ] Test RED : `current` → retourne le premier item
-- [ ] Test RED : `succeed` → item retiré + history incrémenté
-- [ ] Test RED : `isEmpty` sur queue vide → true
-- [ ] GREEN : implémenter `DrillQueue.make`, `current`, `succeed`, `isEmpty`
-- [ ] REFACTOR : simplifier si nécessaire → AC5, AC6, AC7, AC8
+- [x] Test RED : créer une queue → taille et ordre vérifiés
+- [x] Test RED : `current` → retourne le premier item
+- [x] Test RED : `succeed` → item retiré + history incrémenté
+- [x] Test RED : `isEmpty` sur queue vide → true
+- [x] GREEN : implémenter `DrillQueue.make`, `current`, `succeed`, `isEmpty`
+- [x] REFACTOR : simplifier si nécessaire → AC5, AC6, AC7, AC8
 
 ### Étape 4 — DrillQueue : recyclage, queue vide
 
