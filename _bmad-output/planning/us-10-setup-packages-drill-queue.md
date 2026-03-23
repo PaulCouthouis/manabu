@@ -154,11 +154,11 @@ interface DrillSummary<A> {
 
 ### Étape 5 — DrillQueue : double passage scaffolding
 
-- [ ] Test RED : `succeed` avec scaffolding → réinséré sans scaffolding
-- [ ] Test RED : `succeed` sans scaffolding → retiré
-- [ ] Test RED : `recycle` sans scaffolding → recyclé sans (pas de régression)
-- [ ] GREEN : adapter `succeed` et `recycle` pour le flag scaffolding
-- [ ] REFACTOR → AC13, AC14, AC15
+- [x] Test RED : `succeed` avec scaffolding → réinséré sans scaffolding
+- [x] Test RED : `succeed` sans scaffolding → retiré
+- [x] Test RED : `recycle` sans scaffolding → recyclé sans (pas de régression)
+- [x] GREEN : adapter `succeed` et `recycle` pour le flag scaffolding
+- [x] REFACTOR → AC13, AC14, AC15
 
 ### Étape 6 — DrillQueue : summarize
 

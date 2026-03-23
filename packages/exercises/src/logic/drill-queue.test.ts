@@ -102,4 +102,53 @@ describe("DrillQueue", () => {
 
     expect(DrillQueue.isEmpty(s2)).toBe(true)
   })
+
+  // AC13 — succeed avec scaffolding → réinséré sans scaffolding
+  it("succeed avec scaffolding → réinséré en fin de queue sans scaffolding", () => {
+    const queue = DrillQueue.makeWithScaffolding(["a", "b"])
+    const next = DrillQueue.succeed(queue)
+
+    expect(Chunk.size(next.queue)).toBe(2)
+    const last = Option.getOrThrow(Chunk.get(next.queue, 1))
+    expect(last.value).toBe("a")
+    expect(last.withScaffolding).toBe(false)
+    expect(Option.getOrThrow(Chunk.get(next.history, 0)).outcome).toBe("success")
+  })
+
+  // AC14 — succeed sans scaffolding → retiré définitivement
+  it("succeed sans scaffolding → retiré définitivement", () => {
+    const queue = DrillQueue.make(["a"])
+    const next = DrillQueue.succeed(queue)
+
+    expect(DrillQueue.isEmpty(next)).toBe(true)
+  })
+
+  // AC15 — recycle sans scaffolding → recyclé sans (pas de régression)
+  it("recycle sans scaffolding → recyclé sans scaffolding", () => {
+    const queue = DrillQueue.make(["a"])
+    const next = DrillQueue.recycle(queue)
+
+    const item = Option.getOrThrow(DrillQueue.current(next))
+    expect(item.withScaffolding).toBe(false)
+  })
+
+  it("double passage complet : scaffolding → sans scaffolding → retiré", () => {
+    const queue = DrillQueue.makeWithScaffolding(["a"])
+
+    const afterFirst = DrillQueue.succeed(queue)
+    expect(Chunk.size(afterFirst.queue)).toBe(1)
+    expect(Option.getOrThrow(DrillQueue.current(afterFirst)).withScaffolding).toBe(false)
+
+    const afterSecond = DrillQueue.succeed(afterFirst)
+    expect(DrillQueue.isEmpty(afterSecond)).toBe(true)
+    expect(Chunk.size(afterSecond.history)).toBe(2)
+  })
+
+  it("recycle avec scaffolding → recyclé avec scaffolding", () => {
+    const queue = DrillQueue.makeWithScaffolding(["a"])
+    const next = DrillQueue.recycle(queue)
+
+    const item = Option.getOrThrow(DrillQueue.current(next))
+    expect(item.withScaffolding).toBe(true)
+  })
 })
