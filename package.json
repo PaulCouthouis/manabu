@@ -8,7 +8,7 @@
     "lint": "oxlint -c oxlint.json apps/ packages/",
     "format": "oxfmt --write 'apps/**' 'packages/**' '!**/node_modules/**' '!**/styled-system/**' '!**/dist/**' '!**/routeTree.gen.ts'",
     "format:check": "oxfmt --check 'apps/**' 'packages/**' '!**/node_modules/**' '!**/styled-system/**' '!**/dist/**' '!**/routeTree.gen.ts'",
-    "storybook": "pnpm --filter @manabu/ui storybook",
+    "storybook": "pnpm --filter @manabu/storybook storybook",
     "prepare": "simple-git-hooks"
   },
   "simple-git-hooks": {

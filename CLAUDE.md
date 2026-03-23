@@ -34,6 +34,7 @@ manabu/
     domain/            # Entités, value objects, agrégats — pur Effect, zéro dépendance infra
     db/                # @effect/sql-pg, migrations, repositories
     exercises/         # @manabu/exercises — logique exercices (DrillQueue), composants exercice
+    storybook/         # @manabu/storybook — config Storybook centralisée, découvre les stories de ui + exercises
     ui/                # Composants UI partagés, design system Panda/Park
     shared/            # Types partagés, config Effect, utilitaires
   _bmad-output/
@@ -51,10 +52,11 @@ manabu/
 apps/web           →  @manabu/auth, @manabu/domain, @manabu/db, @manabu/ui, @manabu/exercises, @manabu/shared
 packages/auth      →  @manabu/shared
 packages/db        →  @manabu/domain, @manabu/shared
-packages/exercises →  @manabu/shared
-packages/ui        →  @manabu/shared
-packages/domain    →  @manabu/shared
-packages/shared    →  (aucune dépendance interne)
+packages/exercises  →  @manabu/shared
+packages/storybook  →  @manabu/ui, @manabu/exercises (devDeps — runner Storybook)
+packages/ui         →  @manabu/shared
+packages/domain     →  @manabu/shared
+packages/shared     →  (aucune dépendance interne)
 ```
 
 ### Conventions de nommage
@@ -77,7 +79,7 @@ packages/shared    →  (aucune dépendance interne)
 | `pnpm lint` | Linter tout le monorepo (oxlint) |
 | `pnpm format:check` | Vérifier le formatting (oxfmt) |
 | `pnpm format` | Appliquer le formatting (oxfmt) |
-| `pnpm storybook` | Lancer Storybook (packages/ui) sur le port 6006 |
+| `pnpm storybook` | Lancer Storybook (packages/storybook) sur le port 6006 |
 
 ## Routes
 

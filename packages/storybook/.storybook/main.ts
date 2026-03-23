@@ -3,22 +3,23 @@ import { fileURLToPath } from "node:url"
 import type { StorybookConfig } from "@storybook/react-vite"
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
+const uiDir = path.resolve(dirname, "../../ui")
 
 const config: StorybookConfig = {
-  stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
-  addons: [
-    "@chromatic-com/storybook",
-    "@storybook/addon-vitest",
-    "@storybook/addon-a11y",
-    "@storybook/addon-docs",
+  stories: [
+    "../../ui/src/**/*.mdx",
+    "../../ui/src/**/*.stories.@(js|jsx|mjs|ts|tsx)",
+    "../../exercises/src/**/*.mdx",
+    "../../exercises/src/**/*.stories.@(js|jsx|mjs|ts|tsx)",
   ],
+  addons: ["@storybook/addon-vitest", "@storybook/addon-a11y", "@storybook/addon-docs"],
   framework: "@storybook/react-vite",
   viteFinal(config) {
     config.resolve ??= {}
     config.resolve.alias ??= {}
     Object.assign(config.resolve.alias, {
-      "styled-system": path.resolve(dirname, "../styled-system"),
-      "@": path.resolve(dirname, "../src"),
+      "styled-system": path.resolve(uiDir, "styled-system"),
+      "@": path.resolve(uiDir, "src"),
     })
     return config
   },

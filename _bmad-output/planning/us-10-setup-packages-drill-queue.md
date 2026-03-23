@@ -127,12 +127,12 @@ interface DrillSummary<A> {
 
 ### Étape 2 — Setup `packages/storybook` (migration)
 
-- [ ] Créer `packages/storybook/package.json` avec scripts `storybook` et `build-storybook`
-- [ ] Migrer les devDependencies Storybook de `packages/ui` vers `packages/storybook`
-- [ ] Migrer `.storybook/main.ts` et `.storybook/preview.ts` de `packages/ui` vers `packages/storybook`
-- [ ] Configurer le stories glob dans `main.ts` pour découvrir `packages/ui` et `packages/exercises`
-- [ ] Supprimer la config `.storybook/`, les scripts et devDeps Storybook de `packages/ui` → AC4
-- [ ] Vérifier que les 7 stories existantes s'affichent dans le Storybook centralisé → AC2, AC3
+- [x] Créer `packages/storybook/package.json` avec scripts `storybook` et `build-storybook`
+- [x] Migrer les devDependencies Storybook de `packages/ui` vers `packages/storybook`
+- [x] Migrer `.storybook/main.ts` et `.storybook/preview.ts` de `packages/ui` vers `packages/storybook`
+- [x] Configurer le stories glob dans `main.ts` pour découvrir `packages/ui` et `packages/exercises`
+- [x] Supprimer la config `.storybook/`, les scripts et devDeps Storybook de `packages/ui` → AC4
+- [x] Vérifier que les 7 stories existantes s'affichent dans le Storybook centralisé → AC2, AC3
 
 ### Étape 3 — DrillQueue : création, FIFO, succès
 
