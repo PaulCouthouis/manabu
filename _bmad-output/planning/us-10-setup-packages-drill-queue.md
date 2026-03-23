@@ -162,13 +162,13 @@ interface DrillSummary<A> {
 
 ### Étape 6 — DrillQueue : summarize
 
-- [ ] Test RED : `summarize` queue fraîche → tout pending
-- [ ] Test RED : `summarize` après succès → succeeded avec nb essais
-- [ ] Test RED : `summarize` après recyclage → attempted
-- [ ] Test RED : `summarize` sur abandon → pending + attempted mélangés
-- [ ] Test RED : nb essais = nombre d'entrées history par item
-- [ ] GREEN : implémenter `summarize`
-- [ ] REFACTOR → AC16, AC17, AC18, AC19, AC20
+- [x] Test RED : `summarize` queue fraîche → tout pending
+- [x] Test RED : `summarize` après succès → succeeded avec nb essais
+- [x] Test RED : `summarize` après recyclage → attempted
+- [x] Test RED : `summarize` sur abandon → pending + attempted mélangés
+- [x] Test RED : nb essais = nombre d'entrées history par item
+- [x] GREEN : implémenter `summarize`
+- [x] REFACTOR → AC16, AC17, AC18, AC19, AC20
 
 ### Étape 7 — Vérifications finales
 

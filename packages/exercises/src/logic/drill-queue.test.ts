@@ -151,4 +151,64 @@ describe("DrillQueue", () => {
     const item = Option.getOrThrow(DrillQueue.current(next))
     expect(item.withScaffolding).toBe(true)
   })
+
+  // AC16 — summarize sur queue fraîche → tout est pending
+  it("summarize queue fraîche → tout pending", () => {
+    const queue = DrillQueue.make(["a", "b", "c"])
+    const summary = DrillQueue.summarize(queue)
+
+    expect(Chunk.size(summary.succeeded)).toBe(0)
+    expect(Chunk.size(summary.attempted)).toBe(0)
+    expect(Chunk.size(summary.pending)).toBe(3)
+  })
+
+  // AC17 — summarize après succès → items dans succeeded avec nb essais
+  it("summarize après succès → succeeded avec nb essais", () => {
+    const queue = DrillQueue.make(["a", "b", "c"])
+    const s1 = DrillQueue.succeed(queue)
+    const summary = DrillQueue.summarize(s1)
+
+    expect(Chunk.size(summary.succeeded)).toBe(1)
+    expect(Option.getOrThrow(Chunk.get(summary.succeeded, 0)).item.value).toBe("a")
+    expect(Option.getOrThrow(Chunk.get(summary.succeeded, 0)).attempts).toBe(1)
+    expect(Chunk.size(summary.pending)).toBe(2)
+  })
+
+  // AC18 — summarize après recyclage sans succès → items dans attempted
+  it("summarize après recyclage → attempted", () => {
+    const queue = DrillQueue.make(["a", "b"])
+    const r1 = DrillQueue.recycle(queue)
+    const summary = DrillQueue.summarize(r1)
+
+    expect(Chunk.size(summary.attempted)).toBe(1)
+    expect(Option.getOrThrow(Chunk.get(summary.attempted, 0)).item.value).toBe("a")
+    expect(Option.getOrThrow(Chunk.get(summary.attempted, 0)).attempts).toBe(1)
+    expect(Chunk.size(summary.pending)).toBe(1)
+  })
+
+  // AC19 — summarize sur abandon → pending + attempted mélangés
+  it("summarize sur abandon → pending + attempted + succeeded", () => {
+    const queue = DrillQueue.make(["a", "b", "c", "d", "e"])
+    const s1 = DrillQueue.succeed(queue)
+    const r1 = DrillQueue.recycle(s1)
+    const summary = DrillQueue.summarize(r1)
+
+    expect(Chunk.size(summary.succeeded)).toBe(1)
+    expect(Option.getOrThrow(Chunk.get(summary.succeeded, 0)).item.value).toBe("a")
+    expect(Chunk.size(summary.attempted)).toBe(1)
+    expect(Option.getOrThrow(Chunk.get(summary.attempted, 0)).item.value).toBe("b")
+    expect(Chunk.size(summary.pending)).toBe(3)
+  })
+
+  // AC20 — nb essais = nombre d'entrées dans history par item
+  it("nb essais comptabilise toutes les tentatives", () => {
+    const queue = DrillQueue.make(["a"])
+    const r1 = DrillQueue.recycle(queue)
+    const r2 = DrillQueue.recycle(r1)
+    const s1 = DrillQueue.succeed(r2)
+    const summary = DrillQueue.summarize(s1)
+
+    expect(Chunk.size(summary.succeeded)).toBe(1)
+    expect(Option.getOrThrow(Chunk.get(summary.succeeded, 0)).attempts).toBe(3)
+  })
 })

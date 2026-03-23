@@ -67,6 +67,7 @@ packages/shared     →  (aucune dépendance interne)
 - Fonctions / variables : camelCase
 - Effect services / layers : PascalCase avec suffixe descriptif (ex: `SqlLive`, `UserRepo`)
 - Instanciation des `Schema.Class` : utiliser `Class.make({...})` plutôt que `new Class({...})`
+- Fonctions : toujours utiliser des accolades `{}` pour le corps, même pour une seule expression. Pas de fonctions fléchées inline sans accolades (ex: `const foo = (x) => { return x + 1 }`, pas `const foo = (x) => x + 1`).
 
 ## Commandes
 
