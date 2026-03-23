@@ -145,12 +145,12 @@ interface DrillSummary<A> {
 
 ### Étape 4 — DrillQueue : recyclage, queue vide
 
-- [ ] Test RED : `recycle` → item en fin de queue + history incrémenté
-- [ ] Test RED : item recyclé re-présenté après les autres
-- [ ] Test RED : recyclages multiples → item réapparaît
-- [ ] Test RED : tous les items réussis → queue vide
-- [ ] GREEN : implémenter `recycle`
-- [ ] REFACTOR → AC9, AC10, AC11, AC12
+- [x] Test RED : `recycle` → item en fin de queue + history incrémenté
+- [x] Test RED : item recyclé re-présenté après les autres
+- [x] Test RED : recyclages multiples → item réapparaît
+- [x] Test RED : tous les items réussis → queue vide
+- [x] GREEN : implémenter `recycle`
+- [x] REFACTOR → AC9, AC10, AC11, AC12
 
 ### Étape 5 — DrillQueue : double passage scaffolding
 

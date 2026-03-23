@@ -27,15 +27,30 @@ const make = <A>(values: ReadonlyArray<A>): DrillQueueState<A> => ({
 const current = <A>(state: DrillQueueState<A>): Option.Option<DrillItem<A>> =>
   Chunk.get(state.queue, 0)
 
-const succeed = <A>(state: DrillQueueState<A>): Option.Option<DrillQueueState<A>> =>
+const succeed = <A>(state: DrillQueueState<A>): DrillQueueState<A> =>
   pipe(
     current(state),
-    Option.map((item) => ({
-      queue: Chunk.drop(state.queue, 1),
-      history: Chunk.append(state.history, { item, outcome: "success" as const }),
-    })),
+    Option.match({
+      onNone: () => state,
+      onSome: (item) => ({
+        queue: Chunk.drop(state.queue, 1),
+        history: Chunk.append(state.history, { item, outcome: "success" as const }),
+      }),
+    }),
+  )
+
+const recycle = <A>(state: DrillQueueState<A>): DrillQueueState<A> =>
+  pipe(
+    current(state),
+    Option.match({
+      onNone: () => state,
+      onSome: (item) => ({
+        queue: Chunk.append(Chunk.drop(state.queue, 1), item),
+        history: Chunk.append(state.history, { item, outcome: "recycle" as const }),
+      }),
+    }),
   )
 
 const isEmpty = <A>(state: DrillQueueState<A>): boolean => Chunk.isEmpty(state.queue)
 
-export const DrillQueue = { make, current, succeed, isEmpty }
+export const DrillQueue = { make, current, succeed, recycle, isEmpty }

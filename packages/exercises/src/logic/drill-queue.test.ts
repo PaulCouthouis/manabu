@@ -26,15 +26,14 @@ describe("DrillQueue", () => {
 
   it("current retourne None sur une queue vide", () => {
     const queue = DrillQueue.make([])
-    const item = DrillQueue.current(queue)
 
-    expect(Option.isNone(item)).toBe(true)
+    expect(Option.isNone(DrillQueue.current(queue))).toBe(true)
   })
 
   // AC7 — succeed retire l'item de la queue et push dans history
   it("succeed retire l'item et enregistre dans history", () => {
     const queue = DrillQueue.make(items)
-    const next = Option.getOrThrow(DrillQueue.succeed(queue))
+    const next = DrillQueue.succeed(queue)
 
     expect(Chunk.size(next.queue)).toBe(4)
     expect(Option.getOrThrow(DrillQueue.current(next)).value).toBe("b")
@@ -43,19 +42,64 @@ describe("DrillQueue", () => {
     expect(Option.getOrThrow(Chunk.get(next.history, 0)).item.value).toBe("a")
   })
 
-  it("succeed retourne None sur une queue vide", () => {
+  it("succeed sur queue vide retourne la même queue", () => {
     const queue = DrillQueue.make([])
-    expect(Option.isNone(DrillQueue.succeed(queue))).toBe(true)
+    expect(DrillQueue.succeed(queue)).toBe(queue)
   })
 
   // AC8 — isEmpty retourne true quand la queue est vide
   it("isEmpty retourne true quand la queue est vide", () => {
-    const queue = DrillQueue.make([])
-    expect(DrillQueue.isEmpty(queue)).toBe(true)
+    expect(DrillQueue.isEmpty(DrillQueue.make([]))).toBe(true)
   })
 
   it("isEmpty retourne false quand la queue a des items", () => {
+    expect(DrillQueue.isEmpty(DrillQueue.make(items))).toBe(false)
+  })
+
+  // AC9 — recycle déplace l'item en fin de queue et push dans history
+  it("recycle déplace l'item en fin de queue et enregistre dans history", () => {
     const queue = DrillQueue.make(items)
-    expect(DrillQueue.isEmpty(queue)).toBe(false)
+    const next = DrillQueue.recycle(queue)
+
+    expect(Chunk.size(next.queue)).toBe(5)
+    expect(Option.getOrThrow(DrillQueue.current(next)).value).toBe("b")
+    expect(Option.getOrThrow(Chunk.get(next.queue, 4)).value).toBe("a")
+    expect(Chunk.size(next.history)).toBe(1)
+    expect(Option.getOrThrow(Chunk.get(next.history, 0)).outcome).toBe("recycle")
+  })
+
+  it("recycle sur queue vide retourne la même queue", () => {
+    const queue = DrillQueue.make([])
+    expect(DrillQueue.recycle(queue)).toBe(queue)
+  })
+
+  // AC10 — Un item recyclé est re-présenté après les items restants
+  it("un item recyclé est re-présenté après les autres", () => {
+    const queue = DrillQueue.make(["a", "b", "c"])
+    const afterRecycle = DrillQueue.recycle(queue)
+    const afterB = DrillQueue.succeed(afterRecycle)
+    const afterC = DrillQueue.succeed(afterB)
+
+    expect(Option.getOrThrow(DrillQueue.current(afterC)).value).toBe("a")
+  })
+
+  // AC11 — Plusieurs recyclages successifs → l'item réapparaît à chaque fois
+  it("recyclages multiples — l'item réapparaît à chaque fois", () => {
+    const queue = DrillQueue.make(["a"])
+    const r1 = DrillQueue.recycle(queue)
+    expect(Option.getOrThrow(DrillQueue.current(r1)).value).toBe("a")
+
+    const r2 = DrillQueue.recycle(r1)
+    expect(Option.getOrThrow(DrillQueue.current(r2)).value).toBe("a")
+    expect(Chunk.size(r2.history)).toBe(2)
+  })
+
+  // AC12 — Queue avec tous les items réussis → isEmpty retourne true
+  it("tous les items réussis → queue vide", () => {
+    const queue = DrillQueue.make(["a", "b"])
+    const s1 = DrillQueue.succeed(queue)
+    const s2 = DrillQueue.succeed(s1)
+
+    expect(DrillQueue.isEmpty(s2)).toBe(true)
   })
 })
