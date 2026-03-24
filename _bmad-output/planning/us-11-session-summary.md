@@ -243,10 +243,9 @@ SessionSummary (styled div, flexDirection: "column", gap: "4")
 
 ### Étape 1 — Types discriminés & exports
 
-- [ ] Créer `packages/exercises/src/logic/session-summary.ts` avec les types `SessionSummarySucceededItem`, `SessionSummaryAttemptedItem`, `SessionSummaryItem`
-- [ ] Test RED : vérifier que `kind: "succeeded"` a `recordingBlob`, `kind: "attempted"` n'en a pas (test de typage compile-time via `expectTypeOf` de Vitest) → AC1, AC2
-- [ ] GREEN : implémenter les types
-- [ ] Exporter depuis `packages/exercises/src/index.ts`
+- [x] Créer `packages/exercises/src/logic/session-summary.ts` avec les types `SessionSummarySucceededItem`, `SessionSummaryAttemptedItem`, `SessionSummaryItem`
+- [x] Test RED : vérifier que `kind: "succeeded"` a `recordingBlob`, `kind: "attempted"` n'en a pas (test de typage compile-time via `expectTypeOf` de Vitest) → AC1, AC2
+- [x] GREEN : implémenter les types
 
 ### Étape 2 — Service TextToSpeech (TDD)
 
