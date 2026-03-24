@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest"
-import { isTextTruncated } from "./is-text-truncated.js"
+import { isTextTruncated } from "../logic/is-text-truncated.js"
 
 describe("isTextTruncated", () => {
   it("retourne true quand scrollWidth dépasse clientWidth", () => {

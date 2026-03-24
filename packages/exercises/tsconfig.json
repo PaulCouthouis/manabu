@@ -10,5 +10,5 @@
   },
   "references": [{ "path": "../shared" }, { "path": "../ui" }],
   "include": ["src"],
-  "exclude": ["src/**/*.stories.tsx"]
+  "exclude": ["src/**/*.stories.tsx", "src/__stories__", "src/__tests__", "src/test-utils"]
 }

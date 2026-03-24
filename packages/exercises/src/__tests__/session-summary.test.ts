@@ -1,5 +1,8 @@
 import { describe, expectTypeOf, it } from "vitest"
-import type { SessionSummaryAttemptedItem, SessionSummarySucceededItem } from "./session-summary.js"
+import type {
+  SessionSummaryAttemptedItem,
+  SessionSummarySucceededItem,
+} from "../logic/session-summary.js"
 
 describe("SessionSummary types", () => {
   // AC1 — Les types sont définis avec le discriminant `kind`

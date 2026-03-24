@@ -1,7 +1,7 @@
 import { assert, layer } from "@effect/vitest"
 import { Effect, Layer } from "effect"
-import type { Utterance } from "./text-to-speech.js"
-import { SpeechSynthesisApi, TextToSpeech } from "./text-to-speech.js"
+import type { Utterance } from "../logic/text-to-speech.js"
+import { SpeechSynthesisApi, TextToSpeech } from "../logic/text-to-speech.js"
 
 const calls: Array<Utterance> = []
 

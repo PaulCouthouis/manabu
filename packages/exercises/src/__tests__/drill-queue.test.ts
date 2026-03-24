@@ -1,6 +1,6 @@
 import { Array, Chunk, Option } from "effect"
 import { describe, expect, it } from "vitest"
-import { DrillQueue } from "./drill-queue.js"
+import { DrillQueue } from "../logic/drill-queue.js"
 
 describe("DrillQueue", () => {
   const items = ["a", "b", "c", "d", "e"]

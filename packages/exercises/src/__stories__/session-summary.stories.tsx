@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
-import type { DrillItem } from "../../logic/drill-queue.js"
+import type { DrillItem } from "../logic/drill-queue.js"
 import type {
   SessionSummaryAttemptedItem,
   SessionSummarySucceededItem,
-} from "../../logic/session-summary.js"
-import { makeFakeAudioBlob } from "./make-fake-audio-blob.js"
-import { SessionSummary } from "./session-summary.js"
+} from "../logic/session-summary.js"
+import { makeFakeAudioBlob } from "../test-utils/make-fake-audio-blob.js"
+import { SessionSummary } from "../components/session-summary/session-summary.js"
 
 const fakeBlob = makeFakeAudioBlob()
 
