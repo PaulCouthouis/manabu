@@ -249,11 +249,11 @@ SessionSummary (styled div, flexDirection: "column", gap: "4")
 
 ### Étape 2 — Service TextToSpeech (TDD)
 
-- [ ] Créer `packages/exercises/src/logic/text-to-speech.ts`
-- [ ] Test RED : `speak("こんにちは", "ja-JP")` avec mock de `window.speechSynthesis` → `SpeechSynthesisUtterance` créé avec le bon texte et la bonne langue → AC3, AC4
-- [ ] Test RED : `speak` quand `window.speechSynthesis` absent → retourne `TextToSpeechError` → AC5
-- [ ] GREEN : implémenter le service Effect et le layer navigateur
-- [ ] REFACTOR
+- [x] Créer `packages/exercises/src/logic/text-to-speech.ts`
+- [x] Test RED : `speak("こんにちは", "ja-JP")` avec mock de `window.speechSynthesis` → `SpeechSynthesisUtterance` créé avec le bon texte et la bonne langue → AC3, AC4
+- [x] Test RED : `speak` quand `window.speechSynthesis` absent → retourne `TextToSpeechError` → AC5
+- [x] GREEN : implémenter le service Effect et le layer navigateur
+- [x] REFACTOR
 
 ### Étape 3 — Composant SessionSummary + Stories (développement conjoint)
 

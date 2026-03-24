@@ -171,6 +171,14 @@ Chaque critère d'acceptance est validé par un test automatisé ou une commande
 
 Règle : un AC sans test automatisé est un AC non validé.
 
+### Tests — `@effect/vitest` et injection de dépendances, pas de mocks Vitest
+
+- Utiliser `@effect/vitest` pour écrire les tests impliquant Effect : `it.effect` pour les tests, `layer(TestLayer)("describe name", (it) => { ... })` pour fournir un layer partagé à un bloc de tests.
+- Fournir les dépendances via `layer()` (préféré) ou `Effect.provide(TestLayer)` — jamais `vi.fn()`, `vi.mock()`, `vi.stubGlobal()` ou autres mocks/stubs Vitest.
+- Créer les implémentations de test avec `Layer.succeed(ServiceTag, { ...fakeImpl })` ou `Layer.effect`.
+- Injecter les fakes au niveau des APIs externes (réseau, browser, DB), pas au niveau du service métier — la logique métier doit rester dans la zone testée. Ex : stubber `SpeechSynthesisApi` (l'appel browser), pas `TextToSpeech` (le service qui contient la logique).
+- Tester les erreurs Effect avec `Effect.flip` pour inverser le canal d'erreur en valeur, plutôt que `Effect.exit` + pattern matching sur `Cause`.
+
 ### TDD — Red-Green-Refactor
 
 Pour toute logique testable (domain, services, repositories, API), appliquer le cycle TDD :
