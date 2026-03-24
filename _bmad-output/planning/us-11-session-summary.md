@@ -257,22 +257,22 @@ SessionSummary (styled div, flexDirection: "column", gap: "4")
 
 ### Étape 3 — Composant SessionSummary + Stories (développement conjoint)
 
-- [ ] Installer le composant Tooltip via `npx @park-ui/cli components add tooltip` dans `packages/ui`
-- [ ] Créer `packages/exercises/src/components/session-summary/session-summary.tsx`
-- [ ] Créer la fixture audio : fonction `makeFakeAudioBlob()` qui génère un sine wave WAV de 0.5s
-- [ ] Story `AllSucceededFirstTry` : 5 items kana (か, き, く, け, こ), tous réussis en 1 essai → AC6, AC8, AC9, AC13
-- [ ] Implémenter le rendu des items succeeded : `renderContent` + bouton 🔊 + bouton 🎙️ → AC6
-- [ ] Story `AllSucceededMultipleAttempts` : 5 items, certains avec attempts=2 ou 3 → AC8, AC14
-- [ ] Implémenter le badge ×N conditionnel → AC8
-- [ ] Story `Abandoned` : 3 succeeded + 2 attempted, inclure au moins une phrase longue pour vérifier la troncature ellipsis + tooltip → AC7, AC9, AC15
-- [ ] Implémenter le rendu des items attempted : 🔊 uniquement, pas de `renderContent`, pas de 🎙️ → AC7
-- [ ] Implémenter le message "You completed X/Y" → AC9
-- [ ] Vérifier l'ordre d'affichage : succeeded avant attempted → AC10
-- [ ] Brancher le bouton 🔊 sur `TextToSpeech.speak` (layer navigateur en story, `ja-JP`) → AC11
-- [ ] Brancher le bouton 🎙️ sur `URL.createObjectURL(recordingBlob)` + `<audio>` → AC12
-- [ ] Story `SingleItem` : 1 succeeded, abandon → AC16
-- [ ] Story `WithScaffolding` : items avec double passage, attempts=2 (scaffolding + sans) → AC17
-- [ ] Exporter le composant depuis `packages/exercises/src/index.ts`
+- [x] Installer le composant Tooltip via `npx @park-ui/cli components add tooltip` dans `packages/ui`
+- [x] Créer `packages/exercises/src/components/session-summary/session-summary.tsx`
+- [x] Créer la fixture audio : fonction `makeFakeAudioBlob()` qui génère un sine wave WAV de 0.5s
+- [x] Story `AllSucceededFirstTry` : 5 items kana (か, き, く, け, こ), tous réussis en 1 essai → AC6, AC8, AC9, AC13
+- [x] Implémenter le rendu des items succeeded : `renderContent` + bouton 🔊 + bouton 🎙️ → AC6
+- [x] Story `AllSucceededMultipleAttempts` : 5 items, certains avec attempts=2 ou 3 → AC8, AC14
+- [x] Implémenter le badge ×N conditionnel → AC8
+- [x] Story `Abandoned` : 3 succeeded + 2 attempted, inclure au moins une phrase longue pour vérifier la troncature ellipsis + tooltip → AC7, AC9, AC15
+- [x] Implémenter le rendu des items attempted : 🔊 uniquement, pas de `renderContent`, pas de 🎙️ → AC7
+- [x] Implémenter le message "You completed X/Y" → AC9
+- [x] Vérifier l'ordre d'affichage : succeeded avant attempted → AC10
+- [x] Brancher le bouton 🔊 sur `TextToSpeech.speak` (layer navigateur en story, `ja-JP`) → AC11
+- [x] Brancher le bouton 🎙️ sur `URL.createObjectURL(recordingBlob)` + `<audio>` → AC12
+- [x] Story `SingleItem` : 1 succeeded, abandon → AC16
+- [x] Story `WithScaffolding` : items avec double passage, attempts=2 (scaffolding + sans) → AC17
+- [x] Exporter le composant depuis `packages/exercises/src/index.ts`
 
 ### Étape 4 — Vérifications finales
 

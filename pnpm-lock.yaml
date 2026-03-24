@@ -165,16 +165,34 @@ importers:
 
   packages/exercises:
     dependencies:
+      '@effect-atom/atom-react':
+        specifier: ^0.5.0
+        version: 0.5.0(@effect/experimental@0.60.0(@effect/platform@0.96.0(effect@3.21.0))(effect@3.21.0)(ioredis@5.10.0))(@effect/platform@0.96.0(effect@3.21.0))(@effect/rpc@0.73.2(@effect/platform@0.96.0(effect@3.21.0))(effect@3.21.0))(effect@3.21.0)(react@19.2.4)(scheduler@0.27.0)
       '@manabu/shared':
         specifier: workspace:*
         version: link:../shared
+      '@manabu/ui':
+        specifier: workspace:^
+        version: link:../ui
       effect:
         specifier: ^3.21.0
         version: 3.21.0
+      lucide-react:
+        specifier: ^0.577.0
+        version: 0.577.0(react@19.2.4)
+      react:
+        specifier: ^19.2.4
+        version: 19.2.4
     devDependencies:
       '@effect/vitest':
         specifier: ^0.29.0
         version: 0.29.0(effect@3.21.0)(vitest@4.1.0)
+      '@storybook/react-vite':
+        specifier: ^10.3.1
+        version: 10.3.1(esbuild@0.27.4)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(rollup@4.59.0)(storybook@10.3.1(@testing-library/dom@10.4.1)(prettier@3.8.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(typescript@5.9.3)(vite@8.0.1(esbuild@0.27.4)(jiti@2.6.1)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.2))
+      '@types/react':
+        specifier: ^19.2.14
+        version: 19.2.14
       typescript:
         specifier: ^5.8.0
         version: 5.9.3

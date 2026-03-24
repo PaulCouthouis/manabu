@@ -3,8 +3,12 @@
   "compilerOptions": {
     "composite": true,
     "outDir": "dist",
-    "rootDir": "src"
+    "rootDir": "src",
+    "paths": {
+      "styled-system/*": ["../ui/styled-system/*"]
+    }
   },
-  "references": [{ "path": "../shared" }],
-  "include": ["src"]
+  "references": [{ "path": "../shared" }, { "path": "../ui" }],
+  "include": ["src"],
+  "exclude": ["src/**/*.stories.tsx"]
 }
