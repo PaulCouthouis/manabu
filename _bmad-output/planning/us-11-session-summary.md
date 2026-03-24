@@ -276,9 +276,9 @@ SessionSummary (styled div, flexDirection: "column", gap: "4")
 
 ### Étape 4 — Vérifications finales
 
-- [ ] `pnpm build` sans erreur → AC18
-- [ ] `pnpm lint` sans erreur → AC19
-- [ ] Tests existants passent (non-régression)
+- [x] `pnpm build` sans erreur → AC18
+- [x] `pnpm lint` sans erreur → AC19
+- [x] Tests existants passent (non-régression)
 
 ## Hors scope
 
