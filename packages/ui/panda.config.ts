@@ -4,6 +4,7 @@ import jade from "@park-ui/panda-preset/colors/jade"
 import sage from "@park-ui/panda-preset/colors/sage"
 import { absoluteCenter } from "./src/theme/recipes/absolute-center"
 import { group } from "./src/theme/recipes/group"
+import { spinner } from "./src/theme/recipes/spinner"
 
 export default defineConfig({
   preflight: true,
@@ -16,6 +17,7 @@ export default defineConfig({
       recipes: {
         absoluteCenter,
         group,
+        spinner,
       },
     },
   },
