@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.json",
+  "include": [".", "../__stories__", "../test-utils"],
+  "exclude": [],
+  "compilerOptions": {
+    "composite": false,
+    "noEmit": true
+  }
+}
