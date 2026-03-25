@@ -1,6 +1,6 @@
 import { styled } from "styled-system/jsx"
-import type { SessionSummaryAttemptedItem } from "../../logic/session-summary.js"
-import { SummaryItemRow } from "./summary-item-row.js"
+import type { SessionSummaryAttemptedItem } from "~/logic/session/session-summary.js"
+import { SummaryItemRow } from "~/components/session-summary/summary-item-row.js"
 
 const PlaceholderText = styled("span", {
   base: {

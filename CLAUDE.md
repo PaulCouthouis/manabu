@@ -68,6 +68,7 @@ packages/shared     →  (aucune dépendance interne)
 - Effect services / layers : PascalCase avec suffixe descriptif (ex: `SqlLive`, `UserRepo`)
 - Instanciation des `Schema.Class` : utiliser `Class.make({...})` plutôt que `new Class({...})`
 - Fonctions : toujours utiliser des accolades `{}` pour le corps, même pour une seule expression. Pas de fonctions fléchées inline sans accolades (ex: `const foo = (x) => { return x + 1 }`, pas `const foo = (x) => x + 1`).
+- Imports intra-package : toujours utiliser l'alias `~/` (mappé vers `src/`) plutôt que des chemins relatifs (`./`, `../`). Configurer `paths` dans `tsconfig.json` et `resolve.alias` dans `vitest.config.ts` pour chaque package.
 
 ## Commandes
 

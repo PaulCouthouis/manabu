@@ -1,7 +1,7 @@
 import { assert, layer } from "@effect/vitest"
 import { Effect, Layer, Option } from "effect"
-import type { VoiceInfo } from "../logic/voice-selection.js"
-import { SpeechSynthesisApi, TextToSpeech } from "../logic/text-to-speech.js"
+import type { VoiceInfo } from "~/logic/audio/voice-selection.js"
+import { SpeechSynthesisApi, TextToSpeech } from "~/logic/audio/text-to-speech.js"
 
 const calls: Array<{ text: string; lang: string; rate: number; voice: Option.Option<VoiceInfo> }> =
   []

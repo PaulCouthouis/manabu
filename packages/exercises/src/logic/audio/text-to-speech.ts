@@ -1,7 +1,7 @@
 import { Context, Data, Effect, Layer, Option } from "effect"
-import type { VoiceInfo } from "./voice-selection.js"
-import { isSpeechSynthesisVoice } from "./is-speech-synthesis-voice.js"
-import { findBestVoice } from "./voice-selection.js"
+import type { VoiceInfo } from "~/logic/audio/voice-selection.js"
+import { isSpeechSynthesisVoice } from "~/logic/audio/is-speech-synthesis-voice.js"
+import { findBestVoice } from "~/logic/audio/voice-selection.js"
 
 export class TextToSpeechError extends Data.TaggedError("TextToSpeechError")<{
   readonly reason: string

@@ -5,6 +5,7 @@
     "outDir": "dist",
     "rootDir": "src",
     "paths": {
+      "~/*": ["./src/*"],
       "styled-system/*": ["../ui/styled-system/*"]
     }
   },

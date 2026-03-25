@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { styled } from "styled-system/jsx"
 import { Tooltip } from "@manabu/ui"
-import { isTextTruncated } from "../../logic/is-text-truncated.js"
+import { isTextTruncated } from "~/logic/ui/is-text-truncated.js"
 
 const ItemText = styled("span", {
   base: {

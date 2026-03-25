@@ -1,7 +1,7 @@
 import { Option } from "effect"
 import { describe, expect, it } from "vitest"
-import type { VoiceInfo } from "../logic/voice-selection.js"
-import { findBestVoice } from "../logic/voice-selection.js"
+import type { VoiceInfo } from "~/logic/audio/voice-selection.js"
+import { findBestVoice } from "~/logic/audio/voice-selection.js"
 
 const kyoko: VoiceInfo = { name: "Kyoko", lang: "ja-JP", localService: true }
 const oRen: VoiceInfo = { name: "O-Ren (Enhanced)", lang: "ja-JP", localService: true }

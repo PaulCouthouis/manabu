@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest"
-import type { AudioPlayer } from "../logic/audio-playback.js"
-import { playAudio } from "../logic/audio-playback.js"
+import type { AudioPlayer } from "~/logic/audio/audio-playback.js"
+import { playAudio } from "~/logic/audio/audio-playback.js"
 
 describe("playAudio", () => {
   it("set src et appelle play sur le player", () => {

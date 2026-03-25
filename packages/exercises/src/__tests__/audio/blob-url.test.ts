@@ -1,6 +1,6 @@
 import { assert, layer } from "@effect/vitest"
 import { Effect, Layer } from "effect"
-import { BlobUrlApi, createBlobUrl, revokeBlobUrl } from "../logic/blob-url.js"
+import { BlobUrlApi, createBlobUrl, revokeBlobUrl } from "~/logic/audio/blob-url.js"
 
 const created: Array<string> = []
 const revoked: Array<string> = []

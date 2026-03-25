@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest"
-import { isSpeechSynthesisVoice } from "../logic/is-speech-synthesis-voice.js"
+import { isSpeechSynthesisVoice } from "~/logic/audio/is-speech-synthesis-voice.js"
 
 describe("isSpeechSynthesisVoice", () => {
   it("retourne true si voiceURI est présent", () => {

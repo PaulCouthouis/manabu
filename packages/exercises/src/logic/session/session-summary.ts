@@ -1,4 +1,4 @@
-import type { DrillSummaryEntry } from "./drill-queue.js"
+import type { DrillSummaryEntry } from "~/logic/session/drill-queue.js"
 
 export interface SessionSummarySucceededItem<A> extends DrillSummaryEntry<A> {
   readonly kind: "succeeded"

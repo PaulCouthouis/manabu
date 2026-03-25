@@ -2,11 +2,11 @@ import { Check, Mic } from "lucide-react"
 import { useEffect, useMemo, useRef } from "react"
 import { styled } from "styled-system/jsx"
 import { Button } from "@manabu/ui"
-import type { DrillItem } from "../../logic/drill-queue.js"
-import type { SessionSummarySucceededItem } from "../../logic/session-summary.js"
-import { playAudio } from "../../logic/audio-playback.js"
-import { TruncatedContent } from "./truncated-content.js"
-import { SummaryItemRow } from "./summary-item-row.js"
+import type { DrillItem } from "~/logic/session/drill-queue.js"
+import type { SessionSummarySucceededItem } from "~/logic/session/session-summary.js"
+import { playAudio } from "~/logic/audio/audio-playback.js"
+import { TruncatedContent } from "~/components/session-summary/truncated-content.js"
+import { SummaryItemRow } from "~/components/session-summary/summary-item-row.js"
 
 const NewBadge = styled("span", {
   base: {

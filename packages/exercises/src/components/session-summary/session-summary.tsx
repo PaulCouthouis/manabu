@@ -1,16 +1,16 @@
 import { Atom, useAtomSet } from "@effect-atom/atom-react"
 import { Effect, Layer } from "effect"
 import { styled } from "styled-system/jsx"
-import type { DrillItem } from "../../logic/drill-queue.js"
+import type { DrillItem } from "~/logic/session/drill-queue.js"
 import type {
   SessionSummaryAttemptedItem,
   SessionSummarySucceededItem,
-} from "../../logic/session-summary.js"
-import { BrowserSpeechSynthesisApiLive, TextToSpeech } from "../../logic/text-to-speech.js"
-import { BrowserBlobUrlApiLive } from "../../logic/blob-url.js"
-import { Header } from "./header.js"
-import { SucceededItemRow } from "./succeeded-item-row.js"
-import { AttemptedItemRow } from "./attempted-item-row.js"
+} from "~/logic/session/session-summary.js"
+import { BrowserSpeechSynthesisApiLive, TextToSpeech } from "~/logic/audio/text-to-speech.js"
+import { BrowserBlobUrlApiLive } from "~/logic/audio/blob-url.js"
+import { Header } from "~/components/session-summary/header.js"
+import { SucceededItemRow } from "~/components/session-summary/succeeded-item-row.js"
+import { AttemptedItemRow } from "~/components/session-summary/attempted-item-row.js"
 
 export interface SessionSummaryProps<A> {
   readonly succeeded: ReadonlyArray<SessionSummarySucceededItem<A>>
