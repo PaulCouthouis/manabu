@@ -4,6 +4,7 @@ export { Button, ButtonGroup, type ButtonGroupProps, type ButtonProps } from "./
 export * as Card from "./card"
 export * as Field from "./field"
 export { Group, type GroupProps } from "./group"
+export { IconButton, type IconButtonProps } from "./icon-button"
 export { Input, type InputProps } from "./input"
 export { Link, type LinkProps } from "./link"
 export { Loader, type LoaderProps } from "./loader"

@@ -15,7 +15,7 @@ Composant composite d'input multimodal permettant de basculer entre mode voix (V
 | Nature du composant | Composant composite : VoiceRecorder OU Input + bouton toggle | L'US13 encapsule les deux modes d'input et le switch. Le parent (MeaningExercise) reçoit un résultat unifié. |
 | Persistance mode | `Atom.kvs` avec `BrowserKeyValueStore.layerLocalStorage` | Fourni nativement par `@effect-atom/atom-react`. Pas besoin d'un service custom. Schema-safe, fallback automatique sur la `defaultValue` si valeur corrompue. |
 | Défaut | `"voice"` | L'app est orientée oral — le mode voix est l'expérience principale. L'utilisateur switch vers clavier si besoin. |
-| Toggle | `IconButton` Park UI (à installer via CLI), `variant="plain"`, `size="sm"` | Un seul bouton qui bascule. Pas de SegmentGroup — plus simple, moins d'encombrement visuel. |
+| Toggle | `IconButton` Park UI (installé via CLI), `variant="ghost"`, `size="sm"` | Un seul bouton qui bascule. Pas de SegmentGroup — plus simple, moins d'encombrement visuel. |
 | Icônes toggle | `AudioLines` (→ voix) / `Keyboard` (→ clavier) | Affiche le mode **cible**, pas le mode actuel. `AudioLines` évite la collision avec l'icône `Mic` du VoiceRecorder. |
 | Callback | `onAnswer: (result: AnswerResult) => void` avec type discriminé | Le parent sait si c'est du texte ou de l'audio sans logique conditionnelle. |
 | Input clavier | `Input` Park UI, validation au `Enter`, `enterKeyHint="send"`, hauteur `48px` (= VoiceRecorder) | Même dimension que le VoiceRecorder pour éviter un saut visuel au switch. `enterKeyHint="send"` affiche un bouton "Envoyer" sur le clavier mobile. Réponses courtes — pas besoin de `Textarea`. |
@@ -149,10 +149,10 @@ export interface MultimodalInputProps {
 
 ### Étape 1 — Installation composants Park UI manquants
 
-- [ ] Installer `IconButton` via `npx @park-ui/cli component add icon-button` dans `packages/ui`
-- [ ] Story `IconButton` : afficher les variants (`solid`, `surface`, `subtle`, `outline`, `plain`) avec une icône Lucide
-- [ ] Story `Input` : afficher les tailles et états (default, placeholder, disabled) — composant déjà installé, story manquante
-- [ ] Exporter `IconButton` et `Input` depuis `packages/ui/src/index.ts` si pas déjà fait
+- [x] Installer `IconButton` via `npx @park-ui/cli component add icon-button` dans `packages/ui`
+- [x] Story `IconButton` : afficher les variants (`solid`, `outline`, `subtle`, `ghost`) avec une icône Lucide
+- [x] Story `Input` : afficher les tailles et états (default, placeholder, disabled) — composant déjà installé, story manquante
+- [x] Exporter `IconButton` et `Input` depuis `packages/ui/src/index.ts` si pas déjà fait
 
 ### Étape 2 — Atom persisté (`inputModeAtom`)
 
@@ -164,7 +164,7 @@ export interface MultimodalInputProps {
 
 - [ ] Créer `packages/exercises/src/components/multimodal-input/multimodal-input.tsx`
 - [ ] Implémenter le layout flex row avec VoiceRecorder ou Input selon le mode → AC3, AC4, AC10
-- [ ] Installer `IconButton` via CLI Park UI, implémenter le toggle avec `AudioLines` / `Keyboard` (`variant="plain"`, `size="sm"`) → AC5, AC6, AC7
+- [ ] Installer `IconButton` via CLI Park UI, implémenter le toggle avec `AudioLines` / `Keyboard` (`variant="ghost"`, `size="sm"`) → AC5, AC6, AC7
 - [ ] Implémenter le callback `onAnswer` pour le mode clavier (Enter) → AC8
 - [ ] Implémenter le callback `onAnswer` pour le mode voix (onSpeechEnd → blob) → AC9
 - [ ] Story `KeyboardMode` : mode clavier par défaut, Input visible → AC11
