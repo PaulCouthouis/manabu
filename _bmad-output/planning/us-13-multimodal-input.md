@@ -162,14 +162,13 @@ export interface MultimodalInputProps {
 
 ### Étape 3 — Composant MultimodalInput + Stories
 
-- [ ] Créer `packages/exercises/src/components/multimodal-input/multimodal-input.tsx`
-- [ ] Implémenter le layout flex row avec VoiceRecorder ou Input selon le mode → AC3, AC4, AC10
-- [ ] Installer `IconButton` via CLI Park UI, implémenter le toggle avec `AudioLines` / `Keyboard` (`variant="ghost"`, `size="sm"`) → AC5, AC6, AC7
-- [ ] Implémenter le callback `onAnswer` pour le mode clavier (Enter) → AC8
-- [ ] Implémenter le callback `onAnswer` pour le mode voix (onSpeechEnd → blob) → AC9
-- [ ] Story `KeyboardMode` : mode clavier par défaut, Input visible → AC11
-- [ ] Story `VoiceMode` : mode voix, VoiceRecorder visible → AC12
-- [ ] Exporter le composant depuis `packages/exercises/src/index.ts`
+- [x] Créer `packages/exercises/src/components/multimodal-input/multimodal-input.tsx`
+- [x] Implémenter le layout flex row avec VoiceRecorder ou Input selon le mode → AC3, AC4, AC10
+- [x] Implémenter le toggle IconButton (`variant="ghost"`, `size="sm"`) avec `AudioLines` / `Keyboard` → AC5, AC6, AC7
+- [x] Implémenter le callback `onAnswer` pour le mode clavier (Enter) → AC8
+- [x] Implémenter le callback `onAnswer` pour le mode voix (onSpeechEnd → blob) → AC9
+- [x] Story `VoiceMode` : vrai micro, toggle entre voix et clavier → AC11, AC12
+- [x] Exporter le composant depuis `packages/exercises/src/index.ts`
 
 ### Étape 4 — Vérifications finales
 

@@ -1,3 +1,10 @@
+export { type AnswerResult, type InputMode } from "~/logic/input-mode.js"
+
+export {
+  MultimodalInput,
+  type MultimodalInputProps,
+} from "~/components/multimodal-input/multimodal-input.js"
+
 export {
   SessionSummary,
   type SessionSummaryProps,
