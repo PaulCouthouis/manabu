@@ -312,16 +312,16 @@ VoiceRecorder (styled div, flexDirection: "row", alignItems: "center", h: "48px"
 
 ### Étape 1 — Autorisation micro (`MicrophoneApi`)
 
-- [ ] Créer `packages/exercises/src/logic/vocal/microphone.ts` avec `MicrophoneApi`, `MicrophoneError`
-- [ ] Test RED : `acquire` avec fake `getUserMedia` → retourne le `MediaStream` → AC1
-- [ ] GREEN : implémenter le layer browser (`BrowserMicrophoneApiLive`)
-- [ ] Test RED : `acquire` avec fake `getUserMedia` qui rejette `NotAllowedError` → `MicrophoneError({ reason: "permission-denied" })` → AC2
-- [ ] GREEN
-- [ ] Test RED : `acquire` avec fake `getUserMedia` qui rejette `NotFoundError` → `MicrophoneError({ reason: "not-available" })` → AC3
-- [ ] GREEN
-- [ ] Test RED : `release` arrête les tracks du `MediaStream` → AC4
-- [ ] GREEN
-- [ ] REFACTOR
+- [x] Créer `packages/exercises/src/logic/vocal/microphone.ts` avec `MicrophoneApi`, `MicrophoneError`
+- [x] Test RED : `acquire` avec fake `getUserMedia` → retourne le `MediaStream` → AC1
+- [x] GREEN : implémenter le layer browser (`BrowserMicrophoneApiLive`)
+- [x] Test RED : `acquire` avec fake `getUserMedia` qui rejette `NotAllowedError` → `MicrophoneError({ reason: "permission-denied" })` → AC2
+- [x] GREEN
+- [x] Test RED : `acquire` avec fake `getUserMedia` qui rejette `NotFoundError` → `MicrophoneError({ reason: "not-available" })` → AC3
+- [x] GREEN
+- [x] Test RED : `release` arrête les tracks du `MediaStream` → AC4
+- [x] GREEN
+- [x] REFACTOR
 
 ### Étape 2 — Écoute audio (`AudioAnalyserApi`)
 
