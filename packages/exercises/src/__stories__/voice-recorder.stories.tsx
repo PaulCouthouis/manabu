@@ -16,7 +16,7 @@ import { VoiceCaptureService } from "~/logic/vocal/voice-capture.js"
 import type { AudioStream } from "~/logic/vocal/types.js"
 
 const meta: Meta<VoiceRecorderProps> = {
-  title: "VoiceRecorder",
+  title: "Exercises/VoiceRecorder",
   component: VoiceRecorder,
   decorators: [
     (Story) => {
