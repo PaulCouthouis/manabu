@@ -1,6 +1,7 @@
 import { Atom, Result, useAtom, useAtomSet } from "@effect-atom/atom-react"
-import { Array, Cause, Effect, Exit, Layer, Option, Struct, pipe } from "effect"
-import { useEffect, useState } from "react"
+import { Array, Effect, Exit, Layer, Option, Struct, pipe } from "effect"
+import type { Cause } from "effect"
+import React, { useContext, useEffect, useMemo, useState } from "react"
 import { styled } from "styled-system/jsx"
 import { AudioAnalyserApi, BrowserWebAudioContextApiLive } from "~/logic/vocal/audio-analyser.js"
 import { BrowserMediaRecorderApiLive, MediaRecorderApi } from "~/logic/vocal/media-recorder.js"
@@ -21,6 +22,8 @@ import { Waveform } from "~/components/voice-recorder/waveform.js"
 
 export type VoiceRecorderState = "listening" | "processing" | "paused"
 
+export type VoiceRecorderLayer = Layer.Layer<VoiceCaptureService>
+
 export interface VoiceRecorderProps {
   readonly state: VoiceRecorderState
   readonly onSpeechStart: () => void
@@ -28,39 +31,72 @@ export interface VoiceRecorderProps {
   readonly onError: (error: Cause.Cause<MicrophoneError>) => void
 }
 
-// --- Runtime + Atoms ---
+// --- Default layer (browser) ---
 
-const VoiceRecorderRuntime = Atom.runtime(
+export const BrowserVoiceRecorderLayer: VoiceRecorderLayer = Layer.provide(
+  VoiceCaptureService.Default,
   Layer.mergeAll(
-    Layer.provide(
-      VoiceCaptureService.Default,
-      Layer.mergeAll(
-        Layer.provide(MicrophoneApi.Default, BrowserGetUserMediaApiLive),
-        Layer.provide(AudioAnalyserApi.Default, BrowserWebAudioContextApiLive),
-        Layer.provide(MediaRecorderApi.Default, BrowserMediaRecorderApiLive),
-      ),
-    ),
+    Layer.provide(MicrophoneApi.Default, BrowserGetUserMediaApiLive),
+    Layer.provide(AudioAnalyserApi.Default, BrowserWebAudioContextApiLive),
+    Layer.provide(MediaRecorderApi.Default, BrowserMediaRecorderApiLive),
   ),
 )
 
-const startSessionAtom = VoiceRecorderRuntime.fn(
-  Effect.fnUntraced(function* () {
-    const service = yield* VoiceCaptureService
-    return yield* service.start()
-  }),
-)
+// --- Atom factories ---
 
-const processFrameAtom = VoiceRecorderRuntime.fn(
-  Effect.fnUntraced(function* (args: { session: VoiceCaptureSession; now: number }) {
-    return yield* args.session.processFrame(args.now)
-  }),
-)
+function makeRuntime(layer: VoiceRecorderLayer) {
+  const runtime = Atom.runtime(layer)
 
-const closeSessionAtom = VoiceRecorderRuntime.fn(
-  Effect.fnUntraced(function* (session: VoiceCaptureSession) {
-    yield* session.close()
-  }),
-)
+  const startSession = runtime.fn(
+    Effect.fnUntraced(function* () {
+      const service = yield* VoiceCaptureService
+      return yield* service.start()
+    }),
+  )
+
+  const processFrame = runtime.fn(
+    Effect.fnUntraced(function* (args: { session: VoiceCaptureSession; now: number }) {
+      return yield* args.session.processFrame(args.now)
+    }),
+  )
+
+  const closeSession = runtime.fn(
+    Effect.fnUntraced(function* (session: VoiceCaptureSession) {
+      yield* session.close()
+    }),
+  )
+
+  return { startSession, processFrame, closeSession }
+}
+
+type VoiceRecorderAtoms = ReturnType<typeof makeRuntime>
+
+// --- Context ---
+
+const VoiceRecorderAtomsContext = React.createContext<VoiceRecorderAtoms | null>(null)
+
+export function VoiceRecorderProvider(props: {
+  readonly layer: VoiceRecorderLayer
+  readonly children: React.ReactNode
+}) {
+  const atoms = useMemo(() => {
+    return makeRuntime(props.layer)
+  }, [props.layer])
+
+  return (
+    <VoiceRecorderAtomsContext.Provider value={atoms}>
+      {props.children}
+    </VoiceRecorderAtomsContext.Provider>
+  )
+}
+
+function useAtoms(): VoiceRecorderAtoms {
+  const atoms = useContext(VoiceRecorderAtomsContext)
+  if (atoms === null) {
+    throw new Error("VoiceRecorder must be wrapped in VoiceRecorderProvider")
+  }
+  return atoms
+}
 
 // --- Styles ---
 
@@ -120,17 +156,18 @@ const extractFrequencyData = (
 // --- Hooks ---
 
 function useSession(state: VoiceRecorderState) {
-  const [sessionResult, startSession] = useAtom(startSessionAtom)
-  const closeSession = useAtomSet(closeSessionAtom)
+  const { startSession, closeSession } = useAtoms()
+  const [sessionResult, triggerStart] = useAtom(startSession)
+  const triggerClose = useAtomSet(closeSession)
 
   useEffect(() => {
     if (state !== "listening") {
       return
     }
-    startSession()
+    triggerStart()
     return () => {
       if (Result.isSuccess(sessionResult)) {
-        closeSession(sessionResult.value)
+        triggerClose(sessionResult.value)
       }
     }
   }, [state])
@@ -144,8 +181,9 @@ function useFrameLoop(
   onSpeechStart: () => void,
   onSpeechEnd: (blob: Blob) => void,
 ) {
+  const { processFrame } = useAtoms()
   const [frequencyData, setFrequencyData] = useState<Option.Option<Uint8Array>>(Option.none())
-  const processFrame = useAtomSet(processFrameAtom, { mode: "promiseExit" })
+  const triggerFrame = useAtomSet(processFrame, { mode: "promiseExit" })
 
   useEffect(() => {
     if (state !== "listening" || !Result.isSuccess(sessionResult)) {
@@ -159,7 +197,7 @@ function useFrameLoop(
       if (!running) {
         return
       }
-      const frameExit = await processFrame({ session, now: performance.now() })
+      const frameExit = await triggerFrame({ session, now: performance.now() })
       if (!Exit.isSuccess(frameExit) || !running) {
         return
       }

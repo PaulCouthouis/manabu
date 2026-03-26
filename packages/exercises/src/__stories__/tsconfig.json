@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.json",
+  "include": [".", "../test-utils"],
+  "exclude": [],
+  "compilerOptions": {
+    "composite": false,
+    "noEmit": true
+  }
+}

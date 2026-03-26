@@ -383,8 +383,8 @@ VoiceRecorder (styled div, flexDirection: "row", alignItems: "center", h: "48px"
 - [x] Implémenter l'icône d'état avec animation pulse en listening → AC22
 - [x] Story `Paused` : état paused initial, toggle listening → AC23, AC24, AC30
 - [x] Implémenter le gel de la waveform en processing et la ligne plate en paused → AC23, AC24
-- [ ] Story `PermissionDenied` : fake `MicrophoneApi` → erreur → message affiché → AC27, AC31
-- [ ] Story `SimulatedWaveform` : fake `AudioAnalyserApi` avec sin wave → AC32
+- [x] Story `PermissionDenied` : fake `MicrophoneApi` → erreur → message affiché → AC27, AC31
+- [x] Story `SimulatedWaveform` : fake `AudioAnalyserApi` avec sin wave → AC32
 - [x] Exporter le composant depuis `packages/exercises/src/index.ts`
 
 ### Étape 7 — Vérifications finales

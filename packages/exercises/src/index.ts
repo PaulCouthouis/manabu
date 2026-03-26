@@ -5,6 +5,9 @@ export {
 
 export {
   VoiceRecorder,
+  VoiceRecorderProvider,
+  BrowserVoiceRecorderLayer,
   type VoiceRecorderProps,
   type VoiceRecorderState,
+  type VoiceRecorderLayer,
 } from "~/components/voice-recorder/voice-recorder.js"
