@@ -38,7 +38,7 @@ export class AudioAnalyserApi extends Effect.Service<AudioAnalyserApi>()("AudioA
         return {
           getFrequencyData: () => {
             analyser.getByteFrequencyData(frequencyBuffer)
-            return frequencyBuffer
+            return new Uint8Array(frequencyBuffer)
           },
           close: () => {
             disconnect()

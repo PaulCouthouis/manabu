@@ -361,16 +361,16 @@ VoiceRecorder (styled div, flexDirection: "row", alignItems: "center", h: "48px"
 
 ### Étape 5 — Orchestrateur (`VoiceCaptureService`)
 
-- [ ] Créer `packages/exercises/src/logic/vocal/voice-capture.ts` avec `VoiceCaptureService`, `VoiceCaptureEvent`
-- [ ] Test RED : le service émet des `frequencyData` à chaque frame quand le stream est actif → AC17, AC20
-- [ ] GREEN : implémenter la boucle `getFrequencyData` → `detectSpeech` → emit
-- [ ] Test RED : sur `speechStart`, le `MediaRecorder` est démarré → AC18
-- [ ] GREEN
-- [ ] Test RED : sur `speechEnd`, le `MediaRecorder` est stoppé et un `Blob` est émis → AC19
-- [ ] GREEN
-- [ ] Test RED : les ressources sont libérées quand le stream se termine → AC21
-- [ ] GREEN
-- [ ] REFACTOR
+- [x] Créer `packages/exercises/src/logic/vocal/voice-capture.ts` avec `VoiceCaptureService`, `VoiceCaptureEvent`
+- [x] Test RED : le service émet des `frequencyData` à chaque frame quand le stream est actif → AC17, AC20
+- [x] GREEN : implémenter la boucle `getFrequencyData` → `detectSpeech` → emit
+- [x] Test RED : sur `speechStart`, le `MediaRecorder` est démarré → AC18
+- [x] GREEN
+- [x] Test RED : sur `speechEnd`, le `MediaRecorder` est stoppé et un `Blob` est émis → AC19
+- [x] GREEN
+- [x] Test RED : les ressources sont libérées quand le stream se termine → AC21
+- [x] GREEN
+- [x] REFACTOR
 
 ### Étape 6 — Composant VoiceRecorder + Stories
 
