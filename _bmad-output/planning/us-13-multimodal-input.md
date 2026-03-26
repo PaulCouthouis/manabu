@@ -156,9 +156,9 @@ export interface MultimodalInputProps {
 
 ### Étape 2 — Atom persisté (`inputModeAtom`)
 
-- [ ] Créer `packages/exercises/src/logic/input-mode.ts` avec `InputMode`, `AnswerResult`, `inputModeAtom`
-- [ ] Test : `inputModeAtom` retourne `"voice"` par défaut → AC1
-- [ ] Test : set `"keyboard"`, relire → `"keyboard"` → AC2
+- [x] Créer `packages/exercises/src/logic/input-mode.ts` avec `InputMode`, `AnswerResult`, `inputModeAtom`
+- [x] ~Test : `inputModeAtom` retourne `"voice"` par défaut~ → AC1 — pas de test unitaire, c'est du wiring `Atom.kvs` (on testerait la lib). Couvert par les stories (étape 3).
+- [x] ~Test : set `"keyboard"`, relire → `"keyboard"`~ → AC2 — idem, couvert par les stories.
 
 ### Étape 3 — Composant MultimodalInput + Stories
 
