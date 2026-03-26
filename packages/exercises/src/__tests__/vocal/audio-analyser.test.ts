@@ -47,7 +47,7 @@ const TestLayer = Layer.provide(
   }),
 )
 
-const fakeStream: AudioStream = { _tag: "AudioStream" }
+const fakeStream: AudioStream = { _tag: "AudioStream", _raw: null, getTracks: () => [] }
 
 // --- Tests ---
 

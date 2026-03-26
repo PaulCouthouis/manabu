@@ -36,6 +36,7 @@ const mapGetUserMediaError = (error: unknown): MicrophoneError => {
 
 const wrapMediaStream = (mediaStream: MediaStream): AudioStream => ({
   _tag: "AudioStream",
+  _raw: mediaStream,
   getTracks: (): ReadonlyArray<AudioStreamTrack> => {
     return Array.map(mediaStream.getTracks(), (track) => ({
       stop: () => {

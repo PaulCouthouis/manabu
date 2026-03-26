@@ -13,6 +13,7 @@ const makeFakeStream = (trackIds: ReadonlyArray<string>) => {
   const stopped: Array<string> = []
   const stream: AudioStream = {
     _tag: "AudioStream",
+    _raw: null,
     getTracks: () => {
       return trackIds.map((id) => ({
         stop: () => {

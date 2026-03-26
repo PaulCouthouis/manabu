@@ -25,8 +25,8 @@ export const initialState: SpeechDetectorState = {
 
 export const defaultConfig: SpeechDetectorConfig = {
   volumeThreshold: 30,
-  speechMinDuration: Duration.millis(150),
-  silenceMinDuration: Duration.millis(400),
+  speechMinDuration: Duration.millis(30),
+  silenceMinDuration: Duration.millis(800),
 }
 
 const computeAverageVolume = (frequencyData: Uint8Array): number => {

@@ -18,7 +18,7 @@ export class MediaRecorderApi extends Effect.Service<MediaRecorderApi>()("MediaR
     return {
       start: (stream: AudioStream): Effect.Effect<RecorderHandle> => {
         return Effect.sync(() => {
-          return api.start(stream as unknown as MediaStream)
+          return api.start(stream._raw as MediaStream)
         })
       },
     }

@@ -37,11 +37,11 @@ describe("detectSpeech", () => {
     expect(r1.event.kind).toBe("none")
 
     // Frame 2 : son continue mais pas assez longtemps
-    const r2 = detectSpeech(speech(), r1.state, 100)
+    const r2 = detectSpeech(speech(), r1.state, 16)
     expect(r2.event.kind).toBe("none")
 
-    // Frame 3 : seuil de durée atteint (150ms)
-    const r3 = detectSpeech(speech(), r2.state, 150)
+    // Frame 3 : seuil de durée atteint (30ms)
+    const r3 = detectSpeech(speech(), r2.state, 30)
     expect(r3.event.kind).toBe("speechStart")
     expect(r3.state.isSpeaking).toBe(true)
   })
@@ -59,30 +59,29 @@ describe("detectSpeech", () => {
     expect(r1.event.kind).toBe("none")
 
     // Frame 2 : silence continue mais pas assez longtemps
-    const r2 = detectSpeech(silence(), r1.state, 400)
+    const r2 = detectSpeech(silence(), r1.state, 600)
     expect(r2.event.kind).toBe("none")
 
-    // Frame 3 : seuil de silence atteint (400ms)
-    const r3 = detectSpeech(silence(), r2.state, 600)
+    // Frame 3 : seuil de silence atteint (800ms)
+    const r3 = detectSpeech(silence(), r2.state, 1000)
     expect(r3.event.kind).toBe("speechEnd")
     expect(r3.state.isSpeaking).toBe(false)
   })
 
   it("un bruit court ne déclenche pas speechStart → AC11", () => {
-    // Bruit pendant 100ms (< 150ms)
+    // Bruit pendant 16ms (< 30ms, ~1 frame)
     const r1 = detectSpeech(speech(), initialState, 0)
-    const r2 = detectSpeech(speech(), r1.state, 100)
 
     // Puis silence
-    const r3 = detectSpeech(silence(), r2.state, 110)
-    expect(r3.event.kind).toBe("none")
-    expect(r3.state.isSpeaking).toBe(false)
+    const r2 = detectSpeech(silence(), r1.state, 16)
+    expect(r2.event.kind).toBe("none")
+    expect(r2.state.isSpeaking).toBe(false)
   })
 
-  it("une parole de 150ms déclenche speechStart → AC12", () => {
+  it("une parole de 30ms déclenche speechStart → AC12", () => {
     const r1 = detectSpeech(speech(), initialState, 0)
-    const r2 = detectSpeech(speech(), r1.state, 75)
-    const r3 = detectSpeech(speech(), r2.state, 150)
+    const r2 = detectSpeech(speech(), r1.state, 16)
+    const r3 = detectSpeech(speech(), r2.state, 30)
     expect(r3.event.kind).toBe("speechStart")
   })
 })

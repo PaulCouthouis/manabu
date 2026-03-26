@@ -374,18 +374,18 @@ VoiceRecorder (styled div, flexDirection: "row", alignItems: "center", h: "48px"
 
 ### Étape 6 — Composant VoiceRecorder + Stories
 
-- [ ] Créer `packages/exercises/src/components/voice-recorder/voice-recorder.tsx`
-- [ ] Créer `packages/exercises/src/components/voice-recorder/waveform.tsx` (canvas de visualisation)
-- [ ] Créer `packages/exercises/src/components/voice-recorder/status-icon.tsx` (icône Lucide + animation)
-- [ ] Story `Default` : vrai micro, layer browser, waveform live → AC22, AC25, AC26, AC29
-- [ ] Implémenter la consommation du `VoiceCaptureService` : `frequencyData` → waveform, events → callbacks → AC25, AC26
-- [ ] Implémenter l'acquisition du `MediaStream` au mount et le release au unmount → AC28
-- [ ] Implémenter l'icône d'état avec animation pulse en listening → AC22
-- [ ] Story `Paused` : état paused initial, toggle listening → AC23, AC24, AC30
-- [ ] Implémenter le gel de la waveform en processing et la ligne plate en paused → AC23, AC24
+- [x] Créer `packages/exercises/src/components/voice-recorder/voice-recorder.tsx`
+- [x] Créer `packages/exercises/src/components/voice-recorder/waveform.tsx` (canvas de visualisation)
+- [x] Créer `packages/exercises/src/components/voice-recorder/status-icon.tsx` (icône Lucide + animation)
+- [x] Story `Default` : vrai micro, layer browser, waveform live → AC22, AC25, AC26, AC29
+- [x] Implémenter la consommation du `VoiceCaptureService` : `frequencyData` → waveform, events → callbacks → AC25, AC26
+- [x] Implémenter l'acquisition du `MediaStream` au mount et le release au unmount → AC28
+- [x] Implémenter l'icône d'état avec animation pulse en listening → AC22
+- [x] Story `Paused` : état paused initial, toggle listening → AC23, AC24, AC30
+- [x] Implémenter le gel de la waveform en processing et la ligne plate en paused → AC23, AC24
 - [ ] Story `PermissionDenied` : fake `MicrophoneApi` → erreur → message affiché → AC27, AC31
 - [ ] Story `SimulatedWaveform` : fake `AudioAnalyserApi` avec sin wave → AC32
-- [ ] Exporter le composant depuis `packages/exercises/src/index.ts`
+- [x] Exporter le composant depuis `packages/exercises/src/index.ts`
 
 ### Étape 7 — Vérifications finales
 

@@ -5,4 +5,5 @@ export interface AudioStreamTrack {
 export interface AudioStream {
   readonly _tag: "AudioStream"
   readonly getTracks: () => ReadonlyArray<AudioStreamTrack>
+  readonly _raw: unknown
 }

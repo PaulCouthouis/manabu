@@ -8,7 +8,7 @@ import type { AudioStream } from "~/logic/vocal/types.js"
 
 // --- Fakes ---
 
-const fakeStream: AudioStream = { _tag: "AudioStream", getTracks: () => [] }
+const fakeStream: AudioStream = { _tag: "AudioStream", _raw: null, getTracks: () => [] }
 
 const makeFakeFrequencyData = (volume: number): Uint8Array => {
   const data = new Uint8Array(4)
@@ -97,11 +97,11 @@ layer(TestLayer)("VoiceCaptureService", (it) => {
       const service = yield* VoiceCaptureService
       const session = yield* service.start()
 
-      // Parole au-dessus du seuil pendant 150ms
+      // Parole au-dessus du seuil pendant 30ms
       currentVolume = 100
       yield* session.processFrame(0)
-      yield* session.processFrame(75)
-      yield* session.processFrame(150)
+      yield* session.processFrame(16)
+      yield* session.processFrame(30)
 
       assert.isTrue(recorderStarted.value)
       yield* session.close()
@@ -117,13 +117,13 @@ layer(TestLayer)("VoiceCaptureService", (it) => {
       // Parole puis silence
       currentVolume = 100
       yield* session.processFrame(0)
-      yield* session.processFrame(75)
-      yield* session.processFrame(150) // speechStart
+      yield* session.processFrame(16)
+      yield* session.processFrame(30) // speechStart
 
       currentVolume = 0
-      yield* session.processFrame(200)
-      yield* session.processFrame(400)
-      const events = yield* session.processFrame(600) // speechEnd après 400ms de silence
+      yield* session.processFrame(100)
+      yield* session.processFrame(500)
+      const events = yield* session.processFrame(900) // speechEnd après 800ms de silence
 
       assert.isTrue(recorderStopped.value)
       const blobEvent = Array.findFirst(events, (e) => {

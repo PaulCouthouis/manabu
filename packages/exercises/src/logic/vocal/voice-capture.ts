@@ -35,10 +35,12 @@ export class VoiceCaptureService extends Effect.Service<VoiceCaptureService>()(
 
             let vadState: SpeechDetectorState = initialState
             let recorder: Option.Option<RecorderHandle> = Option.none()
+            let wasLoudPrevFrame = false
 
             const processFrame = (now: number): Effect.Effect<ReadonlyArray<VoiceCaptureEvent>> => {
               return Effect.gen(function* () {
                 const frequencyData = analyser.getFrequencyData()
+                const prevState = vadState
                 const result = detectSpeech(frequencyData, vadState, now)
                 vadState = result.state
 
@@ -46,9 +48,9 @@ export class VoiceCaptureService extends Effect.Service<VoiceCaptureService>()(
                   { kind: "frequencyData", data: frequencyData },
                 ]
 
-                const speechEvent = yield* resolveSpeechEvent(result.event)
+                const recorderEvents = yield* handleRecorder(prevState, result)
 
-                return Array.match(speechEvent, {
+                return Array.match(recorderEvents, {
                   onEmpty: () => {
                     return base
                   },
@@ -59,31 +61,59 @@ export class VoiceCaptureService extends Effect.Service<VoiceCaptureService>()(
               })
             }
 
-            const resolveSpeechEvent = (event: {
-              readonly kind: string
-            }): Effect.Effect<ReadonlyArray<VoiceCaptureEvent>> => {
-              if (event.kind === "speechStart") {
-                return Effect.gen(function* () {
+            const handleRecorder = (
+              prevState: SpeechDetectorState,
+              result: {
+                readonly state: SpeechDetectorState
+                readonly event: { readonly kind: string }
+              },
+            ): Effect.Effect<ReadonlyArray<VoiceCaptureEvent>> => {
+              return Effect.gen(function* () {
+                const isNowLoud = Option.isSome(result.state.speakingStartedAt)
+                const wasQuiet = !wasLoudPrevFrame
+                wasLoudPrevFrame = isNowLoud
+
+                // Début de bruit → démarrer l'enregistrement préventivement
+                if (isNowLoud && wasQuiet && Option.isNone(recorder)) {
                   const handle = yield* recorderApi.start(stream)
                   recorder = Option.some(handle)
+                }
+
+                // Faux positif : le bruit s'arrête avant speechStart (jamais passé en isSpeaking) → annuler
+                if (
+                  !isNowLoud &&
+                  !result.state.isSpeaking &&
+                  !prevState.isSpeaking &&
+                  Option.isSome(recorder)
+                ) {
+                  yield* recorder.value.stop()
+                  recorder = Option.none()
+                  return Array.empty<VoiceCaptureEvent>()
+                }
+
+                // speechStart confirmé → émettre l'event (recorder déjà actif)
+                if (result.event.kind === "speechStart") {
                   return [{ kind: "speechStart" as const }]
-                })
-              }
-              if (event.kind === "speechEnd") {
-                return Option.match(recorder, {
-                  onNone: () => {
-                    return Effect.succeed(Array.empty<VoiceCaptureEvent>())
-                  },
-                  onSome: (handle) => {
-                    return Effect.gen(function* () {
-                      const blob = yield* handle.stop()
-                      recorder = Option.none()
-                      return [{ kind: "speechEnd" as const, blob }]
-                    })
-                  },
-                })
-              }
-              return Effect.succeed(Array.empty())
+                }
+
+                // speechEnd → stopper et émettre le blob
+                if (result.event.kind === "speechEnd") {
+                  return yield* Option.match(recorder, {
+                    onNone: () => {
+                      return Effect.succeed(Array.empty<VoiceCaptureEvent>())
+                    },
+                    onSome: (handle) => {
+                      return Effect.gen(function* () {
+                        const blob = yield* handle.stop()
+                        recorder = Option.none()
+                        return [{ kind: "speechEnd" as const, blob }]
+                      })
+                    },
+                  })
+                }
+
+                return Array.empty()
+              })
             }
 
             const close = (): Effect.Effect<void> => {

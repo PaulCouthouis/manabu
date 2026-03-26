@@ -55,7 +55,7 @@ export const BrowserWebAudioContextApiLive = Layer.succeed(WebAudioContextApi, {
     const ctx = new AudioContext()
     return {
       createFromStream: (stream: AudioStream) => {
-        const source = ctx.createMediaStreamSource(stream as unknown as MediaStream)
+        const source = ctx.createMediaStreamSource(stream._raw as MediaStream)
         const analyserNode = ctx.createAnalyser()
         source.connect(analyserNode)
         return {

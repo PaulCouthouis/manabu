@@ -4,6 +4,7 @@ import type { StorybookConfig } from "@storybook/react-vite"
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 const uiDir = path.resolve(dirname, "../../ui")
+const exercisesDir = path.resolve(dirname, "../../exercises")
 
 const config: StorybookConfig = {
   stories: [
@@ -20,6 +21,7 @@ const config: StorybookConfig = {
     Object.assign(config.resolve.alias, {
       "styled-system": path.resolve(uiDir, "styled-system"),
       "@": path.resolve(uiDir, "src"),
+      "~": path.resolve(exercisesDir, "src"),
     })
     return config
   },
