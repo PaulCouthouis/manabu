@@ -335,20 +335,20 @@ VoiceRecorder (styled div, flexDirection: "row", alignItems: "center", h: "48px"
 
 ### Étape 3 — Détection parole/silence (`detectSpeech`, TDD pur)
 
-- [ ] Créer `packages/exercises/src/logic/vocal/detect-speech.ts` avec les types `SpeechDetectorConfig`, `SpeechDetectorState`, `SpeechEvent`
-- [ ] Test RED : volume sous le seuil → `{ kind: "none" }` → AC8
-- [ ] GREEN : implémenter le calcul de volume moyen et la comparaison au seuil
-- [ ] Test RED : volume au-dessus du seuil pendant `speechMinDurationMs` → `{ kind: "speechStart" }` → AC9
-- [ ] GREEN : implémenter la détection de début de parole avec debounce
-- [ ] Test RED : volume sous le seuil pendant `silenceMinDurationMs` après parole → `{ kind: "speechEnd" }` → AC10
-- [ ] GREEN : implémenter la détection de fin de parole
-- [ ] Test RED : bruit court (< `speechMinDurationMs`) → pas de `speechStart` → AC11
-- [ ] GREEN : vérifier que le debounce filtre les bruits courts
-- [ ] Test RED : parole de 150ms (kana isolé) au-dessus du seuil → `speechStart` déclenché → AC12
-- [ ] GREEN
-- [ ] Test : `initialState` a les bonnes valeurs par défaut → AC13
-- [ ] Test : `defaultConfig` a des valeurs sensibles (speechMinDurationMs ~150ms) → AC14
-- [ ] REFACTOR
+- [x] Créer `packages/exercises/src/logic/vocal/detect-speech.ts` avec les types `SpeechDetectorConfig`, `SpeechDetectorState`, `SpeechEvent`
+- [x] Test RED : volume sous le seuil → `{ kind: "none" }` → AC8
+- [x] GREEN : implémenter le calcul de volume moyen et la comparaison au seuil
+- [x] Test RED : volume au-dessus du seuil pendant `speechMinDurationMs` → `{ kind: "speechStart" }` → AC9
+- [x] GREEN : implémenter la détection de début de parole avec debounce
+- [x] Test RED : volume sous le seuil pendant `silenceMinDurationMs` après parole → `{ kind: "speechEnd" }` → AC10
+- [x] GREEN : implémenter la détection de fin de parole
+- [x] Test RED : bruit court (< `speechMinDurationMs`) → pas de `speechStart` → AC11
+- [x] GREEN : vérifier que le debounce filtre les bruits courts
+- [x] Test RED : parole de 150ms (kana isolé) au-dessus du seuil → `speechStart` déclenché → AC12
+- [x] GREEN
+- [x] Test : `initialState` a les bonnes valeurs par défaut → AC13
+- [x] Test : `defaultConfig` a des valeurs sensibles (speechMinDurationMs ~150ms) → AC14
+- [x] REFACTOR
 
 ### Étape 4 — Enregistrement audio (`MediaRecorderApi`)
 

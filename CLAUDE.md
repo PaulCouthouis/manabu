@@ -182,6 +182,7 @@ Règle : un AC sans test automatisé est un AC non validé.
 - Créer les implémentations de test avec `Layer.succeed(ServiceTag, { ...fakeImpl })` ou `Layer.effect`.
 - Injecter les fakes au niveau des APIs externes (réseau, browser, DB), pas au niveau du service métier — la logique métier doit rester dans la zone testée. Ex : stubber `SpeechSynthesisApi` (l'appel browser), pas `TextToSpeech` (le service qui contient la logique).
 - Tester les erreurs Effect avec `Effect.flip` pour inverser le canal d'erreur en valeur, plutôt que `Effect.exit` + pattern matching sur `Cause`.
+- **Ne pas tester les constantes** (valeurs de config, états initiaux). Les constantes sont visibles dans le code — un test qui vérifie qu'une constante vaut sa propre valeur n'apporte rien.
 
 ### TDD — Red-Green-Refactor
 
