@@ -389,9 +389,9 @@ VoiceRecorder (styled div, flexDirection: "row", alignItems: "center", h: "48px"
 
 ### Étape 7 — Vérifications finales
 
-- [ ] `pnpm build` sans erreur → AC33
-- [ ] `pnpm lint` sans erreur → AC34
-- [ ] Tests existants passent (non-régression)
+- [x] `pnpm build` sans erreur → AC33
+- [x] `pnpm lint` sans erreur → AC34
+- [x] Tests existants passent (non-régression)
 
 ## Hors scope
 
