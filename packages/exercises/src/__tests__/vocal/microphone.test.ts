@@ -1,6 +1,7 @@
 import { assert, layer } from "@effect/vitest"
 import { Effect, Layer } from "effect"
 import { GetUserMediaApi, MicrophoneApi } from "~/logic/vocal/microphone.js"
+import type { AudioStream } from "~/logic/vocal/types.js"
 
 // --- Helpers ---
 
@@ -10,16 +11,16 @@ const makeTestLayer = (getUserMedia: () => Promise<MediaStream>) => {
 
 const makeFakeStream = (trackIds: ReadonlyArray<string>) => {
   const stopped: Array<string> = []
-  const stream = {
+  const stream: AudioStream = {
+    _tag: "AudioStream",
     getTracks: () => {
       return trackIds.map((id) => ({
-        id,
         stop: () => {
           stopped.push(id)
         },
       }))
     },
-  } as unknown as MediaStream
+  }
   return { stream, stopped }
 }
 
@@ -36,7 +37,7 @@ layer(
     Effect.gen(function* () {
       const api = yield* MicrophoneApi
       const stream = yield* api.acquire()
-      assert.strictEqual(stream, fakeStream)
+      assert.strictEqual(stream._tag, "AudioStream")
     }),
   )
 })
@@ -75,7 +76,7 @@ layer(
 
 layer(
   makeTestLayer(() => {
-    return Promise.resolve({} as unknown as MediaStream)
+    return Promise.resolve({ getTracks: () => [] } as unknown as MediaStream)
   }),
 )("release — arrête les tracks", (it) => {
   it.effect("stoppe toutes les tracks du MediaStream → AC4", () =>

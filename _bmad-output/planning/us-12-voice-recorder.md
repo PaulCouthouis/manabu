@@ -48,7 +48,6 @@ export class MicrophoneError extends Data.TaggedError("MicrophoneError")<{
 // Analyseur audio (waveform + données VAD)
 export interface AnalyserHandle {
   readonly getFrequencyData: () => Uint8Array
-  readonly getTimeDomainData: () => Uint8Array
   readonly close: () => void
 }
 
@@ -325,14 +324,14 @@ VoiceRecorder (styled div, flexDirection: "row", alignItems: "center", h: "48px"
 
 ### Étape 2 — Écoute audio (`AudioAnalyserApi`)
 
-- [ ] Créer `packages/exercises/src/logic/vocal/audio-analyser.ts` avec `AudioAnalyserApi`, `AnalyserHandle`
-- [ ] Test RED : `create(stream)` retourne un `AnalyserHandle` → AC5
-- [ ] GREEN : implémenter le layer browser (`BrowserAudioAnalyserApiLive`)
-- [ ] Test RED : `getFrequencyData()` retourne un `Uint8Array` → AC6
-- [ ] GREEN
-- [ ] Test RED : `close()` ferme l'`AudioContext` → AC7
-- [ ] GREEN
-- [ ] REFACTOR
+- [x] Créer `packages/exercises/src/logic/vocal/audio-analyser.ts` avec `AudioAnalyserApi`, `AnalyserHandle`
+- [x] Test RED : `create(stream)` retourne un `AnalyserHandle` → AC5
+- [x] GREEN : implémenter le layer browser (`BrowserAudioAnalyserApiLive`)
+- [x] Test RED : `getFrequencyData()` retourne un `Uint8Array` → AC6
+- [x] GREEN
+- [x] Test RED : `close()` ferme l'`AudioContext` → AC7
+- [x] GREEN
+- [x] REFACTOR
 
 ### Étape 3 — Détection parole/silence (`detectSpeech`, TDD pur)
 

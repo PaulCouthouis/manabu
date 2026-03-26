@@ -177,6 +177,7 @@ Règle : un AC sans test automatisé est un AC non validé.
 ### Tests — `@effect/vitest` et injection de dépendances, pas de mocks Vitest
 
 - Utiliser `@effect/vitest` pour écrire les tests impliquant Effect : `it.effect` pour les tests, `layer(TestLayer)("describe name", (it) => { ... })` pour fournir un layer partagé à un bloc de tests.
+- **Toujours utiliser `layer()`** plutôt que `describe` + `Effect.provide` dans chaque test. `layer()` fournit le layer une fois et injecte automatiquement les dépendances — c'est plus concis et idiomatique.
 - Fournir les dépendances via `layer()` (préféré) ou `Effect.provide(TestLayer)` — jamais `vi.fn()`, `vi.mock()`, `vi.stubGlobal()` ou autres mocks/stubs Vitest.
 - Créer les implémentations de test avec `Layer.succeed(ServiceTag, { ...fakeImpl })` ou `Layer.effect`.
 - Injecter les fakes au niveau des APIs externes (réseau, browser, DB), pas au niveau du service métier — la logique métier doit rester dans la zone testée. Ex : stubber `SpeechSynthesisApi` (l'appel browser), pas `TextToSpeech` (le service qui contient la logique).

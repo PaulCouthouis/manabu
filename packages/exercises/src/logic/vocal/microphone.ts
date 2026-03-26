@@ -1,4 +1,5 @@
 import { Array, Context, Data, Effect, Layer } from "effect"
+import type { AudioStream, AudioStreamTrack } from "~/logic/vocal/types.js"
 
 export class MicrophoneError extends Data.TaggedError("MicrophoneError")<{
   readonly reason: "permission-denied" | "not-available" | "unknown"
@@ -33,19 +34,31 @@ const mapGetUserMediaError = (error: unknown): MicrophoneError => {
   })
 }
 
+const wrapMediaStream = (mediaStream: MediaStream): AudioStream => ({
+  _tag: "AudioStream",
+  getTracks: (): ReadonlyArray<AudioStreamTrack> => {
+    return Array.map(mediaStream.getTracks(), (track) => ({
+      stop: () => {
+        track.stop()
+      },
+    }))
+  },
+})
+
 export class MicrophoneApi extends Effect.Service<MicrophoneApi>()("MicrophoneApi", {
   effect: Effect.gen(function* () {
     const api = yield* GetUserMediaApi
     return {
-      acquire: (): Effect.Effect<MediaStream, MicrophoneError> => {
+      acquire: (): Effect.Effect<AudioStream, MicrophoneError> => {
         return Effect.tryPromise({
-          try: () => {
-            return api.getUserMedia({ audio: true })
+          try: async () => {
+            const mediaStream = await api.getUserMedia({ audio: true })
+            return wrapMediaStream(mediaStream)
           },
           catch: mapGetUserMediaError,
         })
       },
-      release: (stream: MediaStream): Effect.Effect<void> => {
+      release: (stream: AudioStream): Effect.Effect<void> => {
         return Effect.sync(() => {
           Array.forEach(stream.getTracks(), (track) => {
             track.stop()
