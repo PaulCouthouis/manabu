@@ -172,9 +172,9 @@ export interface MultimodalInputProps {
 
 ### Étape 4 — Vérifications finales
 
-- [ ] `pnpm build` sans erreur → AC13
-- [ ] `pnpm lint` sans erreur → AC14
-- [ ] Tests existants passent (non-régression)
+- [x] `pnpm build` sans erreur → AC13
+- [x] `pnpm lint` sans erreur → AC14
+- [x] Tests existants passent (non-régression)
 
 ## Hors scope
 
