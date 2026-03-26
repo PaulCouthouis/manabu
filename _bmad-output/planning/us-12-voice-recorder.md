@@ -352,12 +352,12 @@ VoiceRecorder (styled div, flexDirection: "row", alignItems: "center", h: "48px"
 
 ### Étape 4 — Enregistrement audio (`MediaRecorderApi`)
 
-- [ ] Créer `packages/exercises/src/logic/vocal/media-recorder.ts` avec `MediaRecorderApi`, `RecorderHandle`
-- [ ] Test RED : `start(stream)` démarre l'enregistrement → AC15
-- [ ] GREEN : implémenter le layer browser (`BrowserMediaRecorderApiLive`)
-- [ ] Test RED : `stop()` retourne un `Blob` audio → AC16
-- [ ] GREEN
-- [ ] REFACTOR
+- [x] Créer `packages/exercises/src/logic/vocal/media-recorder.ts` avec `MediaRecorderApi`, `RecorderHandle`
+- [x] Test RED : `start(stream)` démarre l'enregistrement → AC15
+- [x] GREEN : implémenter le layer browser (`BrowserMediaRecorderApiLive`)
+- [x] Test RED : `stop()` retourne un `Blob` audio → AC16
+- [x] GREEN
+- [x] REFACTOR
 
 ### Étape 5 — Orchestrateur (`VoiceCaptureService`)
 
