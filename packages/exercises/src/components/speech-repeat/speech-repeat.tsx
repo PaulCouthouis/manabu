@@ -11,6 +11,7 @@ import type {
   SpeechRepeatConfig,
   StimulusKind,
 } from "~/logic/speech-repeat-config.js"
+import { isAudioFirst, isSentence, outcomeFromSpeechResult } from "~/logic/speech-repeat.js"
 import type { SpeechResult } from "~/logic/vocal/speech-recognition.js"
 import { SpeechRecognitionApi } from "~/logic/vocal/speech-recognition.js"
 import { VoiceRecorder } from "~/components/voice-recorder/voice-recorder.js"
@@ -208,22 +209,6 @@ const RecorderWrapper = styled("div", {
   },
 })
 
-// --- Pure helpers ---
-
-function outcomeFromSpeechResult(result: SpeechResult): ExerciseResult["outcome"] {
-  if (result.kind === "match") {
-    return "success"
-  }
-  if (result.kind === "skip") {
-    return "skip"
-  }
-  return "failure"
-}
-
-function isAudioFirst(stimulus: StimulusKind): boolean {
-  return stimulus.mode === "audio"
-}
-
 // --- Sub-components ---
 
 function Stimulus(props: { readonly stimulus: StimulusKind }) {
@@ -258,10 +243,10 @@ function Stimulus(props: { readonly stimulus: StimulusKind }) {
     )
   }
 
-  if (stimulus.text.length <= 4) {
-    return <StimulusText>{stimulus.text}</StimulusText>
+  if (isSentence(stimulus.text)) {
+    return <SentenceText>{stimulus.text}</SentenceText>
   }
-  return <SentenceText>{stimulus.text}</SentenceText>
+  return <StimulusText>{stimulus.text}</StimulusText>
 }
 
 function FeedbackMatch(props: {
