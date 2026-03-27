@@ -329,11 +329,11 @@ Le composant a deux phases : `listening` (VoiceRecorder monté) et `feedback` (V
 
 ### Étape 1 — Types, port SpeechRecognitionApi, fake
 
-- [ ] Créer `packages/exercises/src/logic/vocal/speech-recognition.ts` avec `SpeechResult`, `SpeechRecognitionApi`, `fakeSpeechRecognition`
-- [ ] Test : `fakeSpeechRecognition` retourne le verdict passé en paramètre → AC3
-- [ ] Créer `packages/exercises/src/logic/speech-repeat-config.ts` avec `StimulusKind`, `RewardKind`, `SpeechRepeatConfig`, `ExerciseOutcome`, `ExerciseResult`
-- [ ] Test : les types couvrent les 5 variantes de stimulus → AC4
-- [ ] Exporter depuis `packages/exercises/src/index.ts`
+- [x] Créer `packages/exercises/src/logic/vocal/speech-recognition.ts` avec `SpeechResult`, `SpeechRecognitionApi`
+- [x] ~Test : `fakeSpeechRecognition` retourne le verdict passé en paramètre~ → AC3 — pas de fake exporté, le Layer.succeed sera créé inline dans les stories. Pas de test (on testerait Layer.succeed d'Effect).
+- [x] Créer `packages/exercises/src/logic/speech-repeat-config.ts` avec `StimulusKind`, `RewardKind`, `SpeechRepeatConfig`, `ExerciseOutcome`, `ExerciseResult`
+- [x] ~Test : les types couvrent les 5 variantes de stimulus~ → AC4 — pas de test, ce sont des types purs (on testerait des constantes). Couvert par la compilation TypeScript.
+- [x] ~Exporter depuis `packages/exercises/src/index.ts`~ — pas d'export pour l'instant, aucun consommateur externe. On exportera au Sprint 3 quand apps/web en aura besoin.
 
 ### Étape 2 — Composant SpeechRepeat core + stories de base
 
