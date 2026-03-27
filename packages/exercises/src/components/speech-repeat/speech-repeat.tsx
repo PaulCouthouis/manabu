@@ -19,7 +19,7 @@ import { VoiceRecorder } from "~/components/voice-recorder/voice-recorder.js"
 
 export type SpeechRepeatPhase =
   | { readonly kind: "listening" }
-  | { readonly kind: "feedback"; readonly speechResult: SpeechResult }
+  | { readonly kind: "feedback"; readonly speechResult: SpeechResult; readonly recordingBlob: Blob }
 
 export type SpeechRepeatLayer = Layer.Layer<SpeechRecognitionApi>
 
@@ -344,7 +344,7 @@ function useUserAudioPlayback(phase: SpeechRepeatPhase) {
 
   useEffect(() => {
     if (phase.kind === "feedback" && phase.speechResult.kind === "mismatch") {
-      urlRef.current = URL.createObjectURL(phase.speechResult.audio)
+      urlRef.current = URL.createObjectURL(phase.recordingBlob)
     }
     return () => {
       if (urlRef.current) {
@@ -392,7 +392,7 @@ export function SpeechRepeat(props: SpeechRepeatProps) {
       }
       const speechResult = exit.value
       const outcome = outcomeFromSpeechResult(speechResult)
-      setPhase({ kind: "feedback", speechResult })
+      setPhase({ kind: "feedback", speechResult, recordingBlob: blob })
       onResult({ outcome, speechResult })
     },
     [config.expected, onResult],

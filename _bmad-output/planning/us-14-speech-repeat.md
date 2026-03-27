@@ -368,13 +368,13 @@ Le composant a deux phases : `listening` (VoiceRecorder monté) et `feedback` (V
 
 ### Étape 4 — Feedback autoplay et replays
 
-- [ ] Implémenter l'autoplay modèle via TextToSpeech existant (~0.5s délai) → AC22
-- [ ] Implémenter le bouton 🔊 replay modèle → AC23
-- [ ] Implémenter le bouton 🎙️ replay apprenant (joue le Blob via BlobUrlApi) → AC24
-- [ ] Implémenter l'affichage transcript "You said: {transcript}" → AC25
-- [ ] Story `FeedbackAutoplay` : vérifier l'autoplay modèle sur match/mismatch/skip
-- [ ] Story `FeedbackReplay` : vérifier les boutons replay modèle et apprenant
-- [ ] Story `FeedbackSkipNoUserAudio` : vérifier l'absence de 🎙️ et transcript sur skip
+- [x] Implémenter l'autoplay modèle via TextToSpeech existant (~0.5s délai) → AC22
+- [x] Implémenter le bouton 🔊 replay modèle → AC23
+- [x] Implémenter le bouton 🎙️ replay apprenant (joue le Blob via BlobUrlApi) → AC24
+- [x] Implémenter l'affichage transcript "You said: {transcript}" → AC25
+- [x] Story `FeedbackAutoplay` : vérifier l'autoplay modèle sur match/mismatch/skip
+- [x] Story `FeedbackReplay` : vérifier les boutons replay modèle et apprenant
+- [x] Story `FeedbackSkipNoUserAudio` : vérifier l'absence de 🎙️ et transcript sur skip
 
 ### Étape 5 — Vérifications finales
 

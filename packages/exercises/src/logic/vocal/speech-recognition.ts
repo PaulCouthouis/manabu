@@ -1,8 +1,8 @@
 import { Context, Effect } from "effect"
 
 export type SpeechResult =
-  | { readonly kind: "match"; readonly transcript: string; readonly audio: Blob }
-  | { readonly kind: "mismatch"; readonly transcript: string; readonly audio: Blob }
+  | { readonly kind: "match"; readonly transcript: string }
+  | { readonly kind: "mismatch"; readonly transcript: string }
   | { readonly kind: "skip" }
   | { readonly kind: "noise" }
 

@@ -130,12 +130,10 @@ const skill7WordNoFuriganaConfig: SpeechRepeatConfig = {
 const matchResult: SpeechResult = {
   kind: "match",
   transcript: "か",
-  audio: fakeAudio,
 }
 const mismatchResult: SpeechResult = {
   kind: "mismatch",
   transcript: "が",
-  audio: fakeAudio,
 }
 
 // --- Audio-first stories (Skills 1, 4) ---
@@ -196,7 +194,7 @@ export const FeedbackMatchStatic: Story = {
       <SpeechRepeatStory
         config={skill2Config}
         speechResult={matchResult}
-        initialPhase={{ kind: "feedback", speechResult: matchResult }}
+        initialPhase={{ kind: "feedback", speechResult: matchResult, recordingBlob: fakeAudio }}
       />
     )
   },
@@ -209,7 +207,7 @@ export const FeedbackMismatchStatic: Story = {
       <SpeechRepeatStory
         config={skill2Config}
         speechResult={mismatchResult}
-        initialPhase={{ kind: "feedback", speechResult: mismatchResult }}
+        initialPhase={{ kind: "feedback", speechResult: mismatchResult, recordingBlob: fakeAudio }}
       />
     )
   },
@@ -222,7 +220,7 @@ export const FeedbackMatchAudioFirst: Story = {
       <SpeechRepeatStory
         config={skill1Config}
         speechResult={matchResult}
-        initialPhase={{ kind: "feedback", speechResult: matchResult }}
+        initialPhase={{ kind: "feedback", speechResult: matchResult, recordingBlob: fakeAudio }}
         renderReward={() => {
           return (
             <styled.div textAlign="center">
@@ -247,7 +245,21 @@ export const FeedbackMismatchAudioFirst: Story = {
       <SpeechRepeatStory
         config={skill1Config}
         speechResult={mismatchResult}
-        initialPhase={{ kind: "feedback", speechResult: mismatchResult }}
+        initialPhase={{ kind: "feedback", speechResult: mismatchResult, recordingBlob: fakeAudio }}
+      />
+    )
+  },
+}
+
+export const FeedbackSkipStatic: Story = {
+  name: "Feedback — Skip (static, no user audio)",
+  render: () => {
+    const skipResult: SpeechResult = { kind: "skip" }
+    return (
+      <SpeechRepeatStory
+        config={skill2Config}
+        speechResult={skipResult}
+        initialPhase={{ kind: "feedback", speechResult: skipResult, recordingBlob: fakeAudio }}
       />
     )
   },
@@ -269,7 +281,7 @@ export const SentenceMatch: Story = {
       <SpeechRepeatStory
         config={skill7SentenceConfig}
         speechResult={matchResult}
-        initialPhase={{ kind: "feedback", speechResult: matchResult }}
+        initialPhase={{ kind: "feedback", speechResult: matchResult, recordingBlob: fakeAudio }}
       />
     )
   },
@@ -287,8 +299,8 @@ export const SentenceMismatch: Story = {
           speechResult: {
             kind: "mismatch",
             transcript: "ねこがきです",
-            audio: fakeAudio,
           },
+          recordingBlob: fakeAudio,
         }}
       />
     )
