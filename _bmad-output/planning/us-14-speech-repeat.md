@@ -337,19 +337,19 @@ Le composant a deux phases : `listening` (VoiceRecorder monté) et `feedback` (V
 
 ### Étape 2 — Composant SpeechRepeat core + stories de base
 
-- [ ] Créer `packages/exercises/src/components/speech-repeat/speech-repeat.tsx`
-- [ ] Implémenter le cycle listening → feedback avec montage/démontage VoiceRecorder → AC5, AC6
-- [ ] Implémenter le wiring VoiceCapture → SpeechRecognitionApi → ExerciseResult → AC13
-- [ ] Implémenter le rendu stimulus audio-first (bouton 🔊, autoplay au chargement) → AC7
-- [ ] Implémenter le rendu stimulus visual-first (élément centré, persiste en feedback) → AC8
-- [ ] Implémenter le feedback match (autoplay + récompense/✅) → AC9
-- [ ] Implémenter le feedback mismatch (autoplay + 🔊🎙️ + transcript + Next) → AC10
-- [ ] Implémenter le feedback skip (autoplay + 🔊 modèle seul, pas de 🎙️) → AC11
-- [ ] Implémenter le comportement noise (ignoré, reste en listening) → AC12
-- [ ] Story `AudioFirstMatch` : Skill 1 config, fake match → AC7, AC9
-- [ ] Story `AudioFirstMismatch` : Skill 1 config, fake mismatch → AC10
-- [ ] Story `VisualFirstMatch` : Skill 2 config, fake match → AC8, AC9
-- [ ] Story `VisualFirstMismatch` : Skill 2 config, fake mismatch → AC10
+- [x] Créer `packages/exercises/src/components/speech-repeat/speech-repeat.tsx`
+- [x] Implémenter le cycle listening → feedback avec montage/démontage VoiceRecorder → AC5, AC6
+- [x] Implémenter le wiring VoiceCapture → SpeechRecognitionApi → ExerciseResult → AC13
+- [x] Implémenter le rendu stimulus audio-first (bouton 🔊, autoplay au chargement) → AC7
+- [x] Implémenter le rendu stimulus visual-first (élément centré, persiste en feedback) → AC8
+- [x] Implémenter le feedback match (autoplay + récompense/✅) → AC9
+- [x] Implémenter le feedback mismatch (autoplay + 🔊🎙️ + transcript + Next) → AC10
+- [x] Implémenter le feedback skip (autoplay + 🔊 modèle seul, pas de 🎙️) → AC11
+- [x] Implémenter le comportement noise (ignoré, reste en listening) → AC12
+- [x] Story `AudioFirstMatch` : Skill 1 config, fake match → AC7, AC9
+- [x] Story `AudioFirstMismatch` : Skill 1 config, fake mismatch → AC10
+- [x] Story `VisualFirstMatch` : Skill 2 config, fake match → AC8, AC9
+- [x] Story `VisualFirstMismatch` : Skill 2 config, fake mismatch → AC10
 
 ### Étape 3 — Variantes stimulus par skill + stories
 

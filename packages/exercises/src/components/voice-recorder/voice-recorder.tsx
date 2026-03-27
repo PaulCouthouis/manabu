@@ -105,7 +105,7 @@ const Container = styled("div", {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    height: "48px",
+    height: "64px",
     borderRadius: "l2",
     bg: "bg.subtle",
     borderWidth: "1px",
