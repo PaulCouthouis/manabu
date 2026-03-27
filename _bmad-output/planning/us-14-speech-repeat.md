@@ -353,18 +353,18 @@ Le composant a deux phases : `listening` (VoiceRecorder monté) et `feedback` (V
 
 ### Étape 3 — Variantes stimulus par skill + stories
 
-- [ ] Implémenter le rendu `visual-kana` (hiragana grand centré) → AC15
-- [ ] Implémenter le rendu `visual-kana-scaffolding` (hint し → シ, un seul bloc centré) → AC16
-- [ ] Implémenter le rendu `visual-text` (kanji/phrase centré) → AC21
-- [ ] Implémenter le rendu `visual-text-furigana` (ruby `<ruby>` au-dessus du kanji) → AC19
-- [ ] Story `Skill1_AudioSyllable` : stimulus audio, récompense kana-unlocked → AC14
-- [ ] Story `Skill2_Hiragana` : stimulus hiragana き → AC15
-- [ ] Story `Skill3_KatakanaScaffolding` : stimulus し → シ → AC16
-- [ ] Story `Skill3_KatakanaNoScaffolding` : stimulus シ seul → AC17
-- [ ] Story `Skill4_AudioWord` : stimulus audio, récompense word-unlocked → AC18
-- [ ] Story `Skill7_WordFurigana` : stimulus 猫 avec furigana ねこ → AC19
-- [ ] Story `Skill7_WordNoFurigana` : stimulus 猫 seul → AC20
-- [ ] Story `Skill7_Sentence` : stimulus 猫が好きです → AC21
+- [x] Implémenter le rendu `visual-kana` (hiragana grand centré) → AC15
+- [x] Implémenter le rendu `visual-kana-scaffolding` (hint し → シ, un seul bloc centré) → AC16
+- [x] Implémenter le rendu `visual-text` (kanji/phrase centré) → AC21
+- [x] Implémenter le rendu `visual-text-furigana` (ruby `<ruby>` au-dessus du kanji) → AC19
+- [x] Story `Skill1_AudioSyllable` : stimulus audio, récompense kana-unlocked → AC14
+- [x] Story `Skill2_Hiragana` : stimulus hiragana き → AC15
+- [x] Story `Skill3_KatakanaScaffolding` : stimulus し → シ → AC16
+- [x] Story `Skill3_KatakanaNoScaffolding` : stimulus シ seul → AC17
+- [x] Story `Skill4_AudioWord` : stimulus audio, récompense word-unlocked → AC18
+- [x] Story `Skill7_WordFurigana` : stimulus 猫 avec furigana ねこ → AC19
+- [x] Story `Skill7_WordNoFurigana` : stimulus 猫 seul → AC20
+- [x] Story `Skill7_Sentence` : stimulus 猫が好きです → AC21
 
 ### Étape 4 — Feedback autoplay et replays
 

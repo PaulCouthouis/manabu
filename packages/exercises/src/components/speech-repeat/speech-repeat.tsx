@@ -258,6 +258,9 @@ function Stimulus(props: { readonly stimulus: StimulusKind }) {
     )
   }
 
+  if (stimulus.text.length <= 4) {
+    return <StimulusText>{stimulus.text}</StimulusText>
+  }
   return <SentenceText>{stimulus.text}</SentenceText>
 }
 
@@ -418,10 +421,10 @@ export function SpeechRepeat(props: SpeechRepeatProps) {
         {phase.kind === "feedback" && phase.speechResult.kind === "skip" && <FeedbackSkip />}
       </ExerciseZone>
 
-      {phase.kind === "listening" && (
+      {!(phase.kind === "feedback" && phase.speechResult.kind === "mismatch") && (
         <RecorderWrapper>
           <VoiceRecorder
-            state="listening"
+            state={phase.kind === "listening" ? "listening" : "paused"}
             onSpeechStart={noopSpeechStart}
             onSpeechEnd={handleSpeechEnd}
             onError={(error) => {

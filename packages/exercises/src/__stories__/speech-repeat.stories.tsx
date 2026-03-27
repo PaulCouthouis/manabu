@@ -90,8 +90,36 @@ const skill7SentenceConfig: SpeechRepeatConfig = {
   modelAudioSrc: "",
 }
 
+const skill3ScaffoldingConfig: SpeechRepeatConfig = {
+  stimulus: { mode: "visual-kana-scaffolding", hint: "し", kana: "シ" },
+  expected: "し",
+  reward: "none",
+  modelAudioSrc: "",
+}
+
+const skill3NoScaffoldingConfig: SpeechRepeatConfig = {
+  stimulus: { mode: "visual-kana", kana: "シ" },
+  expected: "し",
+  reward: "none",
+  modelAudioSrc: "",
+}
+
+const skill4Config: SpeechRepeatConfig = {
+  stimulus: { mode: "audio" },
+  expected: "ねこ",
+  reward: "word-unlocked",
+  modelAudioSrc: "",
+}
+
 const skill7WordFuriganaConfig: SpeechRepeatConfig = {
   stimulus: { mode: "visual-text-furigana", text: "猫", reading: "ねこ" },
+  expected: "ねこ",
+  reward: "none",
+  modelAudioSrc: "",
+}
+
+const skill7WordNoFuriganaConfig: SpeechRepeatConfig = {
+  stimulus: { mode: "visual-text", text: "猫" },
   expected: "ねこ",
   reward: "none",
   modelAudioSrc: "",
@@ -271,5 +299,56 @@ export const WordFurigana: Story = {
   name: "Word with furigana — Listening (Skill 7)",
   render: () => {
     return <SpeechRepeatStory config={skill7WordFuriganaConfig} speechResult={matchResult} />
+  },
+}
+
+// --- Skill 3: Katakana scaffolding ---
+
+export const Skill3KatakanaScaffolding: Story = {
+  name: "Katakana scaffolding — し → シ (Skill 3)",
+  render: () => {
+    return <SpeechRepeatStory config={skill3ScaffoldingConfig} speechResult={matchResult} />
+  },
+}
+
+export const Skill3KatakanaNoScaffolding: Story = {
+  name: "Katakana no scaffolding — シ (Skill 3, 2e passage)",
+  render: () => {
+    return <SpeechRepeatStory config={skill3NoScaffoldingConfig} speechResult={matchResult} />
+  },
+}
+
+// --- Skill 4: Audio word ---
+
+export const Skill4AudioWord: Story = {
+  name: "Audio-first — Word (Skill 4)",
+  render: () => {
+    return (
+      <SpeechRepeatStory
+        config={skill4Config}
+        speechResult={matchResult}
+        renderReward={() => {
+          return (
+            <styled.div textAlign="center">
+              <styled.span fontSize="6xl" lineHeight={1}>
+                猫
+              </styled.span>
+              <styled.div fontSize="sm" color="fg.muted">
+                Word unlocked
+              </styled.div>
+            </styled.div>
+          )
+        }}
+      />
+    )
+  },
+}
+
+// --- Skill 7: Word without furigana ---
+
+export const Skill7WordNoFurigana: Story = {
+  name: "Word without furigana — 猫 (Skill 7, 2e passage)",
+  render: () => {
+    return <SpeechRepeatStory config={skill7WordNoFuriganaConfig} speechResult={matchResult} />
   },
 }
