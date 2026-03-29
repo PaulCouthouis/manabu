@@ -378,9 +378,9 @@ Le composant a deux phases : `listening` (VoiceRecorder monté) et `feedback` (V
 
 ### Étape 5 — Vérifications finales
 
-- [ ] `pnpm build` sans erreur → AC26
-- [ ] `pnpm lint` sans erreur → AC27
-- [ ] Tests existants passent (non-régression) → AC28
+- [x] `pnpm build` sans erreur → AC26
+- [x] `pnpm lint` sans erreur → AC27
+- [x] Tests existants passent (non-régression) → AC28
 
 ## Hors scope
 
