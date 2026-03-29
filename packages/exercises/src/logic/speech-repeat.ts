@@ -14,9 +14,3 @@ export function outcomeFromSpeechResult(result: SpeechResult): ExerciseResult["o
 export function isAudioFirst(stimulus: StimulusKind): boolean {
   return stimulus.mode === "audio"
 }
-
-const WORD_MAX_LENGTH = 4
-
-export function isSentence(text: string): boolean {
-  return text.length > WORD_MAX_LENGTH
-}

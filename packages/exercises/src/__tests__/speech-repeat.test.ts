@@ -1,6 +1,6 @@
 import { assert, describe, it } from "@effect/vitest"
 import type { SpeechResult } from "~/logic/vocal/speech-recognition.js"
-import { isAudioFirst, isSentence, outcomeFromSpeechResult } from "~/logic/speech-repeat.js"
+import { isAudioFirst, outcomeFromSpeechResult } from "~/logic/speech-repeat.js"
 
 describe("outcomeFromSpeechResult", () => {
   it("match → success", () => {
@@ -35,19 +35,5 @@ describe("isAudioFirst", () => {
 
   it("visual-text → false", () => {
     assert.strictEqual(isAudioFirst({ mode: "visual-text", text: "猫" }), false)
-  })
-})
-
-describe("isSentence", () => {
-  it("un kanji seul → false", () => {
-    assert.strictEqual(isSentence("猫"), false)
-  })
-
-  it("un mot court → false", () => {
-    assert.strictEqual(isSentence("食べる"), false)
-  })
-
-  it("une phrase → true", () => {
-    assert.strictEqual(isSentence("猫が好きです"), true)
   })
 })

@@ -11,7 +11,8 @@ import type {
   SpeechRepeatConfig,
   StimulusKind,
 } from "~/logic/speech-repeat-config.js"
-import { isAudioFirst, isSentence, outcomeFromSpeechResult } from "~/logic/speech-repeat.js"
+import { isAudioFirst, outcomeFromSpeechResult } from "~/logic/speech-repeat.js"
+import { isSentence } from "~/logic/stimulus-display.js"
 import type { SpeechResult } from "~/logic/vocal/speech-recognition.js"
 import { SpeechRecognitionApi } from "~/logic/vocal/speech-recognition.js"
 import { VoiceRecorder } from "~/components/voice-recorder/voice-recorder.js"

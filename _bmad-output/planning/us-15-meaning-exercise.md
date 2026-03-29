@@ -349,11 +349,11 @@ Le composant a deux phases : `answering` (l'utilisateur interagit) et `feedback`
 
 ### Étape 1 — Types, port AnswerValidationApi, extraction utilitaire
 
-- [ ] Extraire `isSentence` et `WORD_MAX_LENGTH` de `packages/exercises/src/logic/speech-repeat.ts` vers `packages/exercises/src/logic/stimulus-display.ts` → AC4
-- [ ] Mettre à jour l'import dans `speech-repeat.ts` pour utiliser le nouvel emplacement
-- [ ] Test : `isSentence` conserve le même comportement (migration du test existant) → AC4
-- [ ] Créer `packages/exercises/src/logic/meaning-exercise-config.ts` avec `MeaningStimulusKind`, `InteractionMode`, `Choice`, `MeaningExerciseConfig`, `MeaningExerciseResult` → AC1, AC2
-- [ ] Créer `packages/exercises/src/logic/answer-validation.ts` avec `AnswerResult`, `AnswerValidationApi` → AC3
+- [x] Extraire `isSentence` et `WORD_MAX_LENGTH` de `packages/exercises/src/logic/speech-repeat.ts` vers `packages/exercises/src/logic/stimulus-display.ts` → AC4
+- [x] Mettre à jour l'import dans `speech-repeat.ts` pour utiliser le nouvel emplacement
+- [x] Test : `isSentence` conserve le même comportement (migration du test existant) → AC4
+- [x] Créer `packages/exercises/src/logic/meaning-exercise-config.ts` avec `MeaningStimulusKind`, `InteractionMode`, `Choice`, `MeaningExerciseConfig`, `MeaningExerciseResult` → AC1, AC2
+- [x] Créer `packages/exercises/src/logic/answer-validation.ts` avec `AnswerResult`, `AnswerValidationApi` → AC3
 
 ### Étape 2 — Composant MeaningExercise core + mode QCM + stories
 
