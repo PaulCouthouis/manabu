@@ -357,15 +357,15 @@ Le composant a deux phases : `answering` (l'utilisateur interagit) et `feedback`
 
 ### Étape 2 — Composant MeaningExercise core + mode QCM + stories
 
-- [ ] Créer `packages/exercises/src/components/meaning-exercise/meaning-exercise.tsx`
-- [ ] Implémenter le layout : stimulus en haut (persistant), interaction en bas → AC5
-- [ ] Implémenter le cycle answering → feedback → AC6
-- [ ] Implémenter le mode QCM : grille de boutons, tap → `AnswerValidationApi.validate` → feedback → AC6
-- [ ] Implémenter le feedback correct : bonne réponse affichée, fond vert → AC7
-- [ ] Implémenter le feedback incorrect : réponse user + bonne réponse, Next manuel → AC8
-- [ ] Implémenter l'appel `onResult` → AC9
-- [ ] Story `QCM2` : 2 choix, interactif (tap = correct ou incorrect selon le bouton) → AC5, AC6, AC7, AC8
-- [ ] Story `QCM4` : 4 choix, interactif → AC5, AC6, AC7, AC8
+- [x] Créer `packages/exercises/src/components/meaning-exercise/meaning-exercise.tsx`
+- [x] Implémenter le layout : stimulus en haut (persistant), interaction en bas → AC5
+- [x] Implémenter le cycle answering → feedback → AC6
+- [x] Implémenter le mode QCM : grille de boutons, tap → `AnswerValidationApi.validate` → feedback → AC6
+- [x] Implémenter le feedback correct : bonne réponse affichée, fond vert → AC7
+- [x] Implémenter le feedback incorrect : réponse user + bonne réponse, Next manuel → AC8
+- [x] Implémenter l'appel `onResult` → AC9
+- [x] Story `QCM2` : 2 choix, interactif (tap = correct ou incorrect selon le bouton) → AC5, AC6, AC7, AC8
+- [x] Story `QCM4` : 4 choix, interactif → AC5, AC6, AC7, AC8
 
 ### Étape 3 — Variantes stimulus par skill + stories
 

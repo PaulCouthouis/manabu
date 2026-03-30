@@ -1,0 +1,217 @@
+import { Atom, useAtomSet } from "@effect-atom/atom-react"
+import { Effect, Layer } from "effect"
+import { ArrowRight, Circle } from "lucide-react"
+import React, { useCallback, useContext, useMemo, useState } from "react"
+import { styled } from "styled-system/jsx"
+import { Button } from "@manabu/ui"
+import type { AnswerResult } from "~/logic/answer-validation.js"
+import { AnswerValidationApi } from "~/logic/answer-validation.js"
+import type { MeaningExerciseConfig } from "~/logic/meaning-exercise-config.js"
+import { ChoicesQCM } from "~/components/meaning-exercise/choices-qcm.js"
+import { Stimulus } from "~/components/meaning-exercise/stimulus.js"
+
+export type MeaningExercisePhase =
+  | { readonly kind: "answering" }
+  | { readonly kind: "feedback"; readonly result: AnswerResult }
+
+export type MeaningExerciseLayer = Layer.Layer<AnswerValidationApi>
+
+export interface MeaningExerciseProps {
+  readonly config: MeaningExerciseConfig
+  readonly onResult: (result: AnswerResult) => void
+  readonly initialPhase?: MeaningExercisePhase
+}
+
+function makeRuntime(validationLayer: MeaningExerciseLayer) {
+  const runtime = Atom.runtime(validationLayer)
+
+  const validateAtom = runtime.fn(
+    Effect.fnUntraced(function* (args: { answer: string; expected: string }) {
+      const api = yield* AnswerValidationApi
+      return yield* api.validate(args.answer, args.expected)
+    }),
+  )
+
+  return { validateAtom }
+}
+
+type MeaningExerciseAtoms = ReturnType<typeof makeRuntime>
+
+const MeaningExerciseAtomsContext = React.createContext<MeaningExerciseAtoms | null>(null)
+
+export function MeaningExerciseProvider(props: {
+  readonly layer: MeaningExerciseLayer
+  readonly children: React.ReactNode
+}) {
+  const atoms = useMemo(() => {
+    return makeRuntime(props.layer)
+  }, [props.layer])
+
+  return (
+    <MeaningExerciseAtomsContext.Provider value={atoms}>
+      {props.children}
+    </MeaningExerciseAtomsContext.Provider>
+  )
+}
+
+function useAtoms(): MeaningExerciseAtoms {
+  const atoms = useContext(MeaningExerciseAtomsContext)
+  if (atoms === null) {
+    throw new Error("MeaningExercise must be wrapped in MeaningExerciseProvider")
+  }
+  return atoms
+}
+
+const Container = styled("div", {
+  base: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    height: "100dvh",
+    overflow: "hidden",
+  },
+})
+
+const StimulusZone = styled("div", {
+  base: {
+    position: "relative",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+    width: "100%",
+    px: "4",
+  },
+})
+
+const StimulusGroup = styled("div", {
+  base: {
+    position: "relative",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+})
+
+const FeedbackOverlay = styled("div", {
+  base: {
+    position: "absolute",
+    top: "100%",
+    left: "50%",
+    transform: "translateX(-50%)",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: "2",
+    pt: "4",
+    whiteSpace: "nowrap",
+  },
+})
+
+const ExpectedText = styled("span", {
+  base: {
+    fontSize: "2xl",
+    fontWeight: "semibold",
+    textAlign: "center",
+  },
+})
+
+const TranscriptText = styled("span", {
+  base: {
+    fontSize: "2xl",
+    color: "fg.muted",
+    fontStyle: "italic",
+    textAlign: "center",
+  },
+})
+
+const SuccessOverlay = styled("div", {
+  base: {
+    position: "absolute",
+    inset: "0",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    bg: "transparent",
+    color: "colorPalette.11",
+    colorPalette: "accent",
+  },
+})
+
+const FOOTER_HEIGHT = "152px"
+
+const Footer = styled("div", {
+  base: {
+    width: "100%",
+    height: FOOTER_HEIGHT,
+    borderTopWidth: "1px",
+    borderColor: "border.subtle",
+    bg: "bg.subtle",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    px: "4",
+  },
+})
+
+export function MeaningExercise(props: MeaningExerciseProps) {
+  const { config, onResult, initialPhase } = props
+  const [phase, setPhase] = useState<MeaningExercisePhase>(initialPhase ?? { kind: "answering" })
+
+  const { validateAtom } = useAtoms()
+  const validate = useAtomSet(validateAtom, { mode: "promiseExit" })
+
+  const handleSelect = useCallback(
+    async (answer: string) => {
+      const exit = await validate({ answer, expected: config.expected })
+      if (exit._tag !== "Success") {
+        return
+      }
+      const result = exit.value
+      setPhase({ kind: "feedback", result })
+      onResult(result)
+    },
+    [config.expected, onResult],
+  )
+
+  const handleNext = useCallback(() => {
+    setPhase({ kind: "answering" })
+  }, [])
+
+  return (
+    <Container>
+      <StimulusZone>
+        {phase.kind === "feedback" && phase.result.kind === "correct" && (
+          <SuccessOverlay>
+            <Circle width="100%" height="100%" strokeWidth={0.3} />
+          </SuccessOverlay>
+        )}
+
+        <StimulusGroup>
+          <Stimulus config={config} />
+          {phase.kind === "feedback" && (
+            <FeedbackOverlay>
+              <ExpectedText>{config.expected}</ExpectedText>
+              {phase.result.kind === "incorrect" && (
+                <TranscriptText>You said: {phase.result.userAnswer}</TranscriptText>
+              )}
+            </FeedbackOverlay>
+          )}
+        </StimulusGroup>
+      </StimulusZone>
+
+      <Footer>
+        {phase.kind === "answering" && config.interaction.mode === "qcm" && (
+          <ChoicesQCM choices={config.interaction.choices} onSelect={handleSelect} />
+        )}
+        {phase.kind === "feedback" && phase.result.kind === "incorrect" && (
+          <Button colorPalette="accent" size="xl" width="100%" onClick={handleNext}>
+            Next
+            <ArrowRight size={24} />
+          </Button>
+        )}
+      </Footer>
+    </Container>
+  )
+}
