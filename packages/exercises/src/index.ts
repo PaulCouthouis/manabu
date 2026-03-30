@@ -1,8 +1,10 @@
-export { type AnswerResult, type InputMode } from "~/logic/input-mode.js"
+export { type InputMode } from "~/logic/input-mode.js"
 
 export {
   MultimodalInput,
+  MultimodalInputProvider,
   type MultimodalInputProps,
+  type MultimodalInputLayer,
 } from "~/components/multimodal-input/multimodal-input.js"
 
 export {

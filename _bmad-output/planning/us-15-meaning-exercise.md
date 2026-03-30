@@ -379,12 +379,12 @@ Le composant a deux phases : `answering` (l'utilisateur interagit) et `feedback`
 
 ### Étape 4 — Refactoring MultimodalInput (retourne string, internalise STT)
 
-- [ ] Créer `packages/exercises/src/logic/vocal/speech-to-text.ts` avec `SpeechToTextApi` → AC14
-- [ ] Refactorer `MultimodalInput` : `onAnswer` retourne un `string` (plus de `AnswerResult` discriminé) → AC13
-- [ ] En mode voix : blob → `SpeechToTextApi.transcribe` → string, internalisé dans `MultimodalInput` → AC14
-- [ ] Implémenter le skip vocal : "skip" détecté dans le transcript → `onSkip` callback → AC15
-- [ ] Mettre à jour les stories existantes de MultimodalInput
-- [ ] Test : `MultimodalInput` retourne un string en mode clavier et en mode voix (via fake STT)
+- [x] Créer `packages/exercises/src/logic/vocal/speech-to-text.ts` avec `SpeechToTextApi` → AC14
+- [x] Refactorer `MultimodalInput` : `onAnswer` retourne un `string` (plus de `AnswerResult` discriminé) → AC13
+- [x] En mode voix : blob → `SpeechToTextApi.transcribe` → string, internalisé dans `MultimodalInput` → AC14
+- [x] Implémenter le skip vocal : "skip" détecté dans le transcript → `onSkip` callback → AC15
+- [x] Mettre à jour les stories existantes de MultimodalInput
+- [x] Test : `MultimodalInput` retourne un string en mode clavier et en mode voix (via fake STT)
 
 ### Étape 5 — Mode free-input dans MeaningExercise + stories
 

@@ -5,10 +5,6 @@ import { Schema } from "effect"
 export const InputMode = Schema.Literal("voice", "keyboard")
 export type InputMode = typeof InputMode.Type
 
-export type AnswerResult =
-  | { readonly mode: "keyboard"; readonly text: string }
-  | { readonly mode: "voice"; readonly audio: Blob }
-
 export const INPUT_MODE_KEY = "manabu:input-mode"
 
 const InputModeRuntime = Atom.runtime(
