@@ -3,6 +3,7 @@ import { fn } from "storybook/test"
 import { RegistryProvider } from "@effect-atom/atom-react"
 import { Effect, Layer } from "effect"
 import { AnswerValidationApi } from "~/logic/answer-validation.js"
+import { BrowserSpeechSynthesisApiLive, TextToSpeech } from "~/logic/audio/text-to-speech.js"
 import type { MeaningExerciseConfig } from "~/logic/meaning-exercise-config.js"
 import {
   MeaningExercise,
@@ -20,10 +21,15 @@ const fakeAnswerValidationLayer = Layer.succeed(AnswerValidationApi, {
   },
 })
 
+const meaningExerciseLayer = Layer.mergeAll(
+  fakeAnswerValidationLayer,
+  Layer.provide(TextToSpeech.Default, BrowserSpeechSynthesisApiLive),
+)
+
 function MeaningExerciseStory(props: { readonly config: MeaningExerciseConfig }) {
   return (
     <RegistryProvider>
-      <MeaningExerciseProvider layer={fakeAnswerValidationLayer}>
+      <MeaningExerciseProvider layer={meaningExerciseLayer}>
         <MeaningExercise config={props.config} onResult={fn()} />
       </MeaningExerciseProvider>
     </RegistryProvider>
@@ -42,14 +48,14 @@ export default meta
 
 type Story = StoryObj<MeaningExerciseProps>
 
-export const QCM2: Story = {
-  name: "QCM 2 choices",
+export const Skill5_KanjiQCM2: Story = {
+  name: "Skill 5 — Kanji QCM 2 (学)",
   render: () => {
     return (
       <MeaningExerciseStory
         config={{
-          stimulus: { mode: "visual", text: "学" },
-          interaction: { mode: "qcm", choices: ["study", "dog"] },
+          stimulus: { mode: "kanji", text: "学" },
+          interaction: { mode: "qcm", choices: ["study", "play"] },
           expected: "study",
         }}
       />
@@ -57,16 +63,16 @@ export const QCM2: Story = {
   },
 }
 
-export const QCM4: Story = {
-  name: "QCM 4 choices",
+export const Skill5_KanjiQCM4: Story = {
+  name: "Skill 5 — Kanji QCM 4 (犬)",
   render: () => {
     return (
       <MeaningExerciseStory
         config={{
-          stimulus: { mode: "visual", text: "犬" },
+          stimulus: { mode: "kanji", text: "犬" },
           interaction: {
             mode: "qcm",
-            choices: ["dog", "cat", "bird", "fish"],
+            choices: ["dog", "cat", "wolf", "fox"],
           },
           expected: "dog",
         }}
@@ -75,15 +81,72 @@ export const QCM4: Story = {
   },
 }
 
-export const WordQCM2: Story = {
-  name: "Word — QCM 2 (先生)",
+export const Skill6_AudioQCM4: Story = {
+  name: "Skill 6 — Audio QCM 4 (猫)",
   render: () => {
     return (
       <MeaningExerciseStory
         config={{
-          stimulus: { mode: "visual", text: "先生" },
-          interaction: { mode: "qcm", choices: ["teacher", "student"] },
+          stimulus: { mode: "audio", text: "猫" },
+          interaction: {
+            mode: "qcm",
+            choices: ["cat", "dog", "bird", "fish"],
+          },
+          expected: "cat",
+        }}
+      />
+    )
+  },
+}
+
+export const Skill8_SingleKanjiWordQCM4: Story = {
+  name: "Skill 8 — Word 1 kanji QCM 4 (猫)",
+  render: () => {
+    return (
+      <MeaningExerciseStory
+        config={{
+          stimulus: { mode: "word", text: "猫" },
+          interaction: {
+            mode: "qcm",
+            choices: ["cat", "dog", "bird", "fish"],
+          },
+          expected: "cat",
+        }}
+      />
+    )
+  },
+}
+
+export const Skill8_WordQCM4: Story = {
+  name: "Skill 8 — Word QCM 4 (先生)",
+  render: () => {
+    return (
+      <MeaningExerciseStory
+        config={{
+          stimulus: { mode: "word", text: "先生" },
+          interaction: {
+            mode: "qcm",
+            choices: ["teacher", "student", "doctor", "parent"],
+          },
           expected: "teacher",
+        }}
+      />
+    )
+  },
+}
+
+export const Skill8_SentenceQCM4: Story = {
+  name: "Skill 8 — Sentence QCM 4 (猫が好きです)",
+  render: () => {
+    return (
+      <MeaningExerciseStory
+        config={{
+          stimulus: { mode: "word", text: "猫が好きです" },
+          interaction: {
+            mode: "qcm",
+            choices: ["I like cats", "I hate cats", "I have a cat", "I see a cat"],
+          },
+          expected: "I like cats",
         }}
       />
     )
@@ -96,7 +159,7 @@ export const WordQCM4: Story = {
     return (
       <MeaningExerciseStory
         config={{
-          stimulus: { mode: "visual", text: "食べる" },
+          stimulus: { mode: "word", text: "食べる" },
           interaction: {
             mode: "qcm",
             choices: ["to eat", "to drink", "to sleep", "to run"],

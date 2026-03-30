@@ -1,5 +1,6 @@
 export type MeaningStimulusKind =
-  | { readonly mode: "visual"; readonly text: string }
+  | { readonly mode: "kanji"; readonly text: string }
+  | { readonly mode: "word"; readonly text: string }
   | { readonly mode: "audio"; readonly text: string }
 
 export type InteractionMode =

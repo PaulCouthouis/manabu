@@ -1,12 +1,14 @@
 import { Atom, useAtomSet } from "@effect-atom/atom-react"
 import { Effect, Layer } from "effect"
 import { ArrowRight, Circle } from "lucide-react"
-import React, { useCallback, useContext, useMemo, useState } from "react"
+import React, { useCallback, useContext, useEffect, useMemo, useState } from "react"
 import { styled } from "styled-system/jsx"
 import { Button } from "@manabu/ui"
 import type { AnswerResult } from "~/logic/answer-validation.js"
 import { AnswerValidationApi } from "~/logic/answer-validation.js"
+import { TextToSpeech } from "~/logic/audio/text-to-speech.js"
 import type { MeaningExerciseConfig } from "~/logic/meaning-exercise-config.js"
+import { useAutoplayFeedback } from "~/logic/ui/use-autoplay-feedback.js"
 import { ChoicesQCM } from "~/components/meaning-exercise/choices-qcm.js"
 import { Stimulus } from "~/components/meaning-exercise/stimulus.js"
 
@@ -14,7 +16,7 @@ export type MeaningExercisePhase =
   | { readonly kind: "answering" }
   | { readonly kind: "feedback"; readonly result: AnswerResult }
 
-export type MeaningExerciseLayer = Layer.Layer<AnswerValidationApi>
+export type MeaningExerciseLayer = Layer.Layer<AnswerValidationApi | TextToSpeech>
 
 export interface MeaningExerciseProps {
   readonly config: MeaningExerciseConfig
@@ -32,7 +34,14 @@ function makeRuntime(validationLayer: MeaningExerciseLayer) {
     }),
   )
 
-  return { validateAtom }
+  const speakAtom = runtime.fn(
+    Effect.fnUntraced(function* (text: string) {
+      const tts = yield* TextToSpeech
+      yield* tts.speak(text)
+    }),
+  )
+
+  return { validateAtom, speakAtom }
 }
 
 type MeaningExerciseAtoms = ReturnType<typeof makeRuntime>
@@ -159,8 +168,9 @@ export function MeaningExercise(props: MeaningExerciseProps) {
   const { config, onResult, initialPhase } = props
   const [phase, setPhase] = useState<MeaningExercisePhase>(initialPhase ?? { kind: "answering" })
 
-  const { validateAtom } = useAtoms()
+  const { validateAtom, speakAtom } = useAtoms()
   const validate = useAtomSet(validateAtom, { mode: "promiseExit" })
+  const speak = useAtomSet(speakAtom)
 
   const handleSelect = useCallback(
     async (answer: string) => {
@@ -175,6 +185,19 @@ export function MeaningExercise(props: MeaningExerciseProps) {
     [config.expected, onResult],
   )
 
+  useEffect(() => {
+    if (phase.kind === "answering" && config.stimulus.mode === "audio") {
+      speak(config.stimulus.text)
+    }
+  }, [phase.kind, config.stimulus])
+
+  const shouldAutoplay = config.stimulus.mode !== "kanji"
+  useAutoplayFeedback(phase.kind === "feedback" && shouldAutoplay, config.stimulus.text, speak)
+
+  const handlePlay = useCallback(() => {
+    speak(config.stimulus.text)
+  }, [config.stimulus])
+
   const handleNext = useCallback(() => {
     setPhase({ kind: "answering" })
   }, [])
@@ -188,17 +211,26 @@ export function MeaningExercise(props: MeaningExerciseProps) {
           </SuccessOverlay>
         )}
 
-        <StimulusGroup>
-          <Stimulus config={config} />
-          {phase.kind === "feedback" && (
-            <FeedbackOverlay>
-              <ExpectedText>{config.expected}</ExpectedText>
-              {phase.result.kind === "incorrect" && (
-                <TranscriptText>You said: {phase.result.userAnswer}</TranscriptText>
-              )}
-            </FeedbackOverlay>
-          )}
-        </StimulusGroup>
+        {phase.kind === "feedback" && config.stimulus.mode === "audio" ? (
+          <>
+            <ExpectedText>{config.expected}</ExpectedText>
+            {phase.result.kind === "incorrect" && (
+              <TranscriptText>You said: {phase.result.userAnswer}</TranscriptText>
+            )}
+          </>
+        ) : (
+          <StimulusGroup>
+            <Stimulus config={config} onPlay={handlePlay} />
+            {phase.kind === "feedback" && (
+              <FeedbackOverlay>
+                <ExpectedText>{config.expected}</ExpectedText>
+                {phase.result.kind === "incorrect" && (
+                  <TranscriptText>You said: {phase.result.userAnswer}</TranscriptText>
+                )}
+              </FeedbackOverlay>
+            )}
+          </StimulusGroup>
+        )}
       </StimulusZone>
 
       <Footer>

@@ -12,6 +12,7 @@ import type {
   StimulusKind,
 } from "~/logic/speech-repeat-config.js"
 import { isAudioFirst, outcomeFromSpeechResult } from "~/logic/speech-repeat.js"
+import { useAutoplayFeedback } from "~/logic/ui/use-autoplay-feedback.js"
 import { isSentence } from "~/logic/stimulus-display.js"
 import type { SpeechResult } from "~/logic/vocal/speech-recognition.js"
 import { SpeechRecognitionApi } from "~/logic/vocal/speech-recognition.js"
@@ -298,7 +299,6 @@ function useAutoplayModel(
   config: SpeechRepeatConfig,
   speak: (text: string) => void,
 ) {
-  const hasPlayed = useRef(false)
   const audioFirst = isAudioFirst(config.stimulus)
 
   useEffect(() => {
@@ -307,22 +307,7 @@ function useAutoplayModel(
     }
   }, [phase.kind, config.expected, audioFirst])
 
-  useEffect(() => {
-    if (phase.kind !== "feedback") {
-      hasPlayed.current = false
-      return
-    }
-    if (hasPlayed.current) {
-      return
-    }
-    hasPlayed.current = true
-    const timer = setTimeout(() => {
-      speak(config.expected)
-    }, 500)
-    return () => {
-      clearTimeout(timer)
-    }
-  }, [phase.kind, config.expected])
+  useAutoplayFeedback(phase.kind === "feedback", config.expected, speak)
 }
 
 function useUserAudioPlayback(phase: SpeechRepeatPhase) {

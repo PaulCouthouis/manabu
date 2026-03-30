@@ -369,13 +369,13 @@ Le composant a deux phases : `answering` (l'utilisateur interagit) et `feedback`
 
 ### Étape 3 — Variantes stimulus par skill + stories
 
-- [ ] Implémenter le rendu `visual` : taille adaptative via `isSentence` → AC10, AC11
-- [ ] Implémenter le rendu `audio` : bouton 🔊 play statique, replay illimité, actif pendant la réponse → AC12
-- [ ] Story `Skill5_KanjiQCM2` : kanji 学 + QCM 2 choix → AC10
-- [ ] Story `Skill5_KanjiQCM4` : kanji 犬 + QCM 4 choix → AC10
-- [ ] Story `Skill6_AudioQCM4` : bouton play + QCM 4 choix → AC12
-- [ ] Story `Skill8_WordQCM4` : mot 猫 + QCM 4 choix → AC10
-- [ ] Story `Skill8_SentenceQCM4` : phrase 猫が好きです + QCM 4 choix → AC11
+- [x] Implémenter le rendu `visual` : taille adaptative via `isSentence` → AC10, AC11
+- [x] Implémenter le rendu `audio` : bouton 🔊 play statique, replay illimité, actif pendant la réponse → AC12
+- [x] Story `Skill5_KanjiQCM2` : kanji 学 + QCM 2 choix → AC10
+- [x] Story `Skill5_KanjiQCM4` : kanji 犬 + QCM 4 choix → AC10
+- [x] Story `Skill6_AudioQCM4` : bouton play + QCM 4 choix → AC12
+- [x] Story `Skill8_WordQCM4` : mot 猫 + QCM 4 choix → AC10
+- [x] Story `Skill8_SentenceQCM4` : phrase 猫が好きです + QCM 4 choix → AC11
 
 ### Étape 4 — Refactoring MultimodalInput (retourne string, internalise STT)
 
