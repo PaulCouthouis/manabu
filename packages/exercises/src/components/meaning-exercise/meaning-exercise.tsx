@@ -9,6 +9,7 @@ import { AnswerValidationApi } from "~/logic/answer-validation.js"
 import { TextToSpeech } from "~/logic/audio/text-to-speech.js"
 import type { MeaningExerciseConfig } from "~/logic/meaning-exercise-config.js"
 import { useAutoplayFeedback } from "~/logic/ui/use-autoplay-feedback.js"
+import { MultimodalInput } from "~/components/multimodal-input/multimodal-input.js"
 import { ChoicesQCM } from "~/components/meaning-exercise/choices-qcm.js"
 import { Stimulus } from "~/components/meaning-exercise/stimulus.js"
 
@@ -236,6 +237,18 @@ export function MeaningExercise(props: MeaningExerciseProps) {
       <Footer>
         {phase.kind === "answering" && config.interaction.mode === "qcm" && (
           <ChoicesQCM choices={config.interaction.choices} onSelect={handleSelect} />
+        )}
+        {phase.kind === "answering" && config.interaction.mode === "free-input" && (
+          <styled.div width="100%">
+            <MultimodalInput
+              voiceRecorderState="listening"
+              onAnswer={handleSelect}
+              onSpeechStart={() => {}}
+              onError={(error) => {
+                console.error("[MeaningExercise] microphone error", error)
+              }}
+            />
+          </styled.div>
         )}
         {phase.kind === "feedback" && phase.result.kind === "incorrect" && (
           <Button colorPalette="accent" size="xl" width="100%" onClick={handleNext}>

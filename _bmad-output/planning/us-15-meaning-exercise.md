@@ -388,12 +388,12 @@ Le composant a deux phases : `answering` (l'utilisateur interagit) et `feedback`
 
 ### Étape 5 — Mode free-input dans MeaningExercise + stories
 
-- [ ] Intégrer `MultimodalInput` dans MeaningExercise : visible en `free-input`, invisible en `qcm` → AC16, AC17
-- [ ] Wiring : `MultimodalInput.onAnswer(string)` → `AnswerValidationApi.validate` → feedback → AC16
-- [ ] Story `Skill5_FreeInputKeyboard` : kanji + saisie clavier → AC16, AC17
-- [ ] Story `Skill5_FreeInputVoice` : kanji + micro → AC16, AC17
-- [ ] Story `Skill6_FreeInputKeyboard` : audio + saisie clavier → AC16
-- [ ] Story `Skill8_FreeInputKeyboard` : texte + saisie clavier → AC16
+- [x] Intégrer `MultimodalInput` dans MeaningExercise : visible en `free-input`, invisible en `qcm` → AC16, AC17
+- [x] Wiring : `MultimodalInput.onAnswer(string)` → `AnswerValidationApi.validate` → feedback → AC16
+- [x] Story `Skill5_FreeInputKeyboard` : kanji + saisie clavier → AC16, AC17
+- [x] Story `Skill5_FreeInputVoice` : kanji + micro → AC16, AC17
+- [x] Story `Skill6_FreeInputKeyboard` : audio + saisie clavier → AC16
+- [x] Story `Skill8_FreeInputKeyboard` : texte + saisie clavier → AC16
 
 ### Étape 6 — Vérifications finales
 

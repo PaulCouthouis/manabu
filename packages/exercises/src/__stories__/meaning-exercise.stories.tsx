@@ -4,12 +4,18 @@ import { RegistryProvider } from "@effect-atom/atom-react"
 import { Effect, Layer } from "effect"
 import { AnswerValidationApi } from "~/logic/answer-validation.js"
 import { BrowserSpeechSynthesisApiLive, TextToSpeech } from "~/logic/audio/text-to-speech.js"
+import { SpeechToTextApi } from "~/logic/vocal/speech-to-text.js"
 import type { MeaningExerciseConfig } from "~/logic/meaning-exercise-config.js"
 import {
   MeaningExercise,
   MeaningExerciseProvider,
   type MeaningExerciseProps,
 } from "~/components/meaning-exercise/meaning-exercise.js"
+import { MultimodalInputProvider } from "~/components/multimodal-input/multimodal-input.js"
+import {
+  BrowserVoiceRecorderLayer,
+  VoiceRecorderProvider,
+} from "~/components/voice-recorder/voice-recorder.js"
 
 const fakeAnswerValidationLayer = Layer.succeed(AnswerValidationApi, {
   validate: (answer: string, expected: string) => {
@@ -21,6 +27,12 @@ const fakeAnswerValidationLayer = Layer.succeed(AnswerValidationApi, {
   },
 })
 
+const fakeSpeechToTextLayer = Layer.succeed(SpeechToTextApi, {
+  transcribe: (_blob: Blob) => {
+    return Effect.succeed("fake transcript")
+  },
+})
+
 const meaningExerciseLayer = Layer.mergeAll(
   fakeAnswerValidationLayer,
   Layer.provide(TextToSpeech.Default, BrowserSpeechSynthesisApiLive),
@@ -29,9 +41,13 @@ const meaningExerciseLayer = Layer.mergeAll(
 function MeaningExerciseStory(props: { readonly config: MeaningExerciseConfig }) {
   return (
     <RegistryProvider>
-      <MeaningExerciseProvider layer={meaningExerciseLayer}>
-        <MeaningExercise config={props.config} onResult={fn()} />
-      </MeaningExerciseProvider>
+      <VoiceRecorderProvider layer={BrowserVoiceRecorderLayer}>
+        <MultimodalInputProvider layer={fakeSpeechToTextLayer}>
+          <MeaningExerciseProvider layer={meaningExerciseLayer}>
+            <MeaningExercise config={props.config} onResult={fn()} />
+          </MeaningExerciseProvider>
+        </MultimodalInputProvider>
+      </VoiceRecorderProvider>
     </RegistryProvider>
   )
 }
@@ -165,6 +181,51 @@ export const WordQCM4: Story = {
             choices: ["to eat", "to drink", "to sleep", "to run"],
           },
           expected: "to eat",
+        }}
+      />
+    )
+  },
+}
+
+export const Skill5_FreeInput: Story = {
+  name: "Skill 5 — Free input (学)",
+  render: () => {
+    return (
+      <MeaningExerciseStory
+        config={{
+          stimulus: { mode: "kanji", text: "学" },
+          interaction: { mode: "free-input" },
+          expected: "study",
+        }}
+      />
+    )
+  },
+}
+
+export const Skill6_FreeInput: Story = {
+  name: "Skill 6 — Free input (猫)",
+  render: () => {
+    return (
+      <MeaningExerciseStory
+        config={{
+          stimulus: { mode: "audio", text: "猫" },
+          interaction: { mode: "free-input" },
+          expected: "cat",
+        }}
+      />
+    )
+  },
+}
+
+export const Skill8_FreeInput: Story = {
+  name: "Skill 8 — Free input (先生)",
+  render: () => {
+    return (
+      <MeaningExerciseStory
+        config={{
+          stimulus: { mode: "word", text: "先生" },
+          interaction: { mode: "free-input" },
+          expected: "teacher",
         }}
       />
     )
