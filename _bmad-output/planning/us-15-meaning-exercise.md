@@ -397,9 +397,9 @@ Le composant a deux phases : `answering` (l'utilisateur interagit) et `feedback`
 
 ### Étape 6 — Vérifications finales
 
-- [ ] `pnpm build` sans erreur → AC18
-- [ ] `pnpm lint` sans erreur → AC19
-- [ ] Tests existants passent (non-régression) → AC20
+- [x] `pnpm build` sans erreur → AC18
+- [x] `pnpm lint` sans erreur → AC19
+- [x] Tests existants passent (non-régression) → AC20
 
 ## Hors scope
 
