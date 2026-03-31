@@ -9,6 +9,7 @@ import type { MeaningExerciseConfig } from "~/logic/meaning-exercise-config.js"
 import {
   MeaningExercise,
   MeaningExerciseProvider,
+  type MeaningExerciseLayer,
   type MeaningExerciseProps,
 } from "~/components/meaning-exercise/meaning-exercise.js"
 import { MultimodalInputProvider } from "~/components/multimodal-input/multimodal-input.js"
@@ -33,17 +34,35 @@ const fakeSpeechToTextLayer = Layer.succeed(SpeechToTextApi, {
   },
 })
 
+const fakeAcceptedValidationLayer = Layer.succeed(AnswerValidationApi, {
+  validate: (_answer: string, expected: string) => {
+    return Effect.succeed({
+      kind: "accepted" as const,
+      userAnswer: "to learn",
+      expected,
+    })
+  },
+})
+
 const meaningExerciseLayer = Layer.mergeAll(
   fakeAnswerValidationLayer,
   Layer.provide(TextToSpeech.Default, BrowserSpeechSynthesisApiLive),
 )
 
-function MeaningExerciseStory(props: { readonly config: MeaningExerciseConfig }) {
+const acceptedMeaningExerciseLayer = Layer.mergeAll(
+  fakeAcceptedValidationLayer,
+  Layer.provide(TextToSpeech.Default, BrowserSpeechSynthesisApiLive),
+)
+
+function MeaningExerciseStory(props: {
+  readonly config: MeaningExerciseConfig
+  readonly layer?: MeaningExerciseLayer
+}) {
   return (
     <RegistryProvider>
       <VoiceRecorderProvider layer={BrowserVoiceRecorderLayer}>
         <MultimodalInputProvider layer={fakeSpeechToTextLayer}>
-          <MeaningExerciseProvider layer={meaningExerciseLayer}>
+          <MeaningExerciseProvider layer={props.layer ?? meaningExerciseLayer}>
             <MeaningExercise config={props.config} onResult={fn()} />
           </MeaningExerciseProvider>
         </MultimodalInputProvider>
@@ -226,6 +245,41 @@ export const Skill8_FreeInput: Story = {
           stimulus: { mode: "word", text: "先生" },
           interaction: { mode: "free-input" },
           expected: "teacher",
+        }}
+      />
+    )
+  },
+}
+
+export const Accepted_WordQCM: Story = {
+  name: "Accepted — Word QCM (学ぶ → accepted 'to learn')",
+  render: () => {
+    return (
+      <MeaningExerciseStory
+        layer={acceptedMeaningExerciseLayer}
+        config={{
+          stimulus: { mode: "word", text: "学ぶ" },
+          interaction: {
+            mode: "qcm",
+            choices: ["to learn", "to teach", "to read", "to write"],
+          },
+          expected: "to study",
+        }}
+      />
+    )
+  },
+}
+
+export const Accepted_AudioFreeInput: Story = {
+  name: "Accepted — Audio Free input (猫 → accepted)",
+  render: () => {
+    return (
+      <MeaningExerciseStory
+        layer={acceptedMeaningExerciseLayer}
+        config={{
+          stimulus: { mode: "audio", text: "猫" },
+          interaction: { mode: "free-input" },
+          expected: "cat",
         }}
       />
     )

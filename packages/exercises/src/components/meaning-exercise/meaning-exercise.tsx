@@ -136,6 +136,20 @@ const TranscriptText = styled("span", {
   },
 })
 
+const AcceptedTranscript = styled("span", {
+  base: {
+    position: "absolute",
+    bottom: "4",
+    left: "50%",
+    transform: "translateX(-50%)",
+    fontSize: "lg",
+    color: "colorPalette.11",
+    colorPalette: "accent",
+    textAlign: "center",
+    whiteSpace: "nowrap",
+  },
+})
+
 const SuccessOverlay = styled("div", {
   base: {
     position: "absolute",
@@ -206,11 +220,12 @@ export function MeaningExercise(props: MeaningExerciseProps) {
   return (
     <Container>
       <StimulusZone>
-        {phase.kind === "feedback" && phase.result.kind === "correct" && (
-          <SuccessOverlay>
-            <Circle width="100%" height="100%" strokeWidth={0.3} />
-          </SuccessOverlay>
-        )}
+        {phase.kind === "feedback" &&
+          (phase.result.kind === "correct" || phase.result.kind === "accepted") && (
+            <SuccessOverlay>
+              <Circle width="100%" height="100%" strokeWidth={0.3} />
+            </SuccessOverlay>
+          )}
 
         {phase.kind === "feedback" && config.stimulus.mode === "audio" ? (
           <>
@@ -231,6 +246,10 @@ export function MeaningExercise(props: MeaningExerciseProps) {
               </FeedbackOverlay>
             )}
           </StimulusGroup>
+        )}
+
+        {phase.kind === "feedback" && phase.result.kind === "accepted" && (
+          <AcceptedTranscript>✓ {phase.result.userAnswer}</AcceptedTranscript>
         )}
       </StimulusZone>
 
