@@ -1,14 +1,17 @@
 import { Atom, useAtomSet } from "@effect-atom/atom-react"
 import { Effect, Layer, Option } from "effect"
-import React, { useCallback, useContext, useMemo, useState } from "react"
+import { Circle } from "lucide-react"
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react"
 import { styled } from "styled-system/jsx"
 import type { AnswerResult } from "~/logic/answer-validation.js"
 import { AnswerValidationApi } from "~/logic/answer-validation.js"
 import { TextToSpeech } from "~/logic/audio/text-to-speech.js"
 import type { OralProductionConfig, OralProductionResult } from "~/logic/oral-production-config.js"
 import type { ExerciseOutcome } from "~/logic/speech-repeat-config.js"
+import { isSentence } from "~/logic/stimulus-display.js"
 import { useAutoplayFeedback } from "~/logic/ui/use-autoplay-feedback.js"
 import { SpeechRecognitionApi } from "~/logic/vocal/speech-recognition.js"
+import { MismatchActionBar } from "~/components/shared/mismatch-action-bar.js"
 import { VoiceRecorder } from "~/components/voice-recorder/voice-recorder.js"
 
 // --- Types ---
@@ -122,13 +125,117 @@ const MeaningText = styled("span", {
   },
 })
 
+const RewardWord = styled("span", {
+  base: {
+    fontSize: "4xl",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+})
+
+const RewardSentence = styled("span", {
+  base: {
+    fontSize: "2xl",
+    fontWeight: "medium",
+    textAlign: "center",
+    lineHeight: "relaxed",
+  },
+})
+
+const TranscriptText = styled("span", {
+  base: {
+    fontSize: "2xl",
+    color: "fg.muted",
+    fontStyle: "italic",
+    textAlign: "center",
+  },
+})
+
+const AcceptedTranscript = styled("span", {
+  base: {
+    position: "absolute",
+    bottom: "4",
+    left: "50%",
+    transform: "translateX(-50%)",
+    fontSize: "lg",
+    color: "colorPalette.11",
+    colorPalette: "accent",
+    textAlign: "center",
+    whiteSpace: "nowrap",
+  },
+})
+
+const SuccessOverlay = styled("div", {
+  base: {
+    position: "absolute",
+    inset: "0",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    bg: "transparent",
+    color: "colorPalette.11",
+    colorPalette: "accent",
+  },
+})
+
+const StimulusGroup = styled("div", {
+  base: {
+    position: "relative",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+})
+
+const FeedbackOverlay = styled("div", {
+  base: {
+    position: "absolute",
+    top: "100%",
+    left: "50%",
+    transform: "translateX(-50%)",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: "2",
+    pt: "4",
+    whiteSpace: "nowrap",
+  },
+})
+
 const RecorderWrapper = styled("div", {
   base: {
     width: "100%",
   },
 })
 
-// --- Main component ---
+// --- Hooks ---
+
+function useUserAudioPlayback(phase: OralProductionPhase) {
+  const urlRef = useRef<string | null>(null)
+
+  useEffect(() => {
+    if (phase.kind === "feedback" && Option.isSome(phase.recordingBlob)) {
+      urlRef.current = URL.createObjectURL(phase.recordingBlob.value)
+    }
+    return () => {
+      if (urlRef.current) {
+        URL.revokeObjectURL(urlRef.current)
+        urlRef.current = null
+      }
+    }
+  }, [phase])
+
+  const playUserAudio = useCallback(() => {
+    if (urlRef.current) {
+      const audio = new Audio(urlRef.current)
+      audio.play()
+    }
+  }, [phase])
+
+  return playUserAudio
+}
+
+// --- Helpers ---
 
 const noopSpeechStart = () => {}
 const logMicrophoneError = (error: unknown) => {
@@ -145,6 +252,18 @@ function outcomeFromAnswerResult(answerResult: Option.Option<AnswerResult>): Exe
   return "failure"
 }
 
+function feedbackKind(phase: OralProductionPhase): AnswerResult["kind"] | "skip" | null {
+  if (phase.kind !== "feedback") {
+    return null
+  }
+  if (Option.isNone(phase.answerResult)) {
+    return "skip"
+  }
+  return phase.answerResult.value.kind
+}
+
+// --- Main component ---
+
 export function OralProduction(props: OralProductionProps) {
   const { config, onResult, initialPhase } = props
   const [phase, setPhase] = useState<OralProductionPhase>(initialPhase ?? { kind: "listening" })
@@ -155,6 +274,11 @@ export function OralProduction(props: OralProductionProps) {
   const validate = useAtomSet(validateAtom, { mode: "promiseExit" })
 
   useAutoplayFeedback(phase.kind === "feedback", config.expected, speak)
+  const playUserAudio = useUserAudioPlayback(phase)
+
+  const handlePlayModel = useCallback(() => {
+    speak(config.expected)
+  }, [config.expected])
 
   const emitFeedback = useCallback(
     (answerResult: Option.Option<AnswerResult>, blob: Blob) => {
@@ -196,20 +320,65 @@ export function OralProduction(props: OralProductionProps) {
     [config.expected, emitFeedback],
   )
 
+  const handleNext = useCallback(() => {
+    setPhase({ kind: "listening" })
+  }, [])
+
+  const kind = feedbackKind(phase)
+
   return (
     <Container>
       <ExerciseZone>
-        <MeaningText>{config.meaning}</MeaningText>
+        {(kind === "correct" || kind === "accepted") && (
+          <SuccessOverlay>
+            <Circle width="100%" height="100%" strokeWidth={0.3} />
+          </SuccessOverlay>
+        )}
+
+        <StimulusGroup>
+          <MeaningText>{config.meaning}</MeaningText>
+          {phase.kind === "feedback" && (
+            <FeedbackOverlay>
+              {(kind === "correct" || kind === "accepted") &&
+                (isSentence(config.expected) ? (
+                  <RewardSentence>{config.expected}</RewardSentence>
+                ) : (
+                  <RewardWord>{config.expected}</RewardWord>
+                ))}
+              {kind === "incorrect" &&
+                Option.isSome(phase.answerResult) &&
+                phase.answerResult.value.kind === "incorrect" && (
+                  <TranscriptText>You said: {phase.answerResult.value.userAnswer}</TranscriptText>
+                )}
+            </FeedbackOverlay>
+          )}
+        </StimulusGroup>
+
+        {kind === "accepted" &&
+          phase.kind === "feedback" &&
+          Option.isSome(phase.answerResult) &&
+          phase.answerResult.value.kind === "accepted" && (
+            <AcceptedTranscript>✓ {phase.answerResult.value.userAnswer}</AcceptedTranscript>
+          )}
       </ExerciseZone>
 
-      <RecorderWrapper>
-        <VoiceRecorder
-          state={phase.kind === "listening" ? "listening" : "paused"}
-          onSpeechStart={noopSpeechStart}
-          onSpeechEnd={handleSpeechEnd}
-          onError={logMicrophoneError}
+      {kind !== "incorrect" && kind !== "skip" && (
+        <RecorderWrapper>
+          <VoiceRecorder
+            state={phase.kind === "listening" ? "listening" : "paused"}
+            onSpeechStart={noopSpeechStart}
+            onSpeechEnd={handleSpeechEnd}
+            onError={logMicrophoneError}
+          />
+        </RecorderWrapper>
+      )}
+      {(kind === "incorrect" || kind === "skip") && (
+        <MismatchActionBar
+          onPlayModel={handlePlayModel}
+          onPlayUser={kind === "incorrect" ? playUserAudio : undefined}
+          onNext={handleNext}
         />
-      </RecorderWrapper>
+      )}
     </Container>
   )
 }

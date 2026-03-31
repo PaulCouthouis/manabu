@@ -32,9 +32,16 @@ const ActionBarIcon = styled("button", {
   },
 })
 
+const Spacer = styled("div", {
+  base: {
+    width: "12",
+    height: "12",
+  },
+})
+
 export function MismatchActionBar(props: {
   readonly onPlayModel: () => void
-  readonly onPlayUser: () => void
+  readonly onPlayUser?: (() => void) | undefined
   readonly onNext: () => void
 }) {
   return (
@@ -46,9 +53,13 @@ export function MismatchActionBar(props: {
         Next
         <ArrowRight size={24} />
       </Button>
-      <ActionBarIcon onClick={props.onPlayUser} aria-label="Replay your recording">
-        <AudioLines size={32} />
-      </ActionBarIcon>
+      {props.onPlayUser ? (
+        <ActionBarIcon onClick={props.onPlayUser} aria-label="Replay your recording">
+          <AudioLines size={32} />
+        </ActionBarIcon>
+      ) : (
+        <Spacer />
+      )}
     </ActionBar>
   )
 }

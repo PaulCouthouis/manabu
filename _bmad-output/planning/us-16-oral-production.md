@@ -259,23 +259,23 @@ Blob audio
 
 ### Étape 5 — Feedback variants + stories
 
-- [ ] Implémenter feedback exact match : texte japonais (récompense) + autoplay modèle → AC11
-- [ ] Implémenter feedback accepted : texte attendu + transcript + autoplay modèle → AC12
-- [ ] Implémenter feedback incorrect : transcript seul, PAS de texte japonais + autoplay + `MismatchActionBar` (🔊 modèle / Next / 🎙️ user) → AC13
-- [ ] Implémenter feedback skip : pas de texte japonais + autoplay + 🔊 replay modèle + Next → AC14
-- [ ] Réutiliser `useAutoplayFeedback` pour le déclenchement unique
-- [ ] Gérer SpeechResult `noise` → ignoré, micro reste chaud → AC15
-- [ ] Story `Word_ExactMatch` : fake SR retourne `match` → feedback succès avec 猫 affiché → AC11
-- [ ] Story `Sentence_Accepted` : fake SR retourne `mismatch`, fake validation retourne `accepted` → feedback avec les deux textes → AC12
-- [ ] Story `Word_Incorrect` : fake SR retourne `mismatch`, fake validation retourne `incorrect` → feedback sans texte japonais + MismatchActionBar → AC13
-- [ ] Story `Word_Skip` : fake SR retourne `skip` → feedback skip avec replay → AC14
-- [ ] Story `Word_Noise` : fake SR retourne `noise` → micro reste chaud, pas de transition → AC15
+- [x] Implémenter feedback exact match : texte japonais (récompense) + autoplay modèle → AC11
+- [x] Implémenter feedback accepted : texte attendu + transcript + autoplay modèle → AC12
+- [x] Implémenter feedback incorrect : transcript seul, PAS de texte japonais + autoplay + `MismatchActionBar` (🔊 modèle / Next / 🎙️ user) → AC13
+- [x] Implémenter feedback skip : pas de texte japonais + autoplay + 🔊 replay modèle + Next → AC14
+- [x] Réutiliser `useAutoplayFeedback` pour le déclenchement unique
+- [x] Gérer SpeechResult `noise` → ignoré, micro reste chaud → AC15
+- [x] Story `Word_ExactMatch` : fake SR retourne `match` → feedback succès avec 猫 affiché → AC11
+- [x] Story `Sentence_Accepted` : fake SR retourne `mismatch`, fake validation retourne `accepted` → feedback avec les deux textes → AC12
+- [x] Story `Word_Incorrect` : fake SR retourne `mismatch`, fake validation retourne `incorrect` → feedback sans texte japonais + MismatchActionBar → AC13
+- [x] Story `Word_Skip` : fake SR retourne `skip` → feedback skip avec replay → AC14
+- [x] Story `Word_Noise` : fake SR retourne `noise` → micro reste chaud, pas de transition → AC15
 
 ### Étape 6 — Vérifications finales
 
-- [ ] `pnpm build` sans erreur → AC16
-- [ ] `pnpm lint` sans erreur → AC17
-- [ ] Tests existants passent (non-régression) → AC18
+- [x] `pnpm build` sans erreur → AC16
+- [x] `pnpm lint` sans erreur → AC17
+- [x] Tests existants passent (non-régression) → AC18
 
 ## Hors scope
 
