@@ -242,14 +242,14 @@ Blob audio
 
 ### Étape 3 — Composant OralProduction core + stories
 
-- [ ] Créer `packages/exercises/src/components/oral-production/oral-production.tsx`
-- [ ] Implémenter le layout : sens en anglais en haut, VoiceRecorder en bas → AC6
-- [ ] Implémenter le flux : listening → processing → feedback → AC7
-- [ ] Wiring : blob → `SpeechRecognitionApi.recognize` → SpeechResult → mapping vers AnswerResult → AC7, AC8
-- [ ] Cascade de validation : si `mismatch` → `AnswerValidationApi.validate(transcript, expected)` → AC8
-- [ ] Appel `onResult` avec le résultat → AC8
-- [ ] Story `Word_Listening` : sens "cat" affiché, micro chaud → AC6
-- [ ] Story `Sentence_Listening` : sens "I like cats" affiché, micro chaud → AC6
+- [x] Créer `packages/exercises/src/components/oral-production/oral-production.tsx`
+- [x] Implémenter le layout : sens en anglais en haut, VoiceRecorder en bas → AC6
+- [x] Implémenter le flux : listening → processing → feedback → AC7
+- [x] Wiring : blob → `SpeechRecognitionApi.recognize` → SpeechResult → mapping vers AnswerResult → AC7, AC8
+- [x] Cascade de validation : si `mismatch` → `AnswerValidationApi.validate(transcript, expected)` → AC8
+- [x] Appel `onResult` avec le résultat → AC8
+- [x] Story `Word_Listening` : sens "cat" affiché, micro chaud → AC6
+- [x] Story `Sentence_Listening` : sens "I like cats" affiché, micro chaud → AC6
 
 ### Étape 4 — Extraction MismatchActionBar
 
