@@ -13,7 +13,6 @@ export interface SpeechRepeatConfig {
   readonly stimulus: StimulusKind
   readonly expected: string
   readonly reward: RewardKind
-  readonly modelAudioSrc: string
 }
 
 export type ExerciseOutcome = "success" | "failure" | "skip"

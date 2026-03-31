@@ -73,56 +73,48 @@ const skill1Config: SpeechRepeatConfig = {
   stimulus: { mode: "audio" },
   expected: "か",
   reward: "kana-unlocked",
-  modelAudioSrc: "",
 }
 
 const skill2Config: SpeechRepeatConfig = {
   stimulus: { mode: "visual-kana", kana: "き" },
   expected: "き",
   reward: "none",
-  modelAudioSrc: "",
 }
 
 const skill7SentenceConfig: SpeechRepeatConfig = {
   stimulus: { mode: "visual-text", text: "猫が好きです" },
   expected: "ねこがすきです",
   reward: "none",
-  modelAudioSrc: "",
 }
 
 const skill3ScaffoldingConfig: SpeechRepeatConfig = {
   stimulus: { mode: "visual-kana-scaffolding", hint: "し", kana: "シ" },
   expected: "し",
   reward: "none",
-  modelAudioSrc: "",
 }
 
 const skill3NoScaffoldingConfig: SpeechRepeatConfig = {
   stimulus: { mode: "visual-kana", kana: "シ" },
   expected: "し",
   reward: "none",
-  modelAudioSrc: "",
 }
 
 const skill4Config: SpeechRepeatConfig = {
   stimulus: { mode: "audio" },
   expected: "ねこ",
   reward: "word-unlocked",
-  modelAudioSrc: "",
 }
 
 const skill7WordFuriganaConfig: SpeechRepeatConfig = {
   stimulus: { mode: "visual-text-furigana", text: "猫", reading: "ねこ" },
   expected: "ねこ",
   reward: "none",
-  modelAudioSrc: "",
 }
 
 const skill7WordNoFuriganaConfig: SpeechRepeatConfig = {
   stimulus: { mode: "visual-text", text: "猫" },
   expected: "ねこ",
   reward: "none",
-  modelAudioSrc: "",
 }
 
 // --- Fake results ---

@@ -31,8 +31,7 @@ Composant d'exercice sens → produire le japonais à voix haute (Skill 9). Le s
 ```ts
 export interface OralProductionConfig {
   readonly meaning: string          // sens en anglais (stimulus)
-  readonly expected: string         // texte japonais attendu (réponse + TTS)
-  readonly modelAudioSrc: string    // audio modèle du japonais attendu
+  readonly expected: string         // texte japonais attendu (réponse + TTS via TextToSpeech.speak)
 }
 ```
 
@@ -69,7 +68,7 @@ export interface OralProductionProps {
 }
 ```
 
-- `config` — configuration de l'exercice (sens, réponse attendue, audio modèle)
+- `config` — configuration de l'exercice (sens, réponse attendue). Le TTS utilise `expected` directement via `TextToSpeech.speak`.
 - `onResult` — appelé quand le verdict est rendu. Le parent (DrillQueue) gère l'advance.
 
 ## Design
@@ -238,8 +237,8 @@ Blob audio
 
 ### Étape 2 — Types et config OralProduction
 
-- [ ] Créer `packages/exercises/src/logic/oral-production-config.ts` avec `OralProductionConfig`, `OralProductionResult` → AC4, AC5
-- [ ] Exporter depuis `packages/exercises/src/index.ts`
+- [x] Créer `packages/exercises/src/logic/oral-production-config.ts` avec `OralProductionConfig`, `OralProductionResult` → AC4, AC5
+- [x] Exporter depuis `packages/exercises/src/index.ts`
 
 ### Étape 3 — Composant OralProduction core + stories
 
