@@ -253,9 +253,9 @@ Blob audio
 
 ### Étape 4 — Extraction MismatchActionBar
 
-- [ ] Extraire `MismatchActionBar` de `speech-repeat.tsx` vers `packages/exercises/src/components/shared/mismatch-action-bar.tsx` → AC9
-- [ ] Mettre à jour l'import dans `speech-repeat.tsx` → AC10
-- [ ] Vérifier que les stories SpeechRepeat existantes fonctionnent (non-régression) → AC10
+- [x] Extraire `MismatchActionBar` de `speech-repeat.tsx` vers `packages/exercises/src/components/shared/mismatch-action-bar.tsx` → AC9
+- [x] Mettre à jour l'import dans `speech-repeat.tsx` → AC10
+- [x] Vérifier que les stories SpeechRepeat existantes fonctionnent (non-régression) → AC10
 
 ### Étape 5 — Feedback variants + stories
 

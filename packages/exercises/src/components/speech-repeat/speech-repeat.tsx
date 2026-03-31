@@ -1,9 +1,9 @@
 import { Atom, useAtomSet } from "@effect-atom/atom-react"
 import { Effect, Layer } from "effect"
-import { ArrowRight, AudioLines, Circle, Volume2 } from "lucide-react"
+import { Circle, Volume2 } from "lucide-react"
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react"
 import { styled } from "styled-system/jsx"
-import { Button } from "@manabu/ui"
+import { MismatchActionBar } from "~/components/shared/mismatch-action-bar.js"
 import { BrowserBlobUrlApiLive } from "~/logic/audio/blob-url.js"
 import { BrowserSpeechSynthesisApiLive, TextToSpeech } from "~/logic/audio/text-to-speech.js"
 import type {
@@ -140,36 +140,6 @@ const TranscriptText = styled("span", {
   },
 })
 
-const ActionBar = styled("div", {
-  base: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    width: "100%",
-    px: "4",
-    py: "3",
-    borderTopWidth: "1px",
-    borderColor: "border.subtle",
-    bg: "bg.subtle",
-  },
-})
-
-const ActionBarIcon = styled("button", {
-  base: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "12",
-    height: "12",
-    borderRadius: "full",
-    cursor: "pointer",
-    color: "fg.muted",
-    bg: "transparent",
-    _hover: { bg: "bg.muted", color: "fg.default" },
-  },
-})
-
 const SuccessOverlay = styled("div", {
   base: {
     position: "absolute",
@@ -264,27 +234,6 @@ function FeedbackMatch(props: {
     <SuccessOverlay>
       <Circle width="100%" height="100%" strokeWidth={0.3} />
     </SuccessOverlay>
-  )
-}
-
-function MismatchActionBar(props: {
-  readonly onPlayModel: () => void
-  readonly onPlayUser: () => void
-  readonly onNext: () => void
-}) {
-  return (
-    <ActionBar>
-      <ActionBarIcon onClick={props.onPlayModel} aria-label="Replay model">
-        <Volume2 size={32} />
-      </ActionBarIcon>
-      <Button colorPalette="accent" size="xl" onClick={props.onNext}>
-        Next
-        <ArrowRight size={24} />
-      </Button>
-      <ActionBarIcon onClick={props.onPlayUser} aria-label="Replay your recording">
-        <AudioLines size={32} />
-      </ActionBarIcon>
-    </ActionBar>
   )
 }
 
