@@ -63,7 +63,7 @@ function MeaningExerciseStory(props: {
       <VoiceRecorderProvider layer={BrowserVoiceRecorderLayer}>
         <MultimodalInputProvider layer={fakeSpeechToTextLayer}>
           <MeaningExerciseProvider layer={props.layer ?? meaningExerciseLayer}>
-            <MeaningExercise config={props.config} onResult={fn()} />
+            <MeaningExercise config={props.config} onResult={fn()} onSkip={fn()} />
           </MeaningExerciseProvider>
         </MultimodalInputProvider>
       </VoiceRecorderProvider>

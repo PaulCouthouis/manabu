@@ -1,13 +1,14 @@
 import { Atom, useAtom, useAtomSet } from "@effect-atom/atom-react"
 import { Effect, Layer } from "effect"
 import { AudioLines, Keyboard } from "lucide-react"
-import React, { useCallback, useContext, useMemo, useState } from "react"
+import React, { useCallback, useContext, useMemo } from "react"
 import { styled } from "styled-system/jsx"
-import { IconButton, Input } from "@manabu/ui"
+import { IconButton } from "@manabu/ui"
 import {
   VoiceRecorder,
   type VoiceRecorderState,
 } from "~/components/voice-recorder/voice-recorder.js"
+import { TextSubmitInput } from "~/components/shared/text-submit-input.js"
 import { type InputMode, inputModeAtom } from "~/logic/input-mode.js"
 import { SpeechToTextApi } from "~/logic/vocal/speech-to-text.js"
 import type { MicrophoneError } from "~/logic/vocal/microphone.js"
@@ -85,21 +86,9 @@ function isSkipTranscript(transcript: string): boolean {
 
 export function MultimodalInput(props: MultimodalInputProps) {
   const [mode, setMode] = useAtom(inputModeAtom)
-  const [text, setText] = useState("")
 
   const { transcribeAtom } = useAtoms()
   const transcribe = useAtomSet(transcribeAtom, { mode: "promiseExit" })
-
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key !== "Enter" || text.trim() === "") {
-        return
-      }
-      props.onAnswer(text.trim())
-      setText("")
-    },
-    [text, props.onAnswer],
-  )
 
   const handleSpeechEnd = useCallback(
     async (blob: Blob) => {
@@ -133,16 +122,10 @@ export function MultimodalInput(props: MultimodalInputProps) {
           />
         </styled.div>
       ) : (
-        <Input
-          flex="1"
-          height="48px"
-          placeholder={props.placeholder ?? "Type your answer..."}
-          enterKeyHint="send"
-          value={text}
-          onChange={(e) => {
-            setText(e.target.value)
-          }}
-          onKeyDown={handleKeyDown}
+        <TextSubmitInput
+          onSubmit={props.onAnswer}
+          onSkip={props.onSkip}
+          placeholder={props.placeholder}
         />
       )}
       <IconButton

@@ -22,6 +22,7 @@ export type MeaningExerciseLayer = Layer.Layer<AnswerValidationApi | TextToSpeec
 export interface MeaningExerciseProps {
   readonly config: MeaningExerciseConfig
   readonly onResult: (result: AnswerResult) => void
+  readonly onSkip: () => void
   readonly initialPhase?: MeaningExercisePhase
 }
 
@@ -262,6 +263,7 @@ export function MeaningExercise(props: MeaningExerciseProps) {
             <MultimodalInput
               voiceRecorderState="listening"
               onAnswer={handleSelect}
+              onSkip={props.onSkip}
               onSpeechStart={() => {}}
               onError={(error) => {
                 console.error("[MeaningExercise] microphone error", error)

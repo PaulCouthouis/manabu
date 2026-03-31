@@ -253,14 +253,13 @@ Skip (bouton)
 
 ### Étape 2 — Refactoring MultimodalInput
 
-- [ ] Remplacer l'`Input` brut dans `MultimodalInput` par `TextSubmitInput` en mode keyboard → AC7
-- [ ] Adapter les props : `onSubmit` → `onAnswer`, pas de `onSkip` (le skip vocal reste dans le mode voice) → AC7
-- [ ] Vérifier que les stories MeaningExercise existantes fonctionnent → AC8
+- [x] Remplacer l'`Input` brut dans `MultimodalInput` par `TextSubmitInput` en mode keyboard → AC7
+- [x] Adapter les props : `onSubmit` → `onAnswer`, pas de `onSkip` (le skip vocal reste dans le mode voice) → AC7
+- [x] Vérifier que les stories MeaningExercise existantes fonctionnent → AC8
 
 ### Étape 3 — Types WrittenProduction
 
 - [ ] Créer `packages/exercises/src/logic/written-production-config.ts` avec `WrittenProductionConfig`, `WrittenProductionResult` → AC9, AC10
-- [ ] Exporter depuis `packages/exercises/src/index.ts`
 
 ### Étape 4 — Composant WrittenProduction core + stories
 
