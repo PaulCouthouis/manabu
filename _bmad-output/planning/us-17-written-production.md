@@ -243,13 +243,13 @@ Skip (bouton)
 
 ### Étape 1 — Extraction TextSubmitInput (composant partagé)
 
-- [ ] Créer `packages/exercises/src/components/shared/text-submit-input.tsx` avec props `onSubmit`, `onSkip?`, `placeholder?`, `disabled?` → AC1
-- [ ] Implémenter submit via Enter (trim + non-vide) → AC2
-- [ ] Implémenter submit via bouton (trim + non-vide) → AC3
-- [ ] Bouton Submit désactivé si input vide → AC4
-- [ ] Bouton Skip conditionnel (`onSkip` défini) → AC5
-- [ ] État `disabled` grise input + boutons → AC6
-- [ ] Écrire les tests `TextSubmitInput` (submit Enter, submit bouton, vide bloqué, skip, disabled) → AC2, AC3, AC4, AC5, AC6
+- [x] Créer `packages/exercises/src/components/shared/text-submit-input.tsx` avec props `onSubmit`, `onSkip?`, `placeholder?`, `disabled?` → AC1
+- [x] Implémenter submit via Enter (trim + non-vide) → AC2
+- [x] Implémenter submit via bouton (trim + non-vide) → AC3
+- [x] Bouton Submit désactivé si input vide → AC4
+- [x] Bouton Skip conditionnel (`onSkip` défini) → AC5
+- [x] État `disabled` grise input + boutons → AC6
+- [x] Écrire les tests `TextSubmitInput` (submit Enter, submit bouton, vide bloqué, skip, disabled) → AC2, AC3, AC4, AC5, AC6
 
 ### Étape 2 — Refactoring MultimodalInput
 
