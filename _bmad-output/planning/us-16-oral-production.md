@@ -231,10 +231,10 @@ Blob audio
 
 ### Étape 1 — Enrichissement AnswerResult (refactoring transversal)
 
-- [ ] Ajouter le cas `accepted` dans `AnswerResult` (`packages/exercises/src/logic/answer-validation.ts`) → AC1
-- [ ] Mettre à jour le fake `fakeAnswerValidation` pour supporter le cas `accepted` (pas de changement de comportement, le fake continue à faire du exact match) → AC1
-- [ ] Vérifier que MeaningExercise compile avec le nouveau type → AC2
-- [ ] Vérifier que les stories MeaningExercise existantes fonctionnent → AC3
+- [x] Ajouter le cas `accepted` dans `AnswerResult` (`packages/exercises/src/logic/answer-validation.ts`) → AC1
+- [x] Mettre à jour le fake `fakeAnswerValidation` pour supporter le cas `accepted` (pas de changement de comportement, le fake continue à faire du exact match) → AC1
+- [x] Vérifier que MeaningExercise compile avec le nouveau type → AC2
+- [x] Vérifier que les stories MeaningExercise existantes fonctionnent → AC3
 
 ### Étape 2 — Types et config OralProduction
 
