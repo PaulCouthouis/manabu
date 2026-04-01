@@ -246,8 +246,8 @@ Undo (multi-blank uniquement)
 
 ### Étape 1 — Types FillInTheBlank
 
-- [ ] Créer `packages/exercises/src/logic/fill-in-the-blank-config.ts` avec `SentenceSegment`, `BlankDefinition`, `FillInTheBlankConfig` → AC1, AC2
-- [ ] Créer `BlankResult`, `FillInTheBlankResult` dans le même fichier → AC3, AC4
+- [x] Créer `packages/exercises/src/logic/fill-in-the-blank-config.ts` avec `SentenceSegment`, `BlankDefinition`, `FillInTheBlankConfig` → AC1, AC2
+- [x] Créer `BlankResult`, `FillInTheBlankResult` dans le même fichier → AC3, AC4
 
 ### Étape 2 — Logique de validation (TDD)
 
