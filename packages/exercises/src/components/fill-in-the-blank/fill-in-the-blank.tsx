@@ -1,7 +1,8 @@
 import { Array, pipe } from "effect"
+import { Undo2 } from "lucide-react"
 import { useState } from "react"
 import { styled } from "styled-system/jsx"
-import { Button } from "@manabu/ui"
+import { Button, IconButton } from "@manabu/ui"
 import { Container, ExerciseZone } from "~/components/shared/exercise-layout.js"
 import type {
   FillInTheBlankConfig,
@@ -85,6 +86,14 @@ const ChoicesGrid = styled("div", {
   },
 })
 
+const UndoBar = styled("div", {
+  base: {
+    display: "flex",
+    justifyContent: "center",
+    pb: "4",
+  },
+})
+
 // --- Helpers ---
 
 function blankState(blankIndex: number, filledCount: number): "active" | "filled" | "pending" {
@@ -132,7 +141,16 @@ export function FillInTheBlank(props: FillInTheBlankProps) {
     }
   }
 
+  const handleUndo = () => {
+    if (phase.kind !== "filling" || phase.filledBlanks.length === 0) {
+      return
+    }
+    setPhase({ kind: "filling", filledBlanks: Array.dropRight(phase.filledBlanks, 1) })
+  }
+
   const filledBlanks = phase.kind === "filling" ? phase.filledBlanks : []
+  const isMultiBlank = config.blanks.length > 1
+  const canUndo = phase.kind === "filling" && phase.filledBlanks.length > 0
 
   return (
     <Container>
@@ -146,6 +164,20 @@ export function FillInTheBlank(props: FillInTheBlankProps) {
           )}
         </SentenceArea>
       </ExerciseZone>
+
+      {isMultiBlank && phase.kind === "filling" && (
+        <UndoBar>
+          <IconButton
+            variant="ghost"
+            size="md"
+            aria-label="Undo"
+            onClick={handleUndo}
+            disabled={!canUndo}
+          >
+            <Undo2 />
+          </IconButton>
+        </UndoBar>
+      )}
 
       <ChoicesGrid>
         {pipe(

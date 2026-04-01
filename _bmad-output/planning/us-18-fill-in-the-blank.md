@@ -268,14 +268,14 @@ Undo (multi-blank uniquement)
 
 ### Étape 4 — Multi-blank + Undo + stories (Skill 11)
 
-- [ ] Implémenter le flux multi-trou : focus auto-advance au trou suivant → AC14
-- [ ] Implémenter validation auto quand `filledBlanks.length === blanks.length` → AC15
-- [ ] Implémenter bouton Undo (visible si multi-blank, disabled si vide) → AC16
-- [ ] Implémenter Undo : retire le dernier, recule le focus → AC17
-- [ ] Vérifier que les choix sont réutilisables (même particule dans plusieurs trous) → AC18
-- [ ] Story `Skill11_Particles_SingleBlank` : 1 trou, grille 12 particules → AC8
-- [ ] Story `Skill11_Particles_MultiBlank` : 2 trous, grille 12 particules, Undo visible → AC14, AC16
-- [ ] Story `Skill11_Particles_ThreeBlanks` : 3 trous, grille 12 particules → AC14
+- [x] Implémenter le flux multi-trou : focus auto-advance au trou suivant → AC14
+- [x] Implémenter validation auto quand `filledBlanks.length === blanks.length` → AC15
+- [x] Implémenter bouton Undo (visible si multi-blank, disabled si vide) → AC16
+- [x] Implémenter Undo : retire le dernier, recule le focus → AC17
+- [x] Vérifier que les choix sont réutilisables (même particule dans plusieurs trous) → AC18
+- [x] Story `Skill11_Particles_SingleBlank` : 1 trou, grille 12 particules → AC8
+- [x] Story `Skill11_Particles_MultiBlank` : 2 trous, grille 12 particules, Undo visible → AC14, AC16
+- [x] Story `Skill11_Particles_ThreeBlanks` : 3 trous, grille 12 particules → AC14
 
 ### Étape 5 — Feedback variants + TTS + stories
 
