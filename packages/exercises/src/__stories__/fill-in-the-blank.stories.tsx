@@ -1,10 +1,32 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { fn } from "storybook/test"
+import { RegistryProvider } from "@effect-atom/atom-react"
+import { Layer } from "effect"
 import type { FillInTheBlankConfig } from "~/logic/fill-in-the-blank-config.js"
+import { BrowserSpeechSynthesisApiLive, TextToSpeech } from "~/logic/audio/text-to-speech.js"
 import {
   FillInTheBlank,
+  FillInTheBlankProvider,
+  type FillInTheBlankPhase,
   type FillInTheBlankProps,
 } from "~/components/fill-in-the-blank/fill-in-the-blank.js"
+
+// --- Story wrapper ---
+
+const ttsLayer = Layer.provide(TextToSpeech.Default, BrowserSpeechSynthesisApiLive)
+
+function FillInTheBlankStory(props: {
+  readonly config: FillInTheBlankConfig
+  readonly initialPhase?: FillInTheBlankPhase
+}) {
+  return (
+    <RegistryProvider>
+      <FillInTheBlankProvider layer={ttsLayer}>
+        <FillInTheBlank config={props.config} onResult={fn()} initialPhase={props.initialPhase} />
+      </FillInTheBlankProvider>
+    </RegistryProvider>
+  )
+}
 
 // --- Meta ---
 
@@ -107,46 +129,130 @@ const particlesThreeConfig: FillInTheBlankConfig = {
   fullSentence: "友達が私に本をくれた。",
 }
 
-// --- Stories ---
+// --- Answering Stories ---
 
 export const Skill11_Particles_Answering: Story = {
   name: "Skill 11 — Particles (私＿東京に行きます)",
   render: () => {
-    return <FillInTheBlank config={particlesConfig} onResult={fn()} />
+    return <FillInTheBlankStory config={particlesConfig} />
   },
 }
 
 export const Skill11_Particles_MultiBlank: Story = {
   name: "Skill 11 — Particles 2 blanks (私＿東京＿行きます)",
   render: () => {
-    return <FillInTheBlank config={particlesMultiConfig} onResult={fn()} />
+    return <FillInTheBlankStory config={particlesMultiConfig} />
   },
 }
 
 export const Skill11_Particles_ThreeBlanks: Story = {
   name: "Skill 11 — Particles 3 blanks (友達＿私＿本＿くれた)",
   render: () => {
-    return <FillInTheBlank config={particlesThreeConfig} onResult={fn()} />
+    return <FillInTheBlankStory config={particlesThreeConfig} />
   },
 }
 
 export const Skill12_Conjugation_Answering: Story = {
   name: "Skill 12 — Conjugation (彼女は毎日＿＿＿います)",
   render: () => {
-    return <FillInTheBlank config={conjugationConfig} onResult={fn()} />
+    return <FillInTheBlankStory config={conjugationConfig} />
   },
 }
 
 export const Skill13_Keigo_Answering: Story = {
   name: "Skill 13 — Keigo (先生が＿＿＿)",
   render: () => {
-    return <FillInTheBlank config={keigoConfig} onResult={fn()} />
+    return <FillInTheBlankStory config={keigoConfig} />
   },
 }
 
 export const Skill15_Counter_Answering: Story = {
   name: "Skill 15 — Counter (猫が＿＿＿います)",
   render: () => {
-    return <FillInTheBlank config={counterConfig} onResult={fn()} />
+    return <FillInTheBlankStory config={counterConfig} />
+  },
+}
+
+// --- Feedback Stories ---
+
+export const Skill11_Correct: Story = {
+  name: "Skill 11 — Correct (私は東京に行きます ✅)",
+  render: () => {
+    return (
+      <FillInTheBlankStory
+        config={particlesMultiConfig}
+        initialPhase={{
+          kind: "feedback",
+          result: {
+            outcome: "success",
+            blankResults: [
+              { index: 0, userChoice: "は", correctAnswer: "は", isCorrect: true },
+              { index: 1, userChoice: "に", correctAnswer: "に", isCorrect: true },
+            ],
+          },
+        }}
+      />
+    )
+  },
+}
+
+export const Skill11_Incorrect: Story = {
+  name: "Skill 11 — Incorrect (で→に ❌)",
+  render: () => {
+    return (
+      <FillInTheBlankStory
+        config={particlesMultiConfig}
+        initialPhase={{
+          kind: "feedback",
+          result: {
+            outcome: "failure",
+            blankResults: [
+              { index: 0, userChoice: "は", correctAnswer: "は", isCorrect: true },
+              { index: 1, userChoice: "で", correctAnswer: "に", isCorrect: false },
+            ],
+          },
+        }}
+      />
+    )
+  },
+}
+
+export const Skill12_Correct: Story = {
+  name: "Skill 12 — Correct (走って ✅)",
+  render: () => {
+    return (
+      <FillInTheBlankStory
+        config={conjugationConfig}
+        initialPhase={{
+          kind: "feedback",
+          result: {
+            outcome: "success",
+            blankResults: [
+              { index: 0, userChoice: "走って", correctAnswer: "走って", isCorrect: true },
+            ],
+          },
+        }}
+      />
+    )
+  },
+}
+
+export const Skill12_Incorrect: Story = {
+  name: "Skill 12 — Incorrect (食べて→走って ❌)",
+  render: () => {
+    return (
+      <FillInTheBlankStory
+        config={conjugationConfig}
+        initialPhase={{
+          kind: "feedback",
+          result: {
+            outcome: "failure",
+            blankResults: [
+              { index: 0, userChoice: "食べて", correctAnswer: "走って", isCorrect: false },
+            ],
+          },
+        }}
+      />
+    )
   },
 }

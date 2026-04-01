@@ -279,22 +279,22 @@ Undo (multi-blank uniquement)
 
 ### Étape 5 — Feedback variants + TTS + stories
 
-- [ ] Créer `FillInTheBlankProvider` avec `AtomRuntime` injectant `TextToSpeech` layer
-- [ ] Implémenter feedback succès : SuccessOverlay + phrase complète trous en vert → AC19
-- [ ] Implémenter TTS autoplay `speak(fullSentence)` en feedback (succès et échec) → AC20, AC23
-- [ ] Implémenter feedback échec : trous corrects vert, incorrects rouge + correction → AC21, AC22
-- [ ] Implémenter bouton Next en feedback échec → AC24
-- [ ] Écrire les tests du composant FillInTheBlank (tap → validation → result correct/incorrect) → AC10, AC11
-- [ ] Story `Skill11_Correct` : feedback succès, phrase complète, trous verts → AC19, AC20
-- [ ] Story `Skill11_Incorrect` : feedback échec, correction par trou → AC21, AC22, AC24
-- [ ] Story `Skill12_Correct` : feedback succès single-blank → AC19
-- [ ] Story `Skill12_Incorrect` : feedback échec single-blank → AC21
+- [x] Créer `FillInTheBlankProvider` avec `AtomRuntime` injectant `TextToSpeech` layer
+- [x] Implémenter feedback succès : SuccessOverlay + phrase complète trous en vert → AC19
+- [x] Implémenter TTS autoplay `speak(fullSentence)` en feedback (succès et échec) → AC20, AC23
+- [x] Implémenter feedback échec : trous corrects vert, incorrects rouge + correction → AC21, AC22
+- [x] Implémenter bouton Next en feedback échec → AC24
+- [x] Écrire les tests du composant FillInTheBlank (tap → validation → result correct/incorrect) → AC10, AC11
+- [x] Story `Skill11_Correct` : feedback succès, phrase complète, trous verts → AC19, AC20
+- [x] Story `Skill11_Incorrect` : feedback échec, correction par trou → AC21, AC22, AC24
+- [x] Story `Skill12_Correct` : feedback succès single-blank → AC19
+- [x] Story `Skill12_Incorrect` : feedback échec single-blank → AC21
 
 ### Étape 6 — Vérifications finales
 
-- [ ] `pnpm build` sans erreur → AC25
-- [ ] `pnpm lint` sans erreur → AC26
-- [ ] Tests existants passent (non-régression) → AC27
+- [x] `pnpm build` sans erreur → AC25
+- [x] `pnpm lint` sans erreur → AC26
+- [x] Tests existants passent (non-régression) → AC27
 
 ## Hors scope
 
