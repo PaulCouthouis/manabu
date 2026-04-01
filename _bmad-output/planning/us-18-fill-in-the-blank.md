@@ -257,14 +257,14 @@ Undo (multi-blank uniquement)
 
 ### Étape 3 — Composant single-blank + stories (Skills 12-15)
 
-- [ ] Créer `packages/exercises/src/components/fill-in-the-blank/fill-in-the-blank.tsx`
-- [ ] Implémenter le rendu des segments : `<span>` pour texte, `<Blank>` stylé pour les trous → AC8
-- [ ] Style du trou actif (bordure accent) vs trou rempli (badge choix) → AC9
-- [ ] Implémenter tap choix → remplissage → validation auto (single-blank) → AC10, AC11
-- [ ] Vérifier : pas de bouton Skip, pas de bouton Undo en single-blank → AC12, AC13
-- [ ] Story `Skill12_Conjugation_Answering` : phrase à trou + 4-6 boutons → AC8, AC9
-- [ ] Story `Skill13_Keigo_Answering` : idem avec formes keigo → AC8
-- [ ] Story `Skill15_Counter_Answering` : idem avec compteurs → AC8
+- [x] Créer `packages/exercises/src/components/fill-in-the-blank/fill-in-the-blank.tsx`
+- [x] Implémenter le rendu des segments : `<span>` pour texte, `<Blank>` stylé pour les trous → AC8
+- [x] Style du trou actif (bordure accent) vs trou rempli (badge choix) → AC9
+- [x] Implémenter tap choix → remplissage → validation auto (single-blank) → AC10, AC11
+- [x] Vérifier : pas de bouton Skip, pas de bouton Undo en single-blank → AC12, AC13
+- [x] Story `Skill12_Conjugation_Answering` : phrase à trou + 4-6 boutons → AC8, AC9
+- [x] Story `Skill13_Keigo_Answering` : idem avec formes keigo → AC8
+- [x] Story `Skill15_Counter_Answering` : idem avec compteurs → AC8
 
 ### Étape 4 — Multi-blank + Undo + stories (Skill 11)
 
