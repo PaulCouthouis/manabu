@@ -1,4 +1,4 @@
-import { Array, Chunk, Option, pipe } from "effect"
+import { Array, Chunk, HashMap, Option, pipe } from "effect"
 
 export type DrillOutcome = "success" | "recycle"
 
@@ -98,57 +98,93 @@ export interface DrillSummary<A> {
 }
 
 const indexHistory = <A>(history: Chunk.Chunk<DrillEntry<A>>) => {
-  const attempts = new Map<A, number>()
-  const lastSucceeded = new Map<A, DrillItem<A>>()
-
-  for (const entry of Chunk.toArray(history)) {
-    attempts.set(entry.item.value, (attempts.get(entry.item.value) ?? 0) + 1)
-    if (entry.outcome === "success") {
-      lastSucceeded.set(entry.item.value, entry.item)
-    }
-  }
-
-  return { attempts, lastSucceeded }
+  return Array.reduce(
+    Chunk.toArray(history),
+    {
+      attempts: HashMap.empty<A, number>(),
+      lastSucceeded: HashMap.empty<A, DrillItem<A>>(),
+    },
+    (acc, entry) => {
+      const currentAttempts = pipe(
+        HashMap.get(acc.attempts, entry.item.value),
+        Option.getOrElse(() => {
+          return 0
+        }),
+      )
+      const attempts = HashMap.set(acc.attempts, entry.item.value, currentAttempts + 1)
+      const lastSucceeded =
+        entry.outcome === "success"
+          ? HashMap.set(acc.lastSucceeded, entry.item.value, entry.item)
+          : acc.lastSucceeded
+      return { attempts, lastSucceeded }
+    },
+  )
 }
 
 const collectSucceeded = <A>(
-  lastSucceeded: Map<A, DrillItem<A>>,
-  queueValues: Set<A>,
-  attempts: Map<A, number>,
+  lastSucceeded: HashMap.HashMap<A, DrillItem<A>>,
+  queueValues: HashMap.HashMap<A, true>,
+  attempts: HashMap.HashMap<A, number>,
 ) => {
-  const succeeded: Array<DrillSummaryEntry<A>> = []
-  for (const [value, item] of lastSucceeded) {
-    if (!queueValues.has(value)) {
-      succeeded.push({ item, attempts: attempts.get(value) ?? 0 })
-    }
-  }
-  return succeeded
+  return Array.filterMap(HashMap.toEntries(lastSucceeded), ([value, item]) => {
+    return HashMap.has(queueValues, value)
+      ? Option.none()
+      : Option.some({
+          item,
+          attempts: pipe(
+            HashMap.get(attempts, value),
+            Option.getOrElse(() => {
+              return 0
+            }),
+          ),
+        })
+  })
 }
 
-const partitionQueue = <A>(queue: Chunk.Chunk<DrillItem<A>>, attempts: Map<A, number>) => {
-  const attempted: Array<DrillSummaryEntry<A>> = []
-  const pending: Array<DrillItem<A>> = []
-  const seen = new Set<A>()
-
-  for (const item of Chunk.toArray(queue)) {
-    if (attempts.has(item.value)) {
-      if (!seen.has(item.value)) {
-        attempted.push({ item, attempts: attempts.get(item.value) ?? 0 })
-        seen.add(item.value)
+const partitionQueue = <A>(
+  queue: Chunk.Chunk<DrillItem<A>>,
+  attempts: HashMap.HashMap<A, number>,
+) => {
+  const { attempted, pending } = Array.reduce(
+    Chunk.toArray(queue),
+    {
+      attempted: [] as ReadonlyArray<DrillSummaryEntry<A>>,
+      pending: [] as ReadonlyArray<DrillItem<A>>,
+      seen: HashMap.empty<A, true>(),
+    },
+    (acc, item) => {
+      if (!HashMap.has(attempts, item.value)) {
+        return { ...acc, pending: [...acc.pending, item] }
       }
-    } else {
-      pending.push(item)
-    }
-  }
-
+      if (HashMap.has(acc.seen, item.value)) {
+        return acc
+      }
+      return {
+        attempted: [
+          ...acc.attempted,
+          {
+            item,
+            attempts: pipe(
+              HashMap.get(attempts, item.value),
+              Option.getOrElse(() => {
+                return 0
+              }),
+            ),
+          },
+        ],
+        pending: acc.pending,
+        seen: HashMap.set(acc.seen, item.value, true as const),
+      }
+    },
+  )
   return { attempted, pending }
 }
 
 const summarize = <A>(state: DrillQueueState<A>): DrillSummary<A> => {
   const { attempts, lastSucceeded } = indexHistory(state.history)
-  const queueValues = new Set(
-    Chunk.toArray(state.queue).map((item) => {
-      return item.value
+  const queueValues = HashMap.fromIterable(
+    Array.map(Chunk.toArray(state.queue), (item) => {
+      return [item.value, true as const] as const
     }),
   )
 

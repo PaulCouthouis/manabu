@@ -1,9 +1,18 @@
 import { Atom, useAtomSet } from "@effect-atom/atom-react"
 import { Effect, Layer } from "effect"
 import { ArrowRight, Circle } from "lucide-react"
-import React, { useCallback, useContext, useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 import { styled } from "styled-system/jsx"
 import { Button } from "@manabu/ui"
+import {
+  AcceptedTranscript,
+  Container,
+  FeedbackOverlay,
+  StimulusGroup,
+  SuccessOverlay,
+  TranscriptText,
+} from "~/components/shared/exercise-layout.js"
+import { createExerciseProvider } from "~/components/shared/exercise-provider.js"
 import type { AnswerResult } from "~/logic/answer-validation.js"
 import { AnswerValidationApi } from "~/logic/answer-validation.js"
 import { TextToSpeech } from "~/logic/audio/text-to-speech.js"
@@ -26,7 +35,7 @@ export interface MeaningExerciseProps {
   readonly initialPhase?: MeaningExercisePhase
 }
 
-function makeRuntime(validationLayer: MeaningExerciseLayer) {
+function makeAtoms(validationLayer: MeaningExerciseLayer) {
   const runtime = Atom.runtime(validationLayer)
 
   const validateAtom = runtime.fn(
@@ -46,42 +55,12 @@ function makeRuntime(validationLayer: MeaningExerciseLayer) {
   return { validateAtom, speakAtom }
 }
 
-type MeaningExerciseAtoms = ReturnType<typeof makeRuntime>
+const { Provider: MeaningExerciseProvider, useAtoms } = createExerciseProvider(
+  "MeaningExercise",
+  makeAtoms,
+)
 
-const MeaningExerciseAtomsContext = React.createContext<MeaningExerciseAtoms | null>(null)
-
-export function MeaningExerciseProvider(props: {
-  readonly layer: MeaningExerciseLayer
-  readonly children: React.ReactNode
-}) {
-  const atoms = useMemo(() => {
-    return makeRuntime(props.layer)
-  }, [props.layer])
-
-  return (
-    <MeaningExerciseAtomsContext.Provider value={atoms}>
-      {props.children}
-    </MeaningExerciseAtomsContext.Provider>
-  )
-}
-
-function useAtoms(): MeaningExerciseAtoms {
-  const atoms = useContext(MeaningExerciseAtomsContext)
-  if (atoms === null) {
-    throw new Error("MeaningExercise must be wrapped in MeaningExerciseProvider")
-  }
-  return atoms
-}
-
-const Container = styled("div", {
-  base: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    height: "100dvh",
-    overflow: "hidden",
-  },
-})
+export { MeaningExerciseProvider }
 
 const StimulusZone = styled("div", {
   base: {
@@ -96,30 +75,6 @@ const StimulusZone = styled("div", {
   },
 })
 
-const StimulusGroup = styled("div", {
-  base: {
-    position: "relative",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-})
-
-const FeedbackOverlay = styled("div", {
-  base: {
-    position: "absolute",
-    top: "100%",
-    left: "50%",
-    transform: "translateX(-50%)",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    gap: "2",
-    pt: "4",
-    whiteSpace: "nowrap",
-  },
-})
-
 const ExpectedText = styled("span", {
   base: {
     fontSize: "2xl",
@@ -128,39 +83,9 @@ const ExpectedText = styled("span", {
   },
 })
 
-const TranscriptText = styled("span", {
+const FullWidth = styled("div", {
   base: {
-    fontSize: "2xl",
-    color: "fg.muted",
-    fontStyle: "italic",
-    textAlign: "center",
-  },
-})
-
-const AcceptedTranscript = styled("span", {
-  base: {
-    position: "absolute",
-    bottom: "4",
-    left: "50%",
-    transform: "translateX(-50%)",
-    fontSize: "lg",
-    color: "colorPalette.11",
-    colorPalette: "accent",
-    textAlign: "center",
-    whiteSpace: "nowrap",
-  },
-})
-
-const SuccessOverlay = styled("div", {
-  base: {
-    position: "absolute",
-    inset: "0",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    bg: "transparent",
-    color: "colorPalette.11",
-    colorPalette: "accent",
+    width: "100%",
   },
 })
 
@@ -188,18 +113,15 @@ export function MeaningExercise(props: MeaningExerciseProps) {
   const validate = useAtomSet(validateAtom, { mode: "promiseExit" })
   const speak = useAtomSet(speakAtom)
 
-  const handleSelect = useCallback(
-    async (answer: string) => {
-      const exit = await validate({ answer, expected: config.expected })
-      if (exit._tag !== "Success") {
-        return
-      }
-      const result = exit.value
-      setPhase({ kind: "feedback", result })
-      onResult(result)
-    },
-    [config.expected, onResult],
-  )
+  const handleSelect = async (answer: string) => {
+    const exit = await validate({ answer, expected: config.expected })
+    if (exit._tag !== "Success") {
+      return
+    }
+    const result = exit.value
+    setPhase({ kind: "feedback", result })
+    onResult(result)
+  }
 
   useEffect(() => {
     if (phase.kind === "answering" && config.stimulus.mode === "audio") {
@@ -210,13 +132,13 @@ export function MeaningExercise(props: MeaningExerciseProps) {
   const shouldAutoplay = config.stimulus.mode !== "kanji"
   useAutoplayFeedback(phase.kind === "feedback" && shouldAutoplay, config.stimulus.text, speak)
 
-  const handlePlay = useCallback(() => {
+  const handlePlay = () => {
     speak(config.stimulus.text)
-  }, [config.stimulus])
+  }
 
-  const handleNext = useCallback(() => {
+  const handleNext = () => {
     setPhase({ kind: "answering" })
-  }, [])
+  }
 
   return (
     <Container>
@@ -259,7 +181,7 @@ export function MeaningExercise(props: MeaningExerciseProps) {
           <ChoicesQCM choices={config.interaction.choices} onSelect={handleSelect} />
         )}
         {phase.kind === "answering" && config.interaction.mode === "free-input" && (
-          <styled.div width="100%">
+          <FullWidth>
             <MultimodalInput
               voiceRecorderState="listening"
               onAnswer={handleSelect}
@@ -269,7 +191,7 @@ export function MeaningExercise(props: MeaningExerciseProps) {
                 console.error("[MeaningExercise] microphone error", error)
               }}
             />
-          </styled.div>
+          </FullWidth>
         )}
         {phase.kind === "feedback" && phase.result.kind === "incorrect" && (
           <Button colorPalette="accent" size="xl" width="100%" onClick={handleNext}>

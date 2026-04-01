@@ -1,3 +1,4 @@
+import { Array } from "effect"
 import { Grid } from "styled-system/jsx"
 import { Button } from "@manabu/ui"
 
@@ -15,7 +16,7 @@ export function ChoicesQCM(props: ChoicesQCMProps) {
       maxWidth="400px"
       style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))" }}
     >
-      {props.choices.map((choice) => {
+      {Array.map(props.choices, (choice) => {
         return (
           <Button
             key={choice}

@@ -59,20 +59,37 @@ export class VoiceCaptureService extends Effect.Service<VoiceCaptureService>()(
 
                 const isLoud = Option.isSome(result.state.speakingStartedAt)
 
-                // Dès qu'il y a du bruit, s'assurer que le recorder tourne
-                if (isLoud) {
-                  yield* ensureRecorderStarted()
-                  recorderReady = true
+                const startRecorderOnNoise = (): Effect.Effect<void> => {
+                  if (!isLoud) {
+                    return Effect.void
+                  }
+                  return Effect.gen(function* () {
+                    yield* ensureRecorderStarted()
+                    recorderReady = true
+                  })
                 }
 
-                // speechStart confirmé → émettre l'event
-                if (result.event.kind === "speechStart") {
-                  return Array.append(base, { kind: "speechStart" as const })
+                yield* startRecorderOnNoise()
+
+                const emitSpeechStart = (): ReadonlyArray<VoiceCaptureEvent> | null => {
+                  if (result.event.kind === "speechStart") {
+                    return Array.append(base, { kind: "speechStart" as const })
+                  }
+                  return null
                 }
 
-                // speechEnd → stopper le recorder et émettre le blob
-                if (result.event.kind === "speechEnd" && recorderReady) {
-                  return yield* Option.match(recorder, {
+                const maybeSpeechStart = emitSpeechStart()
+                if (maybeSpeechStart !== null) {
+                  return maybeSpeechStart
+                }
+
+                const stopRecorderAndEmitBlob = (): Effect.Effect<
+                  ReadonlyArray<VoiceCaptureEvent>
+                > | null => {
+                  if (result.event.kind !== "speechEnd" || !recorderReady) {
+                    return null
+                  }
+                  return Option.match(recorder, {
                     onNone: () => {
                       return Effect.succeed(base)
                     },
@@ -85,6 +102,11 @@ export class VoiceCaptureService extends Effect.Service<VoiceCaptureService>()(
                       })
                     },
                   })
+                }
+
+                const maybeSpeechEnd = stopRecorderAndEmitBlob()
+                if (maybeSpeechEnd !== null) {
+                  return yield* maybeSpeechEnd
                 }
 
                 return base

@@ -94,7 +94,32 @@ Pour chaque fichier, appliquer les principes de simplification suivants :
 - Ne pas supprimer des abstractions utiles à l'organisation du code
 - Préférer la clarté à la brièveté
 
-### Step 4 : Vérifications
+### Step 4 : Détecter et factoriser le code dupliqué (DRY)
+
+Après avoir simplifié chaque fichier individuellement, analyser le package dans son ensemble pour identifier les duplications inter-fichiers.
+
+#### Ce qu'il faut chercher
+- **Composants styled identiques** définis dans plusieurs fichiers → extraire dans un fichier shared
+- **Patterns Provider/Context/useAtoms** répétés → créer une factory générique
+- **Fonctions utilitaires** copiées-collées entre fichiers → extraire dans un module commun
+- **Hooks React** dupliqués → extraire dans `logic/ui/`
+- **Fake layers et helpers de test** dupliqués entre stories/tests → extraire dans `test-utils/`
+- **Types/interfaces identiques** entre fichiers de config → unifier avec des alias
+
+#### Comment procéder
+1. Utiliser un `Agent` subagent pour analyser les fichiers modifiés et leurs voisins, en cherchant des blocs de code structurellement identiques ou quasi-identiques (>3 lignes répétées dans 2+ fichiers)
+2. Pour chaque duplication trouvée, évaluer si la factorisation est justifiée :
+   - **Oui** : le code est strictement identique ou ne diffère que par un paramètre facilement abstrait
+   - **Non** : les ressemblances sont superficielles ou la factorisation ajouterait de la complexité
+3. Créer les modules partagés et mettre à jour les consommateurs
+4. Ne pas sur-abstraire : si la duplication est dans 2 fichiers seulement et fait <5 lignes, la laisser
+
+#### Seuils
+- **Extraction obligatoire** : même bloc ≥5 lignes dans ≥3 fichiers
+- **Extraction recommandée** : même bloc ≥10 lignes dans 2 fichiers
+- **Ignorer** : boilerplate inhérent au framework (meta Storybook, exports index.ts)
+
+### Step 5 : Vérifications
 
 Après toutes les modifications :
 
@@ -104,7 +129,7 @@ Après toutes les modifications :
 
 Si une vérification échoue plus de 3 fois, demander de l'aide à l'utilisateur via `AskUserQuestion`.
 
-### Step 5 : Résumé
+### Step 6 : Résumé
 
 Afficher un résumé concis :
 

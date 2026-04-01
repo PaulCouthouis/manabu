@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { fn } from "storybook/test"
 import { RegistryProvider } from "@effect-atom/atom-react"
-import { Effect, Layer, Option } from "effect"
-import { AnswerValidationApi } from "~/logic/answer-validation.js"
+import { Layer, Option } from "effect"
+import { fakeAnswerValidationLayer } from "~/test-utils/fake-layers.js"
 import type { WrittenProductionConfig } from "~/logic/written-production-config.js"
 import {
   WrittenProduction,
@@ -10,18 +10,6 @@ import {
   type WrittenProductionPhase,
   type WrittenProductionProps,
 } from "~/components/written-production/written-production.js"
-
-// --- Fake layers ---
-
-const fakeAnswerValidationLayer = Layer.succeed(AnswerValidationApi, {
-  validate: (answer: string, expected: string) => {
-    return Effect.succeed(
-      answer === expected
-        ? { kind: "correct" as const, expected }
-        : { kind: "incorrect" as const, userAnswer: answer, expected },
-    )
-  },
-})
 
 // --- Story wrapper ---
 

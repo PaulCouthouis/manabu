@@ -1,5 +1,6 @@
 import { CircleCheck } from "lucide-react"
 import { styled } from "styled-system/jsx"
+import { token } from "styled-system/tokens"
 import { Text } from "@manabu/ui"
 
 const HeaderRow = styled("div", {
@@ -13,7 +14,7 @@ const HeaderRow = styled("div", {
   },
 })
 
-const HEADER_CHECK_COLOR = "var(--colors-jade-9)"
+const HEADER_CHECK_COLOR = token("colors.jade.9")
 
 export function Header(props: { readonly succeeded: number; readonly total: number }) {
   const isComplete = props.succeeded === props.total

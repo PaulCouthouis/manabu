@@ -1,10 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { fn } from "storybook/test"
 import { RegistryProvider } from "@effect-atom/atom-react"
-import { Effect, Layer } from "effect"
-import { AnswerValidationApi } from "~/logic/answer-validation.js"
+import { Layer } from "effect"
 import { BrowserSpeechSynthesisApiLive, TextToSpeech } from "~/logic/audio/text-to-speech.js"
-import { SpeechToTextApi } from "~/logic/vocal/speech-to-text.js"
+import {
+  fakeAcceptedValidationLayer,
+  fakeAnswerValidationLayer,
+  fakeSpeechToTextLayer,
+} from "~/test-utils/fake-layers.js"
 import type { MeaningExerciseConfig } from "~/logic/meaning-exercise-config.js"
 import {
   MeaningExercise,
@@ -18,39 +21,13 @@ import {
   VoiceRecorderProvider,
 } from "~/components/voice-recorder/voice-recorder.js"
 
-const fakeAnswerValidationLayer = Layer.succeed(AnswerValidationApi, {
-  validate: (answer: string, expected: string) => {
-    return Effect.succeed(
-      answer === expected
-        ? { kind: "correct" as const, expected }
-        : { kind: "incorrect" as const, userAnswer: answer, expected },
-    )
-  },
-})
-
-const fakeSpeechToTextLayer = Layer.succeed(SpeechToTextApi, {
-  transcribe: (_blob: Blob) => {
-    return Effect.succeed("fake transcript")
-  },
-})
-
-const fakeAcceptedValidationLayer = Layer.succeed(AnswerValidationApi, {
-  validate: (_answer: string, expected: string) => {
-    return Effect.succeed({
-      kind: "accepted" as const,
-      userAnswer: "to learn",
-      expected,
-    })
-  },
-})
-
 const meaningExerciseLayer = Layer.mergeAll(
   fakeAnswerValidationLayer,
   Layer.provide(TextToSpeech.Default, BrowserSpeechSynthesisApiLive),
 )
 
 const acceptedMeaningExerciseLayer = Layer.mergeAll(
-  fakeAcceptedValidationLayer,
+  fakeAcceptedValidationLayer("to learn"),
   Layer.provide(TextToSpeech.Default, BrowserSpeechSynthesisApiLive),
 )
 

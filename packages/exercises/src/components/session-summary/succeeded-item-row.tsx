@@ -1,10 +1,12 @@
 import { Check, Mic } from "lucide-react"
 import { useEffect, useMemo, useRef } from "react"
 import { styled } from "styled-system/jsx"
+import { token } from "styled-system/tokens"
 import { Button } from "@manabu/ui"
 import type { DrillItem } from "~/logic/session/drill-queue.js"
 import type { SessionSummarySucceededItem } from "~/logic/session/session-summary.js"
 import { playAudio } from "~/logic/audio/audio-playback.js"
+import { AttemptsBadge } from "~/components/session-summary/attempts-badge.js"
 import { TruncatedContent } from "~/components/session-summary/truncated-content.js"
 import { SummaryItemRow } from "~/components/session-summary/summary-item-row.js"
 
@@ -23,19 +25,6 @@ const NewBadge = styled("span", {
   },
 })
 
-const AttemptsBadge = styled("span", {
-  base: {
-    fontSize: "xs",
-    fontWeight: "medium",
-    color: "jade.11",
-    bg: "jade.3",
-    borderRadius: "full",
-    paddingInline: "2",
-    paddingBlock: "0.5",
-    lineHeight: "tight",
-  },
-})
-
 const SuccessBadge = styled("span", {
   base: {
     display: "inline-flex",
@@ -48,8 +37,8 @@ const SuccessBadge = styled("span", {
   },
 })
 
-const RECORD_ICON_COLOR = "var(--colors-fg-subtle)"
-const SUCCESS_CHECK_COLOR = "var(--colors-jade-11)"
+const RECORD_ICON_COLOR = token("colors.fg.subtle")
+const SUCCESS_CHECK_COLOR = token("colors.jade.11")
 
 function RightBadge(props: { readonly attempts: number }) {
   if (props.attempts > 1) {

@@ -1,12 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { fn } from "storybook/test"
 import { RegistryProvider } from "@effect-atom/atom-react"
-import { Effect, Layer, Option } from "effect"
-import { AnswerValidationApi } from "~/logic/answer-validation.js"
+import { Layer, Option } from "effect"
+import type { AnswerValidationApi } from "~/logic/answer-validation.js"
 import { BrowserSpeechSynthesisApiLive, TextToSpeech } from "~/logic/audio/text-to-speech.js"
 import type { OralProductionConfig } from "~/logic/oral-production-config.js"
 import type { SpeechResult } from "~/logic/vocal/speech-recognition.js"
-import { SpeechRecognitionApi } from "~/logic/vocal/speech-recognition.js"
+import {
+  fakeAcceptedValidationLayer,
+  fakeAnswerValidationLayer,
+  fakeSpeechRecognitionLayer,
+} from "~/test-utils/fake-layers.js"
 import {
   BrowserVoiceRecorderLayer,
   VoiceRecorderProvider,
@@ -20,36 +24,6 @@ import {
 import { makeFakeAudioBlob } from "~/test-utils/make-fake-audio-blob.js"
 
 const fakeAudio = makeFakeAudioBlob()
-
-// --- Fake layers ---
-
-function fakeSpeechRecognitionLayer(result: SpeechResult) {
-  return Layer.succeed(SpeechRecognitionApi, {
-    recognize: (_blob: Blob, _expected: string) => {
-      return Effect.succeed(result)
-    },
-  })
-}
-
-const fakeAnswerValidationLayer = Layer.succeed(AnswerValidationApi, {
-  validate: (answer: string, expected: string) => {
-    return Effect.succeed(
-      answer === expected
-        ? { kind: "correct" as const, expected }
-        : { kind: "incorrect" as const, userAnswer: answer, expected },
-    )
-  },
-})
-
-const fakeAcceptedValidationLayer = Layer.succeed(AnswerValidationApi, {
-  validate: (_answer: string, expected: string) => {
-    return Effect.succeed({
-      kind: "accepted" as const,
-      userAnswer: "べんきょうをします",
-      expected,
-    })
-  },
-})
 
 // --- Story wrapper ---
 
@@ -167,7 +141,7 @@ export const Sentence_Accepted: Story = {
       <OralProductionStory
         config={sentenceConfig}
         speechResult={mismatchSentenceResult}
-        validationLayer={fakeAcceptedValidationLayer}
+        validationLayer={fakeAcceptedValidationLayer("べんきょうをします")}
         initialPhase={{
           kind: "feedback",
           answerResult: Option.some({

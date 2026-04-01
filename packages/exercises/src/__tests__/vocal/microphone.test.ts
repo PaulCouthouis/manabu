@@ -1,5 +1,5 @@
 import { assert, layer } from "@effect/vitest"
-import { Effect, Layer } from "effect"
+import { Array, Effect, Layer } from "effect"
 import { GetUserMediaApi, MicrophoneApi } from "~/logic/vocal/microphone.js"
 import type { AudioStream } from "~/logic/vocal/types.js"
 
@@ -10,12 +10,12 @@ const makeTestLayer = (getUserMedia: () => Promise<MediaStream>) => {
 }
 
 const makeFakeStream = (trackIds: ReadonlyArray<string>) => {
-  const stopped: Array<string> = []
+  const stopped: globalThis.Array<string> = []
   const stream: AudioStream = {
     _tag: "AudioStream",
     _raw: null,
     getTracks: () => {
-      return trackIds.map((id) => ({
+      return Array.map(trackIds, (id) => ({
         stop: () => {
           stopped.push(id)
         },

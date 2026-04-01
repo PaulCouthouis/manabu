@@ -1,5 +1,5 @@
 import { Atom, useAtomSet } from "@effect-atom/atom-react"
-import { Effect, Layer } from "effect"
+import { Array, Effect, Layer } from "effect"
 import { styled } from "styled-system/jsx"
 import type { DrillItem } from "~/logic/session/drill-queue.js"
 import type {
@@ -47,12 +47,12 @@ export function SessionSummary<A>(props: SessionSummaryProps<A>) {
   return (
     <Container>
       <Header succeeded={props.succeeded.length} total={props.total} />
-      {props.succeeded.map((item, i) => {
+      {Array.map(props.succeeded, (item, i) => {
         return (
           <SucceededItemRow key={i} item={item} renderContent={props.renderContent} speak={speak} />
         )
       })}
-      {props.attempted.map((item, i) => {
+      {Array.map(props.attempted, (item, i) => {
         return <AttemptedItemRow key={i} item={item} speak={speak} />
       })}
     </Container>

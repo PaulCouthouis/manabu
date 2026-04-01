@@ -1,11 +1,25 @@
 import { Atom, useAtomSet } from "@effect-atom/atom-react"
 import { Effect, Layer, Option } from "effect"
 import { ArrowRight, Circle } from "lucide-react"
-import React, { useContext, useMemo, useState } from "react"
+import { useState } from "react"
 import { styled } from "styled-system/jsx"
 import { Button } from "@manabu/ui"
+import {
+  AcceptedTranscript,
+  Container,
+  ExerciseZone,
+  FeedbackOverlay,
+  MeaningText,
+  RewardSentence,
+  RewardWord,
+  StimulusGroup,
+  SuccessOverlay,
+  TranscriptText,
+} from "~/components/shared/exercise-layout.js"
+import { createExerciseProvider } from "~/components/shared/exercise-provider.js"
 import type { AnswerResult } from "~/logic/answer-validation.js"
 import { AnswerValidationApi } from "~/logic/answer-validation.js"
+import { feedbackKind, outcomeFromAnswerResult } from "~/logic/answer-feedback.js"
 import { isSentence } from "~/logic/stimulus-display.js"
 import type {
   WrittenProductionConfig,
@@ -28,7 +42,7 @@ export interface WrittenProductionProps {
   readonly initialPhase?: WrittenProductionPhase
 }
 
-function makeRuntime(layer: WrittenProductionLayer) {
+function makeAtoms(layer: WrittenProductionLayer) {
   const runtime = Atom.runtime(layer)
 
   const validateAtom = runtime.fn(
@@ -41,141 +55,12 @@ function makeRuntime(layer: WrittenProductionLayer) {
   return { validateAtom }
 }
 
-type WrittenProductionAtoms = ReturnType<typeof makeRuntime>
+const { Provider: WrittenProductionProvider, useAtoms } = createExerciseProvider(
+  "WrittenProduction",
+  makeAtoms,
+)
 
-const WrittenProductionAtomsContext = React.createContext<WrittenProductionAtoms | null>(null)
-
-export function WrittenProductionProvider(props: {
-  readonly layer: WrittenProductionLayer
-  readonly children: React.ReactNode
-}) {
-  const atoms = useMemo(() => {
-    return makeRuntime(props.layer)
-  }, [props.layer])
-
-  return (
-    <WrittenProductionAtomsContext.Provider value={atoms}>
-      {props.children}
-    </WrittenProductionAtomsContext.Provider>
-  )
-}
-
-function useAtoms(): WrittenProductionAtoms {
-  const atoms = useContext(WrittenProductionAtomsContext)
-  if (atoms === null) {
-    throw new Error("WrittenProduction must be wrapped in WrittenProductionProvider")
-  }
-  return atoms
-}
-
-const Container = styled("div", {
-  base: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    height: "100dvh",
-    overflow: "hidden",
-  },
-})
-
-const ExerciseZone = styled("div", {
-  base: {
-    position: "relative",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    flex: 1,
-    width: "100%",
-  },
-})
-
-const MeaningText = styled("span", {
-  base: {
-    fontSize: "3xl",
-    fontWeight: "semibold",
-    textAlign: "center",
-    lineHeight: "relaxed",
-    px: "4",
-  },
-})
-
-const StimulusGroup = styled("div", {
-  base: {
-    position: "relative",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-})
-
-const FeedbackOverlay = styled("div", {
-  base: {
-    position: "absolute",
-    top: "100%",
-    left: "50%",
-    transform: "translateX(-50%)",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    gap: "2",
-    pt: "4",
-    whiteSpace: "nowrap",
-  },
-})
-
-const RewardWord = styled("span", {
-  base: {
-    fontSize: "4xl",
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-})
-
-const RewardSentence = styled("span", {
-  base: {
-    fontSize: "2xl",
-    fontWeight: "medium",
-    textAlign: "center",
-    lineHeight: "relaxed",
-  },
-})
-
-const TranscriptText = styled("span", {
-  base: {
-    fontSize: "2xl",
-    color: "fg.muted",
-    fontStyle: "italic",
-    textAlign: "center",
-  },
-})
-
-const AcceptedTranscript = styled("span", {
-  base: {
-    position: "absolute",
-    bottom: "4",
-    left: "50%",
-    transform: "translateX(-50%)",
-    fontSize: "lg",
-    color: "colorPalette.11",
-    colorPalette: "accent",
-    textAlign: "center",
-    whiteSpace: "nowrap",
-  },
-})
-
-const SuccessOverlay = styled("div", {
-  base: {
-    position: "absolute",
-    inset: "0",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    bg: "transparent",
-    color: "colorPalette.11",
-    colorPalette: "accent",
-  },
-})
+export { WrittenProductionProvider }
 
 const FOOTER_HEIGHT = "80px"
 
@@ -198,26 +83,6 @@ function ExpectedText(props: { readonly text: string }) {
     return <RewardSentence>{props.text}</RewardSentence>
   }
   return <RewardWord>{props.text}</RewardWord>
-}
-
-function feedbackKind(phase: WrittenProductionPhase): AnswerResult["kind"] | "skip" | null {
-  if (phase.kind !== "feedback") {
-    return null
-  }
-  if (Option.isNone(phase.answerResult)) {
-    return "skip"
-  }
-  return phase.answerResult.value.kind
-}
-
-function outcomeFromAnswerResult(answerResult: Option.Option<AnswerResult>) {
-  if (Option.isNone(answerResult)) {
-    return "skip"
-  }
-  if (answerResult.value.kind === "correct" || answerResult.value.kind === "accepted") {
-    return "success"
-  }
-  return "failure"
 }
 
 export function WrittenProduction(props: WrittenProductionProps) {
@@ -248,7 +113,7 @@ export function WrittenProduction(props: WrittenProductionProps) {
     setPhase({ kind: "answering" })
   }
 
-  const kind = feedbackKind(phase)
+  const kind = phase.kind === "feedback" ? feedbackKind(phase.answerResult) : null
 
   return (
     <Container>

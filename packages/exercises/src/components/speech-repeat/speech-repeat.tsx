@@ -1,8 +1,16 @@
 import { Atom, useAtomSet } from "@effect-atom/atom-react"
 import { Effect, Layer } from "effect"
 import { Circle, Volume2 } from "lucide-react"
-import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { styled } from "styled-system/jsx"
+import {
+  Container,
+  ExerciseZone,
+  RecorderWrapper,
+  SuccessOverlay,
+  TranscriptText,
+} from "~/components/shared/exercise-layout.js"
+import { createExerciseProvider } from "~/components/shared/exercise-provider.js"
 import { MismatchActionBar } from "~/components/shared/mismatch-action-bar.js"
 import { BrowserBlobUrlApiLive } from "~/logic/audio/blob-url.js"
 import { BrowserSpeechSynthesisApiLive, TextToSpeech } from "~/logic/audio/text-to-speech.js"
@@ -12,8 +20,9 @@ import type {
   StimulusKind,
 } from "~/logic/speech-repeat-config.js"
 import { isAudioFirst, outcomeFromSpeechResult } from "~/logic/speech-repeat.js"
-import { useAutoplayFeedback } from "~/logic/ui/use-autoplay-feedback.js"
 import { isSentence } from "~/logic/stimulus-display.js"
+import { useAutoplayFeedback } from "~/logic/ui/use-autoplay-feedback.js"
+import { useUserAudioPlayback } from "~/logic/ui/use-user-audio-playback.js"
 import type { SpeechResult } from "~/logic/vocal/speech-recognition.js"
 import { SpeechRecognitionApi } from "~/logic/vocal/speech-recognition.js"
 import { VoiceRecorder } from "~/components/voice-recorder/voice-recorder.js"
@@ -35,7 +44,7 @@ export interface SpeechRepeatProps {
 
 // --- Runtime & atoms ---
 
-function makeRuntime(recognitionLayer: SpeechRepeatLayer) {
+function makeAtoms(recognitionLayer: SpeechRepeatLayer) {
   const runtime = Atom.runtime(
     Layer.mergeAll(
       Layer.provide(TextToSpeech.Default, BrowserSpeechSynthesisApiLive),
@@ -61,57 +70,14 @@ function makeRuntime(recognitionLayer: SpeechRepeatLayer) {
   return { speakAtom, recognizeAtom }
 }
 
-type SpeechRepeatAtoms = ReturnType<typeof makeRuntime>
+const { Provider: SpeechRepeatProvider, useAtoms } = createExerciseProvider(
+  "SpeechRepeat",
+  makeAtoms,
+)
 
-const SpeechRepeatAtomsContext = React.createContext<SpeechRepeatAtoms | null>(null)
-
-export function SpeechRepeatProvider(props: {
-  readonly layer: SpeechRepeatLayer
-  readonly children: React.ReactNode
-}) {
-  const atoms = useMemo(() => {
-    return makeRuntime(props.layer)
-  }, [props.layer])
-
-  return (
-    <SpeechRepeatAtomsContext.Provider value={atoms}>
-      {props.children}
-    </SpeechRepeatAtomsContext.Provider>
-  )
-}
-
-function useAtoms(): SpeechRepeatAtoms {
-  const atoms = useContext(SpeechRepeatAtomsContext)
-  if (atoms === null) {
-    throw new Error("SpeechRepeat must be wrapped in SpeechRepeatProvider")
-  }
-  return atoms
-}
+export { SpeechRepeatProvider }
 
 // --- Styles ---
-
-const Container = styled("div", {
-  base: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    height: "100dvh",
-    overflow: "hidden",
-  },
-})
-
-const ExerciseZone = styled("div", {
-  base: {
-    position: "relative",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    flex: 1,
-    gap: "6",
-    width: "100%",
-  },
-})
 
 const StimulusText = styled("span", {
   base: {
@@ -128,28 +94,6 @@ const SentenceText = styled("span", {
     fontWeight: "medium",
     textAlign: "center",
     lineHeight: "relaxed",
-  },
-})
-
-const TranscriptText = styled("span", {
-  base: {
-    fontSize: "2xl",
-    color: "fg.muted",
-    fontStyle: "italic",
-    textAlign: "center",
-  },
-})
-
-const SuccessOverlay = styled("div", {
-  base: {
-    position: "absolute",
-    inset: "0",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    bg: "transparent",
-    color: "colorPalette.11",
-    colorPalette: "accent",
   },
 })
 
@@ -172,12 +116,6 @@ const PlayButton = styled("button", {
       width: "50%",
       height: "50%",
     },
-  },
-})
-
-const RecorderWrapper = styled("div", {
-  base: {
-    width: "100%",
   },
 })
 
@@ -259,29 +197,11 @@ function useAutoplayModel(
   useAutoplayFeedback(phase.kind === "feedback", config.expected, speak)
 }
 
-function useUserAudioPlayback(phase: SpeechRepeatPhase) {
-  const urlRef = useRef<string | null>(null)
-
-  useEffect(() => {
-    if (phase.kind === "feedback" && phase.speechResult.kind === "mismatch") {
-      urlRef.current = URL.createObjectURL(phase.recordingBlob)
-    }
-    return () => {
-      if (urlRef.current) {
-        URL.revokeObjectURL(urlRef.current)
-        urlRef.current = null
-      }
-    }
-  }, [phase])
-
-  const playUserAudio = useCallback(() => {
-    if (urlRef.current) {
-      const audio = new Audio(urlRef.current)
-      audio.play()
-    }
-  }, [phase])
-
-  return playUserAudio
+function mismatchBlob(phase: SpeechRepeatPhase): Blob | null {
+  if (phase.kind === "feedback" && phase.speechResult.kind === "mismatch") {
+    return phase.recordingBlob
+  }
+  return null
 }
 
 // --- Main component ---
@@ -298,33 +218,30 @@ export function SpeechRepeat(props: SpeechRepeatProps) {
   const recognize = useAtomSet(recognizeAtom, { mode: "promiseExit" })
 
   useAutoplayModel(phase, config, speak)
-  const playUserAudio = useUserAudioPlayback(phase)
+  const playUserAudio = useUserAudioPlayback(mismatchBlob(phase))
 
-  const handlePlayModel = useCallback(() => {
+  const handlePlayModel = () => {
     speak(config.expected)
-  }, [config.expected])
+  }
 
-  const handleSpeechEnd = useCallback(
-    async (blob: Blob) => {
-      const exit = await recognize({ blob, expected: config.expected })
-      if (exit._tag !== "Success") {
-        return
-      }
-      const speechResult = exit.value
-      const outcome = outcomeFromSpeechResult(speechResult)
-      setPhase({ kind: "feedback", speechResult, recordingBlob: blob })
-      onResult({ outcome, speechResult })
-    },
-    [config.expected, onResult],
-  )
+  const handleSpeechEnd = async (blob: Blob) => {
+    const exit = await recognize({ blob, expected: config.expected })
+    if (exit._tag !== "Success") {
+      return
+    }
+    const speechResult = exit.value
+    const outcome = outcomeFromSpeechResult(speechResult)
+    setPhase({ kind: "feedback", speechResult, recordingBlob: blob })
+    onResult({ outcome, speechResult })
+  }
 
-  const handleNext = useCallback(() => {
+  const handleNext = () => {
     setPhase({ kind: "listening" })
-  }, [])
+  }
 
   return (
     <Container>
-      <ExerciseZone>
+      <ExerciseZone gap="6">
         {phase.kind === "listening" && audioFirst && (
           <PlayButton onClick={handlePlayModel} aria-label="Play model audio">
             <Volume2 />

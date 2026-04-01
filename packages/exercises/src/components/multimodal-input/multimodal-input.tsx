@@ -1,9 +1,9 @@
 import { Atom, useAtom, useAtomSet } from "@effect-atom/atom-react"
 import { Effect, Layer } from "effect"
 import { AudioLines, Keyboard } from "lucide-react"
-import React, { useCallback, useContext, useMemo } from "react"
 import { styled } from "styled-system/jsx"
 import { IconButton } from "@manabu/ui"
+import { createExerciseProvider } from "~/components/shared/exercise-provider.js"
 import {
   VoiceRecorder,
   type VoiceRecorderState,
@@ -27,7 +27,7 @@ export interface MultimodalInputProps {
   readonly onError: (error: Cause.Cause<MicrophoneError>) => void
 }
 
-function makeRuntime(layer: MultimodalInputLayer) {
+function makeAtoms(layer: MultimodalInputLayer) {
   const runtime = Atom.runtime(layer)
 
   const transcribeAtom = runtime.fn(
@@ -40,32 +40,12 @@ function makeRuntime(layer: MultimodalInputLayer) {
   return { transcribeAtom }
 }
 
-type MultimodalInputAtoms = ReturnType<typeof makeRuntime>
+const { Provider: MultimodalInputProvider, useAtoms } = createExerciseProvider(
+  "MultimodalInput",
+  makeAtoms,
+)
 
-const MultimodalInputAtomsContext = React.createContext<MultimodalInputAtoms | null>(null)
-
-export function MultimodalInputProvider(props: {
-  readonly layer: MultimodalInputLayer
-  readonly children: React.ReactNode
-}) {
-  const atoms = useMemo(() => {
-    return makeRuntime(props.layer)
-  }, [props.layer])
-
-  return (
-    <MultimodalInputAtomsContext.Provider value={atoms}>
-      {props.children}
-    </MultimodalInputAtomsContext.Provider>
-  )
-}
-
-function useAtoms(): MultimodalInputAtoms {
-  const atoms = useContext(MultimodalInputAtomsContext)
-  if (atoms === null) {
-    throw new Error("MultimodalInput must be wrapped in MultimodalInputProvider")
-  }
-  return atoms
-}
+export { MultimodalInputProvider }
 
 const Container = styled("div", {
   base: {
@@ -73,6 +53,12 @@ const Container = styled("div", {
     flexDirection: "row",
     alignItems: "center",
     gap: "2",
+  },
+})
+
+const FlexOne = styled("div", {
+  base: {
+    flex: 1,
   },
 })
 
@@ -90,37 +76,34 @@ export function MultimodalInput(props: MultimodalInputProps) {
   const { transcribeAtom } = useAtoms()
   const transcribe = useAtomSet(transcribeAtom, { mode: "promiseExit" })
 
-  const handleSpeechEnd = useCallback(
-    async (blob: Blob) => {
-      const exit = await transcribe(blob)
-      if (exit._tag !== "Success") {
-        return
-      }
-      const transcript = exit.value
-      if (isSkipTranscript(transcript)) {
-        props.onSkip?.()
-        return
-      }
-      props.onAnswer(transcript)
-    },
-    [props.onAnswer, props.onSkip, transcribe],
-  )
+  const handleSpeechEnd = async (blob: Blob) => {
+    const exit = await transcribe(blob)
+    if (exit._tag !== "Success") {
+      return
+    }
+    const transcript = exit.value
+    if (isSkipTranscript(transcript)) {
+      props.onSkip?.()
+      return
+    }
+    props.onAnswer(transcript)
+  }
 
-  const handleToggle = useCallback(() => {
+  const handleToggle = () => {
     setMode(toggleMode(mode))
-  }, [mode])
+  }
 
   return (
     <Container>
       {mode === "voice" ? (
-        <styled.div flex="1">
+        <FlexOne>
           <VoiceRecorder
             state={props.voiceRecorderState}
             onSpeechStart={props.onSpeechStart}
             onSpeechEnd={handleSpeechEnd}
             onError={props.onError}
           />
-        </styled.div>
+        </FlexOne>
       ) : (
         <TextSubmitInput
           onSubmit={props.onAnswer}

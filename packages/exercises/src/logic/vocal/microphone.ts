@@ -34,17 +34,19 @@ const mapGetUserMediaError = (error: unknown): MicrophoneError => {
   })
 }
 
-const wrapMediaStream = (mediaStream: MediaStream): AudioStream => ({
-  _tag: "AudioStream",
-  _raw: mediaStream,
-  getTracks: (): ReadonlyArray<AudioStreamTrack> => {
-    return Array.map(mediaStream.getTracks(), (track) => ({
-      stop: () => {
-        track.stop()
-      },
-    }))
-  },
-})
+const wrapMediaStream = (mediaStream: MediaStream): AudioStream => {
+  return {
+    _tag: "AudioStream",
+    _raw: mediaStream,
+    getTracks: (): ReadonlyArray<AudioStreamTrack> => {
+      return Array.map(mediaStream.getTracks(), (track) => ({
+        stop: () => {
+          track.stop()
+        },
+      }))
+    },
+  }
+}
 
 export class MicrophoneApi extends Effect.Service<MicrophoneApi>()("MicrophoneApi", {
   effect: Effect.gen(function* () {

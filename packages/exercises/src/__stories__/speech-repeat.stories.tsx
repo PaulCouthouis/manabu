@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { fn } from "storybook/test"
 import { RegistryProvider } from "@effect-atom/atom-react"
-import { Effect, Layer } from "effect"
 import { styled } from "styled-system/jsx"
 import type { SpeechRepeatConfig } from "~/logic/speech-repeat-config.js"
-import { SpeechRecognitionApi, type SpeechResult } from "~/logic/vocal/speech-recognition.js"
+import type { SpeechResult } from "~/logic/vocal/speech-recognition.js"
+import { fakeSpeechRecognitionLayer } from "~/test-utils/fake-layers.js"
 import {
   BrowserVoiceRecorderLayer,
   VoiceRecorderProvider,
@@ -18,16 +18,6 @@ import {
 import { makeFakeAudioBlob } from "~/test-utils/make-fake-audio-blob.js"
 
 const fakeAudio = makeFakeAudioBlob()
-
-// --- Fake layers ---
-
-function fakeSpeechRecognitionLayer(result: SpeechResult) {
-  return Layer.succeed(SpeechRecognitionApi, {
-    recognize: (_blob: Blob, _expected: string) => {
-      return Effect.succeed(result)
-    },
-  })
-}
 
 // --- Story wrapper ---
 

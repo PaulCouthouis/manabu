@@ -1,5 +1,6 @@
 import { Volume2 } from "lucide-react"
 import { styled } from "styled-system/jsx"
+import { token } from "styled-system/tokens"
 import { Button, Card } from "@manabu/ui"
 
 const Row = styled("div", {
@@ -22,7 +23,7 @@ const BadgeSlot = styled("span", {
   },
 })
 
-const SPEAK_ICON_COLOR = "var(--colors-jade-11)"
+const SPEAK_ICON_COLOR = token("colors.jade.11")
 
 export function SummaryItemRow(props: {
   readonly modelText: string

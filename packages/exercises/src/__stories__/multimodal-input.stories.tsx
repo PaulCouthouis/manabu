@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { fn } from "storybook/test"
 import { RegistryProvider } from "@effect-atom/atom-react"
-import { Effect, Layer } from "effect"
 import { useState } from "react"
 import {
   BrowserVoiceRecorderLayer,
@@ -13,13 +12,7 @@ import {
   MultimodalInputProvider,
   type MultimodalInputProps,
 } from "~/components/multimodal-input/multimodal-input.js"
-import { SpeechToTextApi } from "~/logic/vocal/speech-to-text.js"
-
-const fakeSpeechToTextLayer = Layer.succeed(SpeechToTextApi, {
-  transcribe: (_blob: Blob) => {
-    return Effect.succeed("fake transcript")
-  },
-})
+import { fakeSpeechToTextLayer } from "~/test-utils/fake-layers.js"
 
 const meta: Meta<MultimodalInputProps> = {
   title: "Exercises/MultimodalInput",
