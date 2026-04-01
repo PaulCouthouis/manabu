@@ -259,7 +259,7 @@ Skip (bouton)
 
 ### Étape 3 — Types WrittenProduction
 
-- [ ] Créer `packages/exercises/src/logic/written-production-config.ts` avec `WrittenProductionConfig`, `WrittenProductionResult` → AC9, AC10
+- [x] Créer `packages/exercises/src/logic/written-production-config.ts` avec `WrittenProductionConfig`, `WrittenProductionResult` → AC9, AC10
 
 ### Étape 4 — Composant WrittenProduction core + stories
 
