@@ -11,6 +11,7 @@ import {
   TranscriptText,
 } from "~/components/shared/exercise-layout.js"
 import { createExerciseProvider } from "~/components/shared/exercise-provider.js"
+import { makeSpeakAtom } from "~/components/shared/make-atoms.js"
 import { MismatchActionBar } from "~/components/shared/mismatch-action-bar.js"
 import { BrowserBlobUrlApiLive } from "~/logic/audio/blob-url.js"
 import { BrowserSpeechSynthesisApiLive, TextToSpeech } from "~/logic/audio/text-to-speech.js"
@@ -53,13 +54,6 @@ function makeAtoms(recognitionLayer: SpeechRepeatLayer) {
     ),
   )
 
-  const speakAtom = runtime.fn(
-    Effect.fnUntraced(function* (text: string) {
-      const tts = yield* TextToSpeech
-      yield* tts.speak(text)
-    }),
-  )
-
   const recognizeAtom = runtime.fn(
     Effect.fnUntraced(function* (args: { blob: Blob; expected: string }) {
       const api = yield* SpeechRecognitionApi
@@ -67,7 +61,7 @@ function makeAtoms(recognitionLayer: SpeechRepeatLayer) {
     }),
   )
 
-  return { speakAtom, recognizeAtom }
+  return { speakAtom: makeSpeakAtom(runtime), recognizeAtom }
 }
 
 const { Provider: SpeechRepeatProvider, useAtoms } = createExerciseProvider(
@@ -207,6 +201,9 @@ function mismatchBlob(phase: SpeechRepeatPhase): Blob | null {
 // --- Main component ---
 
 const noopSpeechStart = () => {}
+const logMicrophoneError = (error: unknown) => {
+  console.error("[SpeechRepeat] microphone error", error)
+}
 
 export function SpeechRepeat(props: SpeechRepeatProps) {
   const { config, onResult, renderReward, initialPhase } = props
@@ -264,9 +261,7 @@ export function SpeechRepeat(props: SpeechRepeatProps) {
             state={phase.kind === "listening" ? "listening" : "paused"}
             onSpeechStart={noopSpeechStart}
             onSpeechEnd={handleSpeechEnd}
-            onError={(error) => {
-              console.error("[SpeechRepeat] microphone error", error)
-            }}
+            onError={logMicrophoneError}
           />
         </RecorderWrapper>
       )}

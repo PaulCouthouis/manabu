@@ -1,5 +1,5 @@
 import { Atom, useAtomSet } from "@effect-atom/atom-react"
-import { Effect, Layer } from "effect"
+import { Layer } from "effect"
 import { ArrowRight, Circle } from "lucide-react"
 import { useEffect, useState } from "react"
 import { styled } from "styled-system/jsx"
@@ -13,6 +13,7 @@ import {
   TranscriptText,
 } from "~/components/shared/exercise-layout.js"
 import { createExerciseProvider } from "~/components/shared/exercise-provider.js"
+import { makeSpeakAtom, makeValidateAtom } from "~/components/shared/make-atoms.js"
 import type { AnswerResult } from "~/logic/answer-validation.js"
 import { AnswerValidationApi } from "~/logic/answer-validation.js"
 import { TextToSpeech } from "~/logic/audio/text-to-speech.js"
@@ -37,22 +38,7 @@ export interface MeaningExerciseProps {
 
 function makeAtoms(validationLayer: MeaningExerciseLayer) {
   const runtime = Atom.runtime(validationLayer)
-
-  const validateAtom = runtime.fn(
-    Effect.fnUntraced(function* (args: { answer: string; expected: string }) {
-      const api = yield* AnswerValidationApi
-      return yield* api.validate(args.answer, args.expected)
-    }),
-  )
-
-  const speakAtom = runtime.fn(
-    Effect.fnUntraced(function* (text: string) {
-      const tts = yield* TextToSpeech
-      yield* tts.speak(text)
-    }),
-  )
-
-  return { validateAtom, speakAtom }
+  return { validateAtom: makeValidateAtom(runtime), speakAtom: makeSpeakAtom(runtime) }
 }
 
 const { Provider: MeaningExerciseProvider, useAtoms } = createExerciseProvider(
@@ -104,6 +90,11 @@ const Footer = styled("div", {
     px: "4",
   },
 })
+
+const noopSpeechStart = () => {}
+const logMicrophoneError = (error: unknown) => {
+  console.error("[MeaningExercise] microphone error", error)
+}
 
 export function MeaningExercise(props: MeaningExerciseProps) {
   const { config, onResult, initialPhase } = props
@@ -186,10 +177,8 @@ export function MeaningExercise(props: MeaningExerciseProps) {
               voiceRecorderState="listening"
               onAnswer={handleSelect}
               onSkip={props.onSkip}
-              onSpeechStart={() => {}}
-              onError={(error) => {
-                console.error("[MeaningExercise] microphone error", error)
-              }}
+              onSpeechStart={noopSpeechStart}
+              onError={logMicrophoneError}
             />
           </FullWidth>
         )}

@@ -47,9 +47,9 @@ const drawBars = (
   const barCount = Math.floor(width / (BAR_WIDTH + BAR_GAP))
   const step = Math.max(1, Math.floor(data.length / barCount))
 
-  for (let i = 0; i < barCount; i++) {
+  Array.from({ length: barCount }, (_, i) => {
     const dataIndex = i * step
-    const value = dataIndex < data.length ? data[dataIndex]! : 0
+    const value = dataIndex < data.length ? (data[dataIndex] ?? 0) : 0
     const barHeight = Math.max(2, (value / 255) * height)
     const x = i * (BAR_WIDTH + BAR_GAP)
     const y = (height - barHeight) / 2
@@ -57,7 +57,7 @@ const drawBars = (
     ctx.beginPath()
     ctx.roundRect(x, y, BAR_WIDTH, barHeight, BAR_RADIUS)
     ctx.fill()
-  }
+  })
 }
 
 export function Waveform(props: {

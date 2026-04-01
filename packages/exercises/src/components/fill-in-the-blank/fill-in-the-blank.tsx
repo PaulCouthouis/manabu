@@ -1,5 +1,5 @@
 import { Atom, useAtomSet } from "@effect-atom/atom-react"
-import { Array, Effect, Layer, pipe } from "effect"
+import { Array, Layer, pipe } from "effect"
 import { ArrowRight, Undo2 } from "lucide-react"
 import { useState } from "react"
 import { styled } from "styled-system/jsx"
@@ -19,6 +19,7 @@ import type {
 } from "~/logic/fill-in-the-blank-config.js"
 import { validateBlanks } from "~/logic/fill-in-the-blank.js"
 import { TextToSpeech } from "~/logic/audio/text-to-speech.js"
+import { makeSpeakAtom } from "~/components/shared/make-atoms.js"
 import { useAutoplayFeedback } from "~/logic/ui/use-autoplay-feedback.js"
 
 // --- Phase ---
@@ -33,15 +34,7 @@ export type FillInTheBlankLayer = Layer.Layer<TextToSpeech>
 
 function makeAtoms(layer: FillInTheBlankLayer) {
   const runtime = Atom.runtime(layer)
-
-  const speakAtom = runtime.fn(
-    Effect.fnUntraced(function* (text: string) {
-      const tts = yield* TextToSpeech
-      yield* tts.speak(text)
-    }),
-  )
-
-  return { speakAtom }
+  return { speakAtom: makeSpeakAtom(runtime) }
 }
 
 const { Provider: FillInTheBlankProvider, useAtoms } = createExerciseProvider(

@@ -1,5 +1,5 @@
 import { Atom, useAtomSet } from "@effect-atom/atom-react"
-import { Effect, Layer, Option } from "effect"
+import { Layer, Option } from "effect"
 import { ArrowRight, Circle } from "lucide-react"
 import { useState } from "react"
 import { styled } from "styled-system/jsx"
@@ -17,6 +17,7 @@ import {
   TranscriptText,
 } from "~/components/shared/exercise-layout.js"
 import { createExerciseProvider } from "~/components/shared/exercise-provider.js"
+import { makeValidateAtom } from "~/components/shared/make-atoms.js"
 import type { AnswerResult } from "~/logic/answer-validation.js"
 import { AnswerValidationApi } from "~/logic/answer-validation.js"
 import { feedbackKind, outcomeFromAnswerResult } from "~/logic/answer-feedback.js"
@@ -44,15 +45,7 @@ export interface WrittenProductionProps {
 
 function makeAtoms(layer: WrittenProductionLayer) {
   const runtime = Atom.runtime(layer)
-
-  const validateAtom = runtime.fn(
-    Effect.fnUntraced(function* (args: { answer: string; expected: string }) {
-      const api = yield* AnswerValidationApi
-      return yield* api.validate(args.answer, args.expected)
-    }),
-  )
-
-  return { validateAtom }
+  return { validateAtom: makeValidateAtom(runtime) }
 }
 
 const { Provider: WrittenProductionProvider, useAtoms } = createExerciseProvider(

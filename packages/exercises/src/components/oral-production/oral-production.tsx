@@ -16,6 +16,7 @@ import {
   TranscriptText,
 } from "~/components/shared/exercise-layout.js"
 import { createExerciseProvider } from "~/components/shared/exercise-provider.js"
+import { makeSpeakAtom, makeValidateAtom } from "~/components/shared/make-atoms.js"
 import { MismatchActionBar } from "~/components/shared/mismatch-action-bar.js"
 import type { AnswerResult } from "~/logic/answer-validation.js"
 import { AnswerValidationApi } from "~/logic/answer-validation.js"
@@ -53,13 +54,6 @@ export interface OralProductionProps {
 function makeAtoms(layer: OralProductionLayer) {
   const runtime = Atom.runtime(layer)
 
-  const speakAtom = runtime.fn(
-    Effect.fnUntraced(function* (text: string) {
-      const tts = yield* TextToSpeech
-      yield* tts.speak(text)
-    }),
-  )
-
   const recognizeAtom = runtime.fn(
     Effect.fnUntraced(function* (args: { blob: Blob; expected: string }) {
       const api = yield* SpeechRecognitionApi
@@ -67,14 +61,11 @@ function makeAtoms(layer: OralProductionLayer) {
     }),
   )
 
-  const validateAtom = runtime.fn(
-    Effect.fnUntraced(function* (args: { answer: string; expected: string }) {
-      const api = yield* AnswerValidationApi
-      return yield* api.validate(args.answer, args.expected)
-    }),
-  )
-
-  return { speakAtom, recognizeAtom, validateAtom }
+  return {
+    speakAtom: makeSpeakAtom(runtime),
+    recognizeAtom,
+    validateAtom: makeValidateAtom(runtime),
+  }
 }
 
 const { Provider: OralProductionProvider, useAtoms } = createExerciseProvider(
