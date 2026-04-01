@@ -120,7 +120,9 @@ Les routes protégées utilisent deux layouts qui vérifient la session via `get
 - **Côté React** : utiliser `Atom.fn` ou `AtomRuntime.fn` (`@effect-atom/atom-react`) pour wrapper les Effects en atoms réactifs. Utiliser `useAtomSet` / `useAtomValue` / `useAtom` pour interagir avec les atoms dans les composants. Ne jamais appeler `Effect.runPromise` ou `Effect.runSync` manuellement dans un composant.
 - **Services Effect côté React** : utiliser `Atom.runtime(Layer.mergeAll(...))` pour créer un `AtomRuntime` qui fournit tous les layers nécessaires, puis `runtime.fn(...)` pour créer les atoms liés aux services. Les APIs browser (SpeechSynthesis, URL.createObjectURL, etc.) sont des `Context.Tag` Effect avec un layer browser — jamais d'accès direct aux globals dans les composants.
 - **Composants React — pas de logique inline** : extraire toute logique (calculs, détection DOM, gestion de ressources) dans des fonctions pures testables ou des hooks custom. Les composants React ne contiennent que du rendu et du wiring. Les hooks custom sont encouragés pour la lisibilité (ex: `useSession`, `useFrameLoop`). Les atoms Effect gèrent les side effects, les fonctions pures gèrent la logique.
-- **Formulaires** : utiliser `useActionState` (React 19) avec `<form action={...}>` et `FormData`. Combiner avec `useAtom(atom, { mode: "promiseExit" })` pour exécuter les atoms dans les actions.
+- **Pas de `useCallback` par défaut** : utiliser des fonctions simples dans le corps du composant. Réserver `useCallback` aux cas où le callback est passé à un enfant `React.memo` ou utilisé comme dépendance d'un `useEffect`.
+- **Formulaires avec action async** : utiliser `useActionState` (React 19) avec `<form action={...}>` et `FormData`. Combiner avec `useAtom(atom, { mode: "promiseExit" })` pour exécuter les atoms dans les actions.
+- **Formulaires simples (submit texte)** : utiliser `<form onSubmit>` avec `type="submit"` sur le bouton d'envoi. Pas de `onKeyDown` pour détecter Enter — le formulaire HTML gère nativement Enter et respecte la composition IME (japonais, chinois).
 
 ### Panda CSS — styled() plutôt que css()
 

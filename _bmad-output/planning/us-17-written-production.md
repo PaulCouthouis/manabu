@@ -263,13 +263,13 @@ Skip (bouton)
 
 ### Étape 4 — Composant WrittenProduction core + stories
 
-- [ ] Créer `packages/exercises/src/components/written-production/written-production.tsx`
-- [ ] Implémenter le layout : sens en anglais en haut, `TextSubmitInput` en footer → AC11
-- [ ] Implémenter le flux : answering → validation → feedback → AC12
-- [ ] Wiring : submit → `AnswerValidationApi.validate(input, expected)` → AnswerResult → AC12, AC14
-- [ ] Implémenter skip → `onResult({ outcome: "skip", answerResult: Option.none() })` → AC13
-- [ ] Story `Word_Answering` : sens "cat" affiché, input actif → AC11
-- [ ] Story `Sentence_Answering` : sens "I like cats" affiché, input actif → AC11
+- [x] Créer `packages/exercises/src/components/written-production/written-production.tsx`
+- [x] Implémenter le layout : sens en anglais en haut, `TextSubmitInput` en footer → AC11
+- [x] Implémenter le flux : answering → validation → feedback → AC12
+- [x] Wiring : submit → `AnswerValidationApi.validate(input, expected)` → AnswerResult → AC12, AC14
+- [x] Implémenter skip → `onResult({ outcome: "skip", answerResult: Option.none() })` → AC13
+- [x] Story `Word_Answering` : sens "cat" affiché, input actif → AC11
+- [x] Story `Sentence_Answering` : sens "I like cats" affiché, input actif → AC11
 
 ### Étape 5 — Feedback variants + stories
 
