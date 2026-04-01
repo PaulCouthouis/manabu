@@ -251,9 +251,9 @@ Undo (multi-blank uniquement)
 
 ### Étape 2 — Logique de validation (TDD)
 
-- [ ] Écrire les tests `validateBlanks` : tous corrects → success, un incorrect → failure, multi-trou mixte → failure avec détail par trou → AC5, AC6, AC7
-- [ ] Implémenter `validateBlanks(filledBlanks, blanks)` → `ReadonlyArray<BlankResult>` → AC5
-- [ ] Implémenter `buildResult(blankResults)` → `FillInTheBlankResult` avec dérivation de l'outcome → AC6, AC7
+- [x] Écrire les tests `validateBlanks` : tous corrects → success, un incorrect → failure, multi-trou mixte → failure avec détail par trou → AC5, AC6, AC7
+- [x] Implémenter `validateBlanks(filledBlanks, blanks)` → `ReadonlyArray<BlankResult>` → AC5
+- [x] Implémenter `buildResult(blankResults)` → `FillInTheBlankResult` avec dérivation de l'outcome → AC6, AC7
 
 ### Étape 3 — Composant single-blank + stories (Skills 12-15)
 

@@ -147,7 +147,7 @@ Les routes protégées utilisent deux layouts qui vérifient la session via `get
 
 - `tsconfig.base.json` avec `strict: true` et `noUncheckedIndexedAccess: true`.
 - Chaque package étend cette config — impossible de relâcher la strictness.
-- Éviter les assertions de type (`as`) — préférer les type guards, `Schema.decode`, ou restructurer le code pour que le type soit inféré correctement.
+- Éviter les assertions de type (`as`) et les non-null assertions (`!`) — préférer les type guards, `Schema.decode`, `Array.zip`, `Option.fromNullable`, ou restructurer le code pour que le type soit inféré correctement.
 
 ### Lisibilité — fonctions nommées plutôt que commentaires
 
