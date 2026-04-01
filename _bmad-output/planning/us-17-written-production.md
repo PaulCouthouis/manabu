@@ -273,21 +273,21 @@ Skip (bouton)
 
 ### Étape 5 — Feedback variants + stories
 
-- [ ] Implémenter feedback correct : cercle succès + texte japonais → AC15
-- [ ] Implémenter feedback accepted : cercle succès + texte attendu + transcript user (accent) → AC16
-- [ ] Implémenter feedback incorrect : bonne réponse + "You wrote: ..." + bouton Next → AC17
-- [ ] Implémenter feedback skip : bonne réponse (correction passive) + bouton Next → AC18
-- [ ] Vérifier qu'aucun audio n'est joué → AC19
-- [ ] Story `Word_Correct` : fake validation retourne `correct` → feedback succès avec 猫 affiché → AC15
-- [ ] Story `Sentence_Accepted` : fake validation retourne `accepted` → feedback avec les deux textes → AC16
-- [ ] Story `Word_Incorrect` : fake validation retourne `incorrect` → bonne réponse + "You wrote: ..." + Next → AC17
-- [ ] Story `Word_Skip` : skip → bonne réponse affichée + Next → AC18
+- [x] Implémenter feedback correct : cercle succès + texte japonais → AC15
+- [x] Implémenter feedback accepted : cercle succès + texte attendu + transcript user (accent) → AC16
+- [x] Implémenter feedback incorrect : bonne réponse + "You wrote: ..." + bouton Next → AC17
+- [x] Implémenter feedback skip : bonne réponse (correction passive) + bouton Next → AC18
+- [x] Vérifier qu'aucun audio n'est joué → AC19
+- [x] Story `Word_Correct` : fake validation retourne `correct` → feedback succès avec 猫 affiché → AC15
+- [x] Story `Sentence_Accepted` : fake validation retourne `accepted` → feedback avec les deux textes → AC16
+- [x] Story `Word_Incorrect` : fake validation retourne `incorrect` → bonne réponse + "You wrote: ..." + Next → AC17
+- [x] Story `Word_Skip` : skip → bonne réponse affichée + Next → AC18
 
 ### Étape 6 — Vérifications finales
 
-- [ ] `pnpm build` sans erreur → AC20
-- [ ] `pnpm lint` sans erreur → AC21
-- [ ] Tests existants passent (non-régression) → AC22
+- [x] `pnpm build` sans erreur → AC20
+- [x] `pnpm lint` sans erreur → AC21
+- [x] Tests existants passent (non-régression) → AC22
 
 ## Hors scope
 

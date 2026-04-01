@@ -1,12 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { fn } from "storybook/test"
 import { RegistryProvider } from "@effect-atom/atom-react"
-import { Effect, Layer } from "effect"
+import { Effect, Layer, Option } from "effect"
 import { AnswerValidationApi } from "~/logic/answer-validation.js"
 import type { WrittenProductionConfig } from "~/logic/written-production-config.js"
 import {
   WrittenProduction,
   WrittenProductionProvider,
+  type WrittenProductionPhase,
   type WrittenProductionProps,
 } from "~/components/written-production/written-production.js"
 
@@ -27,13 +28,18 @@ const fakeAnswerValidationLayer = Layer.succeed(AnswerValidationApi, {
 function WrittenProductionStory(props: {
   readonly config: WrittenProductionConfig
   readonly validationLayer?: Layer.Layer<AnswerValidationApi>
+  readonly initialPhase?: WrittenProductionPhase
 }) {
   const layer = props.validationLayer ?? fakeAnswerValidationLayer
 
   return (
     <RegistryProvider>
       <WrittenProductionProvider layer={layer}>
-        <WrittenProduction config={props.config} onResult={fn()} />
+        <WrittenProduction
+          config={props.config}
+          onResult={fn()}
+          initialPhase={props.initialPhase}
+        />
       </WrittenProductionProvider>
     </RegistryProvider>
   )
@@ -78,5 +84,73 @@ export const Sentence_Answering: Story = {
   name: "Sentence — Answering (I like cats → 猫が好きです)",
   render: () => {
     return <WrittenProductionStory config={sentenceConfig} />
+  },
+}
+
+export const Word_Correct: Story = {
+  name: "Word — Correct (猫 ✅)",
+  render: () => {
+    return (
+      <WrittenProductionStory
+        config={wordConfig}
+        initialPhase={{
+          kind: "feedback",
+          answerResult: Option.some({ kind: "correct", expected: "猫" }),
+        }}
+      />
+    )
+  },
+}
+
+export const Sentence_Accepted: Story = {
+  name: "Sentence — Accepted (IA validated ✅)",
+  render: () => {
+    return (
+      <WrittenProductionStory
+        config={sentenceConfig}
+        initialPhase={{
+          kind: "feedback",
+          answerResult: Option.some({
+            kind: "accepted",
+            userAnswer: "猫が好きです",
+            expected: "猫が好きです",
+          }),
+        }}
+      />
+    )
+  },
+}
+
+export const Word_Incorrect: Story = {
+  name: "Word — Incorrect (❌ + Next)",
+  render: () => {
+    return (
+      <WrittenProductionStory
+        config={wordConfig}
+        initialPhase={{
+          kind: "feedback",
+          answerResult: Option.some({
+            kind: "incorrect",
+            userAnswer: "べんきょう",
+            expected: "猫",
+          }),
+        }}
+      />
+    )
+  },
+}
+
+export const Word_Skip: Story = {
+  name: "Word — Skip (⏭️ + Next)",
+  render: () => {
+    return (
+      <WrittenProductionStory
+        config={wordConfig}
+        initialPhase={{
+          kind: "feedback",
+          answerResult: Option.none(),
+        }}
+      />
+    )
   },
 }

@@ -1,9 +1,12 @@
 import { Atom, useAtomSet } from "@effect-atom/atom-react"
 import { Effect, Layer, Option } from "effect"
+import { ArrowRight, Circle } from "lucide-react"
 import React, { useContext, useMemo, useState } from "react"
 import { styled } from "styled-system/jsx"
+import { Button } from "@manabu/ui"
 import type { AnswerResult } from "~/logic/answer-validation.js"
 import { AnswerValidationApi } from "~/logic/answer-validation.js"
+import { isSentence } from "~/logic/stimulus-display.js"
 import type {
   WrittenProductionConfig,
   WrittenProductionResult,
@@ -97,6 +100,83 @@ const MeaningText = styled("span", {
   },
 })
 
+const StimulusGroup = styled("div", {
+  base: {
+    position: "relative",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+})
+
+const FeedbackOverlay = styled("div", {
+  base: {
+    position: "absolute",
+    top: "100%",
+    left: "50%",
+    transform: "translateX(-50%)",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: "2",
+    pt: "4",
+    whiteSpace: "nowrap",
+  },
+})
+
+const RewardWord = styled("span", {
+  base: {
+    fontSize: "4xl",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+})
+
+const RewardSentence = styled("span", {
+  base: {
+    fontSize: "2xl",
+    fontWeight: "medium",
+    textAlign: "center",
+    lineHeight: "relaxed",
+  },
+})
+
+const TranscriptText = styled("span", {
+  base: {
+    fontSize: "2xl",
+    color: "fg.muted",
+    fontStyle: "italic",
+    textAlign: "center",
+  },
+})
+
+const AcceptedTranscript = styled("span", {
+  base: {
+    position: "absolute",
+    bottom: "4",
+    left: "50%",
+    transform: "translateX(-50%)",
+    fontSize: "lg",
+    color: "colorPalette.11",
+    colorPalette: "accent",
+    textAlign: "center",
+    whiteSpace: "nowrap",
+  },
+})
+
+const SuccessOverlay = styled("div", {
+  base: {
+    position: "absolute",
+    inset: "0",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    bg: "transparent",
+    color: "colorPalette.11",
+    colorPalette: "accent",
+  },
+})
+
 const FOOTER_HEIGHT = "80px"
 
 const Footer = styled("div", {
@@ -112,6 +192,23 @@ const Footer = styled("div", {
     px: "4",
   },
 })
+
+function ExpectedText(props: { readonly text: string }) {
+  if (isSentence(props.text)) {
+    return <RewardSentence>{props.text}</RewardSentence>
+  }
+  return <RewardWord>{props.text}</RewardWord>
+}
+
+function feedbackKind(phase: WrittenProductionPhase): AnswerResult["kind"] | "skip" | null {
+  if (phase.kind !== "feedback") {
+    return null
+  }
+  if (Option.isNone(phase.answerResult)) {
+    return "skip"
+  }
+  return phase.answerResult.value.kind
+}
 
 function outcomeFromAnswerResult(answerResult: Option.Option<AnswerResult>) {
   if (Option.isNone(answerResult)) {
@@ -147,10 +244,49 @@ export function WrittenProduction(props: WrittenProductionProps) {
     emitFeedback(Option.none())
   }
 
+  const handleNext = () => {
+    setPhase({ kind: "answering" })
+  }
+
+  const kind = feedbackKind(phase)
+
   return (
     <Container>
       <ExerciseZone>
-        <MeaningText>{config.meaning}</MeaningText>
+        {(kind === "correct" || kind === "accepted") && (
+          <SuccessOverlay>
+            <Circle width="100%" height="100%" strokeWidth={0.3} />
+          </SuccessOverlay>
+        )}
+
+        <StimulusGroup>
+          <MeaningText>{config.meaning}</MeaningText>
+          {phase.kind === "feedback" && (
+            <FeedbackOverlay>
+              {(kind === "correct" || kind === "accepted") && (
+                <ExpectedText text={config.expected} />
+              )}
+              {kind === "incorrect" &&
+                Option.isSome(phase.answerResult) &&
+                phase.answerResult.value.kind === "incorrect" && (
+                  <>
+                    <ExpectedText text={config.expected} />
+                    <TranscriptText>
+                      You wrote: {phase.answerResult.value.userAnswer}
+                    </TranscriptText>
+                  </>
+                )}
+              {kind === "skip" && <ExpectedText text={config.expected} />}
+            </FeedbackOverlay>
+          )}
+        </StimulusGroup>
+
+        {kind === "accepted" &&
+          phase.kind === "feedback" &&
+          Option.isSome(phase.answerResult) &&
+          phase.answerResult.value.kind === "accepted" && (
+            <AcceptedTranscript>✓ {phase.answerResult.value.userAnswer}</AcceptedTranscript>
+          )}
       </ExerciseZone>
 
       <Footer>
@@ -160,6 +296,12 @@ export function WrittenProduction(props: WrittenProductionProps) {
             onSkip={handleSkip}
             placeholder="「日本語で入力」"
           />
+        )}
+        {(kind === "incorrect" || kind === "skip") && (
+          <Button colorPalette="accent" size="xl" width="100%" onClick={handleNext}>
+            Next
+            <ArrowRight size={24} />
+          </Button>
         )}
       </Footer>
     </Container>
