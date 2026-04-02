@@ -129,11 +129,11 @@ interface FillInTheBlankProps {
 
 ### Étape 2 — Composant MicroLesson + stories
 
-- [ ] Installer `react-markdown` dans `packages/exercises` → AC3
-- [ ] Créer `packages/exercises/src/components/micro-lesson/micro-lesson.tsx` avec Dialog Park UI + `react-markdown` → AC3, AC5, AC6
-- [ ] Styler la zone de contenu avec overflow-y scroll → AC4
-- [ ] Story `MicroLesson_Short` : contenu court, pas de scroll → AC3
-- [ ] Story `MicroLesson_Long` : contenu long avec scroll visible → AC4
+- [x] Installer `react-markdown` dans `packages/exercises` → AC3
+- [x] Créer `packages/exercises/src/components/micro-lesson/micro-lesson.tsx` avec Dialog Park UI + `react-markdown` → AC3, AC5, AC6
+- [x] Styler la zone de contenu avec overflow-y scroll → AC4
+- [x] Story `MicroLesson_Short` : contenu court, pas de scroll → AC3
+- [x] Story `MicroLesson_Long` : contenu long avec scroll visible → AC4
 
 ### Étape 3 — Intégration dans FillInTheBlank
 

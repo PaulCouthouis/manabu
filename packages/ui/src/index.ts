@@ -6,6 +6,7 @@ export {
   type ButtonGroupProps,
 } from "./components/ui/button"
 export * as Card from "./components/ui/card"
+export * as Dialog from "./components/ui/dialog"
 export * as Field from "./components/ui/field"
 export { IconButton, type IconButtonProps } from "./components/ui/icon-button"
 export { Input, type InputProps } from "./components/ui/input"
