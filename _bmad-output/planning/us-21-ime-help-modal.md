@@ -13,13 +13,13 @@ Modale d'aide à l'installation et l'utilisation du clavier japonais (IME). Dét
 | Question | Décision | Justification |
 |---|---|---|
 | Détection device | Fonction pure `detectDevice(ua: string) → DeviceType` | Testable en TDD, pas de dépendance browser. |
-| Accès User Agent | `NavigatorApi` — Context.Tag Effect avec layer browser et fake pour tests/stories | Même pattern que `SpeechSynthesisApi`. Les stories simulent chaque device sans toucher au vrai `navigator.userAgent`. |
+| Accès User Agent | `UserAgentApi` — Context.Tag Effect dans `logic/user-agent.ts` avec `BrowserUserAgentApiLive` et fake pour tests/stories | Même pattern que `BlobUrlApi`. Les stories simulent chaque device sans toucher au vrai `navigator.userAgent`. |
 | Contenu des tutos | Fichiers `.md` statiques importés via `?raw` (Vite) | Contenu stable (procédures OS). Même approche que MicroLesson — du markdown string rendu par `react-markdown`. |
 | 5 devices + unknown | ios, android, macos, windows, chromeos + sélecteur pour unknown | Couvre 99%+ des users. ChromeOS inclus car marché éducatif important. Linux → unknown (trop de variantes distro/DE). |
 | Device unknown | Sélecteur de plateforme (5 boutons) au lieu d'un message vague | Actionnable. Sert aussi de fallback si la détection UA se trompe. |
 | Retour sélecteur | Lien "← Back to platforms" quand un device est sélectionné manuellement | Permet de corriger un mauvais choix. |
 | Modale | Dialog Park UI + `react-markdown` (pattern MicroLesson) | Pas réinventer. `scrollBehavior="inside"`, header/footer fixes. |
-| Provider Effect | **Non.** Pas de Layer dans le composant | `detectDevice` est une fonction pure appelée au render. Le User Agent est passé via props ou lu une fois. |
+| Provider Effect | **Oui.** `UserAgentApi` fourni via `AtomRuntime` | Le composant utilise un atom Effect pour lire le UA via `UserAgentApi`, cohérent avec le pattern des autres APIs browser. `detectDevice` reste une fonction pure consommée par l'atom. |
 | Terme UI | "Japanese Keyboard Setup" | "IME" est opaque pour un débutant. Explication courte dans le body : "IME = Input Method Editor". |
 | Bouton ⌨️ Help | Haut à droite de WrittenProduction | Même position que le 💡 de FillInTheBlank. Ne gêne pas le flux de saisie. |
 | Auto-open Sprint 2 | Prop `autoOpen?: boolean` | Le wiring localStorage (`manabu:ime-help-shown`) se fait au Sprint 3. En Storybook, on contrôle via prop. |
@@ -49,19 +49,36 @@ Ordre de détection (important — ChromeOS avant Android car les UA CrOS contie
 5. `Windows` → `"windows"`
 6. Sinon → `"unknown"`
 
+### UserAgentApi
+
+```ts
+// packages/exercises/src/logic/user-agent.ts
+class UserAgentApi extends Context.Tag("UserAgentApi")<
+  UserAgentApi,
+  { readonly get: () => string }
+>() {}
+
+const BrowserUserAgentApiLive = Layer.succeed(UserAgentApi, {
+  get: () => globalThis.navigator.userAgent,
+})
+```
+
+- `BrowserUserAgentApiLive` — layer browser, lit le vrai `navigator.userAgent`
+- En test/story — `Layer.succeed(UserAgentApi, { get: () => "Mozilla/5.0 (Macintosh; ..." })` pour simuler un device
+
 ### Props IMEHelpModal
 
 ```ts
 interface IMEHelpModalProps {
   readonly open: boolean
   readonly onClose: () => void
-  readonly userAgent: string       // navigator.userAgent passé par le parent
+  readonly deviceType: DeviceType   // résolu par l'atom Effect en amont
 }
 ```
 
 - `open` — contrôlé par le parent
 - `onClose` — appelé par "Got it", ✕, ou clic hors modale
-- `userAgent` — string UA pour la détection device (injectable = testable)
+- `deviceType` — device résolu via `UserAgentApi` + `detectDevice`, passé par le parent (atom Effect)
 
 ### Props WrittenProduction (mise à jour)
 
@@ -342,8 +359,9 @@ Tip: press **Space** multiple times to cycle through kanji candidates.
 
 ### Étape 1 — TDD detectDevice
 
-- [ ] Écrire les tests `detectDevice` : iOS iPhone, iOS iPad, Android, macOS, Windows, ChromeOS, unknown, priorité CrOS > Android → AC1, AC2, AC3, AC4, AC5, AC6, AC7, AC8
-- [ ] Implémenter `detectDevice` dans `packages/exercises/src/components/ime-help-modal/detect-device.ts` → AC1-AC8
+- [x] Écrire les tests `detectDevice` : iOS iPhone, iOS iPad, Android, macOS, Windows, ChromeOS, unknown, priorité CrOS > Android → AC1, AC2, AC3, AC4, AC5, AC6, AC7, AC8
+- [x] Implémenter `detectDevice` dans `packages/exercises/src/components/ime-help-modal/detect-device.ts` → AC1-AC8
+- [x] Créer `UserAgentApi` Context.Tag + `BrowserUserAgentApiLive` + helper `getUserAgent()` dans `packages/exercises/src/logic/user-agent.ts`
 
 ### Étape 2 — Fichiers markdown par device
 
