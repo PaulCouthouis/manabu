@@ -124,15 +124,15 @@ Si `prefers-reduced-motion: reduce` est actif, le kana/mot apparaît directement
 
 ### Étape 2 — Mise à jour stories SpeechRepeat
 
-- [ ] Remplacer le placeholder `styled.div` dans `AudioFirstMatch` par `<RewardDisplay text="か" status="new" label="Kana unlocked" />` → AC4
-- [ ] Remplacer le placeholder `styled.div` dans `FeedbackMatchAudioFirst` par `<RewardDisplay text="か" status="new" label="Kana unlocked" />` → AC5
-- [ ] Remplacer le placeholder `styled.div` dans `Skill4AudioWord` par `<RewardDisplay text="猫" status="new" label="Word unlocked" />` → AC6
+- [x] Remplacer le placeholder `styled.div` dans `AudioFirstMatch` par `<RewardDisplay text="か" status="new" label="Kana unlocked" />` → AC4
+- [x] Remplacer le placeholder `styled.div` dans `FeedbackMatchAudioFirst` par `<RewardDisplay text="か" status="new" label="Kana unlocked" />` → AC5
+- [x] Remplacer le placeholder `styled.div` dans `Skill4AudioWord` par `<RewardDisplay text="猫" status="new" label="Word unlocked" />` → AC6
 
 ### Étape 3 — Vérifications finales
 
-- [ ] `pnpm build` sans erreur → AC7
-- [ ] `pnpm lint` sans erreur → AC8
-- [ ] Tests existants passent (non-régression) → AC9
+- [x] `pnpm build` sans erreur → AC7
+- [x] `pnpm lint` sans erreur → AC8
+- [x] Tests existants passent (non-régression) → AC9
 
 ## Hors scope
 

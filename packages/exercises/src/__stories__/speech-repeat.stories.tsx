@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { fn } from "storybook/test"
 import { RegistryProvider } from "@effect-atom/atom-react"
-import { styled } from "styled-system/jsx"
+import { RewardDisplay } from "~/components/reward-animation/reward-display.js"
 import type { SpeechRepeatConfig } from "~/logic/speech-repeat-config.js"
 import type { SpeechResult } from "~/logic/vocal/speech-recognition.js"
 import { fakeSpeechRecognitionLayer } from "~/test-utils/fake-layers.js"
@@ -128,16 +128,7 @@ export const AudioFirstMatch: Story = {
         config={skill1Config}
         speechResult={matchResult}
         renderReward={() => {
-          return (
-            <styled.div textAlign="center">
-              <styled.span fontSize="6xl" lineHeight={1}>
-                か
-              </styled.span>
-              <styled.div fontSize="sm" color="fg.muted">
-                Kana unlocked
-              </styled.div>
-            </styled.div>
-          )
+          return <RewardDisplay text="か" status="new" label="Kana unlocked" />
         }}
       />
     )
@@ -204,16 +195,7 @@ export const FeedbackMatchAudioFirst: Story = {
         speechResult={matchResult}
         initialPhase={{ kind: "feedback", speechResult: matchResult, recordingBlob: fakeAudio }}
         renderReward={() => {
-          return (
-            <styled.div textAlign="center">
-              <styled.span fontSize="6xl" lineHeight={1}>
-                か
-              </styled.span>
-              <styled.div fontSize="sm" color="fg.muted">
-                Kana unlocked
-              </styled.div>
-            </styled.div>
-          )
+          return <RewardDisplay text="か" status="new" label="Kana unlocked" />
         }}
       />
     )
@@ -322,16 +304,7 @@ export const Skill4AudioWord: Story = {
         config={skill4Config}
         speechResult={matchResult}
         renderReward={() => {
-          return (
-            <styled.div textAlign="center">
-              <styled.span fontSize="6xl" lineHeight={1}>
-                猫
-              </styled.span>
-              <styled.div fontSize="sm" color="fg.muted">
-                Word unlocked
-              </styled.div>
-            </styled.div>
-          )
+          return <RewardDisplay text="猫" status="new" label="Word unlocked" />
         }}
       />
     )
