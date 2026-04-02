@@ -1,4 +1,5 @@
 export { absoluteCenter } from "./absolute-center"
+export { dialog } from "./dialog"
 export { group } from "./group"
 export { spinner } from "./spinner"
 export { tooltip } from "./tooltip"

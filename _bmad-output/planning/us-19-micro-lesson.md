@@ -124,8 +124,8 @@ interface FillInTheBlankProps {
 
 ### Étape 1 — Setup Dialog Park UI
 
-- [ ] Installer le composant Dialog via `npx @park-ui/cli component add dialog` → AC1
-- [ ] Créer une story basique Dialog dans Storybook pour vérifier le bon fonctionnement → AC2
+- [x] Installer le composant Dialog via `npx @park-ui/cli component add dialog` → AC1
+- [x] Créer une story basique Dialog dans Storybook pour vérifier le bon fonctionnement → AC2
 
 ### Étape 2 — Composant MicroLesson + stories
 
