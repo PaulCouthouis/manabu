@@ -3,7 +3,7 @@ import { Layer, Option } from "effect"
 import { ArrowRight, Circle } from "lucide-react"
 import { useState } from "react"
 import { styled } from "styled-system/jsx"
-import { Button } from "@manabu/ui"
+import { Button, IconButton } from "@manabu/ui"
 import {
   AcceptedTranscript,
   Container,
@@ -27,6 +27,8 @@ import type {
   WrittenProductionResult,
 } from "~/logic/written-production-config.js"
 import { TextSubmitInput } from "~/components/shared/text-submit-input.js"
+import { IMEHelpModal, IMEHelpModalProvider } from "~/components/ime-help-modal/ime-help-modal.js"
+import { BrowserUserAgentApiLive } from "~/logic/user-agent.js"
 
 export type WrittenProductionPhase =
   | { readonly kind: "answering" }
@@ -67,7 +69,8 @@ const Footer = styled("div", {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    px: "4",
+    gap: "2",
+    px: "2",
   },
 })
 
@@ -81,6 +84,7 @@ function ExpectedText(props: { readonly text: string }) {
 export function WrittenProduction(props: WrittenProductionProps) {
   const { config, onResult, initialPhase } = props
   const [phase, setPhase] = useState<WrittenProductionPhase>(initialPhase ?? { kind: "answering" })
+  const [imeHelpOpen, setImeHelpOpen] = useState(false)
 
   const { validateAtom } = useAtoms()
   const validate = useAtomSet(validateAtom, { mode: "promiseExit" })
@@ -149,11 +153,26 @@ export function WrittenProduction(props: WrittenProductionProps) {
 
       <Footer>
         {phase.kind === "answering" && (
-          <TextSubmitInput
-            onSubmit={handleSubmit}
-            onSkip={handleSkip}
-            placeholder="「日本語で入力」"
-          />
+          <>
+            <IconButton
+              variant="outline"
+              height="48px"
+              aria-label="Keyboard help"
+              css={{ flexShrink: "0" }}
+              onClick={() => {
+                setImeHelpOpen(true)
+              }}
+            >
+              <styled.span fontSize="2xl" fontWeight="bold">
+                ?
+              </styled.span>
+            </IconButton>
+            <TextSubmitInput
+              onSubmit={handleSubmit}
+              onSkip={handleSkip}
+              placeholder="「日本語で入力」"
+            />
+          </>
         )}
         {(kind === "incorrect" || kind === "skip") && (
           <Button colorPalette="accent" size="xl" width="100%" onClick={handleNext}>
@@ -162,6 +181,14 @@ export function WrittenProduction(props: WrittenProductionProps) {
           </Button>
         )}
       </Footer>
+      <IMEHelpModalProvider layer={BrowserUserAgentApiLive}>
+        <IMEHelpModal
+          open={imeHelpOpen}
+          onClose={() => {
+            setImeHelpOpen(false)
+          }}
+        />
+      </IMEHelpModalProvider>
     </Container>
   )
 }

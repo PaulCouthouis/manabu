@@ -385,16 +385,16 @@ Tip: press **Space** multiple times to cycle through kanji candidates.
 
 ### Étape 4 — Intégration WrittenProduction
 
-- [ ] Ajouter le bouton ⌨️ Help en haut à droite de WrittenProduction (même pattern que 💡 dans FillInTheBlank) → AC18
-- [ ] Wiring : bouton → useState `open` → IMEHelpModal → AC19
-- [ ] Vérifier que le bouton est accessible en phase answering et feedback → AC20
-- [ ] Mettre à jour les stories WrittenProduction existantes avec le bouton ⌨️ visible → AC21
+- [x] Ajouter le bouton ⌨️ Help en haut à droite de WrittenProduction (même pattern que 💡 dans FillInTheBlank) → AC18
+- [x] Wiring : bouton → useState `open` → IMEHelpModal → AC19
+- [x] Vérifier que le bouton est accessible en phase answering et feedback → AC20
+- [x] Mettre à jour les stories WrittenProduction existantes avec le bouton ⌨️ visible → AC21
 
 ### Étape 5 — Vérifications finales
 
-- [ ] `pnpm build` sans erreur → AC22
-- [ ] `pnpm lint` sans erreur → AC23
-- [ ] Tests existants passent (non-régression) → AC24
+- [x] `pnpm build` sans erreur → AC22
+- [x] `pnpm lint` sans erreur → AC23
+- [x] Tests existants passent (non-régression) → AC24
 
 ## Hors scope
 
