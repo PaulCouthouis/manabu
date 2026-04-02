@@ -129,6 +129,7 @@ Les routes protégées utilisent deux layouts qui vérifient la session via `get
 - Privilégier `const Main = styled("main", { base: { ... } })` pour créer des composants stylés.
 - Éviter `css()` et les props inline sur `styled.div` — réserver `css()` aux cas où `styled()` n'est pas applicable.
 - **Couleurs pour composants tiers (Lucide, canvas)** : utiliser `token("colors.fg.muted")` de `styled-system/tokens` plutôt que `var(--colors-fg-muted)`. Pour les icônes Lucide, préférer la prop `color` sur un `styled` parent (`currentColor` s'applique automatiquement).
+- **Icônes Lucide plutôt qu'emojis** : dans les composants React, utiliser des icônes `lucide-react` au lieu d'emojis pour les éléments d'interface (boutons, titres, labels). Les emojis ont un rendu incohérent entre OS/navigateurs, les icônes Lucide sont vectorielles et thémables.
 
 ### Durées — `Duration` Effect plutôt que des nombres bruts
 

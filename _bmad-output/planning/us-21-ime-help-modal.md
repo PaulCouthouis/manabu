@@ -373,15 +373,15 @@ Tip: press **Space** multiple times to cycle through kanji candidates.
 
 ### Étape 3 — Composant IMEHelpModal + stories
 
-- [ ] Créer `packages/exercises/src/components/ime-help-modal/ime-help-modal.tsx` avec Dialog Park UI + `react-markdown` + prose styles (pattern MicroLesson) → AC11, AC12, AC13, AC14
-- [ ] Implémenter le sélecteur de plateforme pour device `"unknown"` (useState interne) → AC15, AC16
-- [ ] Implémenter le lien "← Back to platforms" → AC17
-- [ ] Story `IMEHelpModal_macOS` : userAgent macOS → AC11, AC12
-- [ ] Story `IMEHelpModal_Windows` : userAgent Windows → AC11, AC12
-- [ ] Story `IMEHelpModal_iOS` : userAgent iOS → AC11, AC12
-- [ ] Story `IMEHelpModal_Android` : userAgent Android → AC11, AC12
-- [ ] Story `IMEHelpModal_ChromeOS` : userAgent ChromeOS → AC11, AC12
-- [ ] Story `IMEHelpModal_Unknown` : userAgent inconnu → sélecteur affiché → AC15
+- [x] Créer `packages/exercises/src/components/ime-help-modal/ime-help-modal.tsx` avec Dialog Park UI + `react-markdown` + prose styles (pattern MicroLesson) → AC11, AC12, AC13, AC14
+- [x] Implémenter le sélecteur de plateforme pour device `"unknown"` (useState interne) → AC15, AC16
+- [x] Implémenter le lien "← Back to platforms" → AC17
+- [x] Story `IMEHelpModal_macOS` : userAgent macOS → AC11, AC12
+- [x] Story `IMEHelpModal_Windows` : userAgent Windows → AC11, AC12
+- [x] Story `IMEHelpModal_iOS` : userAgent iOS → AC11, AC12
+- [x] Story `IMEHelpModal_Android` : userAgent Android → AC11, AC12
+- [x] Story `IMEHelpModal_ChromeOS` : userAgent ChromeOS → AC11, AC12
+- [x] Story `IMEHelpModal_Unknown` : userAgent inconnu → sélecteur affiché → AC15
 
 ### Étape 4 — Intégration WrittenProduction
 

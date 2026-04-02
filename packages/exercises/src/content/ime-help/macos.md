@@ -22,70 +22,56 @@ Tip: press **Space** multiple times to cycle through kanji candidates.
 
 ### Basic
 
-| Romaji | Kana |     | Romaji | Kana |     | Romaji | Kana |
-| ------ | ---- | --- | ------ | ---- | --- | ------ | ---- |
-| a      | あ   |     | ka     | か   |     | sa     | さ   |
-| i      | い   |     | ki     | き   |     | shi    | し   |
-| u      | う   |     | ku     | く   |     | su     | す   |
-| e      | え   |     | ke     | け   |     | se     | せ   |
-| o      | お   |     | ko     | こ   |     | so     | そ   |
-| ta     | た   |     | na     | な   |     | ha     | は   |
-| chi    | ち   |     | ni     | に   |     | hi     | ひ   |
-| tsu    | つ   |     | nu     | ぬ   |     | fu     | ふ   |
-| te     | て   |     | ne     | ね   |     | he     | へ   |
-| to     | と   |     | no     | の   |     | ho     | ほ   |
-| ma     | ま   |     | ya     | や   |     | ra     | ら   |
-| mi     | み   |     |        |      |     | ri     | り   |
-| mu     | む   |     | yu     | ゆ   |     | ru     | る   |
-| me     | め   |     |        |      |     | re     | れ   |
-| mo     | も   |     | yo     | よ   |     | ro     | ろ   |
-| wa     | わ   |     | n      | ん   |     | wo     | を   |
+| Romaji           | Kana           |
+| ---------------- | -------------- |
+| a i u e o        | あ い う え お |
+| ka ki ku ke ko   | か き く け こ |
+| sa shi su se so  | さ し す せ そ |
+| ta chi tsu te to | た ち つ て と |
+| na ni nu ne no   | な に ぬ ね の |
+| ha hi fu he ho   | は ひ ふ へ ほ |
+| ma mi mu me mo   | ま み む め も |
+| ya yu yo         | や ゆ よ       |
+| ra ri ru re ro   | ら り る れ ろ |
+| wa wo            | わ を          |
+| n                | ん             |
 
 ### Voiced (dakuten) & semi-voiced (handakuten)
 
-| Romaji | Kana |     | Romaji | Kana |     | Romaji | Kana |
-| ------ | ---- | --- | ------ | ---- | --- | ------ | ---- |
-| ga     | が   |     | za     | ざ   |     | da     | だ   |
-| gi     | ぎ   |     | ji     | じ   |     | di     | ぢ   |
-| gu     | ぐ   |     | zu     | ず   |     | du     | づ   |
-| ge     | げ   |     | ze     | ぜ   |     | de     | で   |
-| go     | ご   |     | zo     | ぞ   |     | do     | ど   |
-| ba     | ば   |     | pa     | ぱ   |     |        |
-| bi     | び   |     | pi     | ぴ   |     |        |
-| bu     | ぶ   |     | pu     | ぷ   |     |        |
-| be     | べ   |     | pe     | ぺ   |     |        |
-| bo     | ぼ   |     | po     | ぽ   |     |        |
+| Romaji         | Kana           |
+| -------------- | -------------- |
+| ga gi gu ge go | が ぎ ぐ げ ご |
+| za ji zu ze zo | ざ じ ず ぜ ぞ |
+| da di du de do | だ ぢ づ で ど |
+| ba bi bu be bo | ば び ぶ べ ぼ |
+| pa pi pu pe po | ぱ ぴ ぷ ぺ ぽ |
 
 ### Combos (yōon)
 
-| Romaji | Kana |     | Romaji | Kana |     | Romaji | Kana |
-| ------ | ---- | --- | ------ | ---- | --- | ------ | ---- |
-| kya    | きゃ |     | sha    | しゃ |     | cha    | ちゃ |
-| kyu    | きゅ |     | shu    | しゅ |     | chu    | ちゅ |
-| kyo    | きょ |     | sho    | しょ |     | cho    | ちょ |
-| nya    | にゃ |     | hya    | ひゃ |     | mya    | みゃ |
-| nyu    | にゅ |     | hyu    | ひゅ |     | myu    | みゅ |
-| nyo    | にょ |     | hyo    | ひょ |     | myo    | みょ |
-| rya    | りゃ |     | gya    | ぎゃ |     | ja     | じゃ |
-| ryu    | りゅ |     | gyu    | ぎゅ |     | ju     | じゅ |
-| ryo    | りょ |     | gyo    | ぎょ |     | jo     | じょ |
-| bya    | びゃ |     | pya    | ぴゃ |     |        |
-| byu    | びゅ |     | pyu    | ぴゅ |     |        |
-| byo    | びょ |     | pyo    | ぴょ |     |        |
+| Romaji      | Kana           |
+| ----------- | -------------- |
+| kya kyu kyo | きゃ きゅ きょ |
+| sha shu sho | しゃ しゅ しょ |
+| cha chu cho | ちゃ ちゅ ちょ |
+| nya nyu nyo | にゃ にゅ にょ |
+| hya hyu hyo | ひゃ ひゅ ひょ |
+| mya myu myo | みゃ みゅ みょ |
+| rya ryu ryo | りゃ りゅ りょ |
+| gya gyu gyo | ぎゃ ぎゅ ぎょ |
+| ja ju jo    | じゃ じゅ じょ |
+| bya byu byo | びゃ びゅ びょ |
+| pya pyu pyo | ぴゃ ぴゅ ぴょ |
 
 ### Special katakana
 
-| Romaji | Katakana |     | Romaji | Katakana |
-| ------ | -------- | --- | ------ | -------- |
-| ti     | ティ     |     | di     | ディ     |
-| tu     | トゥ     |     | du     | ドゥ     |
-| fa     | ファ     |     | va     | ヴァ     |
-| fi     | フィ     |     | vi     | ヴィ     |
-| fe     | フェ     |     | ve     | ヴェ     |
-| fo     | フォ     |     | vo     | ヴォ     |
-| wi     | ウィ     |     | we     | ウェ     |
-| wo     | ウォ     |     | she    | シェ     |
-| je     | ジェ     |     | che    | チェ     |
+| Romaji      | Katakana            |
+| ----------- | ------------------- |
+| ti di       | ティ ディ           |
+| tu du       | トゥ ドゥ           |
+| fa fi fe fo | ファ フィ フェ フォ |
+| va vi ve vo | ヴァ ヴィ ヴェ ヴォ |
+| wi we wo    | ウィ ウェ ウォ      |
+| she je che  | シェ ジェ チェ      |
 
 ### Tips
 
