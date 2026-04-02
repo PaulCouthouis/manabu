@@ -5,6 +5,7 @@ import sage from "@park-ui/panda-preset/colors/sage"
 import { absoluteCenter } from "./src/theme/recipes/absolute-center"
 import { dialog } from "./src/theme/recipes/dialog"
 import { group } from "./src/theme/recipes/group"
+import { rewardKeyframes } from "./src/theme/keyframes"
 import { spinner } from "./src/theme/recipes/spinner"
 
 export default defineConfig({
@@ -15,6 +16,7 @@ export default defineConfig({
   outdir: "styled-system",
   theme: {
     extend: {
+      keyframes: rewardKeyframes,
       recipes: {
         absoluteCenter,
         group,

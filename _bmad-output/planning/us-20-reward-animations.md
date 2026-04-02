@@ -115,12 +115,12 @@ Si `prefers-reduced-motion: reduce` est actif, le kana/mot apparaît directement
 
 ### Étape 1 — Composant RewardDisplay + stories
 
-- [ ] Créer `packages/exercises/src/components/reward-animation/reward-display.tsx` avec keyframes Panda CSS → AC1, AC2
-- [ ] Gérer `prefers-reduced-motion` dans les keyframes → AC3
-- [ ] Story `RewardDisplay_KanaNew` : text か, status new, label "Kana unlocked" → AC1
-- [ ] Story `RewardDisplay_KanaReviewed` : text か, status reviewed → AC2
-- [ ] Story `RewardDisplay_WordNew` : text 猫, status new, label "Word unlocked" → AC1
-- [ ] Story `RewardDisplay_WordReviewed` : text 猫, status reviewed → AC2
+- [x] Créer `packages/exercises/src/components/reward-animation/reward-display.tsx` avec keyframes Panda CSS → AC1, AC2
+- [x] Gérer `prefers-reduced-motion` dans les keyframes → AC3
+- [x] Story `RewardDisplay_KanaNew` : text か, status new, label "Kana unlocked" → AC1
+- [x] Story `RewardDisplay_KanaReviewed` : text か, status reviewed → AC2
+- [x] Story `RewardDisplay_WordNew` : text 猫, status new, label "Word unlocked" → AC1
+- [x] Story `RewardDisplay_WordReviewed` : text 猫, status reviewed → AC2
 
 ### Étape 2 — Mise à jour stories SpeechRepeat
 
