@@ -1,12 +1,14 @@
+import { Array } from "effect"
+
 const SAMPLE_RATE = 44100
 const DURATION = 0.5
 const FREQUENCY = 440
 const WAV_HEADER_SIZE = 44
 
 function writeString(view: DataView, offset: number, str: string) {
-  for (let i = 0; i < str.length; i++) {
-    view.setUint8(offset + i, str.charCodeAt(i))
-  }
+  Array.forEach(str.split(""), (char, i) => {
+    view.setUint8(offset + i, char.charCodeAt(0))
+  })
 }
 
 function writeWavHeader(view: DataView, dataLength: number) {
@@ -33,10 +35,10 @@ export function makeFakeAudioBlob(): Blob {
 
   writeWavHeader(view, dataLength)
 
-  for (let i = 0; i < numSamples; i++) {
+  Array.forEach(Array.range(0, numSamples - 1), (i) => {
     const sample = Math.sin((2 * Math.PI * FREQUENCY * i) / SAMPLE_RATE)
     view.setInt16(WAV_HEADER_SIZE + i * 2, sample * 0x7fff, true)
-  }
+  })
 
   return new Blob([buffer], { type: "audio/wav" })
 }

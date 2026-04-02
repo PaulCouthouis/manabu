@@ -9,13 +9,7 @@ export interface ChoicesQCMProps {
 
 export function ChoicesQCM(props: ChoicesQCMProps) {
   return (
-    <Grid
-      columns={2}
-      gap="4"
-      width="100%"
-      maxWidth="400px"
-      style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))" }}
-    >
+    <Grid columns={2} gap="4" width="100%" maxWidth="400px">
       {Array.map(props.choices, (choice) => {
         return (
           <Button

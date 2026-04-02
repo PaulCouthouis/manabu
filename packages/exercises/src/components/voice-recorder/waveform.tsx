@@ -1,3 +1,4 @@
+import { Array } from "effect"
 import { useEffect, useRef } from "react"
 import { styled } from "styled-system/jsx"
 import { token } from "styled-system/tokens"
@@ -47,7 +48,7 @@ const drawBars = (
   const barCount = Math.floor(width / (BAR_WIDTH + BAR_GAP))
   const step = Math.max(1, Math.floor(data.length / barCount))
 
-  Array.from({ length: barCount }, (_, i) => {
+  Array.forEach(Array.range(0, barCount - 1), (i) => {
     const dataIndex = i * step
     const value = dataIndex < data.length ? (data[dataIndex] ?? 0) : 0
     const barHeight = Math.max(2, (value / 255) * height)

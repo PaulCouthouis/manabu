@@ -1,6 +1,7 @@
+import { Lightbulb } from "lucide-react"
 import Markdown from "react-markdown"
 import { Button, Dialog } from "@manabu/ui"
-import { proseStyles } from "~/components/shared/prose-styles.js"
+import { Prose } from "~/components/shared/prose-styles.js"
 
 export interface MicroLessonProps {
   readonly content: string
@@ -24,12 +25,14 @@ export function MicroLesson(props: MicroLessonProps) {
       <Dialog.Positioner>
         <Dialog.Content>
           <Dialog.Header>
-            <Dialog.Title>💡 Grammar Points</Dialog.Title>
+            <Dialog.Title>
+              <Lightbulb size={20} /> Grammar Points
+            </Dialog.Title>
           </Dialog.Header>
           <Dialog.Body>
-            <div className={proseStyles}>
+            <Prose>
               <Markdown>{content}</Markdown>
-            </div>
+            </Prose>
           </Dialog.Body>
           <Dialog.Footer>
             <Dialog.CloseTrigger asChild>

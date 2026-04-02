@@ -1,5 +1,5 @@
 import { type ComponentType, useState } from "react"
-import { Effect, type Layer, Option, Record, pipe } from "effect"
+import { Array, Effect, type Layer, Option, Record, pipe } from "effect"
 import { Apple, Keyboard, Laptop, Monitor, Smartphone, TabletSmartphone } from "lucide-react"
 import Markdown from "react-markdown"
 import remarkGfm from "remark-gfm"
@@ -7,7 +7,7 @@ import { styled } from "styled-system/jsx"
 import { Button, Dialog } from "@manabu/ui"
 import { type DeviceType, detectDevice } from "~/components/ime-help-modal/detect-device.js"
 import { createExerciseProvider } from "~/components/shared/exercise-provider.js"
-import { proseStyles } from "~/components/shared/prose-styles.js"
+import { Prose } from "~/components/shared/prose-styles.js"
 import { UserAgentApi } from "~/logic/user-agent.js"
 import androidContent from "~/content/ime-help/android.md?raw"
 import chromeosContent from "~/content/ime-help/chromeos.md?raw"
@@ -102,9 +102,9 @@ function DeviceContent(props: { readonly deviceType: KnownDevice }) {
       <DeviceLabel>
         We detected you're on <strong>{displayName}</strong>.
       </DeviceLabel>
-      <div className={proseStyles}>
+      <Prose>
         <Markdown remarkPlugins={REMARK_PLUGINS}>{content}</Markdown>
-      </div>
+      </Prose>
     </>
   )
 }
@@ -113,7 +113,7 @@ function PlatformSelector(props: { readonly onSelect: (device: KnownDevice) => v
   return (
     <>
       <DeviceLabel>We couldn't detect your device. Select your platform:</DeviceLabel>
-      {deviceIcons.map(([device, Icon]) => {
+      {Array.map(deviceIcons, ([device, Icon]) => {
         const label = pipe(Record.get(deviceDisplayNames, device), Option.getOrThrow)
         return (
           <PlatformButton
