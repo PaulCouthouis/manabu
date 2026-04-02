@@ -365,11 +365,11 @@ Tip: press **Space** multiple times to cycle through kanji candidates.
 
 ### Étape 2 — Fichiers markdown par device
 
-- [ ] Créer `packages/exercises/src/content/ime-help/macos.md` → AC9, AC10
-- [ ] Créer `packages/exercises/src/content/ime-help/windows.md` → AC9, AC10
-- [ ] Créer `packages/exercises/src/content/ime-help/ios.md` → AC9, AC10
-- [ ] Créer `packages/exercises/src/content/ime-help/android.md` → AC9, AC10
-- [ ] Créer `packages/exercises/src/content/ime-help/chromeos.md` → AC9, AC10
+- [x] Créer `packages/exercises/src/content/ime-help/macos.md` → AC9, AC10
+- [x] Créer `packages/exercises/src/content/ime-help/windows.md` → AC9, AC10
+- [x] Créer `packages/exercises/src/content/ime-help/ios.md` → AC9, AC10
+- [x] Créer `packages/exercises/src/content/ime-help/android.md` → AC9, AC10
+- [x] Créer `packages/exercises/src/content/ime-help/chromeos.md` → AC9, AC10
 
 ### Étape 3 — Composant IMEHelpModal + stories
 
