@@ -15,6 +15,19 @@ import {
 
 const ttsLayer = Layer.provide(TextToSpeech.Default, BrowserSpeechSynthesisApiLive)
 
+const sampleLessonContent = `## は (topic marker)
+
+Marks the **topic** of the sentence — what the sentence is about.
+
+**Example:** 私**は**学生です。(*I* am a student.)
+
+## が (subject marker)
+
+Marks the **grammatical subject**, especially for new information or emphasis.
+
+**Example:** 雨**が**降っている。(It *is raining*.)
+`
+
 function FillInTheBlankStory(props: {
   readonly config: FillInTheBlankConfig
   readonly initialPhase?: FillInTheBlankPhase
@@ -22,7 +35,12 @@ function FillInTheBlankStory(props: {
   return (
     <RegistryProvider>
       <FillInTheBlankProvider layer={ttsLayer}>
-        <FillInTheBlank config={props.config} onResult={fn()} initialPhase={props.initialPhase} />
+        <FillInTheBlank
+          config={props.config}
+          onResult={fn()}
+          lessonContent={sampleLessonContent}
+          initialPhase={props.initialPhase}
+        />
       </FillInTheBlankProvider>
     </RegistryProvider>
   )

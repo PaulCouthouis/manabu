@@ -1,8 +1,9 @@
 import { Atom, useAtomSet } from "@effect-atom/atom-react"
 import { Array, Layer, pipe } from "effect"
-import { ArrowRight, Undo2 } from "lucide-react"
+import { ArrowRight, Lightbulb, Undo2 } from "lucide-react"
 import { useState } from "react"
 import { styled } from "styled-system/jsx"
+import { token } from "styled-system/tokens"
 import { Button, IconButton } from "@manabu/ui"
 import {
   Container,
@@ -21,6 +22,7 @@ import { validateBlanks } from "~/logic/fill-in-the-blank.js"
 import { TextToSpeech } from "~/logic/audio/text-to-speech.js"
 import { makeSpeakAtom } from "~/components/shared/make-atoms.js"
 import { useAutoplayFeedback } from "~/logic/ui/use-autoplay-feedback.js"
+import { MicroLesson } from "~/components/micro-lesson/micro-lesson.js"
 
 // --- Phase ---
 
@@ -49,6 +51,7 @@ export { FillInTheBlankProvider }
 export interface FillInTheBlankProps {
   readonly config: FillInTheBlankConfig
   readonly onResult: (result: FillInTheBlankResult) => void
+  readonly lessonContent: string
   readonly initialPhase?: FillInTheBlankPhase
 }
 
@@ -141,6 +144,16 @@ const CorrectionLine = styled("span", {
   },
 })
 
+const LessonButton = styled("div", {
+  base: {
+    position: "absolute",
+    top: "3",
+    right: "3",
+  },
+})
+
+const LESSON_ICON_COLOR = token("colors.jade.11")
+
 // --- Helpers ---
 
 function fillingBlankState(
@@ -204,10 +217,11 @@ function incorrectBlanks(blankResults: ReadonlyArray<BlankResult>): ReadonlyArra
 // --- Component ---
 
 export function FillInTheBlank(props: FillInTheBlankProps) {
-  const { config, onResult, initialPhase } = props
+  const { config, onResult, lessonContent, initialPhase } = props
   const [phase, setPhase] = useState<FillInTheBlankPhase>(
     initialPhase ?? { kind: "filling", filledBlanks: [] },
   )
+  const [lessonOpen, setLessonOpen] = useState(false)
 
   const { speakAtom } = useAtoms()
   const speak = useAtomSet(speakAtom)
@@ -241,6 +255,25 @@ export function FillInTheBlank(props: FillInTheBlankProps) {
   return (
     <Container>
       <ExerciseZone>
+        <LessonButton>
+          <IconButton
+            variant="ghost"
+            size="lg"
+            aria-label="Grammar lesson"
+            onClick={() => {
+              setLessonOpen(true)
+            }}
+          >
+            <Lightbulb size={28} color={LESSON_ICON_COLOR} />
+          </IconButton>
+        </LessonButton>
+        <MicroLesson
+          content={lessonContent}
+          open={lessonOpen}
+          onClose={() => {
+            setLessonOpen(false)
+          }}
+        />
         <StimulusGroup>
           <SentenceArea>
             {phase.kind === "filling" &&

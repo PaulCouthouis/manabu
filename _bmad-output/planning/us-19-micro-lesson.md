@@ -137,16 +137,16 @@ interface FillInTheBlankProps {
 
 ### Étape 3 — Intégration dans FillInTheBlank
 
-- [ ] Ajouter prop `lessonContent: string` (obligatoire) à `FillInTheBlankProps` → AC7
-- [ ] Ajouter le bouton 💡 en haut à droite, `useState` pour ouvert/fermé → AC8, AC9
-- [ ] Vérifier que le bouton 💡 est accessible en phase filling et feedback → AC10
-- [ ] Mettre à jour toutes les stories FillInTheBlank existantes avec un `lessonContent` fictif → AC11
+- [x] Ajouter prop `lessonContent: string` (obligatoire) à `FillInTheBlankProps` → AC7
+- [x] Ajouter le bouton 💡 en haut à droite, `useState` pour ouvert/fermé → AC8, AC9
+- [x] Vérifier que le bouton 💡 est accessible en phase filling et feedback → AC10
+- [x] Mettre à jour toutes les stories FillInTheBlank existantes avec un `lessonContent` fictif → AC11
 
 ### Étape 4 — Vérifications finales
 
-- [ ] `pnpm build` sans erreur → AC12
-- [ ] `pnpm lint` sans erreur → AC13
-- [ ] Tests existants passent (non-régression) → AC14
+- [x] `pnpm build` sans erreur → AC12
+- [x] `pnpm lint` sans erreur → AC13
+- [x] Tests existants passent (non-régression) → AC14
 
 ## Hors scope
 
