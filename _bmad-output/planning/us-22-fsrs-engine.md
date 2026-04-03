@@ -213,13 +213,13 @@ Service Effect dans `packages/domain`. Consomme les fonctions pures de `@manabu/
 
 ### Étape 1 — Types FSRS (TDD)
 
-- [ ] Écrire les tests de validation `FsrsState` : valeurs valides acceptées, stability < 0 rejeté, difficulty hors range rejeté, retrievability hors range rejeté → AC1, AC2, AC3, AC4
-- [ ] Implémenter `FsrsState` dans `packages/fsrs/src/fsrs-state.ts` → AC1-AC4
-- [ ] Écrire les tests `FsrsRating` et `FsrsCardState` : valeurs valides acceptées, invalides rejetées → AC5, AC6
-- [ ] Implémenter `FsrsRating` et `FsrsCardState` dans `packages/fsrs/src/fsrs-rating.ts` → AC5, AC6
-- [ ] Écrire les tests `FsrsParams` : 19 weights, requestRetention in [0, 1] → AC7
-- [ ] Implémenter `FsrsParams` + `defaultFsrsParams` dans `packages/fsrs/src/fsrs-params.ts` → AC7, AC8
-- [ ] Exporter tout depuis `packages/fsrs/src/index.ts`
+- [x] Écrire les tests de validation `FsrsState` : valeurs valides acceptées, stability < 0 rejeté, difficulty hors range rejeté, retrievability hors range rejeté → AC1, AC2, AC3, AC4
+- [x] Implémenter `FsrsState` dans `packages/fsrs/src/fsrs-state.ts` → AC1-AC4
+- [x] Écrire les tests `FsrsRating` et `FsrsCardState` : valeurs valides acceptées, invalides rejetées → AC5, AC6
+- [x] Implémenter `FsrsRating` et `FsrsCardState` dans `packages/fsrs/src/fsrs-rating.ts` → AC5, AC6
+- [x] Écrire les tests `FsrsParams` : 19 weights, requestRetention in [0, 1] → AC7
+- [x] Implémenter `FsrsParams` + `defaultFsrsParams` dans `packages/fsrs/src/fsrs-params.ts` → AC7, AC8
+- [x] Exporter tout depuis `packages/fsrs/src/index.ts`
 
 ### Étape 2 — scheduleReview (TDD)
 
