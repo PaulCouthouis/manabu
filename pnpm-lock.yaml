@@ -43,7 +43,7 @@ importers:
         version: link:../../packages/ui
       '@park-ui/panda-preset':
         specifier: ^0.43.1
-        version: 0.43.1(@internationalized/date@3.11.0)(@pandacss/dev@1.9.0(typescript@5.9.3))
+        version: 0.43.1(@internationalized/date@3.5.5)(@pandacss/dev@1.9.0(typescript@5.9.3))
       '@tanstack/react-router':
         specifier: ^1.167.5
         version: 1.167.5(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -149,6 +149,9 @@ importers:
 
   packages/domain:
     dependencies:
+      '@manabu/fsrs':
+        specifier: workspace:*
+        version: link:../fsrs
       '@manabu/shared':
         specifier: workspace:*
         version: link:../shared
@@ -202,6 +205,22 @@ importers:
       '@types/react':
         specifier: ^19.2.14
         version: 19.2.14
+      typescript:
+        specifier: ^5.8.0
+        version: 5.9.3
+      vitest:
+        specifier: ^4.1.0
+        version: 4.1.0(@vitest/browser-playwright@4.1.0)(vite@8.0.1(esbuild@0.27.4)(jiti@2.6.1)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.2))
+
+  packages/fsrs:
+    dependencies:
+      '@manabu/shared':
+        specifier: workspace:*
+        version: link:../shared
+      effect:
+        specifier: ^3.21.0
+        version: 3.21.0
+    devDependencies:
       typescript:
         specifier: ^5.8.0
         version: 5.9.3
@@ -279,7 +298,7 @@ importers:
         version: link:../shared
       '@park-ui/panda-preset':
         specifier: ^0.43.1
-        version: 0.43.1(@internationalized/date@3.5.5)(@pandacss/dev@1.9.0(typescript@5.9.3))
+        version: 0.43.1(@internationalized/date@3.11.0)(@pandacss/dev@1.9.0(typescript@5.9.3))
     devDependencies:
       '@pandacss/dev':
         specifier: ^1.9.0

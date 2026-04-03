@@ -34,6 +34,7 @@ manabu/
     domain/            # Entités, value objects, agrégats — pur Effect, zéro dépendance infra
     db/                # @effect/sql-pg, migrations, repositories
     exercises/         # @manabu/exercises — logique exercices (DrillQueue), composants exercice
+    fsrs/              # @manabu/fsrs — FSRS engine (spaced repetition), logique pure, zéro domaine
     storybook/         # @manabu/storybook — config Storybook centralisée, découvre les stories de ui + exercises
     ui/                # Composants UI partagés, design system Panda/Park
     shared/            # Types partagés, config Effect, utilitaires
@@ -53,9 +54,10 @@ apps/web           →  @manabu/auth, @manabu/domain, @manabu/db, @manabu/ui, @m
 packages/auth      →  @manabu/shared
 packages/db        →  @manabu/domain, @manabu/shared
 packages/exercises  →  @manabu/shared
+packages/fsrs       →  @manabu/shared
 packages/storybook  →  @manabu/ui, @manabu/exercises (devDeps — runner Storybook)
 packages/ui         →  @manabu/shared
-packages/domain     →  @manabu/shared
+packages/domain     →  @manabu/fsrs, @manabu/shared
 packages/shared     →  (aucune dépendance interne)
 ```
 

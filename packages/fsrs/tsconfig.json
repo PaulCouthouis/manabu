@@ -5,6 +5,6 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "references": [{ "path": "../fsrs" }, { "path": "../shared" }],
+  "references": [{ "path": "../shared" }],
   "include": ["src"]
 }

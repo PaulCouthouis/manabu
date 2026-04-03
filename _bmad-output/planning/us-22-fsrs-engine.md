@@ -204,12 +204,12 @@ Service Effect dans `packages/domain`. Consomme les fonctions pures de `@manabu/
 
 ### Étape 0 — Setup package `@manabu/fsrs`
 
-- [ ] Créer `packages/fsrs/package.json` (name `@manabu/fsrs`, deps `effect`, `@manabu/shared`)
-- [ ] Créer `packages/fsrs/tsconfig.json` (extends base, references shared)
-- [ ] Créer `packages/fsrs/vitest.config.ts`
-- [ ] Créer `packages/fsrs/src/index.ts` (barrel export vide)
-- [ ] Ajouter `@manabu/fsrs` comme dépendance de `packages/domain`
-- [ ] Vérifier `pnpm install` + `pnpm build` passent
+- [x] Créer `packages/fsrs/package.json` (name `@manabu/fsrs`, deps `effect`, `@manabu/shared`)
+- [x] Créer `packages/fsrs/tsconfig.json` (extends base, references shared)
+- [x] Créer `packages/fsrs/vitest.config.ts`
+- [x] Créer `packages/fsrs/src/index.ts` (barrel export vide)
+- [x] Ajouter `@manabu/fsrs` comme dépendance de `packages/domain`
+- [x] Vérifier `pnpm install` + `pnpm build` passent
 
 ### Étape 1 — Types FSRS (TDD)
 
