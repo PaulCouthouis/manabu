@@ -133,6 +133,13 @@ Les routes protégées utilisent deux layouts qui vérifient la session via `get
 - **Couleurs pour composants tiers (Lucide, canvas)** : utiliser `token("colors.fg.muted")` de `styled-system/tokens` plutôt que `var(--colors-fg-muted)`. Pour les icônes Lucide, préférer la prop `color` sur un `styled` parent (`currentColor` s'applique automatiquement).
 - **Icônes Lucide plutôt qu'emojis** : dans les composants React, utiliser des icônes `lucide-react` au lieu d'emojis pour les éléments d'interface (boutons, titres, labels). Les emojis ont un rendu incohérent entre OS/navigateurs, les icônes Lucide sont vectorielles et thémables.
 
+### Dates — `DateTime` Effect plutôt que `Date`
+
+- Utiliser `DateTime.Utc` plutôt que `Date` pour représenter les instants.
+- Créer via `DateTime.unsafeMake("...")` ou `DateTime.make(...)` (retourne `Option`).
+- Arithmétique via `DateTime.add(dt, { days: 1 })`, pas de calculs manuels sur les millisecondes.
+- Convertir à la frontière avec les APIs externes via `DateTime.toDateUtc(...)` ou `DateTime.toEpochMillis(...)`.
+
 ### Durées — `Duration` Effect plutôt que des nombres bruts
 
 - Utiliser `Duration.days(30)`, `Duration.minutes(1)`, `Duration.seconds(5)`, etc. pour exprimer les durées.

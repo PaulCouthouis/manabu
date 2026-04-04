@@ -4,3 +4,5 @@ export { FsrsRatingSchema, FsrsCardStateSchema } from "./fsrs-rating.js"
 export { FsrsState } from "./fsrs-state.js"
 
 export { FsrsParams } from "./fsrs-params.js"
+
+export { scheduleReview } from "./schedule-review.js"

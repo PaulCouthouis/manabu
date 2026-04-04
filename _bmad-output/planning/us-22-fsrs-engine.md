@@ -223,18 +223,18 @@ Service Effect dans `packages/domain`. Consomme les fonctions pures de `@manabu/
 
 ### Étape 2 — scheduleReview (TDD)
 
-- [ ] Test : Good sur carte new → stabilité initiale, nextReviewAt ~1 jour → AC9
-- [ ] Test : Hard sur carte new → stabilité réduite, intervalle < Good → AC10
-- [ ] Test : Again sur carte new → quasi-reset, intervalle très court → AC11
-- [ ] Test : relation d'ordre `interval(Good) > interval(Hard) > interval(Again)` → AC12
-- [ ] Implémenter `scheduleReview` (cas new) dans `packages/fsrs/src/schedule-review.ts` → AC9-AC12
-- [ ] Test : 5 Good successifs → intervalles croissants exponentiellement → AC13
-- [ ] Test : Again après 5 Good → contraction forte, stability > 0, pas de reset total → AC14, AC15
-- [ ] Implémenter `scheduleReview` (cas learning/review) → AC13-AC15
-- [ ] Test : transitions cardState (new → learning → review) → AC16
-- [ ] Test : nextReviewAt > now dans tous les cas → AC17
-- [ ] Test : invariants de sortie (stability >= 0, difficulty in [0, 10]) → AC18
-- [ ] Compléter l'implémentation → AC16-AC18
+- [x] Test : Good sur carte new → stabilité initiale, nextReviewAt ~1 jour → AC9
+- [x] Test : Hard sur carte new → stabilité réduite, intervalle < Good → AC10
+- [x] Test : Again sur carte new → quasi-reset, intervalle très court → AC11
+- [x] Test : relation d'ordre `interval(Good) > interval(Hard) > interval(Again)` → AC12
+- [x] Implémenter `scheduleReview` (cas new) dans `packages/fsrs/src/schedule-review.ts` → AC9-AC12
+- [x] Test : 5 Good successifs → intervalles croissants exponentiellement → AC13
+- [x] Test : Again après 5 Good → contraction forte, stability > 0, pas de reset total → AC14, AC15
+- [x] Implémenter `scheduleReview` (cas learning/review) → AC13-AC15
+- [x] Test : transitions cardState (new → learning → review) → AC16
+- [x] Test : nextReviewAt > now dans tous les cas → AC17
+- [x] Test : invariants de sortie (stability >= 0, difficulty in [0, 10]) → AC18
+- [x] Compléter l'implémentation → AC16-AC18
 
 ### Étape 3 — mapAttemptsToRating (TDD)
 
