@@ -1,10 +1,10 @@
-export type { FsrsRating, FsrsCardState } from "./fsrs-rating.js"
-export { FsrsRatingSchema, FsrsCardStateSchema } from "./fsrs-rating.js"
+export type { FsrsRating, FsrsCardState } from "~/fsrs-rating.js"
+export { FsrsRatingSchema, FsrsCardStateSchema } from "~/fsrs-rating.js"
 
-export { FsrsState } from "./fsrs-state.js"
+export { FsrsState } from "~/fsrs-state.js"
 
-export { FsrsParams } from "./fsrs-params.js"
+export { FsrsParams } from "~/fsrs-params.js"
 
-export { scheduleReview } from "./schedule-review.js"
+export { scheduleReview } from "~/schedule-review.js"
 
-export { mapAttemptsToRating } from "./map-attempts-to-rating.js"
+export { mapAttemptsToRating } from "~/map-attempts-to-rating.js"

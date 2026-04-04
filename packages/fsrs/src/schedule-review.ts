@@ -1,7 +1,7 @@
 import { DateTime } from "effect"
-import type { FsrsCardState, FsrsRating } from "./fsrs-rating.js"
-import { defaultFsrsParams, type FsrsParams } from "./fsrs-params.js"
-import { FsrsState } from "./fsrs-state.js"
+import type { FsrsCardState, FsrsRating } from "~/fsrs-rating.js"
+import { defaultFsrsParams, type FsrsParams } from "~/fsrs-params.js"
+import { FsrsState } from "~/fsrs-state.js"
 
 // FSRS v5 constants
 // Source: https://github.com/open-spaced-repetition/fsrs4anki/blob/v5.0.0/fsrs4anki_scheduler.js
