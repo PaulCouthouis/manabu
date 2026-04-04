@@ -1,5 +1,5 @@
 import { assert, layer } from "@effect/vitest"
-import { Effect, Layer } from "effect"
+import { Array, Effect, Layer, Option } from "effect"
 import { SkillTypeRepo } from "./skill-type-repo.js"
 import { runMigrations } from "./migrations/index.js"
 import { TestSqlLayer } from "./test-utils.js"
@@ -33,10 +33,10 @@ layer(TestLayer, { timeout: 60_000 })("SkillTypeRepo — PostgreSQL integration"
       assert.strictEqual(grammar.length, 5)
 
       // Verify a specific skill type
-      const first = foundations.find((s) => s.code === "F1")
-      assert.ok(first)
-      assert.strictEqual(first.name, "Syllable listening & repetition")
-      assert.strictEqual(first.family, "Foundation")
+      const first = Array.findFirst(foundations, (s) => s.code === "F1")
+      assert.ok(Option.isSome(first))
+      assert.strictEqual(first.value.name, "Syllable listening & repetition")
+      assert.strictEqual(first.value.family, "Foundation")
     }),
   )
 })

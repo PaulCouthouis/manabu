@@ -76,8 +76,6 @@ const decodeRow = (
   }
 }
 
-// --- Repo ---
-
 export class LinguisticElementRepo extends Effect.Service<LinguisticElementRepo>()(
   "LinguisticElementRepo",
   {
@@ -89,29 +87,25 @@ export class LinguisticElementRepo extends Effect.Service<LinguisticElementRepo>
           const rows = yield* sql<ElementRow>`
             SELECT * FROM linguistic_element WHERE id = ${Number(id)}
           `
-          return yield* Array.head(rows).pipe(
-            Option.match({
-              onNone: () => Effect.succeed(Option.none<LinguisticElement>()),
-              onSome: (row) =>
-                Effect.gen(function* () {
-                  const comps = yield* sql<ComponentRow>`
-                    SELECT component_id FROM element_component WHERE parent_id = ${row.id} ORDER BY position
-                  `
-                  const gpRows =
-                    row.kind === "sentence"
-                      ? yield* sql<{ grammar_point_id: number }>`
-                          SELECT grammar_point_id FROM sentence_grammar_point WHERE sentence_id = ${row.id}
-                        `
-                      : []
-                  const element = yield* decodeRow(
-                    row,
-                    Array.map(comps, (r) => r.component_id),
-                    Array.map(gpRows, (r) => r.grammar_point_id),
-                  )
-                  return Option.some(element)
-                }),
-            }),
+          const maybeRow = Array.head(rows)
+          if (Option.isNone(maybeRow)) return Option.none<LinguisticElement>()
+
+          const row = maybeRow.value
+          const comps = yield* sql<ComponentRow>`
+            SELECT component_id FROM element_component WHERE parent_id = ${row.id} ORDER BY position
+          `
+          const gpRows =
+            row.kind === "sentence"
+              ? yield* sql<{ grammar_point_id: number }>`
+                  SELECT grammar_point_id FROM sentence_grammar_point WHERE sentence_id = ${row.id}
+                `
+              : []
+          const element = yield* decodeRow(
+            row,
+            Array.map(comps, (r) => r.component_id),
+            Array.map(gpRows, (r) => r.grammar_point_id),
           )
+          return Option.some(element)
         })
 
       const findByKind = (kind: LinguisticElementKind) =>

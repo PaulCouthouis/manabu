@@ -1,19 +1,12 @@
 import { assert, layer } from "@effect/vitest"
 import { LinguisticElementId, SENTENCE_SKILL_IDS, SentenceId, SkillTypeId } from "@manabu/domain"
-import { Array, Effect, Layer, Option } from "effect"
+import { Array, Effect, Option } from "effect"
 import { ContentItemRepo } from "./content-item-repo.js"
 import { LinguisticElementRepo } from "./linguistic-element-repo.js"
 import { runMigrations } from "./migrations/index.js"
-import { SkillTypeRepo } from "./skill-type-repo.js"
-import { TestSqlLayer } from "./test-utils.js"
+import { TestRepoLayer } from "./test-utils.js"
 
-const TestLayer = Layer.mergeAll(
-  LinguisticElementRepo.Default,
-  ContentItemRepo.Default,
-  SkillTypeRepo.Default,
-).pipe(Layer.provideMerge(TestSqlLayer))
-
-layer(TestLayer, { timeout: 180_000 })("Seed sentences — PostgreSQL", (it) => {
+layer(TestRepoLayer, { timeout: 180_000 })("Seed sentences — PostgreSQL", (it) => {
   // AC20 — chaque SentenceElement a exactement 7 ContentItems
   it.effect("each sentence element has exactly 7 ContentItems (skills 4-10)", () =>
     Effect.gen(function* () {

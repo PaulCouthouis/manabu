@@ -1,21 +1,14 @@
 import { assert, layer } from "@effect/vitest"
 import { LinguisticElementId, SkillTypeId, WORD_SKILL_IDS, WordId } from "@manabu/domain"
-import { Array, Effect, Layer, Option } from "effect"
+import { Array, Effect, Option } from "effect"
 import { ContentItemRepo } from "./content-item-repo.js"
 import { LinguisticElementRepo } from "./linguistic-element-repo.js"
 import { runMigrations } from "./migrations/index.js"
-import { SkillTypeRepo } from "./skill-type-repo.js"
-import { TestSqlLayer } from "./test-utils.js"
-
-const TestLayer = Layer.mergeAll(
-  LinguisticElementRepo.Default,
-  ContentItemRepo.Default,
-  SkillTypeRepo.Default,
-).pipe(Layer.provideMerge(TestSqlLayer))
+import { TestRepoLayer } from "./test-utils.js"
 
 const isUS6Word = (id: number) => id >= 5000 && id <= 9999
 
-layer(TestLayer, { timeout: 120_000 })("Seed words — PostgreSQL", (it) => {
+layer(TestRepoLayer, { timeout: 120_000 })("Seed words — PostgreSQL", (it) => {
   // AC11 — Chaque mot a exactement 6 ContentItems (skills 4, 6, 7, 8, 9, 10)
   it.effect("each word has exactly 6 ContentItems for skills 4, 6, 7, 8, 9, 10", () =>
     Effect.gen(function* () {

@@ -3,20 +3,18 @@ import { ContentItem } from "@manabu/domain"
 import type { LinguisticElementId, SkillTypeId } from "@manabu/domain"
 import { Array, Effect, Schema } from "effect"
 
-const decodeContentItem = Schema.decodeUnknown(ContentItem)
-
 type ContentItemRow = { id: number; element_id: number; skill_type_id: number }
 
-const decodeRows = (rows: ReadonlyArray<ContentItemRow>) =>
-  Effect.all(
-    Array.map(rows, (row) =>
-      decodeContentItem({
-        id: row.id,
-        linguisticElementId: row.element_id,
-        skillTypeId: row.skill_type_id,
-      }),
-    ),
-  )
+const decodeContentItems = Schema.decode(Schema.Array(ContentItem))
+
+const decodeRows = (rows: ReadonlyArray<ContentItemRow>) => {
+  const mapped = Array.map(rows, (row) => ({
+    id: row.id,
+    linguisticElementId: row.element_id,
+    skillTypeId: row.skill_type_id,
+  }))
+  return decodeContentItems(mapped)
+}
 
 export class ContentItemRepo extends Effect.Service<ContentItemRepo>()("ContentItemRepo", {
   effect: Effect.gen(function* () {

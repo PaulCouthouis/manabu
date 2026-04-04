@@ -1,19 +1,12 @@
 import { assert, layer } from "@effect/vitest"
 import { KanaId, LinguisticElementId, SkillTypeId, sokuonChoonIds } from "@manabu/domain"
-import { Array, Effect, Layer, Option } from "effect"
+import { Array, Effect, Option } from "effect"
 import { ContentItemRepo } from "./content-item-repo.js"
 import { LinguisticElementRepo } from "./linguistic-element-repo.js"
 import { runMigrations } from "./migrations/index.js"
-import { SkillTypeRepo } from "./skill-type-repo.js"
-import { TestSqlLayer } from "./test-utils.js"
+import { TestRepoLayer } from "./test-utils.js"
 
-const TestLayer = Layer.mergeAll(
-  LinguisticElementRepo.Default,
-  ContentItemRepo.Default,
-  SkillTypeRepo.Default,
-).pipe(Layer.provideMerge(TestSqlLayer))
-
-layer(TestLayer, { timeout: 60_000 })("Seed kana extended — PostgreSQL", (it) => {
+layer(TestRepoLayer, { timeout: 60_000 })("Seed kana extended — PostgreSQL", (it) => {
   // AC-K3 — les 3 sokuon/chōon n'ont aucun ContentItem
   it.effect("sokuon/chōon have no ContentItems", () =>
     Effect.gen(function* () {

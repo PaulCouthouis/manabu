@@ -1,5 +1,8 @@
 import { PostgreSqlContainer } from "@testcontainers/postgresql"
 import { ConfigProvider, Effect, Layer } from "effect"
+import { ContentItemRepo } from "./content-item-repo.js"
+import { LinguisticElementRepo } from "./linguistic-element-repo.js"
+import { SkillTypeRepo } from "./skill-type-repo.js"
 import { SqlLive } from "./sql-live.js"
 
 export const TestSqlLayer = Layer.unwrapScoped(
@@ -22,3 +25,9 @@ export const TestSqlLayer = Layer.unwrapScoped(
     return Layer.provide(SqlLive, Layer.setConfigProvider(configProvider))
   }),
 )
+
+export const TestRepoLayer = Layer.mergeAll(
+  LinguisticElementRepo.Default,
+  ContentItemRepo.Default,
+  SkillTypeRepo.Default,
+).pipe(Layer.provideMerge(TestSqlLayer))
