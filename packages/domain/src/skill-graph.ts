@@ -36,44 +36,76 @@ export const SkillGraph: SkillGraphData = HashMap.fromIterable([
 export const getPrerequisites = (
   graph: SkillGraphData,
   id: SkillTypeId,
-): ReadonlyArray<SkillTypeId> =>
-  pipe(
+): ReadonlyArray<SkillTypeId> => {
+  return pipe(
     HashMap.get(graph, id),
-    Option.getOrElse(() => Array.empty<SkillTypeId>()),
+    Option.getOrElse(() => {
+      return Array.empty<SkillTypeId>()
+    }),
   )
+}
 
 export const getTransitivePrerequisites = (
   graph: SkillGraphData,
   id: SkillTypeId,
 ): ReadonlyArray<SkillTypeId> => {
-  const visited = new Set<SkillTypeId>()
-  const stack = [...getPrerequisites(graph, id)]
-
-  let current = stack.pop()
-  while (current !== undefined) {
-    if (!visited.has(current)) {
-      visited.add(current)
-      stack.push(...getPrerequisites(graph, current))
-    }
-    current = stack.pop()
+  const collect = (
+    stack: ReadonlyArray<SkillTypeId>,
+    visited: ReadonlySet<SkillTypeId>,
+  ): ReadonlySet<SkillTypeId> => {
+    return pipe(
+      Array.head(stack),
+      Option.match({
+        onNone: () => {
+          return visited
+        },
+        onSome: (current) => {
+          const rest = Array.drop(stack, 1)
+          if (visited.has(current)) {
+            return collect(rest, visited)
+          }
+          const newVisited = new Set([...visited, current])
+          const neighbors = getPrerequisites(graph, current)
+          return collect([...rest, ...neighbors], newVisited)
+        },
+      }),
+    )
   }
 
-  return Array.fromIterable(visited)
+  return Array.fromIterable(collect(getPrerequisites(graph, id), new Set()))
 }
 
-export const getEntryPoints = (graph: SkillGraphData): ReadonlyArray<SkillTypeId> =>
-  pipe(
+export const getEntryPoints = (graph: SkillGraphData): ReadonlyArray<SkillTypeId> => {
+  return pipe(
     Array.fromIterable(HashMap.toEntries(graph)),
-    Array.filter(([, prereqs]) => prereqs.length === 0),
-    Array.map(([id]) => id),
+    Array.filter(([, prereqs]) => {
+      return prereqs.length === 0
+    }),
+    Array.map(([id]) => {
+      return id
+    }),
   )
+}
 
-export const getDependents = (graph: SkillGraphData, id: SkillTypeId): ReadonlyArray<SkillTypeId> =>
-  pipe(
+export const getDependents = (
+  graph: SkillGraphData,
+  id: SkillTypeId,
+): ReadonlyArray<SkillTypeId> => {
+  return pipe(
     Array.fromIterable(HashMap.toEntries(graph)),
-    Array.filter(([, prereqs]) => prereqs.some((p) => p === id)),
-    Array.map(([depId]) => depId),
+    Array.filter(([, prereqs]) => {
+      return Array.some(prereqs, (p) => {
+        return p === id
+      })
+    }),
+    Array.map(([depId]) => {
+      return depId
+    }),
   )
+}
 
-export const validateGraph = (graph: SkillGraphData): boolean =>
-  validateDag(HashMap.keys(graph), (id) => getPrerequisites(graph, id))
+export const validateGraph = (graph: SkillGraphData): boolean => {
+  return validateDag(HashMap.keys(graph), (id) => {
+    return getPrerequisites(graph, id)
+  })
+}

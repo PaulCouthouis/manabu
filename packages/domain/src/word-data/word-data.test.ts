@@ -3,7 +3,7 @@ import { wordData } from "./index.js"
 import { kanaData } from "../kana-data.js"
 import { kanaExtendedData } from "../kana-extended-data.js"
 import { kanjiData } from "../kanji-data/index.js"
-import { Array, Number } from "effect"
+import { Array, Number, Struct } from "effect"
 
 const PARTICLES = new Set([
   "は",
@@ -33,7 +33,9 @@ const PARTICLES = new Set([
   "って",
 ])
 
-const n = (x: number): number => x
+const n = (x: number): number => {
+  return x
+}
 
 const allKanaIds = new Set([
   ...Array.map(kanaData, (k) => n(k.id)),
@@ -50,7 +52,7 @@ describe("word-data", () => {
 
   // AC2 — pas de written en doublon
   it("has no duplicate written forms", () => {
-    const writtens = Array.map(wordData, (w) => w.written)
+    const writtens = Array.map(wordData, Struct.get("written"))
     const unique = new Set(writtens)
     expect(unique.size).toBe(wordData.length)
   })
@@ -119,12 +121,10 @@ describe("word-data", () => {
     const kanjiById = new Map(Array.map(kanjiData, (k) => [n(k.id), k.character] as const))
 
     for (const w of wordData) {
-      const reconstructed = w.components
-        .map((cid) => {
-          const id = n(cid)
-          return id >= 1000 ? kanjiById.get(id) : kanaById.get(id)
-        })
-        .join("")
+      const reconstructed = Array.map(w.components, (cid) => {
+        const id = n(cid)
+        return id >= 1000 ? kanjiById.get(id) : kanaById.get(id)
+      }).join("")
       expect(
         reconstructed,
         `Word ${w.written}: reconstructed "${reconstructed}" from components`,

@@ -1,6 +1,6 @@
 import { assert, layer } from "@effect/vitest"
 import { KanaId, LinguisticElementId, SkillTypeId, sokuonChoonIds } from "@manabu/domain"
-import { Array, Effect, Option } from "effect"
+import { Array, Effect, HashSet, Option } from "effect"
 import { ContentItemRepo } from "./content-item-repo.js"
 import { LinguisticElementRepo } from "./linguistic-element-repo.js"
 import { runMigrations } from "./migrations/index.js"
@@ -18,10 +18,10 @@ layer(TestRepoLayer, { timeout: 60_000 })("Seed kana extended — PostgreSQL", (
       const f1ElementIds = new Set(Array.map(f1Items, (ci) => Number(ci.linguisticElementId)))
       const f3ElementIds = new Set(Array.map(f3Items, (ci) => Number(ci.linguisticElementId)))
 
-      for (const id of sokuonChoonIds) {
+      HashSet.forEach(sokuonChoonIds, (id) => {
         assert.ok(!f1ElementIds.has(id), `Sokuon/chōon ${id} should not have F1 ContentItem`)
         assert.ok(!f3ElementIds.has(id), `Sokuon/chōon ${id} should not have F3 ContentItem`)
-      }
+      })
     }),
   )
 

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest"
 import { kanjiData } from "./kanji-data/index.js"
-import { Array, Order } from "effect"
+import { Array, Order, Struct } from "effect"
 import { validateComponentGraph } from "./linguistic-element.js"
 
 describe("kanji-data", () => {
@@ -11,7 +11,7 @@ describe("kanji-data", () => {
 
   // AC2 — pas de character en doublon
   it("has no duplicate characters", () => {
-    const characters = Array.map(kanjiData, (k) => k.character)
+    const characters = Array.map(kanjiData, Struct.get("character"))
     const unique = new Set(characters)
     expect(unique.size).toBe(kanjiData.length)
   })

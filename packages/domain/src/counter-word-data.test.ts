@@ -1,9 +1,11 @@
 import { describe, expect, it } from "vitest"
 import { counterWordData } from "./counter-word-data.js"
 import { kanjiData } from "./kanji-data/index.js"
-import { Array, Number as N } from "effect"
+import { Array, Number as N, Struct } from "effect"
 
-const n = (x: number): number => x
+const n = (x: number): number => {
+  return x
+}
 
 const allKanjiIds = new Set(Array.map(kanjiData, (k) => n(k.id)))
 
@@ -50,7 +52,7 @@ describe("counter-word-data", () => {
   })
 
   it("has no duplicate written forms", () => {
-    const writtens = Array.map(counterWordData, (w) => w.written)
+    const writtens = Array.map(counterWordData, Struct.get("written"))
     const unique = new Set(writtens)
     expect(unique.size).toBe(counterWordData.length)
   })

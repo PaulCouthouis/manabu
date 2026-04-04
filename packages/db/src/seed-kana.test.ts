@@ -1,6 +1,6 @@
 import { assert, layer } from "@effect/vitest"
 import { KanaId, LinguisticElementId, SkillTypeId, sokuonChoonIds } from "@manabu/domain"
-import { Array, Effect, Option } from "effect"
+import { Array, Effect, HashSet, Option } from "effect"
 import { ContentItemRepo } from "./content-item-repo.js"
 import { LinguisticElementRepo } from "./linguistic-element-repo.js"
 import { runMigrations } from "./migrations/index.js"
@@ -62,7 +62,7 @@ layer(TestRepoLayer, { timeout: 60_000 })("Seed kana — PostgreSQL", (it) => {
       const kanaElements = yield* elemRepo.findByKind("kana")
       const standardHiragana = Array.filter(
         kanaElements,
-        (k) => k.kind === "kana" && k.kanaType === "hiragana" && !sokuonChoonIds.has(k.id),
+        (k) => k.kind === "kana" && k.kanaType === "hiragana" && !HashSet.has(sokuonChoonIds, k.id),
       )
 
       assert.strictEqual(standardHiragana.length, 104)
@@ -89,7 +89,7 @@ layer(TestRepoLayer, { timeout: 60_000 })("Seed kana — PostgreSQL", (it) => {
       const kanaElements = yield* elemRepo.findByKind("kana")
       const katakanaWithF3 = Array.filter(
         kanaElements,
-        (k) => k.kind === "kana" && k.kanaType === "katakana" && !sokuonChoonIds.has(k.id),
+        (k) => k.kind === "kana" && k.kanaType === "katakana" && !HashSet.has(sokuonChoonIds, k.id),
       )
 
       // 104 standard + 13 extended = 117

@@ -5,25 +5,54 @@ import { grammarData } from "../grammar-data/index.js"
 import { wordData } from "../word-data/index.js"
 import { sentenceData } from "./index.js"
 
-const n = (x: number): number => x
+const n = (x: number): number => {
+  return x
+}
 
-const wordIds = new Set([...wordData.map((w) => n(w.id)), ...counterWordData.map((w) => n(w.id))])
-const grammarIds = new Set(grammarData.map((g) => n(g.id)))
+const wordIds = new Set([
+  ...Array.map(wordData, (w) => {
+    return n(w.id)
+  }),
+  ...Array.map(counterWordData, (w) => {
+    return n(w.id)
+  }),
+])
+const grammarIds = new Set(
+  Array.map(grammarData, (g) => {
+    return n(g.id)
+  }),
+)
 
 const grammarToSkill = (id: number): number => {
-  if (id >= 300 && id <= 379) return 11
-  if (id >= 380 && id <= 472) return 12
-  if (id >= 473 && id <= 500) return 13
-  if (id >= 501 && id <= 514) return 14
-  if (id >= 515 && id <= 558) return 15
+  if (id >= 300 && id <= 379) {
+    return 11
+  }
+  if (id >= 380 && id <= 472) {
+    return 12
+  }
+  if (id >= 473 && id <= 500) {
+    return 13
+  }
+  if (id >= 501 && id <= 514) {
+    return 14
+  }
+  if (id >= 515 && id <= 558) {
+    return 15
+  }
   throw new Error(`Unknown grammar ID: ${id}`)
 }
 
-const getGrammarIds = (sentence: (typeof sentenceData)[number]): ReadonlyArray<number> =>
-  sentence.grammarPoints.map((c) => n(c))
+const getGrammarIds = (sentence: (typeof sentenceData)[number]): ReadonlyArray<number> => {
+  return Array.map(sentence.grammarPoints, (c) => {
+    return n(c)
+  })
+}
 
-const getWordIds = (sentence: (typeof sentenceData)[number]): ReadonlyArray<number> =>
-  sentence.components.map((c) => n(c))
+const getWordIds = (sentence: (typeof sentenceData)[number]): ReadonlyArray<number> => {
+  return Array.map(sentence.components, (c) => {
+    return n(c)
+  })
+}
 
 const maxWordIdForRank = (rank: number): number => {
   switch (rank) {
@@ -165,7 +194,7 @@ describe("sentence-data", () => {
             gIds.length,
             `Sentence ${n(s.id)} (rank ${s.sentenceRank}) should have 2 grammar points, has ${gIds.length}`,
           ).toBe(2)
-          const skills = new Set(gIds.map(grammarToSkill))
+          const skills = new Set(Array.map(gIds, grammarToSkill))
           expect(
             skills.size,
             `Sentence ${n(s.id)} (rank ${s.sentenceRank}): grammar points should be from same skill`,
@@ -183,7 +212,7 @@ describe("sentence-data", () => {
             gIds.length,
             `Sentence ${n(s.id)} (rank 8) should have 2 grammar points, has ${gIds.length}`,
           ).toBe(2)
-          const skills = new Set(gIds.map(grammarToSkill))
+          const skills = new Set(Array.map(gIds, grammarToSkill))
           expect(
             skills.size,
             `Sentence ${n(s.id)} (rank 8): grammar points should be from different skills`,
@@ -201,7 +230,7 @@ describe("sentence-data", () => {
             gIds.length,
             `Sentence ${n(s.id)} (rank 9) should have 3 grammar points, has ${gIds.length}`,
           ).toBe(3)
-          const skills = gIds.map(grammarToSkill)
+          const skills = Array.map(gIds, grammarToSkill)
           const uniqueSkills = new Set(skills)
           expect(
             uniqueSkills.size,
@@ -220,7 +249,7 @@ describe("sentence-data", () => {
             gIds.length,
             `Sentence ${n(s.id)} (rank 10) should have 3 grammar points, has ${gIds.length}`,
           ).toBe(3)
-          const skills = new Set(gIds.map(grammarToSkill))
+          const skills = new Set(Array.map(gIds, grammarToSkill))
           expect(
             skills.size,
             `Sentence ${n(s.id)} (rank 10): should have 3 different skills, has ${skills.size}`,

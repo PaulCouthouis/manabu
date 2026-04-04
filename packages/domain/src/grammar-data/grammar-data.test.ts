@@ -7,9 +7,11 @@ import {
   skill14Data,
   skill15Data,
 } from "./index.js"
-import { Array, Number as N } from "effect"
+import { Array, Number as N, Struct } from "effect"
 
-const n = (x: number): number => x
+const n = (x: number): number => {
+  return x
+}
 
 describe("grammar-data", () => {
   // AC1 — 259 GrammarElements présents
@@ -19,7 +21,7 @@ describe("grammar-data", () => {
 
   // AC2 — pas de name en doublon
   it("has no duplicate names", () => {
-    const names = Array.map(grammarData, (g) => g.name)
+    const names = Array.map(grammarData, Struct.get("name"))
     const unique = new Set(names)
     expect(unique.size).toBe(grammarData.length)
   })

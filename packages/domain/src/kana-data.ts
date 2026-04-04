@@ -15,14 +15,24 @@ const handakuten = "ぱ ぴ ぷ ぺ ぽ"
 const yoon =
   "きゃ きゅ きょ しゃ しゅ しょ ちゃ ちゅ ちょ にゃ にゅ にょ ひゃ ひゅ ひょ みゃ みゅ みょ りゃ りゅ りょ ぎゃ ぎゅ ぎょ じゃ じゅ じょ びゃ びゅ びょ ぴゃ ぴゅ ぴょ"
 
-const toKatakana = (s: string) =>
-  s.replace(/[\u3041-\u3096]/g, (ch) => String.fromCharCode(ch.charCodeAt(0) + 0x60))
+const hiraganaToKatakanaChar = (ch: string) => {
+  return String.fromCharCode(ch.charCodeAt(0) + 0x60)
+}
 
-const hiraganaChars = Array.flatMap([gojuon, dakuten, handakuten, yoon], (s) => s.split(" "))
+const toKatakana = (s: string) => {
+  return s.replace(/[\u3041-\u3096]/g, hiraganaToKatakanaChar)
+}
+
+const hiraganaChars = Array.flatMap([gojuon, dakuten, handakuten, yoon], (s) => {
+  return s.split(" ")
+})
 const katakanaChars = Array.map(hiraganaChars, toKatakana)
 
-const toEntries = (chars: ReadonlyArray<string>, kanaType: KanaType) =>
-  Array.map(chars, (character) => ({ character, kanaType }))
+const toEntries = (chars: ReadonlyArray<string>, kanaType: KanaType) => {
+  return Array.map(chars, (character) => {
+    return { character, kanaType }
+  })
+}
 
 const allChars = [...toEntries(hiraganaChars, "hiragana"), ...toEntries(katakanaChars, "katakana")]
 

@@ -1,3 +1,4 @@
+import { Array } from "effect"
 import {
   SentenceElement,
   SentenceId,
@@ -6,7 +7,9 @@ import {
 } from "../linguistic-element.js"
 import { GrammarPointId } from "../grammar-point.js"
 
-const isWordId = (id: number): boolean => id >= WORD_ID_MIN
+const isWordId = (id: number): boolean => {
+  return id >= WORD_ID_MIN
+}
 
 export const s = (
   id: number,
@@ -15,14 +18,20 @@ export const s = (
   components: readonly number[],
   sentenceRank: number,
 ) => {
-  const words = components.filter(isWordId)
-  const grammarPoints = components.filter((x) => !isWordId(x))
+  const words = Array.filter(components, isWordId)
+  const grammarPoints = Array.filter(components, (x) => {
+    return !isWordId(x)
+  })
   return SentenceElement.make({
     id: SentenceId(id),
     text,
     meaning,
-    components: words.map((x) => mkWordId(x)),
-    grammarPoints: grammarPoints.map((x) => GrammarPointId(x)),
+    components: Array.map(words, (x) => {
+      return mkWordId(x)
+    }),
+    grammarPoints: Array.map(grammarPoints, (x) => {
+      return GrammarPointId(x)
+    }),
     sentenceRank,
   })
 }

@@ -1,4 +1,4 @@
-import { Brand, Schema } from "effect"
+import { Array, Brand, Schema, Struct } from "effect"
 import { validateDag } from "./dag.js"
 import { GrammarPointIdSchema } from "./grammar-point.js"
 
@@ -30,11 +30,14 @@ export const SentenceIdSchema = Schema.Number.pipe(Schema.fromBrand(SentenceId))
 
 // --- Helpers ---
 
-const kindField = <const K extends string>(kind: K) =>
-  Schema.Literal(kind).pipe(
+const kindField = <const K extends string>(kind: K) => {
+  return Schema.Literal(kind).pipe(
     Schema.propertySignature,
-    Schema.withConstructorDefault(() => kind),
+    Schema.withConstructorDefault(() => {
+      return kind
+    }),
   )
+}
 
 // --- Kana ---
 
@@ -98,9 +101,12 @@ export const validateComponentGraph = (
     readonly components: ReadonlyArray<LinguisticElementId>
   }>,
 ): boolean => {
-  const byId = new Map(elements.map((e) => [e.id, e]))
-  return validateDag(
-    elements.map((e) => e.id),
-    (id) => byId.get(id)?.components ?? [],
+  const byId = new Map(
+    Array.map(elements, (e) => {
+      return [e.id, e] as const
+    }),
   )
+  return validateDag(Array.map(elements, Struct.get("id")), (id) => {
+    return byId.get(id)?.components ?? []
+  })
 }

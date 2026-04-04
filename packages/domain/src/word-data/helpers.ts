@@ -1,3 +1,4 @@
+import { Array } from "effect"
 import type { KanaId, KanjiId } from "../linguistic-element.js"
 import {
   KanaId as mkKanaId,
@@ -6,7 +7,9 @@ import {
   WordId,
 } from "../linguistic-element.js"
 
-const toComponentId = (id: number): KanaId | KanjiId => (id >= 1000 ? mkKanjiId(id) : mkKanaId(id))
+const toComponentId = (id: number): KanaId | KanjiId => {
+  return id >= 1000 ? mkKanjiId(id) : mkKanaId(id)
+}
 
 export const w = (
   id: number,
@@ -14,11 +17,12 @@ export const w = (
   meaning: string,
   components: readonly number[],
   frequency: number,
-) =>
-  WordElement.make({
+) => {
+  return WordElement.make({
     id: WordId(id),
     written,
     meaning,
-    components: components.map(toComponentId) as [KanaId | KanjiId, ...(KanaId | KanjiId)[]],
+    components: Array.map(components, toComponentId) as [KanaId | KanjiId, ...(KanaId | KanjiId)[]],
     frequency,
   })
+}

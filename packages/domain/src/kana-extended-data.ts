@@ -1,3 +1,4 @@
+import { Array, HashSet, pipe, Struct } from "effect"
 import { KanaElement, KanaId } from "./linguistic-element.js"
 
 // --- Sokuon & Chōon (pas de ContentItems — micro-leçon en contexte) ---
@@ -28,4 +29,8 @@ const extendedKatakana: ReadonlyArray<KanaElement> = [
 
 export const kanaExtendedData: ReadonlyArray<KanaElement> = [...sokuonChoon, ...extendedKatakana]
 
-export const sokuonChoonIds: ReadonlySet<KanaElement["id"]> = new Set(sokuonChoon.map((k) => k.id))
+export const sokuonChoonIds: HashSet.HashSet<KanaElement["id"]> = pipe(
+  sokuonChoon,
+  Array.map(Struct.get("id")),
+  HashSet.fromIterable,
+)
