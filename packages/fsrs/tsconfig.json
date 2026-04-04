@@ -3,10 +3,7 @@
   "compilerOptions": {
     "composite": true,
     "outDir": "dist",
-    "rootDir": "src",
-    "paths": {
-      "~/*": ["./src/*"]
-    }
+    "rootDir": "src"
   },
   "references": [{ "path": "../shared" }],
   "include": ["src"]

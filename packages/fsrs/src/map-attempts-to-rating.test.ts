@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest"
-import { mapAttemptsToRating } from "~/map-attempts-to-rating.js"
+import { mapAttemptsToRating } from "./map-attempts-to-rating.js"
 
 describe("mapAttemptsToRating", () => {
   // AC19

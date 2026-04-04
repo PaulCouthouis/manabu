@@ -1,7 +1,7 @@
 import { DateTime, Equal } from "effect"
 import { describe, expect, it } from "vitest"
-import { FsrsState } from "~/fsrs-state.js"
-import { scheduleReview } from "~/schedule-review.js"
+import { FsrsState } from "./fsrs-state.js"
+import { scheduleReview } from "./schedule-review.js"
 
 const now = DateTime.unsafeMake("2026-04-03T12:00:00Z")
 const newState = FsrsState.make({ stability: 0, difficulty: 0, retrievability: 0 })

@@ -1,4 +1,4 @@
-import type { FsrsRating } from "~/fsrs-rating.js"
+import type { FsrsRating } from "./fsrs-rating.js"
 
 export function mapAttemptsToRating(attempts: number): FsrsRating {
   if (attempts <= 1) {
