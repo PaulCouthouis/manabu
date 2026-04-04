@@ -238,11 +238,11 @@ Service Effect dans `packages/domain`. Consomme les fonctions pures de `@manabu/
 
 ### Étape 3 — mapAttemptsToRating (TDD)
 
-- [ ] Test : 1 tentative → Good → AC19
-- [ ] Test : 2 tentatives → Hard → AC20
-- [ ] Test : 3 tentatives → Again → AC21
-- [ ] Test : 10 tentatives → Again → AC22
-- [ ] Implémenter `mapAttemptsToRating` dans `packages/fsrs/src/map-attempts-to-rating.ts` → AC19-AC22
+- [x] Test : 1 tentative → Good → AC19
+- [x] Test : 2 tentatives → Hard → AC20
+- [x] Test : 3 tentatives → Again → AC21
+- [x] Test : 10 tentatives → Again → AC22
+- [x] Implémenter `mapAttemptsToRating` dans `packages/fsrs/src/map-attempts-to-rating.ts` → AC19-AC22
 
 ### Étape 4 — FsrsScheduler service (TDD)
 

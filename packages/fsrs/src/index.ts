@@ -6,3 +6,5 @@ export { FsrsState } from "./fsrs-state.js"
 export { FsrsParams } from "./fsrs-params.js"
 
 export { scheduleReview } from "./schedule-review.js"
+
+export { mapAttemptsToRating } from "./map-attempts-to-rating.js"
