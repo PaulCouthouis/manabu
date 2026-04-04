@@ -246,18 +246,18 @@ Service Effect dans `packages/domain`. Consomme les fonctions pures de `@manabu/
 
 ### Étape 4 — FsrsScheduler service (TDD)
 
-- [ ] Test : `FsrsScheduler.Default` fournit un layer fonctionnel → AC23
-- [ ] Test : `schedule()` retourne le résultat attendu → AC24
-- [ ] Test : `ratingFromAttempts()` retourne le rating attendu → AC25
-- [ ] Test : le service est injectable via `Layer.succeed` → AC26
-- [ ] Implémenter `FsrsScheduler` dans `packages/domain/src/fsrs-scheduler.ts` → AC23-AC26
-- [ ] Exporter `FsrsScheduler` depuis `packages/domain/src/index.ts`
+- [x] Test : `FsrsScheduler.Default` fournit un layer fonctionnel → AC23
+- [x] Test : `schedule()` retourne le résultat attendu → AC24
+- [x] Test : `ratingFromAttempts()` retourne le rating attendu → AC25
+- [x] Test : le service est injectable via `Layer.succeed` → AC26
+- [x] Implémenter `FsrsScheduler` dans `packages/domain/src/fsrs-scheduler.ts` → AC23-AC26
+- [x] Exporter `FsrsScheduler` depuis `packages/domain/src/index.ts`
 
 ### Étape 5 — Vérifications finales
 
-- [ ] `pnpm build` sans erreur → AC27
-- [ ] `pnpm lint` sans erreur → AC28
-- [ ] Tests existants passent (non-régression) → AC29
+- [x] `pnpm build` sans erreur → AC27
+- [x] `pnpm lint` sans erreur → AC28
+- [x] Tests existants passent (non-régression) → AC29
 
 ## Hors scope
 

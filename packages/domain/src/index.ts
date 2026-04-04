@@ -49,6 +49,8 @@ export { GrammarPoint, GrammarPointId, GrammarPointIdSchema } from "./grammar-po
 
 export { ReviewCard, ReviewCardId, ReviewCardIdSchema } from "./review-card.js"
 
+export { FsrsScheduler } from "./fsrs-scheduler.js"
+
 export { kanaData } from "./kana-data.js"
 
 export { kanaExtendedData, sokuonChoonIds } from "./kana-extended-data.js"
