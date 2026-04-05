@@ -146,10 +146,10 @@ packages/db      →  queries batch (ReviewCardRepo, ContentItemRepo)
 
 ### Étape 1 — Entry points (TDD)
 
-- [ ] Définir le port `ContentAvailability` dans `packages/domain` : `getAvailableItems(userId, skillId) → Effect<Array<ContentItem>>`
-- [ ] Définir les ports repos nécessaires pour les lookups
-- [ ] Test : Skill 1 (0 prérequis), 3 items nouveaux → les 3 retournés → AC1
-- [ ] Implémenter le cas trivial : récupérer les ContentItems du skill, les retourner tous
+- [x] Définir le port `ContentAvailability` dans `packages/domain` : `getAvailableItems(userId, skillId) → Effect<Array<ContentItem>>`
+- [x] Définir les ports repos nécessaires pour les lookups
+- [x] Test : Skill 1 (0 prérequis), 3 items nouveaux → les 3 retournés → AC1
+- [x] Implémenter le cas trivial : récupérer les ContentItems du skill, les retourner tous
 
 ### Étape 2 — Exclure les items non expirés (TDD)
 
