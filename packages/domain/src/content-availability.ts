@@ -1,6 +1,8 @@
-import { Array, Context, DateTime, Effect, Option, Struct } from "effect"
+import { Array, Context, DateTime, Effect, Function, Option, Struct } from "effect"
 import type { ContentItem, ContentItemId } from "./content-item.js"
+import type { LinguisticElementId } from "./linguistic-element.js"
 import type { ReviewCard } from "./review-card.js"
+import { getPrerequisites, SkillGraph } from "./skill-graph.js"
 import type { SkillTypeId } from "./skill-type.js"
 
 // --- Ports ---
@@ -9,6 +11,10 @@ export class ContentItemPort extends Context.Tag("ContentItemPort")<
   ContentItemPort,
   {
     readonly findBySkillType: (skillId: SkillTypeId) => Effect.Effect<Array<ContentItem>>
+    readonly findByElementAndSkills: (
+      elementIds: ReadonlyArray<LinguisticElementId>,
+      skillIds: ReadonlyArray<SkillTypeId>,
+    ) => Effect.Effect<Array<ContentItem>>
   }
 >() {}
 
@@ -17,7 +23,7 @@ export class ReviewCardPort extends Context.Tag("ReviewCardPort")<
   {
     readonly findByUserAndContentItems: (
       userId: string,
-      contentItemIds: Array<ContentItemId>,
+      contentItemIds: ReadonlyArray<ContentItemId>,
     ) => Effect.Effect<Array<ReviewCard>>
   }
 >() {}
@@ -43,6 +49,28 @@ const isActionable = Effect.fnUntraced(function* (
   return yield* lessThanNow(card.value.nextReviewAt)
 })
 
+const hasPrereqSatisfied = Effect.fnUntraced(function* (
+  elementId: LinguisticElementId,
+  prereqSkillId: SkillTypeId,
+  prereqContentItems: ReadonlyArray<ContentItem>,
+  prereqReviewCards: ReadonlyArray<ReviewCard>,
+) {
+  const prereqContentItem = Array.findFirst(prereqContentItems, (ci) => {
+    return ci.linguisticElementId === elementId && ci.skillTypeId === prereqSkillId
+  })
+  if (Option.isNone(prereqContentItem)) {
+    return true
+  }
+  const reviewCard = Array.findFirst(prereqReviewCards, (r) => {
+    return r.contentItemId === prereqContentItem.value.id
+  })
+  if (Option.isNone(reviewCard)) {
+    return false
+  }
+  const expired = yield* lessThanNow(reviewCard.value.nextReviewAt)
+  return !expired
+})
+
 // --- Service ---
 
 export class ContentAvailability extends Effect.Service<ContentAvailability>()(
@@ -52,9 +80,8 @@ export class ContentAvailability extends Effect.Service<ContentAvailability>()(
       const contentItemPort = yield* ContentItemPort
       const reviewCardPort = yield* ReviewCardPort
 
-      const getAvailableItems = (userId: string, skillId: SkillTypeId) => {
+      const filterActionable = (userId: string, items: ReadonlyArray<ContentItem>) => {
         return Effect.gen(function* () {
-          const items = yield* contentItemPort.findBySkillType(skillId)
           const contentItemIds = Array.map(items, Struct.get("id"))
           const reviewCards = yield* reviewCardPort.findByUserAndContentItems(
             userId,
@@ -63,6 +90,54 @@ export class ContentAvailability extends Effect.Service<ContentAvailability>()(
           return yield* Effect.filter(items, (item) => {
             return isActionable(item, reviewCards)
           })
+        })
+      }
+
+      const filterByPrerequisites = (
+        userId: string,
+        skillId: SkillTypeId,
+        items: ReadonlyArray<ContentItem>,
+      ) => {
+        return Effect.gen(function* () {
+          const prereqSkillIds = getPrerequisites(SkillGraph, skillId)
+          if (Array.isEmptyReadonlyArray(prereqSkillIds)) {
+            return items
+          }
+
+          const elementIds = Array.map(items, Struct.get("linguisticElementId"))
+          const prereqContentItems = yield* contentItemPort.findByElementAndSkills(
+            elementIds,
+            prereqSkillIds,
+          )
+          const prereqContentItemIds = Array.map(prereqContentItems, Struct.get("id"))
+          const prereqReviewCards = yield* reviewCardPort.findByUserAndContentItems(
+            userId,
+            prereqContentItemIds,
+          )
+
+          const hasAllPrereqsSatisfied = (item: ContentItem) => {
+            return Effect.gen(function* () {
+              const results = yield* Effect.forEach(prereqSkillIds, (prereqSkillId) => {
+                return hasPrereqSatisfied(
+                  item.linguisticElementId,
+                  prereqSkillId,
+                  prereqContentItems,
+                  prereqReviewCards,
+                )
+              })
+              return Array.every(results, Function.identity)
+            })
+          }
+
+          return yield* Effect.filter(items, hasAllPrereqsSatisfied)
+        })
+      }
+
+      const getAvailableItems = (userId: string, skillId: SkillTypeId) => {
+        return Effect.gen(function* () {
+          const items = yield* contentItemPort.findBySkillType(skillId)
+          const actionableItems = yield* filterActionable(userId, items)
+          return yield* filterByPrerequisites(userId, skillId, actionableItems)
         })
       }
 

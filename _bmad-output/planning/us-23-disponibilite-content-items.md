@@ -159,10 +159,10 @@ packages/db      →  queries batch (ReviewCardRepo, ContentItemRepo)
 
 ### Étape 3 — Prérequis sur l'élément lui-même (TDD)
 
-- [ ] Test : (kana, Skill 2), prérequis [1], ContentItem(kana, Skill 1) existe + ReviewCard valide → retourné → AC4
-- [ ] Test : ContentItem(kana, Skill 1) existe mais ReviewCard absente → rejeté → AC5
-- [ ] Test : kana n'a pas de ContentItem dans Skill 1 → pas de dépendance, retourné → AC6
-- [ ] Ajouter la vérification : pour chaque prérequis P, si ContentItem(E, P) existe, ReviewCard(user, E, P) valide requise
+- [x] Test : (kana, Skill 2), prérequis [1], ContentItem(kana, Skill 1) existe + ReviewCard valide → retourné → AC4
+- [x] Test : ContentItem(kana, Skill 1) existe mais ReviewCard absente → rejeté → AC5
+- [x] Test : kana n'a pas de ContentItem dans Skill 1 → pas de dépendance, retourné → AC6
+- [x] Ajouter la vérification : pour chaque prérequis P, si ContentItem(E, P) existe, ReviewCard(user, E, P) valide requise
 
 ### Étape 4 — Vérification des composants (TDD)
 
