@@ -45,7 +45,7 @@ export {
 
 export { ContentItem, ContentItemId, ContentItemIdSchema } from "./content-item.js"
 
-export { ContentAvailability, ContentItemPort } from "./content-availability.js"
+export { ContentAvailability, ContentItemPort, ReviewCardPort } from "./content-availability.js"
 
 export { GrammarPoint, GrammarPointId, GrammarPointIdSchema } from "./grammar-point.js"
 

@@ -153,9 +153,9 @@ packages/db      →  queries batch (ReviewCardRepo, ContentItemRepo)
 
 ### Étape 2 — Exclure les items non expirés (TDD)
 
-- [ ] Test : item avec ReviewCard nextReviewAt > now → exclu → AC2
-- [ ] Test : item avec ReviewCard nextReviewAt < now → retourné → AC3
-- [ ] Ajouter le filtre : pas de ReviewCard (nouveau) ou ReviewCard overdue
+- [x] Test : item avec ReviewCard nextReviewAt > now → exclu → AC2
+- [x] Test : item avec ReviewCard nextReviewAt < now → retourné → AC3
+- [x] Ajouter le filtre : pas de ReviewCard (nouveau) ou ReviewCard overdue
 
 ### Étape 3 — Prérequis sur l'élément lui-même (TDD)
 

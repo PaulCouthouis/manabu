@@ -1,10 +1,10 @@
-import { Schema } from "effect"
+import { DateTime, Schema } from "effect"
 import { describe, expect, it } from "vitest"
 import { ContentItemId } from "./content-item.js"
 import { ReviewCard, ReviewCardId } from "./review-card.js"
 
 describe("ReviewCard", () => {
-  const now = new Date()
+  const now = DateTime.unsafeMake("2026-04-05T12:00:00Z")
   const testUuid = ReviewCardId("550e8400-e29b-41d4-a716-446655440000")
 
   // AC7 — ReviewCard.make() crée une instance valide

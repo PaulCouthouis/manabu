@@ -143,6 +143,8 @@ Les routes protégées utilisent deux layouts qui vérifient la session via `get
 - Créer via `DateTime.unsafeMake("...")` ou `DateTime.make(...)` (retourne `Option`).
 - Arithmétique via `DateTime.add(dt, { days: 1 })`, pas de calculs manuels sur les millisecondes.
 - Convertir à la frontière avec les APIs externes via `DateTime.toDateUtc(...)` ou `DateTime.toEpochMillis(...)`.
+- **Instants littéraux** : utiliser `DateTime.unsafeMake("...")` pour les fixtures et les constantes. Ne jamais écrire `new Date("...")` directement.
+- **Horloge dans les services** : utiliser `DateTime.now` (Effect). `@effect/vitest` injecte un `TestClock` à epoch 0 — fixer une date connue avec `yield* TestClock.setTime(DateTime.toEpochMillis(now))` et définir les fixtures relativement à cette date (`DateTime.add(now, { days: 3 })`).
 
 ### Durées — `Duration` Effect plutôt que des nombres bruts
 

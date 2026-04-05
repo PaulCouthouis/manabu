@@ -13,6 +13,6 @@ export class ReviewCard extends Schema.Class<ReviewCard>("ReviewCard")({
   id: ReviewCardIdSchema,
   userId: Schema.String,
   contentItemId: ContentItemIdSchema,
-  createdAt: Schema.DateFromSelf,
-  nextReviewAt: Schema.DateFromSelf,
+  createdAt: Schema.DateTimeUtcFromSelf,
+  nextReviewAt: Schema.DateTimeUtcFromSelf,
 }) {}
