@@ -1,16 +1,35 @@
-import { Array, Context, DateTime, Effect, Function, Option, Struct } from "effect"
+import { Array, Boolean, Context, DateTime, Effect, Function, Option, pipe, Struct } from "effect"
 import type { ContentItem, ContentItemId } from "./content-item.js"
+import type { GrammarPointId } from "./grammar-point.js"
 import type { LinguisticElementId } from "./linguistic-element.js"
 import type { ReviewCard } from "./review-card.js"
 import { getPrerequisites, SkillGraph } from "./skill-graph.js"
-import type { SkillTypeId } from "./skill-type.js"
+import { SkillTypeId } from "./skill-type.js"
 
-// --- Ports ---
+// --- Types ---
 
 export type ElementComponent = {
   readonly elementId: LinguisticElementId
   readonly componentId: LinguisticElementId
 }
+
+export type ElementGrammarPoint = {
+  readonly elementId: LinguisticElementId
+  readonly grammarPointId: GrammarPointId
+}
+
+export type GrammarPointContentItem = {
+  readonly grammarPointId: GrammarPointId
+  readonly contentItemId: ContentItemId
+}
+
+// --- Constants ---
+
+const GRAMMAR_SKILL_IDS = Array.map([11, 12, 13, 14, 15], SkillTypeId)
+
+const isGrammarSkill = (skillId: SkillTypeId) => Array.contains(GRAMMAR_SKILL_IDS, skillId)
+
+// --- Ports ---
 
 export class ContentItemPort extends Context.Tag("ContentItemPort")<
   ContentItemPort,
@@ -23,6 +42,13 @@ export class ContentItemPort extends Context.Tag("ContentItemPort")<
     readonly findComponentIds: (
       elementIds: ReadonlyArray<LinguisticElementId>,
     ) => Effect.Effect<Array<ElementComponent>>
+    readonly findGrammarPointIds: (
+      elementIds: ReadonlyArray<LinguisticElementId>,
+    ) => Effect.Effect<Array<ElementGrammarPoint>>
+    readonly findContentItemsByGrammarPoints: (
+      grammarPointIds: ReadonlyArray<GrammarPointId>,
+      skillIds: ReadonlyArray<SkillTypeId>,
+    ) => Effect.Effect<Array<GrammarPointContentItem>>
   }
 >() {}
 
@@ -38,23 +64,19 @@ export class ReviewCardPort extends Context.Tag("ReviewCardPort")<
 
 // --- Logique métier ---
 
-const lessThanNow = (dt: DateTime.Utc) => {
-  return Effect.map(DateTime.now, (now) => {
-    return DateTime.lessThan(dt, now)
-  })
-}
+const isExpired = (dt: DateTime.Utc) => pipe(DateTime.now, Effect.map(DateTime.greaterThan(dt)))
+
+const isRetained = (dt: DateTime.Utc) => pipe(isExpired(dt), Effect.map(Boolean.not))
 
 const isActionable = Effect.fnUntraced(function* (
   item: ContentItem,
   reviewCards: ReadonlyArray<ReviewCard>,
 ) {
-  const card = Array.findFirst(reviewCards, (rc) => {
-    return rc.contentItemId === item.id
-  })
+  const card = Array.findFirst(reviewCards, (rc) => rc.contentItemId === item.id)
   if (Option.isNone(card)) {
     return true
   }
-  return yield* lessThanNow(card.value.nextReviewAt)
+  return yield* isExpired(card.value.nextReviewAt)
 })
 
 const hasPrereqSatisfied = Effect.fnUntraced(function* (
@@ -63,21 +85,66 @@ const hasPrereqSatisfied = Effect.fnUntraced(function* (
   prereqContentItems: ReadonlyArray<ContentItem>,
   prereqReviewCards: ReadonlyArray<ReviewCard>,
 ) {
-  const prereqContentItem = Array.findFirst(prereqContentItems, (ci) => {
-    return ci.linguisticElementId === elementId && ci.skillTypeId === prereqSkillId
-  })
+  const prereqContentItem = Array.findFirst(
+    prereqContentItems,
+    (ci) => ci.linguisticElementId === elementId && ci.skillTypeId === prereqSkillId,
+  )
   if (Option.isNone(prereqContentItem)) {
     return true
   }
-  const reviewCard = Array.findFirst(prereqReviewCards, (r) => {
-    return r.contentItemId === prereqContentItem.value.id
-  })
+  const reviewCard = Array.findFirst(
+    prereqReviewCards,
+    (r) => r.contentItemId === prereqContentItem.value.id,
+  )
   if (Option.isNone(reviewCard)) {
     return false
   }
-  const expired = yield* lessThanNow(reviewCard.value.nextReviewAt)
-  return !expired
+  return yield* isRetained(reviewCard.value.nextReviewAt)
 })
+
+const isGpStudied = Effect.fnUntraced(function* (
+  gpId: GrammarPointId,
+  gpContentItems: ReadonlyArray<GrammarPointContentItem>,
+  gpReviewCards: ReadonlyArray<ReviewCard>,
+) {
+  const contentItemIds = pipe(
+    gpContentItems,
+    Array.filter((gci) => gci.grammarPointId === gpId),
+    Array.map(Struct.get("contentItemId")),
+  )
+  const results = yield* Effect.forEach(contentItemIds, (ciId) =>
+    pipe(
+      Array.findFirst(gpReviewCards, (r) => r.contentItemId === ciId),
+      Option.match({
+        onNone: () => Effect.succeed(false),
+        onSome: (rc) => isRetained(rc.nextReviewAt),
+      }),
+    ),
+  )
+  return Array.some(results, Function.identity)
+})
+
+const getGpIdsForElement = (
+  gpPairs: ReadonlyArray<ElementGrammarPoint>,
+  elementId: LinguisticElementId,
+) => {
+  return pipe(
+    gpPairs,
+    Array.filter((p) => p.elementId === elementId),
+    Array.map(Struct.get("grammarPointId")),
+  )
+}
+
+const getComponentIdsForElement = (
+  componentPairs: ReadonlyArray<ElementComponent>,
+  elementId: LinguisticElementId,
+) => {
+  return pipe(
+    componentPairs,
+    Array.filter((p) => p.elementId === elementId),
+    Array.map(Struct.get("componentId")),
+  )
+}
 
 // --- Service ---
 
@@ -95,9 +162,35 @@ export class ContentAvailability extends Effect.Service<ContentAvailability>()(
             userId,
             contentItemIds,
           )
-          return yield* Effect.filter(items, (item) => {
-            return isActionable(item, reviewCards)
-          })
+          return yield* Effect.filter(items, (item) => isActionable(item, reviewCards))
+        })
+      }
+
+      const fetchPrereqData = (
+        userId: string,
+        items: ReadonlyArray<ContentItem>,
+        prereqSkillIds: ReadonlyArray<SkillTypeId>,
+      ) => {
+        return Effect.gen(function* () {
+          const elementIds = Array.map(items, Struct.get("linguisticElementId"))
+          const componentPairs = yield* contentItemPort.findComponentIds(elementIds)
+          const allElementIds = pipe(
+            Array.map(componentPairs, Struct.get("componentId")),
+            Array.appendAll(elementIds),
+            Array.dedupe,
+          )
+
+          const prereqContentItems = yield* contentItemPort.findByElementAndSkills(
+            allElementIds,
+            prereqSkillIds,
+          )
+          const prereqContentItemIds = Array.map(prereqContentItems, Struct.get("id"))
+          const prereqReviewCards = yield* reviewCardPort.findByUserAndContentItems(
+            userId,
+            prereqContentItemIds,
+          )
+
+          return { componentPairs, prereqContentItems, prereqReviewCards }
         })
       }
 
@@ -112,42 +205,30 @@ export class ContentAvailability extends Effect.Service<ContentAvailability>()(
             return items
           }
 
-          const elementIds = Array.map(items, Struct.get("linguisticElementId"))
-          const componentPairs = yield* contentItemPort.findComponentIds(elementIds)
-          const componentIds = Array.map(componentPairs, Struct.get("componentId"))
-          const allElementIds = Array.dedupe([...elementIds, ...componentIds])
-
-          const prereqContentItems = yield* contentItemPort.findByElementAndSkills(
-            allElementIds,
-            prereqSkillIds,
-          )
-          const prereqContentItemIds = Array.map(prereqContentItems, Struct.get("id"))
-          const prereqReviewCards = yield* reviewCardPort.findByUserAndContentItems(
+          const { componentPairs, prereqContentItems, prereqReviewCards } = yield* fetchPrereqData(
             userId,
-            prereqContentItemIds,
+            items,
+            prereqSkillIds,
           )
 
           const hasAllPrereqsSatisfied = (item: ContentItem) => {
-            const itemComponentIds = Array.filterMap(componentPairs, (p) => {
-              if (p.elementId === item.linguisticElementId) {
-                return Option.some(p.componentId)
-              }
-              return Option.none()
-            })
-            const idsToCheck = [item.linguisticElementId, ...itemComponentIds]
+            const idsToCheck = pipe(
+              getComponentIdsForElement(componentPairs, item.linguisticElementId),
+              Array.prepend(item.linguisticElementId),
+            )
 
             return Effect.gen(function* () {
-              const results = yield* Effect.forEach(idsToCheck, (elementId) => {
-                return Effect.forEach(prereqSkillIds, (prereqSkillId) => {
-                  return hasPrereqSatisfied(
+              const results = yield* Effect.forEach(idsToCheck, (elementId) =>
+                Effect.forEach(prereqSkillIds, (prereqSkillId) =>
+                  hasPrereqSatisfied(
                     elementId,
                     prereqSkillId,
                     prereqContentItems,
                     prereqReviewCards,
-                  )
-                })
-              })
-              return Array.every(Array.flatten(results), Function.identity)
+                  ),
+                ),
+              )
+              return pipe(results, Array.flatten, Array.every(Function.identity))
             })
           }
 
@@ -155,11 +236,69 @@ export class ContentAvailability extends Effect.Service<ContentAvailability>()(
         })
       }
 
+      const fetchGpData = (userId: string, items: ReadonlyArray<ContentItem>) => {
+        return Effect.gen(function* () {
+          const elementIds = Array.map(items, Struct.get("linguisticElementId"))
+          const gpPairs = yield* contentItemPort.findGrammarPointIds(elementIds)
+          const allGpIds = pipe(gpPairs, Array.map(Struct.get("grammarPointId")), Array.dedupe)
+          const gpContentItems = yield* contentItemPort.findContentItemsByGrammarPoints(
+            allGpIds,
+            GRAMMAR_SKILL_IDS,
+          )
+          const gpContentItemIds = pipe(
+            gpContentItems,
+            Array.map(Struct.get("contentItemId")),
+            Array.dedupe,
+          )
+          const gpReviewCards = yield* reviewCardPort.findByUserAndContentItems(
+            userId,
+            gpContentItemIds,
+          )
+
+          return { gpPairs, allGpIds, gpContentItems, gpReviewCards }
+        })
+      }
+
+      const computeStudiedGpIds = (
+        allGpIds: ReadonlyArray<GrammarPointId>,
+        gpContentItems: ReadonlyArray<GrammarPointContentItem>,
+        gpReviewCards: ReadonlyArray<ReviewCard>,
+      ) => {
+        return Effect.filter(allGpIds, (gpId) => isGpStudied(gpId, gpContentItems, gpReviewCards))
+      }
+
+      const filterByGrammarPoints = (
+        userId: string,
+        skillId: SkillTypeId,
+        items: ReadonlyArray<ContentItem>,
+      ) => {
+        return Effect.gen(function* () {
+          if (!isGrammarSkill(skillId)) {
+            return items
+          }
+
+          const { gpPairs, allGpIds, gpContentItems, gpReviewCards } = yield* fetchGpData(
+            userId,
+            items,
+          )
+          const studiedGpIds = yield* computeStudiedGpIds(allGpIds, gpContentItems, gpReviewCards)
+
+          return Array.filter(items, (item) => {
+            const itemGpIds = getGpIdsForElement(gpPairs, item.linguisticElementId)
+            if (itemGpIds.length <= 1) {
+              return true
+            }
+            return Array.every(itemGpIds, (gpId) => Array.contains(studiedGpIds, gpId))
+          })
+        })
+      }
+
       const getAvailableItems = (userId: string, skillId: SkillTypeId) => {
         return Effect.gen(function* () {
           const items = yield* contentItemPort.findBySkillType(skillId)
           const actionableItems = yield* filterActionable(userId, items)
-          return yield* filterByPrerequisites(userId, skillId, actionableItems)
+          const prereqItems = yield* filterByPrerequisites(userId, skillId, actionableItems)
+          return yield* filterByGrammarPoints(userId, skillId, prereqItems)
         })
       }
 

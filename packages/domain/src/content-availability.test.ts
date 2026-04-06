@@ -5,8 +5,11 @@ import {
   ContentItemPort,
   ReviewCardPort,
   type ElementComponent,
+  type ElementGrammarPoint,
+  type GrammarPointContentItem,
 } from "./content-availability.js"
 import { ContentItem, ContentItemId } from "./content-item.js"
+import { GrammarPointId } from "./grammar-point.js"
 import { LinguisticElementId } from "./linguistic-element.js"
 import { ReviewCard, ReviewCardId } from "./review-card.js"
 import { SkillTypeId } from "./skill-type.js"
@@ -17,12 +20,13 @@ const skill1 = SkillTypeId(1)
 const skill2 = SkillTypeId(2)
 const skill4 = SkillTypeId(4)
 const skill7 = SkillTypeId(7)
+const skill11 = SkillTypeId(11)
 
 const now = DateTime.unsafeMake("2026-04-05T12:00:00Z")
 const future = DateTime.add(now, { days: 3 })
 const past = DateTime.subtract(now, { days: 1 })
 
-// Kana elements (id 1 = あ hiragana, id 2 = い hiragana)
+// Kana elements (id 1 = あ, id 2 = い)
 const kanaA_s1 = ContentItem.make({
   id: ContentItemId(1),
   linguisticElementId: LinguisticElementId(1),
@@ -49,7 +53,7 @@ const kanaI_s2 = ContentItem.make({
   skillTypeId: skill2,
 })
 
-// Word element (id 5000) in Skill 7, with kana components あ(1) and い(2)
+// Word element (id 5000) in Skill 7
 const word_s7 = ContentItem.make({
   id: ContentItemId(201),
   linguisticElementId: LinguisticElementId(5000),
@@ -64,6 +68,43 @@ const word_s4 = ContentItem.make({
 const wordComponents: ReadonlyArray<ElementComponent> = [
   { elementId: LinguisticElementId(5000), componentId: LinguisticElementId(1) },
   { elementId: LinguisticElementId(5000), componentId: LinguisticElementId(2) },
+]
+
+// Sentence 70021 (雨が降っている) — 1 GP [が/302] → bootstrap
+const sentence1gp_s11 = ContentItem.make({
+  id: ContentItemId(301),
+  linguisticElementId: LinguisticElementId(70021),
+  skillTypeId: skill11,
+})
+
+// Sentence 70006 (今日は休日だ) — 2 GP [だ/300, は/301]
+const sentence2gp_s11 = ContentItem.make({
+  id: ContentItemId(302),
+  linguisticElementId: LinguisticElementId(70006),
+  skillTypeId: skill11,
+})
+
+// Bootstrap sentences already studied (contain individual GPs)
+const bootstrapDa_s11 = ContentItem.make({
+  id: ContentItemId(303),
+  linguisticElementId: LinguisticElementId(70010),
+  skillTypeId: skill11,
+})
+const bootstrapHa_s11 = ContentItem.make({
+  id: ContentItemId(304),
+  linguisticElementId: LinguisticElementId(70020),
+  skillTypeId: skill11,
+})
+
+const grammarPointPairs: ReadonlyArray<ElementGrammarPoint> = [
+  { elementId: LinguisticElementId(70021), grammarPointId: GrammarPointId(302) },
+  { elementId: LinguisticElementId(70006), grammarPointId: GrammarPointId(300) },
+  { elementId: LinguisticElementId(70006), grammarPointId: GrammarPointId(301) },
+]
+
+const gpContentItems: ReadonlyArray<GrammarPointContentItem> = [
+  { grammarPointId: GrammarPointId(300), contentItemId: ContentItemId(303) },
+  { grammarPointId: GrammarPointId(301), contentItemId: ContentItemId(304) },
 ]
 
 const makeReviewCard = (contentItemId: ContentItemId, nextReviewAt: DateTime.Utc) => {
@@ -81,6 +122,8 @@ const makeReviewCard = (contentItemId: ContentItemId, nextReviewAt: DateTime.Utc
 const makeContentItemPort = (
   allItems: ReadonlyArray<ContentItem>,
   components: ReadonlyArray<ElementComponent> = [],
+  grammarPoints: ReadonlyArray<ElementGrammarPoint> = [],
+  gpCIs: ReadonlyArray<GrammarPointContentItem> = [],
 ) => {
   return Layer.succeed(ContentItemPort, {
     findBySkillType: (skillId) => {
@@ -107,6 +150,20 @@ const makeContentItemPort = (
         }),
       )
     },
+    findGrammarPointIds: (elementIds) => {
+      return Effect.succeed(
+        Array.filter(grammarPoints, (p) => {
+          return Array.contains(elementIds, p.elementId)
+        }),
+      )
+    },
+    findContentItemsByGrammarPoints: (grammarPointIds) => {
+      return Effect.succeed(
+        Array.filter(gpCIs, (gci) => {
+          return Array.contains(grammarPointIds, gci.grammarPointId)
+        }),
+      )
+    },
   })
 }
 
@@ -122,14 +179,23 @@ const makeReviewCardPort = (cards: ReadonlyArray<ReviewCard>) => {
   })
 }
 
-const makeTestLayer = (
-  contentItems: ReadonlyArray<ContentItem>,
-  reviewCards: ReadonlyArray<ReviewCard>,
-  components: ReadonlyArray<ElementComponent> = [],
-) => {
+const makeTestLayer = (opts: {
+  readonly contentItems: ReadonlyArray<ContentItem>
+  readonly reviewCards: ReadonlyArray<ReviewCard>
+  readonly components?: ReadonlyArray<ElementComponent>
+  readonly grammarPoints?: ReadonlyArray<ElementGrammarPoint>
+  readonly gpContentItems?: ReadonlyArray<GrammarPointContentItem>
+}) => {
   return ContentAvailability.Default.pipe(
-    Layer.provide(makeContentItemPort(contentItems, components)),
-    Layer.provide(makeReviewCardPort(reviewCards)),
+    Layer.provide(
+      makeContentItemPort(
+        opts.contentItems,
+        opts.components ?? [],
+        opts.grammarPoints ?? [],
+        opts.gpContentItems ?? [],
+      ),
+    ),
+    Layer.provide(makeReviewCardPort(opts.reviewCards)),
   )
 }
 
@@ -137,49 +203,84 @@ const makeTestLayer = (
 
 const allSkill1Items = [kanaA_s1, kanaI_s1, kanaU_s1]
 const allItems_s1_s2 = [...allSkill1Items, kanaA_s2, kanaI_s2]
-
-const EntryPointsLayer = makeTestLayer(allSkill1Items, [])
-const OneNonExpiredLayer = makeTestLayer(allSkill1Items, [makeReviewCard(ContentItemId(1), future)])
-const OneOverdueLayer = makeTestLayer(allSkill1Items, [makeReviewCard(ContentItemId(1), past)])
-const AllPrereqsSatisfiedLayer = makeTestLayer(allItems_s1_s2, [
-  makeReviewCard(ContentItemId(1), future),
-  makeReviewCard(ContentItemId(2), future),
-])
-const OnePrereqMissingLayer = makeTestLayer(allItems_s1_s2, [
-  makeReviewCard(ContentItemId(1), future),
-])
-const NoPrereqContentItemLayer = makeTestLayer([kanaA_s2], [])
-
-// Skill 7 prereqs: [2, 3, 4]
-// word_s7 needs: element prereq word_s4 (Skill 4) + component prereqs kanaA_s2, kanaI_s2 (Skill 2)
-// Skill 3 (katakana): hiragana kana have no ContentItem → ignored (AC9)
 const allItems_components = [...allItems_s1_s2, word_s4, word_s7]
+const allItems_gp = [sentence1gp_s11, sentence2gp_s11, bootstrapDa_s11, bootstrapHa_s11]
 
-const AllComponentPrereqsSatisfiedLayer = makeTestLayer(
-  allItems_components,
-  [
-    makeReviewCard(ContentItemId(202), future), // word in Skill 4
-    makeReviewCard(ContentItemId(101), future), // kana あ in Skill 2
-    makeReviewCard(ContentItemId(102), future), // kana い in Skill 2
+const EntryPointsLayer = makeTestLayer({ contentItems: allSkill1Items, reviewCards: [] })
+
+const OneNonExpiredLayer = makeTestLayer({
+  contentItems: allSkill1Items,
+  reviewCards: [makeReviewCard(ContentItemId(1), future)],
+})
+
+const OneOverdueLayer = makeTestLayer({
+  contentItems: allSkill1Items,
+  reviewCards: [makeReviewCard(ContentItemId(1), past)],
+})
+
+const AllPrereqsSatisfiedLayer = makeTestLayer({
+  contentItems: allItems_s1_s2,
+  reviewCards: [makeReviewCard(ContentItemId(1), future), makeReviewCard(ContentItemId(2), future)],
+})
+
+const OnePrereqMissingLayer = makeTestLayer({
+  contentItems: allItems_s1_s2,
+  reviewCards: [makeReviewCard(ContentItemId(1), future)],
+})
+
+const NoPrereqContentItemLayer = makeTestLayer({ contentItems: [kanaA_s2], reviewCards: [] })
+
+const AllComponentPrereqsSatisfiedLayer = makeTestLayer({
+  contentItems: allItems_components,
+  reviewCards: [
+    makeReviewCard(ContentItemId(202), future),
+    makeReviewCard(ContentItemId(101), future),
+    makeReviewCard(ContentItemId(102), future),
   ],
-  wordComponents,
-)
+  components: wordComponents,
+})
 
-const OneComponentMissingLayer = makeTestLayer(
-  allItems_components,
-  [
-    makeReviewCard(ContentItemId(202), future), // word in Skill 4
-    makeReviewCard(ContentItemId(101), future), // kana あ in Skill 2 — い missing
+const OneComponentMissingLayer = makeTestLayer({
+  contentItems: allItems_components,
+  reviewCards: [
+    makeReviewCard(ContentItemId(202), future),
+    makeReviewCard(ContentItemId(101), future),
   ],
-  wordComponents,
-)
+  components: wordComponents,
+})
 
-const ComponentNoContentItemLayer = makeTestLayer(
-  // word_s7 + word_s4, but NO kana ContentItems in Skill 2 → components ignored
-  [word_s4, word_s7],
-  [makeReviewCard(ContentItemId(202), future)], // only element prereq
-  wordComponents,
-)
+const ComponentNoContentItemLayer = makeTestLayer({
+  contentItems: [word_s4, word_s7],
+  reviewCards: [makeReviewCard(ContentItemId(202), future)],
+  components: wordComponents,
+})
+
+// GP layers — Skill 11 prereq is Skill 8, but no ContentItems in Skill 8 → prereqs trivially pass
+const Gp1BootstrapLayer = makeTestLayer({
+  contentItems: allItems_gp,
+  reviewCards: [],
+  grammarPoints: grammarPointPairs,
+  gpContentItems: gpContentItems,
+})
+
+const Gp2AllStudiedLayer = makeTestLayer({
+  contentItems: allItems_gp,
+  reviewCards: [
+    makeReviewCard(ContentItemId(303), future), // だ studied
+    makeReviewCard(ContentItemId(304), future), // は studied
+  ],
+  grammarPoints: grammarPointPairs,
+  gpContentItems: gpContentItems,
+})
+
+const Gp2OneMissingLayer = makeTestLayer({
+  contentItems: allItems_gp,
+  reviewCards: [
+    makeReviewCard(ContentItemId(303), future), // だ studied, は NOT studied
+  ],
+  grammarPoints: grammarPointPairs,
+  gpContentItems: gpContentItems,
+})
 
 // --- Tests ---
 
@@ -320,6 +421,60 @@ layer(ComponentNoContentItemLayer)(
 
         assert.strictEqual(items.length, 1)
         assert.deepStrictEqual(Array.map(items, Struct.get("id")), [ContentItemId(201)])
+      }),
+    )
+  },
+)
+
+layer(Gp1BootstrapLayer)("ContentAvailability — Étape 5 : 1 GP bootstrap (AC10)", (it) => {
+  it.effect("sentence skill grammaire, 1 GP → pas de vérification GP", () =>
+    Effect.gen(function* () {
+      yield* TestClock.setTime(DateTime.toEpochMillis(now))
+      const contentAvailability = yield* ContentAvailability
+      const items = yield* contentAvailability.getAvailableItems("user1", skill11)
+
+      const ids = Array.map(items, Struct.get("id"))
+      assert.ok(Array.contains(ids, ContentItemId(301)))
+    }),
+  )
+})
+
+layer(Gp2AllStudiedLayer)("ContentAvailability — Étape 5 : 2+ GP tous étudiés (AC11)", (it) => {
+  it.effect("sentence skill grammaire, 2+ GP, tous étudiés → retourné", () =>
+    Effect.gen(function* () {
+      yield* TestClock.setTime(DateTime.toEpochMillis(now))
+      const contentAvailability = yield* ContentAvailability
+      const items = yield* contentAvailability.getAvailableItems("user1", skill11)
+
+      const ids = Array.map(items, Struct.get("id"))
+      assert.ok(Array.contains(ids, ContentItemId(302)))
+    }),
+  )
+})
+
+layer(Gp2OneMissingLayer)("ContentAvailability — Étape 5 : 2+ GP un manquant (AC12)", (it) => {
+  it.effect("sentence skill grammaire, 2+ GP, un non étudié → rejeté", () =>
+    Effect.gen(function* () {
+      yield* TestClock.setTime(DateTime.toEpochMillis(now))
+      const contentAvailability = yield* ContentAvailability
+      const items = yield* contentAvailability.getAvailableItems("user1", skill11)
+
+      const ids = Array.map(items, Struct.get("id"))
+      assert.ok(!Array.contains(ids, ContentItemId(302)))
+    }),
+  )
+})
+
+layer(AllComponentPrereqsSatisfiedLayer)(
+  "ContentAvailability — Étape 5 : Skill non-grammaire (AC13)",
+  (it) => {
+    it.effect("mot dans un skill core → pas de check GP", () =>
+      Effect.gen(function* () {
+        yield* TestClock.setTime(DateTime.toEpochMillis(now))
+        const contentAvailability = yield* ContentAvailability
+        const items = yield* contentAvailability.getAvailableItems("user1", skill7)
+
+        assert.strictEqual(items.length, 1)
       }),
     )
   },

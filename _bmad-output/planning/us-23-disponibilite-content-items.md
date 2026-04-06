@@ -173,11 +173,11 @@ packages/db      →  queries batch (ReviewCardRepo, ContentItemRepo)
 
 ### Étape 5 — Règle grammar points (TDD)
 
-- [ ] Test : sentence Skill 11, 1 GP → pas de vérification GP → AC10
-- [ ] Test : sentence Skill 11, 2 GP, tous étudiés → OK → AC11
-- [ ] Test : sentence Skill 11, 2 GP, un manquant → rejeté → AC12
-- [ ] Test : mot Skill 7 (non-grammaire) → pas de vérification GP → AC13
-- [ ] Ajouter la règle GP pour les skills 11-15
+- [x] Test : sentence Skill 11, 1 GP → pas de vérification GP → AC10
+- [x] Test : sentence Skill 11, 2 GP, tous étudiés → OK → AC11
+- [x] Test : sentence Skill 11, 2 GP, un manquant → rejeté → AC12
+- [x] Test : mot Skill 7 (non-grammaire) → pas de vérification GP → AC13
+- [x] Ajouter la règle GP pour les skills 11-15
 
 ### Étape 6 — Queries batch dans `packages/db`
 

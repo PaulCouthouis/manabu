@@ -50,6 +50,8 @@ export {
   ContentItemPort,
   ReviewCardPort,
   type ElementComponent,
+  type ElementGrammarPoint,
+  type GrammarPointContentItem,
 } from "./content-availability.js"
 
 export { GrammarPoint, GrammarPointId, GrammarPointIdSchema } from "./grammar-point.js"
