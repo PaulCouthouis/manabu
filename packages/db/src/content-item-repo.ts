@@ -5,14 +5,7 @@ import {
   GrammarPointIdSchema,
   LinguisticElementIdSchema,
 } from "@manabu/domain"
-import type {
-  ElementComponent,
-  ElementGrammarPoint,
-  GrammarPointContentItem,
-  GrammarPointId,
-  LinguisticElementId,
-  SkillTypeId,
-} from "@manabu/domain"
+import type { GrammarPointId, LinguisticElementId, SkillTypeId } from "@manabu/domain"
 import { Array, Effect, Schema } from "effect"
 
 type ContentItemRow = { id: number; element_id: number; skill_type_id: number }

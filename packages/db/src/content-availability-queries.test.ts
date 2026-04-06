@@ -1,6 +1,6 @@
 import { SqlClient } from "@effect/sql"
 import { assert, layer } from "@effect/vitest"
-import { ContentItemId, GrammarPointId, LinguisticElementId, SkillTypeId } from "@manabu/domain"
+import { LinguisticElementId, SkillTypeId } from "@manabu/domain"
 import { Array, Effect, Struct } from "effect"
 import { ContentItemRepo } from "./content-item-repo.js"
 import { runMigrations } from "./migrations/index.js"
