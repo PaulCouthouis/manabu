@@ -34,21 +34,21 @@ const isGrammarSkill = (skillId: SkillTypeId) => Array.contains(GRAMMAR_SKILL_ID
 export class ContentItemPort extends Context.Tag("ContentItemPort")<
   ContentItemPort,
   {
-    readonly findBySkillType: (skillId: SkillTypeId) => Effect.Effect<Array<ContentItem>>
+    readonly findBySkillType: (skillId: SkillTypeId) => Effect.Effect<ReadonlyArray<ContentItem>>
     readonly findByElementAndSkills: (
       elementIds: ReadonlyArray<LinguisticElementId>,
       skillIds: ReadonlyArray<SkillTypeId>,
-    ) => Effect.Effect<Array<ContentItem>>
+    ) => Effect.Effect<ReadonlyArray<ContentItem>>
     readonly findComponentIds: (
       elementIds: ReadonlyArray<LinguisticElementId>,
-    ) => Effect.Effect<Array<ElementComponent>>
+    ) => Effect.Effect<ReadonlyArray<ElementComponent>>
     readonly findGrammarPointIds: (
       elementIds: ReadonlyArray<LinguisticElementId>,
-    ) => Effect.Effect<Array<ElementGrammarPoint>>
+    ) => Effect.Effect<ReadonlyArray<ElementGrammarPoint>>
     readonly findContentItemsByGrammarPoints: (
       grammarPointIds: ReadonlyArray<GrammarPointId>,
       skillIds: ReadonlyArray<SkillTypeId>,
-    ) => Effect.Effect<Array<GrammarPointContentItem>>
+    ) => Effect.Effect<ReadonlyArray<GrammarPointContentItem>>
   }
 >() {}
 
@@ -58,7 +58,7 @@ export class ReviewCardPort extends Context.Tag("ReviewCardPort")<
     readonly findByUserAndContentItems: (
       userId: string,
       contentItemIds: ReadonlyArray<ContentItemId>,
-    ) => Effect.Effect<Array<ReviewCard>>
+    ) => Effect.Effect<ReadonlyArray<ReviewCard>>
   }
 >() {}
 

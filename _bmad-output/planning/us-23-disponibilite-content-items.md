@@ -190,22 +190,25 @@ packages/db      →  queries batch (ReviewCardRepo, ContentItemRepo)
 
 ### Étape 7 — Intégration end-to-end
 
-- [ ] Wiring : `ContentAvailability` avec les vrais repos dans `packages/db`
-- [ ] Ajouter à `TestRepoLayer`
-- [ ] Test intégration : kana Skill 1 nouveau → AC16
-- [ ] Test intégration : kana Skill 2 + ReviewCard valide → AC17
-- [ ] Test intégration : kana Skill 2 + ReviewCard expirée → AC18
-- [ ] Test intégration : mot Skill 7 tout OK → AC19
-- [ ] Test intégration : mot Skill 7 composant manquant → AC20
-- [ ] Test intégration : sentence Skill 11, 1 GP → AC21
-- [ ] Test intégration : sentence Skill 11, 2 GP manquant → AC22
+- [x] Créer `packages/server-runtime` (`@manabu/server-runtime`, dépend de `@manabu/domain` + `@manabu/db`)
+- [x] Bridge layers : `ContentItemPortLive` (ContentItemRepo → ContentItemPort), `ReviewCardPortLive` (ReviewCardRepo → ReviewCardPort)
+- [x] `ContentAvailabilityLive` : compose bridge layers + `ContentAvailability.Default`
+- [x] `TestServerRuntimeLayer` : `ContentAvailabilityLive` + `TestRepoLayer` (Testcontainers)
+- [x] Test intégration : kana Skill 1 nouveau → AC16
+- [x] Test intégration : kana Skill 2 + ReviewCard valide → AC17
+- [x] Test intégration : kana Skill 2 + ReviewCard expirée → AC18
+- [x] Test intégration : mot Skill 7 tout OK → AC19
+- [x] Test intégration : mot Skill 7 composant manquant → AC20
+- [x] Test intégration : sentence Skill 11, 1 GP → AC21
+- [x] Test intégration : sentence Skill 11, 2 GP manquant → AC22
 
 ### Étape 8 — Vérifications finales
 
-- [ ] Exporter `ContentAvailability` depuis `packages/db/src/index.ts`
-- [ ] `pnpm build` sans erreur → AC23
-- [ ] `pnpm lint` sans erreur → AC24
-- [ ] Tests existants passent (non-régression) → AC25
+- [x] Exporter les layers depuis `packages/server-runtime/src/index.ts`
+- [x] Mettre à jour CLAUDE.md (nouveau package, dépendances)
+- [x] `pnpm build` sans erreur → AC23
+- [x] `pnpm lint` sans erreur → AC24
+- [x] Tests existants passent (non-régression) → AC25
 
 ## Hors scope
 

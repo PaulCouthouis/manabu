@@ -37,6 +37,7 @@ manabu/
     fsrs/              # @manabu/fsrs — FSRS engine (spaced repetition), logique pure, zéro domaine
     storybook/         # @manabu/storybook — config Storybook centralisée, découvre les stories de ui + exercises
     ui/                # Composants UI partagés, design system Panda/Park
+    server-runtime/    # @manabu/server-runtime — composition root serveur (wiring domain + db)
     shared/            # Types partagés, config Effect, utilitaires
   _bmad-output/
     specs/             # Documents de spécification (PRD, taxonomie skills)
@@ -50,15 +51,16 @@ manabu/
 ### Dépendances entre packages
 
 ```
-apps/web           →  @manabu/auth, @manabu/domain, @manabu/db, @manabu/ui, @manabu/exercises, @manabu/shared
-packages/auth      →  @manabu/shared
-packages/db        →  @manabu/domain, @manabu/shared
-packages/exercises  →  @manabu/shared
-packages/fsrs       →  @manabu/shared
-packages/storybook  →  @manabu/ui, @manabu/exercises (devDeps — runner Storybook)
-packages/ui         →  @manabu/shared
-packages/domain     →  @manabu/fsrs, @manabu/shared
-packages/shared     →  (aucune dépendance interne)
+apps/web              →  @manabu/auth, @manabu/server-runtime, @manabu/ui, @manabu/exercises, @manabu/shared
+packages/server-runtime →  @manabu/domain, @manabu/db
+packages/auth         →  @manabu/shared
+packages/db           →  @manabu/domain, @manabu/shared
+packages/exercises    →  @manabu/shared
+packages/fsrs         →  @manabu/shared
+packages/storybook    →  @manabu/ui, @manabu/exercises (devDeps — runner Storybook)
+packages/ui           →  @manabu/shared
+packages/domain       →  @manabu/fsrs, @manabu/shared
+packages/shared       →  (aucune dépendance interne)
 ```
 
 ### Conventions de nommage
