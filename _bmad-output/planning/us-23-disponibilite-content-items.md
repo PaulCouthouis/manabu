@@ -166,10 +166,10 @@ packages/db      →  queries batch (ReviewCardRepo, ContentItemRepo)
 
 ### Étape 4 — Vérification des composants (TDD)
 
-- [ ] Test : mot Skill 7, composants kana tous avec ReviewCard valide dans Skill 2 → retourné → AC7
-- [ ] Test : un composant avec ContentItem dans prérequis mais sans ReviewCard → rejeté → AC8
-- [ ] Test : composant sans ContentItem dans le skill prérequis → ignoré → AC9
-- [ ] Ajouter la vérification des composants pour chaque prérequis
+- [x] Test : mot Skill 7, composants kana tous avec ReviewCard valide dans Skill 2 → retourné → AC7
+- [x] Test : un composant avec ContentItem dans prérequis mais sans ReviewCard → rejeté → AC8
+- [x] Test : composant sans ContentItem dans le skill prérequis → ignoré → AC9
+- [x] Ajouter la vérification des composants pour chaque prérequis
 
 ### Étape 5 — Règle grammar points (TDD)
 

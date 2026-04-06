@@ -1,6 +1,11 @@
 import { assert, layer } from "@effect/vitest"
 import { Array, DateTime, Effect, Layer, Struct, TestClock } from "effect"
-import { ContentAvailability, ContentItemPort, ReviewCardPort } from "./content-availability.js"
+import {
+  ContentAvailability,
+  ContentItemPort,
+  ReviewCardPort,
+  type ElementComponent,
+} from "./content-availability.js"
 import { ContentItem, ContentItemId } from "./content-item.js"
 import { LinguisticElementId } from "./linguistic-element.js"
 import { ReviewCard, ReviewCardId } from "./review-card.js"
@@ -10,12 +15,14 @@ import { SkillTypeId } from "./skill-type.js"
 
 const skill1 = SkillTypeId(1)
 const skill2 = SkillTypeId(2)
+const skill4 = SkillTypeId(4)
+const skill7 = SkillTypeId(7)
 
 const now = DateTime.unsafeMake("2026-04-05T12:00:00Z")
 const future = DateTime.add(now, { days: 3 })
 const past = DateTime.subtract(now, { days: 1 })
 
-// Skill 1 items (entry point, no prereqs)
+// Kana elements (id 1 = あ hiragana, id 2 = い hiragana)
 const kanaA_s1 = ContentItem.make({
   id: ContentItemId(1),
   linguisticElementId: LinguisticElementId(1),
@@ -31,8 +38,6 @@ const kanaU_s1 = ContentItem.make({
   linguisticElementId: LinguisticElementId(3),
   skillTypeId: skill1,
 })
-
-// Skill 2 items (prereq: Skill 1)
 const kanaA_s2 = ContentItem.make({
   id: ContentItemId(101),
   linguisticElementId: LinguisticElementId(1),
@@ -43,6 +48,23 @@ const kanaI_s2 = ContentItem.make({
   linguisticElementId: LinguisticElementId(2),
   skillTypeId: skill2,
 })
+
+// Word element (id 5000) in Skill 7, with kana components あ(1) and い(2)
+const word_s7 = ContentItem.make({
+  id: ContentItemId(201),
+  linguisticElementId: LinguisticElementId(5000),
+  skillTypeId: skill7,
+})
+const word_s4 = ContentItem.make({
+  id: ContentItemId(202),
+  linguisticElementId: LinguisticElementId(5000),
+  skillTypeId: skill4,
+})
+
+const wordComponents: ReadonlyArray<ElementComponent> = [
+  { elementId: LinguisticElementId(5000), componentId: LinguisticElementId(1) },
+  { elementId: LinguisticElementId(5000), componentId: LinguisticElementId(2) },
+]
 
 const makeReviewCard = (contentItemId: ContentItemId, nextReviewAt: DateTime.Utc) => {
   return ReviewCard.make({
@@ -56,7 +78,10 @@ const makeReviewCard = (contentItemId: ContentItemId, nextReviewAt: DateTime.Utc
 
 // --- Helpers ---
 
-const makeContentItemPort = (allItems: ReadonlyArray<ContentItem>) => {
+const makeContentItemPort = (
+  allItems: ReadonlyArray<ContentItem>,
+  components: ReadonlyArray<ElementComponent> = [],
+) => {
   return Layer.succeed(ContentItemPort, {
     findBySkillType: (skillId) => {
       return Effect.succeed(
@@ -72,6 +97,13 @@ const makeContentItemPort = (allItems: ReadonlyArray<ContentItem>) => {
             Array.contains(elementIds, ci.linguisticElementId) &&
             Array.contains(skillIds, ci.skillTypeId)
           )
+        }),
+      )
+    },
+    findComponentIds: (elementIds) => {
+      return Effect.succeed(
+        Array.filter(components, (p) => {
+          return Array.contains(elementIds, p.elementId)
         }),
       )
     },
@@ -93,9 +125,10 @@ const makeReviewCardPort = (cards: ReadonlyArray<ReviewCard>) => {
 const makeTestLayer = (
   contentItems: ReadonlyArray<ContentItem>,
   reviewCards: ReadonlyArray<ReviewCard>,
+  components: ReadonlyArray<ElementComponent> = [],
 ) => {
   return ContentAvailability.Default.pipe(
-    Layer.provide(makeContentItemPort(contentItems)),
+    Layer.provide(makeContentItemPort(contentItems, components)),
     Layer.provide(makeReviewCardPort(reviewCards)),
   )
 }
@@ -116,6 +149,37 @@ const OnePrereqMissingLayer = makeTestLayer(allItems_s1_s2, [
   makeReviewCard(ContentItemId(1), future),
 ])
 const NoPrereqContentItemLayer = makeTestLayer([kanaA_s2], [])
+
+// Skill 7 prereqs: [2, 3, 4]
+// word_s7 needs: element prereq word_s4 (Skill 4) + component prereqs kanaA_s2, kanaI_s2 (Skill 2)
+// Skill 3 (katakana): hiragana kana have no ContentItem → ignored (AC9)
+const allItems_components = [...allItems_s1_s2, word_s4, word_s7]
+
+const AllComponentPrereqsSatisfiedLayer = makeTestLayer(
+  allItems_components,
+  [
+    makeReviewCard(ContentItemId(202), future), // word in Skill 4
+    makeReviewCard(ContentItemId(101), future), // kana あ in Skill 2
+    makeReviewCard(ContentItemId(102), future), // kana い in Skill 2
+  ],
+  wordComponents,
+)
+
+const OneComponentMissingLayer = makeTestLayer(
+  allItems_components,
+  [
+    makeReviewCard(ContentItemId(202), future), // word in Skill 4
+    makeReviewCard(ContentItemId(101), future), // kana あ in Skill 2 — い missing
+  ],
+  wordComponents,
+)
+
+const ComponentNoContentItemLayer = makeTestLayer(
+  // word_s7 + word_s4, but NO kana ContentItems in Skill 2 → components ignored
+  [word_s4, word_s7],
+  [makeReviewCard(ContentItemId(202), future)], // only element prereq
+  wordComponents,
+)
 
 // --- Tests ---
 
@@ -209,6 +273,53 @@ layer(NoPrereqContentItemLayer)(
 
         assert.strictEqual(items.length, 1)
         assert.deepStrictEqual(Array.map(items, Struct.get("id")), [ContentItemId(101)])
+      }),
+    )
+  },
+)
+
+layer(AllComponentPrereqsSatisfiedLayer)(
+  "ContentAvailability — Étape 4 : Composants tous satisfaits (AC7)",
+  (it) => {
+    it.effect("tous les composants ont ReviewCard valide → retourné", () =>
+      Effect.gen(function* () {
+        yield* TestClock.setTime(DateTime.toEpochMillis(now))
+        const contentAvailability = yield* ContentAvailability
+        const items = yield* contentAvailability.getAvailableItems("user1", skill7)
+
+        assert.strictEqual(items.length, 1)
+        assert.deepStrictEqual(Array.map(items, Struct.get("id")), [ContentItemId(201)])
+      }),
+    )
+  },
+)
+
+layer(OneComponentMissingLayer)(
+  "ContentAvailability — Étape 4 : Composant manquant (AC8)",
+  (it) => {
+    it.effect("un composant sans ReviewCard valide → rejeté", () =>
+      Effect.gen(function* () {
+        yield* TestClock.setTime(DateTime.toEpochMillis(now))
+        const contentAvailability = yield* ContentAvailability
+        const items = yield* contentAvailability.getAvailableItems("user1", skill7)
+
+        assert.strictEqual(items.length, 0)
+      }),
+    )
+  },
+)
+
+layer(ComponentNoContentItemLayer)(
+  "ContentAvailability — Étape 4 : Composant sans ContentItem dans prérequis (AC9)",
+  (it) => {
+    it.effect("composant sans ContentItem dans le skill prérequis → ignoré", () =>
+      Effect.gen(function* () {
+        yield* TestClock.setTime(DateTime.toEpochMillis(now))
+        const contentAvailability = yield* ContentAvailability
+        const items = yield* contentAvailability.getAvailableItems("user1", skill7)
+
+        assert.strictEqual(items.length, 1)
+        assert.deepStrictEqual(Array.map(items, Struct.get("id")), [ContentItemId(201)])
       }),
     )
   },

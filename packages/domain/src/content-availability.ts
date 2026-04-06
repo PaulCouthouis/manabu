@@ -7,6 +7,11 @@ import type { SkillTypeId } from "./skill-type.js"
 
 // --- Ports ---
 
+export type ElementComponent = {
+  readonly elementId: LinguisticElementId
+  readonly componentId: LinguisticElementId
+}
+
 export class ContentItemPort extends Context.Tag("ContentItemPort")<
   ContentItemPort,
   {
@@ -15,6 +20,9 @@ export class ContentItemPort extends Context.Tag("ContentItemPort")<
       elementIds: ReadonlyArray<LinguisticElementId>,
       skillIds: ReadonlyArray<SkillTypeId>,
     ) => Effect.Effect<Array<ContentItem>>
+    readonly findComponentIds: (
+      elementIds: ReadonlyArray<LinguisticElementId>,
+    ) => Effect.Effect<Array<ElementComponent>>
   }
 >() {}
 
@@ -105,8 +113,12 @@ export class ContentAvailability extends Effect.Service<ContentAvailability>()(
           }
 
           const elementIds = Array.map(items, Struct.get("linguisticElementId"))
+          const componentPairs = yield* contentItemPort.findComponentIds(elementIds)
+          const componentIds = Array.map(componentPairs, Struct.get("componentId"))
+          const allElementIds = Array.dedupe([...elementIds, ...componentIds])
+
           const prereqContentItems = yield* contentItemPort.findByElementAndSkills(
-            elementIds,
+            allElementIds,
             prereqSkillIds,
           )
           const prereqContentItemIds = Array.map(prereqContentItems, Struct.get("id"))
@@ -116,16 +128,26 @@ export class ContentAvailability extends Effect.Service<ContentAvailability>()(
           )
 
           const hasAllPrereqsSatisfied = (item: ContentItem) => {
+            const itemComponentIds = Array.filterMap(componentPairs, (p) => {
+              if (p.elementId === item.linguisticElementId) {
+                return Option.some(p.componentId)
+              }
+              return Option.none()
+            })
+            const idsToCheck = [item.linguisticElementId, ...itemComponentIds]
+
             return Effect.gen(function* () {
-              const results = yield* Effect.forEach(prereqSkillIds, (prereqSkillId) => {
-                return hasPrereqSatisfied(
-                  item.linguisticElementId,
-                  prereqSkillId,
-                  prereqContentItems,
-                  prereqReviewCards,
-                )
+              const results = yield* Effect.forEach(idsToCheck, (elementId) => {
+                return Effect.forEach(prereqSkillIds, (prereqSkillId) => {
+                  return hasPrereqSatisfied(
+                    elementId,
+                    prereqSkillId,
+                    prereqContentItems,
+                    prereqReviewCards,
+                  )
+                })
               })
-              return Array.every(results, Function.identity)
+              return Array.every(Array.flatten(results), Function.identity)
             })
           }
 
