@@ -181,9 +181,12 @@ packages/db      →  queries batch (ReviewCardRepo, ContentItemRepo)
 
 ### Étape 6 — Queries batch dans `packages/db`
 
-- [ ] Implémenter `ReviewCardRepo.findByUserAndContentItems(userId, contentItemIds)` → AC14
-- [ ] Implémenter `ContentItemRepo.findByElementAndSkills(elementIds, skillIds)` → AC15
-- [ ] Tests intégration pour chaque query
+- [x] Implémenter `ReviewCardRepo.findByUserAndContentItems(userId, contentItemIds)` → AC14
+- [x] Implémenter `ContentItemRepo.findByElementAndSkills(elementIds, skillIds)` → AC15
+- [x] Implémenter `ContentItemRepo.findComponentIds(elementIds)` (query `element_component`)
+- [x] Implémenter `ContentItemRepo.findGrammarPointIds(elementIds)` (query `sentence_grammar_point`)
+- [x] Implémenter `ContentItemRepo.findContentItemsByGrammarPoints(gpIds, skillIds)` (join `sentence_grammar_point` + `content_item`)
+- [x] Tests intégration pour chaque query
 
 ### Étape 7 — Intégration end-to-end
 
